@@ -1,25 +1,14 @@
 {
   "date": "2026-07-23",
-  "generatedAt": "2026-07-23T13:48:08.050Z",
-  "degraded": true,
+  "generatedAt": "2026-07-23T15:09:10.044Z",
+  "degraded": false,
   "items": [
-    {
-      "title": "Casambi appoints Will Norris to lead North America",
-      "url": "https://www.arc-magazine.com/casambi-appoints-will-norris-to-lead-north-america",
-      "source": "arc",
-      "published": "Tue, 14 Jul 2026 10:24:42 +0000",
-      "summary": "",
-      "topics": [
-        "controls",
-        "practice"
-      ]
-    },
     {
       "title": "Modern lighting control brings new life to historic basilica",
       "url": "https://www.a1lightingmagazine.com/latest-news/modern-lighting-control-brings-new-life-to-historic-basilica",
       "source": "A1 Lighting",
       "published": "Mon, 20 Jul 2026 12:38:28 +0000",
-      "summary": "",
+      "summary": "Pharos Architectural Controls has been installed to run the exterior illumination of Sint-Petrusbasiliek in Oirschot, replacing an older system with a networked, more energy-efficient control setup for the facade.",
       "topics": [
         "controls",
         "facade",
@@ -31,48 +20,10 @@
       "url": "https://www.lightnowblog.com/2026/07/dlc-finalizes-networked-lighting-controls-nlc-v5-2",
       "source": "LightNOW",
       "published": "Wed, 22 Jul 2026 05:40:16 +0000",
-      "summary": "",
+      "summary": "DesignLights Consortium's Networked Lighting Controls V5.2 requirements take effect August 2026, tightening interoperability and reporting standards and extending controls integration into HVAC and other building systems, affecting product qualification for rebate programs.",
       "topics": [
         "standards",
         "controls"
-      ]
-    },
-    {
-      "title": "Q2 2026 Acquisitions",
-      "url": "https://www.lightnowblog.com/2026/07/q2-2026-acquisitions",
-      "source": "LightNOW",
-      "published": "Mon, 13 Jul 2026 05:10:55 +0000",
-      "summary": "",
-      "topics": [
-        "practice"
-      ]
-    },
-    {
-      "title": "Kimi Antonelli, F1 driver, goes undercover at Signify",
-      "url": "https://www.arc-magazine.com/f1-driver-kimi-antonelli-goes-undercover-at-signify",
-      "source": "arc",
-      "published": "Tue, 14 Jul 2026 15:18:46 +0000",
-      "summary": "",
-      "topics": []
-    },
-    {
-      "title": "White Light helps bring ‘fantasmagorical’ magic to life at the Watermill Theatre",
-      "url": "https://www.a1lightingmagazine.com/latest-news/white-light-at-the-watermill-theatre",
-      "source": "A1 Lighting",
-      "published": "Tue, 14 Jul 2026 12:31:24 +0000",
-      "summary": "",
-      "topics": [
-        "product"
-      ]
-    },
-    {
-      "title": "Messe Frankfurt acquires LiGHT Expo London",
-      "url": "https://www.arc-magazine.com/messe-frankfurt-acquires-light-expo-london",
-      "source": "arc",
-      "published": "Fri, 10 Jul 2026 14:30:45 +0000",
-      "summary": "",
-      "topics": [
-        "awards"
       ]
     },
     {
@@ -80,23 +31,18 @@
       "url": "https://www.lightnowblog.com/2026/07/house-passes-bill-to-create-permanent-daylight-savings-time",
       "source": "LightNOW",
       "published": "Thu, 23 Jul 2026 05:46:49 +0000",
-      "summary": "",
-      "topics": []
+      "summary": "The US House has passed a bill for permanent daylight saving time, still requiring Senate and presidential approval; relevant to lighting controls scheduling and circadian-related design assumptions tied to seasonal light shifts.",
+      "topics": [
+        "circadian",
+        "standards"
+      ]
     },
     {
       "title": "Trump Administration Declines To Renew USMCA Trade Deal",
       "url": "https://www.lightnowblog.com/2026/07/trump-administration-declines-to-renew-usmca-trade-deal",
       "source": "LightNOW",
       "published": "Tue, 21 Jul 2026 05:35:11 +0000",
-      "summary": "",
-      "topics": []
-    },
-    {
-      "title": "Moorea Festival Goes Giga with Robe",
-      "url": "https://www.a1lightingmagazine.com/company-news/moorea-festival-goes-giga-with-robe",
-      "source": "A1 Lighting",
-      "published": "Fri, 17 Jul 2026 12:17:48 +0000",
-      "summary": "",
+      "summary": "The US administration has declined to renew USMCA in its current form, triggering a lengthy review process that could affect sourcing, pricing and supply chains for lighting manufacturers and specifiers across North America.",
       "topics": [
         "practice"
       ]
@@ -106,17 +52,21 @@
       "url": "https://www.arc-magazine.com/foscarini-asteria",
       "source": "arc",
       "published": "Tue, 14 Jul 2026 08:52:10 +0000",
-      "summary": "",
-      "topics": []
+      "summary": "Foscarini's Asteria fixture, first shown at Euroluce 2025, reworks the multi-arm chandelier format with a pared-back, architectural form language.",
+      "topics": [
+        "product",
+        "optics"
+      ]
     },
     {
       "title": "Collingwood lights up Northampton Saints hospitality and net zero drive",
       "url": "https://www.a1lightingmagazine.com/projects/collingwood-lights-up-northampton-saints-hospitality",
       "source": "A1 Lighting",
       "published": "Thu, 23 Jul 2026 11:58:55 +0000",
-      "summary": "",
+      "summary": "Collingwood Lighting has completed an LED refurbishment of Northampton Saints' Barwell stand, targeting improved fan-facing hospitality lighting and reduced energy use as part of the club's net-zero programme.",
       "topics": [
-        "sustainability"
+        "sustainability",
+        "product"
       ]
     }
   ],
