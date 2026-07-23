@@ -12,6 +12,7 @@ export const nav = [
   { href: '/learn', label: 'Learn' },
   { href: '/projects', label: 'Projects' },
   { href: '/standards', label: 'Standards' },
+  { href: '/directory', label: 'Directory' },
   { href: '/tools', label: 'Tools' },
   { href: '/glossary', label: 'Glossary' },
   { href: '/events', label: 'Events' },
@@ -33,6 +34,7 @@ export const mobileNav = [
 export const mobileMore = [
   { href: '/projects', label: 'Projects', icon: 'image', hint: 'Case studies' },
   { href: '/glossary', label: 'Glossary', icon: 'book', hint: 'Term definitions' },
+  { href: '/directory', label: 'Directory', icon: 'building', hint: 'Hãng đèn, studio, tiêu chuẩn' },
   { href: '/events', label: 'Events', icon: 'calendar', hint: 'Fairs and deadlines' },
   { href: '/saved', label: 'Saved', icon: 'heart', hint: 'Your bookmarks' },
   { href: '/archive', label: 'Archive', icon: 'clock', hint: 'Past digests' },

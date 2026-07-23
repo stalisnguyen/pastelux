@@ -202,7 +202,60 @@ async function checkFeeds() {
   }
 }
 
+/**
+ * The directory carries the most outbound links on the site, so it rots the
+ * fastest. Same rules as events: status, off-domain drift, and expectText.
+ */
+async function checkDirectory() {
+  const entries = JSON.parse(await readFile(join(ROOT, 'src/content/directory.json'), 'utf8'));
+  console.log(`\n${c.dim('── directory ──')}`);
+
+  for (const d of entries) {
+    const tag = d.id;
+
+    if (d.unverifiableUrl) {
+      warnings.push(`${tag}: URL check skipped — blocked to automated clients.`);
+      console.log(`${c.yellow('SKIP')} ${tag.padEnd(24)} ${d.url}`);
+      continue;
+    }
+
+    let res;
+    try {
+      res = await fetchPage(d.url);
+    } catch (err) {
+      errors.push(`${tag}: ${d.url} — request failed (${err.message})`);
+      console.log(`${c.red('FAIL')} ${tag.padEnd(24)} ${err.message}`);
+      continue;
+    }
+
+    if (res.status >= 400) {
+      errors.push(`${tag}: ${d.url} returned HTTP ${res.status}`);
+      console.log(`${c.red('FAIL')} ${tag.padEnd(24)} HTTP ${res.status}`);
+      continue;
+    }
+
+    if (host(res.finalUrl) !== host(d.url)) {
+      warnings.push(`${tag}: redirects off-domain to ${res.finalUrl} — confirm the company still owns it.`);
+      console.log(`${c.yellow('WARN')} ${tag.padEnd(24)} -> ${host(res.finalUrl)}`);
+      continue;
+    }
+
+    const text = `${titleOf(res.body)} ${visibleText(res.body)}`;
+    if (!text.includes(d.expectText.toLowerCase())) {
+      errors.push(
+        `${tag}: page does not contain expectText "${d.expectText}". Title was "${titleOf(res.body)}".`
+      );
+      console.log(`${c.red('FAIL')} ${tag.padEnd(24)} missing "${d.expectText}"`);
+      continue;
+    }
+
+    ok.push(tag);
+    console.log(`${c.green(' OK ')} ${tag.padEnd(24)} ${titleOf(res.body).slice(0, 46)}`);
+  }
+}
+
 await checkEvents();
+await checkDirectory();
 await checkFeeds();
 
 console.log(`\n${c.dim('── summary ──')}`);

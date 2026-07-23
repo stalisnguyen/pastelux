@@ -1,0 +1,206 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+
+const all = (await getCollection('directory')).map((e) => e.data);
+
+const KINDS = [
+  { key: 'manufacturer', label: 'Manufacturers', vi: 'Nhà sản xuất đèn' },
+  { key: 'source', label: 'LED sources', vi: 'Nhà sản xuất chip LED' },
+  { key: 'controls', label: 'Controls', vi: 'Hệ điều khiển' },
+  { key: 'studio', label: 'Design practices', vi: 'Văn phòng thiết kế chiếu sáng' },
+  { key: 'body', label: 'Standards bodies', vi: 'Tổ chức tiêu chuẩn' },
+] as const;
+
+const groups = KINDS.map((k) => ({
+  ...k,
+  items: all.filter((e) => e.kind === k.key).sort((a, b) => a.name.localeCompare(b.name)),
+})).filter((g) => g.items.length);
+
+const countries = [...new Set(all.map((e) => e.country))].sort();
+const vnCount = all.filter((e) => e.country === 'Vietnam').length;
+---
+
+<Base
+  title="Directory"
+  description="Verified links to architectural lighting manufacturers, LED source makers, controls vendors, design practices and standards bodies."
+>
+  <PageHeader
+    eyebrow={`${all.length} entries`}
+    title="Directory"
+    lede="Who makes the fittings, who makes the chips inside them, who makes the control gear, whose work is worth studying, and who writes the standards. Every link is checked automatically each week."
+  >
+    <p class="vi-block vi-def mt-2 text-[0.95rem] max-w-2xl leading-relaxed">
+      Ai làm ra bộ đèn, ai làm chip LED bên trong, ai làm hệ điều khiển, văn phòng nào đáng học
+      hỏi, và ai viết ra tiêu chuẩn. Mọi liên kết đều được kiểm tra tự động hằng tuần.
+      Có {vnCount} đơn vị Việt Nam trong danh sách.
+    </p>
+  </PageHeader>
+
+  <div class="flex flex-wrap gap-2 mb-5" data-pagefind-ignore>
+    <button class="chip chip-accent kind-btn cursor-pointer" data-kind="all" type="button" aria-pressed="true">
+      All
+    </button>
+    {
+      groups.map((g) => (
+        <button class="chip kind-btn cursor-pointer" data-kind={g.key} type="button" aria-pressed="false">
+          {g.label}
+          <span class="vi-block-inline" style="color: var(--vi-text)"> · {g.vi}</span>
+        </button>
+      ))
+    }
+    <button class="chip kind-btn cursor-pointer" data-kind="vn" type="button" aria-pressed="false">
+      🇻🇳 Vietnam ({vnCount})
+    </button>
+  </div>
+
+  <div class="relative mb-6" data-pagefind-ignore>
+    <input
+      id="dir-filter"
+      type="search"
+      placeholder="Tìm — ví dụ: facade, exterior, DALI, bảo tàng, ngoài trời…"
+      class="field !py-2.5 !text-[0.95rem] w-full"
+      aria-label="Filter the directory"
+      autocomplete="off"
+    />
+  </div>
+
+  <div class="grid gap-9 pb-6">
+    {
+      groups.map((g) => (
+        <section class="dir-group" data-kind={g.key} aria-labelledby={`k-${g.key}`}>
+          <div class="flex items-center gap-3 mb-4">
+            <h2 id={`k-${g.key}`} class="text-lg font-semibold">
+              {g.label}
+            </h2>
+            <span class="vi-block-inline text-[0.9rem]" style="color: var(--vi-text)">
+              {g.vi}
+            </span>
+            <span class="h-px flex-1" style="background: var(--border)" />
+            <span class="text-xs" style="color: var(--text-faint)">
+              {g.items.length}
+            </span>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-3">
+            {g.items.map((e) => (
+              <article
+                class="card p-4 dir-item"
+                data-kind={e.kind}
+                data-country={e.country}
+                data-text={[e.name, e.country, e.what, e.viWhat, e.kind].join(' ').toLowerCase()}
+              >
+                <div class="flex items-baseline gap-2 flex-wrap">
+                  <h3 class="font-semibold text-[1rem]">
+                    <a href={e.url} target="_blank" rel="noopener noreferrer" class="no-underline hover:underline" style="color: var(--text)">
+                      {e.name}
+                    </a>
+                  </h3>
+                  <span class="chip">{e.country}</span>
+                  {e.country === 'Vietnam' && <span class="chip chip-accent">local</span>}
+                </div>
+
+                <p class="text-[0.88rem] mt-2 leading-relaxed" style="color: var(--text-muted)">
+                  {e.what}
+                </p>
+                <p class="vi-block vi-def text-[0.85rem] mt-1.5 leading-relaxed">{e.viWhat}</p>
+
+                <div class="flex items-center gap-3 mt-3 flex-wrap">
+                  <a
+                    href={e.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-[0.8rem] no-underline hover:underline inline-flex items-center gap-1"
+                  >
+                    {new URL(e.url).hostname.replace(/^www\./, '')}
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true">
+                      <path d="M7 17L17 7M9 7h8v8" />
+                    </svg>
+                  </a>
+                  <span class="text-[0.72rem]" style="color: var(--text-faint)">
+                    checked {e.verified}
+                  </span>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      ))
+    }
+  </div>
+
+  <div id="dir-empty" class="hidden py-10 text-center">
+    <p style="color: var(--text-faint)">Nothing matches that filter.</p>
+    <p class="vi-block vi-def mt-1 text-[0.88rem]">Không có kết quả. Thử từ khoá ngắn hơn.</p>
+  </div>
+
+  <p class="text-[0.8rem] pb-6" style="color: var(--text-faint)">
+    Inclusion is not endorsement — this is a starting point for research, not a recommended-vendor
+    list. Nothing here is sponsored.
+    <span class="vi-block-inline">
+      Có tên trong danh sách không đồng nghĩa với được khuyến nghị — đây là điểm khởi đầu để tra
+      cứu, không phải danh sách nhà cung cấp được đề xuất. Không có mục nào là quảng cáo trả tiền.
+    </span>
+  </p>
+</Base>
+
+<script>
+  const items = [...document.querySelectorAll<HTMLElement>('.dir-item')];
+  const sections = [...document.querySelectorAll<HTMLElement>('.dir-group')];
+  const buttons = [...document.querySelectorAll<HTMLElement>('.kind-btn')];
+  const input = document.getElementById('dir-filter') as HTMLInputElement | null;
+  const empty = document.getElementById('dir-empty');
+
+  let kind = 'all';
+
+  const fold = (s: string) =>
+    s
+      .normalize('NFD')
+      .replace(/[̀-ͯ]/g, '')
+      .replace(/đ/g, 'd')
+      .replace(/Đ/g, 'D')
+      .toLowerCase();
+
+  const folded = new WeakMap<HTMLElement, string>();
+  for (const el of items) folded.set(el, fold(el.dataset.text ?? ''));
+
+  function apply() {
+    const q = fold((input?.value ?? '').trim());
+    let shown = 0;
+
+    for (const el of items) {
+      const okKind =
+        kind === 'all' ||
+        (kind === 'vn' ? el.dataset.country === 'Vietnam' : el.dataset.kind === kind);
+      const okText = !q || (folded.get(el) ?? '').includes(q);
+      const show = okKind && okText;
+      el.classList.toggle('hidden', !show);
+      if (show) shown++;
+    }
+
+    // Hide a whole section once every card inside it is filtered out.
+    for (const sec of sections) {
+      const visible = [...sec.querySelectorAll('.dir-item')].some(
+        (c) => !c.classList.contains('hidden')
+      );
+      sec.classList.toggle('hidden', !visible);
+    }
+
+    empty?.classList.toggle('hidden', shown > 0);
+  }
+
+  buttons.forEach((btn) =>
+    btn.addEventListener('click', () => {
+      kind = btn.dataset.kind!;
+      buttons.forEach((b) => {
+        const on = b === btn;
+        b.classList.toggle('chip-accent', on);
+        b.setAttribute('aria-pressed', String(on));
+      });
+      apply();
+    })
+  );
+
+  input?.addEventListener('input', apply);
+</script>

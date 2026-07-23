@@ -168,4 +168,28 @@ const projects = defineCollection({
   }),
 });
 
-export const collections = { learn, daily, glossary, events, criteria, projects };
+/**
+ * Manufacturers, LED source makers, controls vendors, design practices and
+ * standards bodies. Carries the same verification discipline as events —
+ * `verified`, `source` and `expectText` are mandatory, so an unchecked entry
+ * cannot build and check-links can prove each destination is still the right
+ * one rather than merely alive.
+ */
+const directory = defineCollection({
+  loader: file('./src/content/directory.json'),
+  schema: z.object({
+    id: z.string(),
+    name: z.string(),
+    kind: z.enum(['manufacturer', 'source', 'controls', 'studio', 'body']),
+    country: z.string(),
+    url: z.string().url(),
+    what: z.string(),
+    viWhat: z.string(),
+    verified: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'verified must be YYYY-MM-DD'),
+    source: z.string().min(8),
+    expectText: z.string().min(3),
+    unverifiableUrl: z.string().optional(),
+  }),
+});
+
+export const collections = { learn, daily, glossary, events, criteria, projects, directory };
