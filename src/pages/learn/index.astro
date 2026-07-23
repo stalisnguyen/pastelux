@@ -57,6 +57,11 @@ const planned = [
                 <p class="text-[0.9rem] mt-2 leading-relaxed" style="color: var(--text-muted)">
                   {a.data.summary}
                 </p>
+                {a.data.viSummary && (
+                  <p class="vi-block vi-def text-[0.86rem] mt-1.5 leading-relaxed">
+                    {a.data.viSummary}
+                  </p>
+                )}
                 <div class="flex items-center gap-2 mt-3.5 flex-wrap">
                   <span class="chip">{a.data.readingMinutes} min read</span>
                   {a.data.topics.map((t) => (

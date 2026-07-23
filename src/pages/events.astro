@@ -36,7 +36,13 @@ const daysTo = (d: string) => Math.ceil((Date.parse(d) - now) / 86_400_000);
     eyebrow="Calendar"
     title="Events"
     lede="Conferences, fairs and award deadlines. Every entry records the date its details were last checked and the source they came from, and an automated job re-tests each link weekly. Still confirm with the organiser before booking anything."
-  />
+  >
+    <p class="vi-block vi-def mt-2 text-[0.95rem] max-w-2xl leading-relaxed">
+      Hội thảo, hội chợ và hạn nộp giải thưởng. Mỗi mục ghi rõ ngày kiểm tra thông tin lần cuối và
+      nguồn lấy từ đâu; có job tự động kiểm tra lại link mỗi tuần. Dù vậy vẫn nên xác nhận với ban
+      tổ chức trước khi đặt vé.
+    </p>
+  </PageHeader>
 
   <section aria-labelledby="upcoming-h" class="mb-12">
     <h2 id="upcoming-h" class="text-lg font-semibold mb-4">Upcoming</h2>

@@ -12,16 +12,22 @@ import { url } from '../site';
     eyebrow="Calculators"
     title="Tools"
     lede="Everything runs in your browser — nothing is sent anywhere, and the page works offline once loaded. For sketching and sanity checks, not for certification."
-  />
+  >
+    <p class="vi-block vi-def mt-2 text-[0.95rem] max-w-2xl leading-relaxed">
+      Mọi phép tính chạy ngay trên máy bạn, không gửi dữ liệu đi đâu, và dùng được cả khi mất mạng.
+      Dùng để phác nhanh và kiểm tra lại — không thay thế phần mềm tính toán chính thức.
+    </p>
+  </PageHeader>
 
   <div class="grid gap-5 pb-6">
     <!-- ------------------------------------------------ lumen method -->
     <section id="lumen" class="card p-6 scroll-mt-20" aria-labelledby="lumen-h">
       <h2 id="lumen-h" class="text-lg font-semibold">Lumen method</h2>
-      <p class="text-[0.9rem] mt-1.5 mb-5" style="color: var(--text-muted)">
+      <p class="text-[0.9rem] mt-1.5" style="color: var(--text-muted)">
         Total flux needed for a target maintained illuminance, and the number of luminaires that
         implies. Room index is computed from the geometry.
       </p>
+      <p class="vi-block vi-def text-[0.86rem] mt-1 mb-5">Tính tổng quang thông cần thiết để đạt độ rọi duy trì mong muốn, và suy ra số bộ đèn. Chỉ số phòng được tính tự động từ kích thước.</p>
 
       <div class="grid sm:grid-cols-3 gap-4">
         <div><label class="label" for="lm-L">Room length (m)</label><input class="field" id="lm-L" type="number" value="10" step="0.1" min="0.1" /></div>
@@ -45,10 +51,11 @@ import { url } from '../site';
     <!-- ------------------------------------------------- beam to spot -->
     <section id="beam" class="card p-6 scroll-mt-20" aria-labelledby="beam-h">
       <h2 id="beam-h" class="text-lg font-semibold">Beam angle → spot size</h2>
-      <p class="text-[0.9rem] mt-1.5 mb-5" style="color: var(--text-muted)">
+      <p class="text-[0.9rem] mt-1.5" style="color: var(--text-muted)">
         Pool diameter at a given throw, and the peak intensity needed to hit a target illuminance
         on axis.
       </p>
+      <p class="vi-block vi-def text-[0.86rem] mt-1 mb-5">Đường kính vệt sáng ở một khoảng cách chiếu, và cường độ sáng tâm chùm cần có để đạt độ rọi mong muốn trên trục.</p>
 
       <div class="grid sm:grid-cols-3 gap-4">
         <div><label class="label" for="bs-d">Throw distance (m)</label><input class="field" id="bs-d" type="number" value="3.25" step="0.05" min="0.1" /></div>
@@ -97,10 +104,11 @@ import { url } from '../site';
     <!-- ------------------------------------------- inverse square law -->
     <section id="isl" class="card p-6 scroll-mt-20" aria-labelledby="isl-h">
       <h2 id="isl-h" class="text-lg font-semibold">Inverse square law</h2>
-      <p class="text-[0.9rem] mt-1.5 mb-5" style="color: var(--text-muted)">
+      <p class="text-[0.9rem] mt-1.5" style="color: var(--text-muted)">
         E = I · cos θ / d². Also converts illuminance to luminance for a matte surface, which is
         what the eye actually sees.
       </p>
+      <p class="vi-block vi-def text-[0.86rem] mt-1 mb-5">E = I · cos θ / d². Đồng thời đổi độ rọi sang độ chói cho bề mặt mờ — đây mới là thứ mắt thực sự nhìn thấy.</p>
 
       <div class="grid sm:grid-cols-4 gap-4">
         <div><label class="label" for="isl-I">Intensity (cd)</label><input class="field" id="isl-I" type="number" value="5000" step="100" min="0" /></div>
@@ -119,10 +127,11 @@ import { url } from '../site';
     <!-- -------------------------------------------------- melanopic -->
     <section id="medi" class="card p-6 scroll-mt-20" aria-labelledby="medi-h">
       <h2 id="medi-h" class="text-lg font-semibold">Melanopic EDI</h2>
-      <p class="text-[0.9rem] mt-1.5 mb-5" style="color: var(--text-muted)">
+      <p class="text-[0.9rem] mt-1.5" style="color: var(--text-muted)">
         Vertical photopic lux at the eye × M-DER. Checked against the widely cited consensus
         targets.
       </p>
+      <p class="vi-block vi-def text-[0.86rem] mt-1 mb-5">Độ rọi đứng tại mắt × M-DER. Kết quả được đối chiếu với ngưỡng khuyến nghị quốc tế: ban ngày ≥250, buổi tối ≤10.</p>
 
       <div class="grid sm:grid-cols-3 gap-4">
         <div>
@@ -160,9 +169,10 @@ import { url } from '../site';
     <!-- ---------------------------------------------------- converter -->
     <section id="convert" class="card p-6 scroll-mt-20" aria-labelledby="conv-h">
       <h2 id="conv-h" class="text-lg font-semibold">Unit converter</h2>
-      <p class="text-[0.9rem] mt-1.5 mb-5" style="color: var(--text-muted)">
+      <p class="text-[0.9rem] mt-1.5" style="color: var(--text-muted)">
         The conversions that come up when a drawing set arrives in the other convention.
       </p>
+      <p class="vi-block vi-def text-[0.86rem] mt-1 mb-5">Các phép đổi hay gặp khi nhận hồ sơ theo hệ đơn vị Bắc Mỹ (footcandle, foot-lambert).</p>
       <div class="grid sm:grid-cols-2 gap-4">
         <div><label class="label" for="cv-fc">Footcandles</label><input class="field" id="cv-fc" type="number" value="50" step="1" /></div>
         <div><label class="label" for="cv-lx">Lux</label><input class="field" id="cv-lx" type="number" value="538" step="1" /></div>

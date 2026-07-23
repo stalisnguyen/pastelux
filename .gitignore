@@ -2,5 +2,28 @@ node_modules/
 dist/
 .astro/
 .env
+.env.*
 .DS_Store
 npm-debug.log*
+
+# ---------------------------------------------------------------------------
+# This repository is PUBLIC. Anything committed here is visible to anyone, and
+# it stays in the git history even after you delete the file.
+#
+# GitHub Pages on a free account only serves public repositories, so switching
+# the repo to private would take pasteluxvn.com offline. The defence is
+# therefore not to commit sensitive material in the first place.
+#
+# Never commit:
+#   - API keys or tokens.  ANTHROPIC_API_KEY lives in Actions Secrets, which is
+#     never exposed even on a public repo — keep it there.
+#   - Client drawings, tender documents, fee proposals.
+#   - Photographs you do not hold the rights to publish.
+#
+# Anything to keep locally but out of the repo goes in private/.
+# ---------------------------------------------------------------------------
+private/
+*.dwg
+*.rvt
+*.pln
+**/draft-*/

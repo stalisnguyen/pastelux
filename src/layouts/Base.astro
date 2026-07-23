@@ -55,6 +55,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://example.com
             window.matchMedia('(prefers-color-scheme: light)').matches;
           const theme = saved ?? (prefersLight ? 'light' : 'dark');
           document.documentElement.dataset.theme = theme;
+          // Same reason as the theme: decide before first paint so the
+          // Vietnamese annotations never flash in and then disappear.
+          if (localStorage.getItem('pastelux-vi') === '0') {
+            document.documentElement.classList.add('vi-off');
+          }
         } catch {}
       })();
     </script>

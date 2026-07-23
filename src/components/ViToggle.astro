@@ -1,0 +1,50 @@
+---
+/**
+ * Site-wide switch for the Vietnamese annotations.
+ *
+ * Vietnamese is additive everywhere: the English term is what appears on a
+ * drawing, a datasheet and a standard, so it is never replaced. This only
+ * shows or hides the second voice underneath it.
+ */
+---
+
+<button
+  id="vi-toggle"
+  class="btn !px-2 !py-1.5 !text-[0.78rem] font-semibold"
+  type="button"
+  aria-pressed="true"
+  title="Ẩn / hiện chú thích tiếng Việt"
+  aria-label="Toggle Vietnamese annotations"
+>
+  VI
+</button>
+
+<script is:inline>
+  (() => {
+    const KEY = 'pastelux-vi';
+    const btn = document.getElementById('vi-toggle');
+    if (!btn) return;
+
+    const paint = (on) => {
+      document.documentElement.classList.toggle('vi-off', !on);
+      btn.setAttribute('aria-pressed', String(on));
+      btn.style.color = on ? 'var(--accent-ink)' : 'var(--text-muted)';
+      btn.style.background = on ? 'var(--accent)' : 'var(--surface)';
+      btn.style.borderColor = on ? 'var(--accent)' : 'var(--border-strong)';
+    };
+
+    let on = true;
+    try {
+      on = localStorage.getItem(KEY) !== '0';
+    } catch {}
+    paint(on);
+
+    btn.addEventListener('click', () => {
+      on = !on;
+      paint(on);
+      try {
+        localStorage.setItem(KEY, on ? '1' : '0');
+      } catch {}
+    });
+  })();
+</script>

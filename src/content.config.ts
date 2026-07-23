@@ -7,6 +7,8 @@ const learn = defineCollection({
   schema: z.object({
     title: z.string(),
     summary: z.string(),
+    /** Vietnamese one-liner, shown under the English on cards and article heads. */
+    viSummary: z.string().optional(),
     /** Chapter number drives ordering and the "01 · Fundamentals" grouping. */
     chapter: z.number(),
     chapterTitle: z.string(),
@@ -49,8 +51,18 @@ const glossary = defineCollection({
   schema: z.object({
     id: z.string(),
     term: z.string(),
-    /** Optional Vietnamese gloss. Delete the field to hide it site-wide. */
+    /**
+     * Vietnamese runs alongside the English, never instead of it: specs,
+     * datasheets and standards are all written in English, so the English term
+     * has to stay the one you recognise on a drawing. `vi` is the term itself,
+     * `viDefinition` and `viNote` are the fuller explanations. All optional —
+     * a term with none simply shows English only.
+     */
     vi: z.string().optional(),
+    viDefinition: z.string().optional(),
+    viNote: z.string().optional(),
+    /** A concrete worked example — what the term looks like on a real job. */
+    viExample: z.string().optional(),
     symbol: z.string().optional(),
     unit: z.string().optional(),
     definition: z.string(),

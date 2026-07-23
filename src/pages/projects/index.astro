@@ -20,7 +20,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     eyebrow={`${projects.length} ${projects.length === 1 ? 'case study' : 'case studies'}`}
     title="Projects"
     lede="Built work, read the way a designer needs it — what the scheme was trying to do, the numbers behind it, and what it taught."
-  />
+  >
+    <p class="vi-block vi-def mt-2 text-[0.95rem] max-w-2xl leading-relaxed">
+      Công trình đã xây, trình bày theo cách người thiết kế cần đọc: ý đồ của phương án, các con số
+      đằng sau nó, và bài học rút ra.
+    </p>
+  </PageHeader>
 
   {
     typologies.length > 1 && (

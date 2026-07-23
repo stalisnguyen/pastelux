@@ -391,6 +391,22 @@
     overflow-x: auto;
     max-width: 100%;
   }
+
+  /* ---- Vietnamese annotations ----
+     Additive, never a replacement: the English term is what appears on a
+     drawing or a datasheet, so it always stays visible. These read as a
+     quieter second voice under it, and can be hidden entirely. */
+  .vi-def {
+    color: var(--text-muted);
+    /* Diacritics need a little more room to breathe than Latin text. */
+    line-height: 1.72;
+  }
+  .vi-block {
+    display: block;
+  }
+  .vi-off .vi-block {
+    display: none;
+  }
 }
 
 @utility container-page {
