@@ -1,6 +1,6 @@
 {
   "date": "2026-07-23",
-  "generatedAt": "2026-07-23T15:09:10.044Z",
+  "generatedAt": "2026-07-23T23:56:39.947Z",
   "degraded": false,
   "items": [
     {
@@ -8,10 +8,10 @@
       "url": "https://www.a1lightingmagazine.com/latest-news/modern-lighting-control-brings-new-life-to-historic-basilica",
       "source": "A1 Lighting",
       "published": "Mon, 20 Jul 2026 12:38:28 +0000",
-      "summary": "Pharos Architectural Controls has been installed to run the exterior illumination of Sint-Petrusbasiliek in Oirschot, replacing an older system with a networked, more energy-efficient control setup for the facade.",
+      "summary": "Pharos Architectural Controls has been installed to manage the floodlighting of the Sint-Petrusbasiliek in Oirschot, replacing an older system with a networked, energy-efficient control scheme suited to heritage facade lighting.",
       "topics": [
-        "controls",
         "facade",
+        "controls",
         "sustainability"
       ]
     },
@@ -20,7 +20,7 @@
       "url": "https://www.lightnowblog.com/2026/07/dlc-finalizes-networked-lighting-controls-nlc-v5-2",
       "source": "LightNOW",
       "published": "Wed, 22 Jul 2026 05:40:16 +0000",
-      "summary": "DesignLights Consortium's Networked Lighting Controls V5.2 requirements take effect August 2026, tightening interoperability and reporting standards and extending controls integration into HVAC and other building systems, affecting product qualification for rebate programs.",
+      "summary": "DLC's Networked Lighting Controls V5.2 requirements take effect August 2026, tightening interoperability and reporting rules and extending NLC scope to integrated building systems such as HVAC, a change specifiers should track for future compliance.",
       "topics": [
         "standards",
         "controls"
@@ -31,10 +31,10 @@
       "url": "https://www.lightnowblog.com/2026/07/house-passes-bill-to-create-permanent-daylight-savings-time",
       "source": "LightNOW",
       "published": "Thu, 23 Jul 2026 05:46:49 +0000",
-      "summary": "The US House has passed a bill for permanent daylight saving time, still requiring Senate and presidential approval; relevant to lighting controls scheduling and circadian-related design assumptions tied to seasonal light shifts.",
+      "summary": "The US House passed a bill to make daylight saving time permanent, pending Senate approval; if enacted, it would affect astronomical time settings and scheduling logic in networked exterior and circadian lighting controls.",
       "topics": [
-        "circadian",
-        "standards"
+        "controls",
+        "circadian"
       ]
     },
     {
@@ -42,9 +42,10 @@
       "url": "https://www.lightnowblog.com/2026/07/trump-administration-declines-to-renew-usmca-trade-deal",
       "source": "LightNOW",
       "published": "Tue, 21 Jul 2026 05:35:11 +0000",
-      "summary": "The US administration has declined to renew USMCA in its current form, triggering a lengthy review process that could affect sourcing, pricing and supply chains for lighting manufacturers and specifiers across North America.",
+      "summary": "The Trump administration will not renew USMCA in its current form, beginning a lengthy review process that could eventually affect component sourcing, tariffs and pricing for lighting manufacturers and specifiers in North America.",
       "topics": [
-        "practice"
+        "practice",
+        "sustainability"
       ]
     },
     {
@@ -52,7 +53,7 @@
       "url": "https://www.arc-magazine.com/foscarini-asteria",
       "source": "arc",
       "published": "Tue, 14 Jul 2026 08:52:10 +0000",
-      "summary": "Foscarini's Asteria fixture, first shown at Euroluce 2025, reworks the multi-arm chandelier format with a pared-back, architectural form language.",
+      "summary": "Foscarini's Asteria fixture, first shown at Euroluce 2025, reworks the multi-arm chandelier format with a pared-back, architectural profile suited to decorative specification.",
       "topics": [
         "product",
         "optics"
@@ -63,13 +64,13 @@
       "url": "https://www.a1lightingmagazine.com/projects/collingwood-lights-up-northampton-saints-hospitality",
       "source": "A1 Lighting",
       "published": "Thu, 23 Jul 2026 11:58:55 +0000",
-      "summary": "Collingwood Lighting has completed an LED refurbishment of Northampton Saints' Barwell stand, targeting improved fan-facing hospitality lighting and reduced energy use as part of the club's net-zero programme.",
+      "summary": "Collingwood Lighting has fitted new LED luminaires in the Barwell stand at Northampton Saints as phase one of a refurbishment aimed at improving stadium hospitality lighting and reducing energy use.",
       "topics": [
         "sustainability",
         "product"
       ]
     }
   ],
-  "termOfDay": "task-area",
-  "projectOfDay": "colour-quality"
+  "termOfDay": "l70",
+  "projectOfDay": "photometric-quantities"
 }
