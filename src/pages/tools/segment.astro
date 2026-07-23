@@ -153,7 +153,7 @@ import { url } from '../../site';
   const SEG_FAST = 'Xenova/segformer-b0-finetuned-ade-512-512';
   const SEG_DETAILED = 'Xenova/segformer-b5-finetuned-ade-640-640';
   const DEPTH = 'onnx-community/depth-anything-v2-small';
-  const WORK_MAX = 720; // post-processing works at this longest side, then upscales
+  const WORK_MAX = 1100; // post-processing works at this longest side, then upscales
 
   const VI: Record<string, string> = {
     wall: 'tường', floor: 'sàn', flooring: 'sàn', ceiling: 'trần', windowpane: 'cửa sổ',
@@ -349,11 +349,6 @@ import { url } from '../../site';
     }
   }
 
-  // Distinct colour by golden-angle hue; consecutive ids look very different.
-  function colorFor(i: number): [number, number, number] {
-    const h = (i * 137.508) % 360;
-    return hsv(h, 0.72, 0.98);
-  }
   function hsv(h: number, s: number, v: number): [number, number, number] {
     const c = v * s, x = c * (1 - Math.abs(((h / 60) % 2) - 1)), m = v - c;
     let r = 0, g = 0, b = 0;
@@ -361,6 +356,63 @@ import { url } from '../../site';
     else if (h < 180) [r, g, b] = [0, c, x]; else if (h < 240) [r, g, b] = [0, x, c];
     else if (h < 300) [r, g, b] = [x, 0, c]; else [r, g, b] = [c, 0, x];
     return [Math.round((r + m) * 255), Math.round((g + m) * 255), Math.round((b + m) * 255)];
+  }
+
+  // Grab the source image as an RGB byte array at an arbitrary resolution.
+  function srcRGB(W: number, H: number): Uint8Array {
+    const c = document.createElement('canvas');
+    c.width = W; c.height = H;
+    const ctx = c.getContext('2d')!;
+    ctx.imageSmoothingEnabled = true;
+    ctx.drawImage(sourceImage!, 0, 0, W, H);
+    const d = ctx.getImageData(0, 0, W, H).data;
+    const out = new Uint8Array(W * H * 3);
+    for (let i = 0, j = 0; i < W * H; i++, j += 3) { out[j] = d[i * 4]; out[j + 1] = d[i * 4 + 1]; out[j + 2] = d[i * 4 + 2]; }
+    return out;
+  }
+
+  /**
+   * Bilateral majority vote: replace each label with the dominant label among
+   * neighbours that are similar in the source render. Render surfaces are
+   * near-flat in colour, so this snaps wavy semantic boundaries onto the real,
+   * straight geometry edges — the single biggest quality lever here.
+   */
+  function bilateralRefine(labels: Int32Array, src: Uint8Array, W: number, H: number, iters: number, R: number, S: number) {
+    const N = W * H;
+    let cur = labels;
+    let maxL = 0; for (let i = 0; i < N; i++) if (cur[i] > maxL) maxL = cur[i];
+    const votes = new Float32Array(maxL + 2);
+    const touched = new Int32Array((2 * R + 1) * (2 * R + 1));
+    for (let it = 0; it < iters; it++) {
+      const next = new Int32Array(N);
+      for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+        const p = y * W + x, pj = p * 3;
+        const pr = src[pj], pg = src[pj + 1], pb = src[pj + 2];
+        let nt = 0, best = cur[p], bestv = -1;
+        for (let dy = -R; dy <= R; dy++) {
+          const yy = y + dy; if (yy < 0 || yy >= H) continue;
+          for (let dx = -R; dx <= R; dx++) {
+            const xx = x + dx; if (xx < 0 || xx >= W) continue;
+            const q = yy * W + xx, l = cur[q]; if (l < 0) continue;
+            const qj = q * 3, dr = pr - src[qj], dg = pg - src[qj + 1], db = pb - src[qj + 2];
+            const w = 1 / (1 + (dr * dr + dg * dg + db * db) / S);
+            if (votes[l] === 0) touched[nt++] = l;
+            votes[l] += w;
+          }
+        }
+        for (let k = 0; k < nt; k++) { const l = touched[k]; if (votes[l] > bestv) { bestv = votes[l]; best = l; } votes[l] = 0; }
+        next[p] = best;
+      }
+      cur = next;
+    }
+    return cur;
+  }
+
+  // 48 well-separated colours for graph colouring.
+  function buildPalette(): [number, number, number][] {
+    const p: [number, number, number][] = [];
+    for (let i = 0; i < 48; i++) p.push(hsv((i * 137.508) % 360, 0.86 - (i % 3) * 0.1, 0.98 - (i % 2) * 0.14));
+    return p;
   }
 
   // -------------------------------------- the core: build the label map
@@ -374,9 +426,10 @@ import { url } from '../../site';
     const W = Math.max(16, Math.round(origW * scale));
     const H = Math.max(16, Math.round(origH * scale));
     const N = W * H;
+    const srcW = srcRGB(W, H);
 
     // 1. argmax class per pixel (full coverage, no holes)
-    const classIdx = new Int16Array(N).fill(-1);
+    let classIdx = new Int32Array(N).fill(-1);
     const bestVal = new Uint8Array(N);
     const classNames: string[] = [];
     for (const seg of segOut) {
@@ -386,12 +439,15 @@ import { url } from '../../site';
       for (let i = 0; i < N; i++) if (m[i] > bestVal[i]) { bestVal[i] = m[i]; classIdx[i] = k; }
     }
 
+    // 1b. snap the coarse class boundaries onto the render's real edges
+    classIdx = bilateralRefine(classIdx, srcW, W, H, 2, 3, 1400) as typeof classIdx;
+
     // 2. orientation bucket for architectural surfaces, from depth normals
     const bucket = new Uint8Array(N);
     if (wantPlanes && depOut) {
       const raw = depOut.depth ?? depOut.predicted_depth ?? depOut;
       const depth = Float32Array.from(channelToGrid(raw, W, H, true));
-      boxBlur(depth, W, H, 2);
+      boxBlur(depth, W, H, 3);
       const gx = new Float32Array(N), gy = new Float32Array(N);
       for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
         const i = y * W + x;
@@ -400,8 +456,8 @@ import { url } from '../../site';
       }
       let sx = 0, sy = 0, na = 0;
       for (let i = 0; i < N; i++) if (isArch(classNames[classIdx[i]])) { sx += Math.abs(gx[i]); sy += Math.abs(gy[i]); na++; }
-      const Tx = na ? (sx / na) * 0.8 + 0.3 : 1e9;
-      const Ty = na ? (sy / na) * 0.8 + 0.3 : 1e9;
+      const Tx = na ? (sx / na) * 1.0 + 0.3 : 1e9;
+      const Ty = na ? (sy / na) * 1.0 + 0.3 : 1e9;
       for (let i = 0; i < N; i++) {
         const nm = classNames[classIdx[i]];
         if (nm && WALL_LIKE.has(first(nm))) bucket[i] = gx[i] < -Tx ? 0 : gx[i] > Tx ? 2 : 1;
@@ -431,70 +487,136 @@ import { url } from '../../site';
       compSize.push(size);
     }
 
-    // 4. merge speckle: components below threshold fold into their largest neighbour
-    const minSize = Math.max(12, Math.round(N * 0.0006));
+    // 4. merge speckle into the neighbour with the longest shared border
+    const minSize = Math.max(24, Math.round(N * 0.0012));
     const remap = new Int32Array(nComp);
     for (let i = 0; i < nComp; i++) remap[i] = i;
     const find = (a: number) => { while (remap[a] !== a) a = remap[a] = remap[remap[a]]; return a; };
-
-    // adjacency: shared border length between neighbouring components
     const edges = new Map<number, Map<number, number>>();
-    const addEdge = (a: number, b: number) => {
-      if (a === b) return;
-      if (!edges.has(a)) edges.set(a, new Map());
-      const m = edges.get(a)!; m.set(b, (m.get(b) ?? 0) + 1);
-    };
+    const addEdge = (a: number, b: number) => { if (a === b) return; if (!edges.has(a)) edges.set(a, new Map()); const m = edges.get(a)!; m.set(b, (m.get(b) ?? 0) + 1); };
     for (let p = 0; p < N; p++) {
       const a = comp[p]; if (a < 0) continue;
       const x = p % W, y = (p / W) | 0;
       if (x < W - 1) { const b = comp[p + 1]; if (b >= 0 && b !== a) { addEdge(a, b); addEdge(b, a); } }
       if (y < H - 1) { const b = comp[p + W]; if (b >= 0 && b !== a) { addEdge(a, b); addEdge(b, a); } }
     }
-    // fold smallest-first into the neighbour with the longest shared border
     const order = [...Array(nComp).keys()].sort((a, b) => compSize[a] - compSize[b]);
     for (const cId of order) {
       if (compSize[find(cId)] >= minSize) continue;
-      const nbrs = edges.get(cId);
-      if (!nbrs || !nbrs.size) continue;
+      const nbrs = edges.get(cId); if (!nbrs || !nbrs.size) continue;
       let best = -1, bestLen = -1;
       for (const [nb, len] of nbrs) { const r = find(nb); if (r === find(cId)) continue; if (len > bestLen) { bestLen = len; best = r; } }
       if (best >= 0) { const rc = find(cId); compSize[best] += compSize[rc]; remap[rc] = best; }
     }
 
-    // 5. assign colours to surviving roots
-    const colorOf = new Map<number, [number, number, number]>();
-    let ci = 0;
-    for (let i = 0; i < nComp; i++) { const r = find(i); if (!colorOf.has(r)) colorOf.set(r, colorFor(ci++)); }
-
-    // 6. paint work-res label image, then upscale nearest to full res
-    const workImg = new ImageData(W, H);
-    for (let p = 0; p < N; p++) {
-      const a = comp[p];
-      const col = a >= 0 ? colorOf.get(find(a))! : [20, 20, 20];
-      workImg.data[p * 4] = col[0]; workImg.data[p * 4 + 1] = col[1];
-      workImg.data[p * 4 + 2] = col[2]; workImg.data[p * 4 + 3] = 255;
+    // 4b. compact regions to a dense root index
+    const rootIndex = new Map<number, number>();
+    const rootClass: number[] = [];
+    const rootSize: number[] = [];
+    for (let i = 0; i < nComp; i++) {
+      if (find(i) !== i) continue;
+      rootIndex.set(i, rootIndex.size);
+      rootClass.push(compClass[i]); rootSize.push(compSize[i]);
     }
-    const workCanvas = document.createElement('canvas');
-    workCanvas.width = W; workCanvas.height = H;
-    workCanvas.getContext('2d')!.putImageData(workImg, 0, 0);
+    const nReg = rootIndex.size;
+    const regionOf = new Int32Array(N);
+    for (let p = 0; p < N; p++) { const a = comp[p]; regionOf[p] = a >= 0 ? rootIndex.get(find(a))! : -1; }
 
+    // region adjacency (dense)
+    const adj: Set<number>[] = Array.from({ length: nReg }, () => new Set<number>());
+    for (let p = 0; p < N; p++) {
+      const a = regionOf[p]; if (a < 0) continue;
+      const x = p % W, y = (p / W) | 0;
+      if (x < W - 1) { const b = regionOf[p + 1]; if (b >= 0 && b !== a) { adj[a].add(b); adj[b].add(a); } }
+      if (y < H - 1) { const b = regionOf[p + W]; if (b >= 0 && b !== a) { adj[a].add(b); adj[b].add(a); } }
+    }
+
+    // 5. graph-colour so no two touching regions share a colour
+    const palette = buildPalette();
+    const regColor: [number, number, number][] = new Array(nReg);
+    const byArea = [...Array(nReg).keys()].sort((a, b) => rootSize[b] - rootSize[a]);
+    for (const r of byArea) {
+      let best = palette[0], bestScore = -1;
+      for (const c of palette) {
+        let mn = 1e12;
+        for (const nb of adj[r]) { const nc = regColor[nb]; if (!nc) continue; const d = (c[0] - nc[0]) ** 2 + (c[1] - nc[1]) ** 2 + (c[2] - nc[2]) ** 2; if (d < mn) mn = d; }
+        if (mn > bestScore) { bestScore = mn; best = c; }
+      }
+      regColor[r] = best;
+    }
+
+    // 6. upscale the region map to full resolution (nearest), then snap the
+    //    boundaries to the full-res render edges so lines come out crisp.
+    let fullReg = new Int32Array(origW * origH);
+    for (let Y = 0; Y < origH; Y++) {
+      const wy = Math.min(H - 1, (Y * H / origH) | 0);
+      for (let X = 0; X < origW; X++) {
+        const wx = Math.min(W - 1, (X * W / origW) | 0);
+        fullReg[Y * origW + X] = regionOf[wy * W + wx];
+      }
+    }
+    const srcF = srcRGB(origW, origH);
+    fullReg = boundaryRefineRegions(fullReg, srcF, origW, origH, 2, 2, 1200) as typeof fullReg;
+
+    // 7. paint the final solid label map
     labelCanvas = document.createElement('canvas');
     labelCanvas.width = origW; labelCanvas.height = origH;
     const lctx = labelCanvas.getContext('2d')!;
-    lctx.imageSmoothingEnabled = false;
-    lctx.drawImage(workCanvas, 0, 0, origW, origH);
+    const out = lctx.createImageData(origW, origH);
+    for (let p = 0; p < origW * origH; p++) {
+      const r = fullReg[p];
+      const c = r >= 0 ? regColor[r] : [18, 18, 18];
+      out.data[p * 4] = c[0]; out.data[p * 4 + 1] = c[1]; out.data[p * 4 + 2] = c[2]; out.data[p * 4 + 3] = 255;
+    }
+    lctx.putImageData(out, 0, 0);
 
-    // 7. legend, aggregated by class
+    // 8. legend, aggregated by class
     const perClass = new Map<string, { color: [number, number, number]; regions: number; area: number }>();
-    for (let i = 0; i < nComp; i++) {
-      if (find(i) !== i) continue; // only roots
-      const name = classNames[compClass[i]] ?? 'unknown';
-      const key = first(name);
-      const e = perClass.get(key) ?? { color: colorOf.get(i)!, regions: 0, area: 0 };
-      e.regions++; e.area += compSize[i];
+    for (let r = 0; r < nReg; r++) {
+      const key = first(classNames[rootClass[r]] ?? 'unknown');
+      const e = perClass.get(key) ?? { color: regColor[r], regions: 0, area: 0 };
+      e.regions++; e.area += rootSize[r];
       if (!perClass.has(key)) perClass.set(key, e);
     }
     renderLegend(perClass);
+  }
+
+  /** Same bilateral idea, at full resolution, on region ids, boundary pixels only. */
+  function boundaryRefineRegions(reg: Int32Array, src: Uint8Array, W: number, H: number, iters: number, R: number, S: number) {
+    const N = W * H;
+    let maxR = 0; for (let i = 0; i < N; i++) if (reg[i] > maxR) maxR = reg[i];
+    const votes = new Float32Array(maxR + 2);
+    const touched = new Int32Array((2 * R + 1) * (2 * R + 1));
+    let cur = reg;
+    for (let it = 0; it < iters; it++) {
+      const isB = new Uint8Array(N);
+      for (let p = 0; p < N; p++) {
+        const x = p % W, y = (p / W) | 0, r = cur[p];
+        if ((x > 0 && cur[p - 1] !== r) || (x < W - 1 && cur[p + 1] !== r) || (y > 0 && cur[p - W] !== r) || (y < H - 1 && cur[p + W] !== r)) isB[p] = 1;
+      }
+      const next = Int32Array.from(cur);
+      for (let p = 0; p < N; p++) {
+        if (!isB[p]) continue;
+        const x = p % W, y = (p / W) | 0, pj = p * 3;
+        const pr = src[pj], pg = src[pj + 1], pb = src[pj + 2];
+        let nt = 0, best = cur[p], bestv = -1;
+        for (let dy = -R; dy <= R; dy++) {
+          const yy = y + dy; if (yy < 0 || yy >= H) continue;
+          for (let dx = -R; dx <= R; dx++) {
+            const xx = x + dx; if (xx < 0 || xx >= W) continue;
+            const q = yy * W + xx, r = cur[q]; if (r < 0) continue;
+            const qj = q * 3, dr = pr - src[qj], dg = pg - src[qj + 1], db = pb - src[qj + 2];
+            const w = 1 / (1 + (dr * dr + dg * dg + db * db) / S);
+            if (votes[r] === 0) touched[nt++] = r;
+            votes[r] += w;
+          }
+        }
+        for (let k = 0; k < nt; k++) { const r = touched[k]; if (votes[r] > bestv) { bestv = votes[r]; best = r; } votes[r] = 0; }
+        next[p] = best;
+      }
+      cur = next;
+    }
+    return cur;
   }
 
   function renderLegend(perClass: Map<string, { color: number[]; regions: number; area: number }>) {
