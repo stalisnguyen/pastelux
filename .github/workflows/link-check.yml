@@ -1,0 +1,76 @@
+name: Link check
+
+# Event links rot: organisers move pages, domains lapse and start redirecting to
+# parking or shop pages, and feeds go quiet. This catches that before a reader
+# clicks through to the wrong place.
+on:
+  schedule:
+    - cron: '0 4 * * 1' # Mondays, 04:00 UTC
+  push:
+    paths:
+      - 'src/content/events.json'
+      - 'src/data/feeds.json'
+      - 'scripts/check-links.mjs'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Check outbound links
+        id: check
+        run: node scripts/check-links.mjs | tee check.log
+
+      # A dead link should not sit unnoticed until someone reports it.
+      - name: Open an issue if anything is broken
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let log = '';
+            try { log = fs.readFileSync('check.log', 'utf8'); } catch {}
+            const body = [
+              'The scheduled link check failed. One or more published URLs are broken,',
+              'have redirected off-domain, or no longer contain their expected text.',
+              '',
+              'Fix `src/content/events.json` (or `src/data/feeds.json`), then re-run the workflow.',
+              '',
+              '```',
+              log.replace(/\[[0-9;]*m/g, '').slice(-4000),
+              '```',
+            ].join('\n');
+
+            const title = 'Link check failed';
+            const existing = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'link-check',
+            });
+
+            if (existing.data.length) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existing.data[0].number,
+                body,
+              });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title,
+                body,
+                labels: ['link-check'],
+              });
+            }

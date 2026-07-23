@@ -1,0 +1,398 @@
+---
+import { kelvinToRgb, mder, MDER_TABLE } from '../../lib/diagram';
+
+/**
+ * Animated 24-hour cycle. Scrub the hour and the room, the CCT and the melanopic
+ * EDI readout all move together; press play and it runs the day.
+ *
+ * The room preview is deliberately schematic — it shows the *relationship*
+ * between spectrum, level and circadian effect, not a rendering.
+ */
+
+const W = 640;
+const H = 210;
+const X0 = 40;
+const X1 = W - 40;
+
+// Sampled every hour for the curve paths; the runtime interpolates between them.
+const hours = Array.from({ length: 25 }, (_, h) => h);
+
+/** Design intent for a daylit workplace, expressed as a daily schedule. */
+function target(h: number) {
+  // CCT: warm at night, cool through the middle of the day.
+  const cct =
+    h < 5 ? 2200 : h < 8 ? 2200 + ((h - 5) / 3) * 2000 : h < 15 ? 4200 + Math.sin(((h - 8) / 7) * Math.PI) * 1600 : h < 19 ? 4200 - ((h - 15) / 4) * 1500 : h < 22 ? 2700 - ((h - 19) / 3) * 300 : 2200;
+  // Vertical illuminance at the eye, including daylight contribution.
+  const lux =
+    h < 6 ? 2 : h < 9 ? 2 + ((h - 6) / 3) * 380 : h < 16 ? 380 + Math.sin(((h - 9) / 7) * Math.PI) * 320 : h < 19 ? 380 - ((h - 16) / 3) * 300 : h < 22 ? 80 - ((h - 19) / 3) * 68 : 3;
+  return { cct: Math.round(cct), lux: Math.round(lux) };
+}
+
+const samples = hours.map((h) => {
+  const { cct, lux } = target(h);
+  return { h, cct, lux, medi: Math.round(lux * mder(cct)) };
+});
+
+const maxMedi = Math.max(...samples.map((s) => s.medi));
+const xAt = (h: number) => X0 + (h / 24) * (X1 - X0);
+const yAt = (m: number) => 150 - (m / maxMedi) * 96;
+
+const mediPath = samples.map((s, i) => `${i ? 'L' : 'M'} ${xAt(s.h)},${yAt(s.medi)}`).join(' ');
+const rampStops = samples.filter((_, i) => i % 2 === 0);
+---
+
+<figure class="cc" role="group" aria-label="Animated 24-hour circadian lighting cycle">
+  <div class="cc-frame">
+    <!-- ------------------------------------------------ room preview -->
+    <div class="cc-room">
+      <svg viewBox="0 0 320 190" role="img" aria-label="Schematic room whose lighting changes with the hour">
+        <defs>
+          <linearGradient id="cc-wall" x1="0" y1="0" x2="0" y2="1">
+            <stop id="cc-wall-a" offset="0%" stop-color="#ffb35c" stop-opacity="0.5" />
+            <stop id="cc-wall-b" offset="100%" stop-color="#ffb35c" stop-opacity="0.1" />
+          </linearGradient>
+          <linearGradient id="cc-win" x1="0" y1="0" x2="0" y2="1">
+            <stop id="cc-win-a" offset="0%" stop-color="#6fc3ff" stop-opacity="0.9" />
+            <stop id="cc-win-b" offset="100%" stop-color="#6fc3ff" stop-opacity="0.4" />
+          </linearGradient>
+        </defs>
+
+        <rect x="0" y="0" width="320" height="190" rx="6" fill="var(--bg)" />
+        <!-- ceiling + walls -->
+        <rect x="16" y="16" width="288" height="140" fill="url(#cc-wall)" />
+        <!-- window -->
+        <rect id="cc-window" x="196" y="34" width="94" height="86" rx="2" fill="url(#cc-win)" />
+        <rect x="196" y="34" width="94" height="86" rx="2" fill="none" stroke="var(--border-strong)" />
+        <line x1="243" y1="34" x2="243" y2="120" stroke="var(--border-strong)" stroke-width="1" />
+        <!-- luminaire + its light -->
+        <rect x="70" y="16" width="46" height="7" rx="2" fill="var(--surface)" stroke="var(--border-strong)" />
+        <circle id="cc-lamp" cx="93" cy="24" r="4" fill="#ffb35c" />
+        <path id="cc-cone" d="M 93 26 L 40 156 L 146 156 Z" fill="#ffb35c" opacity="0.28" />
+        <!-- desk + occupant -->
+        <rect x="52" y="132" width="120" height="7" rx="2" fill="var(--border-strong)" />
+        <circle cx="150" cy="118" r="10" fill="var(--surface)" stroke="var(--text-muted)" stroke-width="1.4" />
+        <circle cx="155" cy="116" r="2.4" fill="var(--text-muted)" />
+        <line x1="150" y1="128" x2="150" y2="156" stroke="var(--text-muted)" stroke-width="1.6" />
+        <rect x="16" y="156" width="288" height="18" fill="var(--bg-elevated)" />
+        <!-- eye-level measurement line -->
+        <line x1="150" y1="118" x2="290" y2="118" stroke="var(--accent-cool)" stroke-width="1" stroke-dasharray="3 3" opacity="0.8" />
+        <text x="288" y="112" text-anchor="end" class="cc-t">eye level, vertical</text>
+      </svg>
+    </div>
+
+    <!-- ------------------------------------------------ readouts -->
+    <div class="cc-read">
+      <div>
+        <span class="cc-lab">Time</span>
+        <strong id="cc-time" class="cc-val">08:00</strong>
+      </div>
+      <div>
+        <span class="cc-lab">CCT</span>
+        <strong id="cc-cct" class="cc-val">3500 K</strong>
+      </div>
+      <div>
+        <span class="cc-lab">Vertical lux</span>
+        <strong id="cc-lux" class="cc-val">255</strong>
+      </div>
+      <div>
+        <span class="cc-lab">Melanopic EDI</span>
+        <strong id="cc-medi" class="cc-val">160</strong>
+        <span id="cc-verdict" class="cc-verdict">below daytime target</span>
+      </div>
+    </div>
+
+    <!-- ------------------------------------------------ chart + scrubber -->
+    <svg viewBox={`0 0 ${W} ${H}`} class="cc-chart" role="img" aria-label="Melanopic EDI across the day">
+      <defs>
+        <linearGradient id="cc-ramp" x1="0" y1="0" x2="1" y2="0">
+          {
+            rampStops.map((s) => (
+              <stop offset={`${(s.h / 24) * 100}%`} stop-color={kelvinToRgb(s.cct)} />
+            ))
+          }
+        </linearGradient>
+      </defs>
+
+      <!-- 250 lx daytime target -->
+      <line x1={X0} y1={yAt(250)} x2={X1} y2={yAt(250)} stroke="var(--success)" stroke-width="1" stroke-dasharray="4 3" opacity="0.8" />
+      <text x={X1} y={yAt(250) - 5} text-anchor="end" class="cc-t" fill="var(--success)">250 lx mEDI — daytime target</text>
+
+      <!-- 10 lx evening ceiling -->
+      <line x1={X0} y1={yAt(10)} x2={X1} y2={yAt(10)} stroke="var(--accent)" stroke-width="1" stroke-dasharray="4 3" opacity="0.6" />
+      <text x={X0} y={yAt(10) - 5} class="cc-t" fill="var(--accent)">10 lx — evening ceiling</text>
+
+      <path d={`${mediPath} L ${xAt(24)},150 L ${xAt(0)},150 Z`} fill="var(--accent-cool)" fill-opacity="0.13" />
+      <path d={mediPath} fill="none" stroke="var(--accent-cool)" stroke-width="2" />
+
+      <!-- CCT ramp along the base -->
+      <rect x={X0} y="162" width={X1 - X0} height="11" rx="3" fill="url(#cc-ramp)" />
+
+      <line x1={X0} y1="150" x2={X1} y2="150" stroke="var(--border-strong)" stroke-width="1" />
+      {
+        [0, 6, 12, 18, 24].map((h) => (
+          <text x={xAt(h)} y="190" text-anchor="middle" class="cc-t">
+            {String(h).padStart(2, '0')}:00
+          </text>
+        ))
+      }
+
+      <!-- playhead -->
+      <g id="cc-head">
+        <line x1={xAt(8)} y1="34" x2={xAt(8)} y2="173" stroke="var(--accent)" stroke-width="1.5" />
+        <circle cx={xAt(8)} cy={yAt(samples[8].medi)} r="5" fill="var(--accent)" stroke="var(--bg-elevated)" stroke-width="2" />
+      </g>
+    </svg>
+
+    <div class="cc-ctl">
+      <button id="cc-play" class="btn !py-1 !px-3 !text-[0.85rem]" type="button" aria-label="Play the day cycle">
+        ▶ Play
+      </button>
+      <input
+        id="cc-slider"
+        type="range"
+        min="0"
+        max="24"
+        step="0.25"
+        value="8"
+        aria-label="Hour of day"
+      />
+    </div>
+  </div>
+
+  <figcaption class="cc-cap">
+    Scrub through the day, or press play. Level and spectrum move together: the
+    melanopic curve clears 250 lx only while daylight is contributing, and the
+    evening drop is achieved by warming the source, not just dimming it. Schedule
+    is an illustrative design intent, not measured data.
+  </figcaption>
+</figure>
+
+<style>
+  .cc {
+    margin-block: 1.9em;
+  }
+  .cc-frame {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    padding: 1rem;
+    display: grid;
+    gap: 0.9rem;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  @media (min-width: 620px) {
+    .cc-frame {
+      grid-template-columns: 300px minmax(0, 1fr);
+      grid-template-areas: 'room read' 'chart chart' 'ctl ctl';
+    }
+    .cc-room { grid-area: room; }
+    .cc-read { grid-area: read; }
+    .cc-chart { grid-area: chart; }
+    .cc-ctl { grid-area: ctl; }
+  }
+  .cc-room svg,
+  .cc-chart {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .cc-read {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.7rem;
+    align-content: center;
+  }
+  .cc-lab {
+    display: block;
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .cc-val {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    color: var(--accent);
+    line-height: 1.3;
+  }
+  .cc-verdict {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--text-faint);
+  }
+  .cc-t {
+    font-size: 9.5px;
+    fill: var(--text-faint);
+    font-family: var(--font-mono);
+  }
+  .cc-ctl {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .cc-ctl input[type='range'] {
+    flex: 1;
+    accent-color: var(--accent);
+    min-width: 0;
+  }
+  .cc-cap {
+    margin-top: 0.7rem;
+    font-size: 0.8rem;
+    line-height: 1.55;
+    color: var(--text-faint);
+  }
+</style>
+
+<script define:vars={{ samples, X0, X1, maxMedi, MDER_TABLE }}>
+  (() => {
+    const slider = document.getElementById('cc-slider');
+    const play = document.getElementById('cc-play');
+    if (!slider || !play) return;
+
+    const $ = (id) => document.getElementById(id);
+    const xAt = (h) => X0 + (h / 24) * (X1 - X0);
+    const yAt = (m) => 150 - (m / maxMedi) * 96;
+
+    const lerp = (a, b, t) => a + (b - a) * t;
+
+    /** Same table the article and the Kelvin diagram use. */
+    const mder = (cct) => {
+      const t = MDER_TABLE;
+      if (cct <= t[0][0]) return t[0][1];
+      if (cct >= t[t.length - 1][0]) return t[t.length - 1][1];
+      for (let i = 0; i < t.length - 1; i++) {
+        const [k0, v0] = t[i];
+        const [k1, v1] = t[i + 1];
+        if (cct <= k1) return v0 + ((cct - k0) / (k1 - k0)) * (v1 - v0);
+      }
+      return t[t.length - 1][1];
+    };
+
+    const at = (h) => {
+      const i = Math.min(Math.floor(h), 23);
+      const t = h - i;
+      const a = samples[i];
+      const b = samples[i + 1] ?? samples[i];
+      const cct = Math.round(lerp(a.cct, b.cct, t));
+      const lux = Math.round(lerp(a.lux, b.lux, t));
+      // Derive rather than interpolate, so lux x M-DER always equals the mEDI
+      // shown — a reader checking the arithmetic should never find a mismatch.
+      return { cct, lux, medi: Math.round(lux * mder(cct)) };
+    };
+
+    /** Approximate sRGB of a blackbody — mirrors kelvinToRgb in lib/diagram.ts. */
+    const kelvin = (k) => {
+      const t = Math.min(Math.max(k, 1000), 40000) / 100;
+      let r, g, b;
+      if (t <= 66) {
+        r = 255;
+        g = 99.4708 * Math.log(t) - 161.1196;
+        b = t <= 19 ? 0 : 138.5177 * Math.log(t - 10) - 305.0448;
+      } else {
+        r = 329.6987 * Math.pow(t - 60, -0.1332);
+        g = 288.1222 * Math.pow(t - 60, -0.0755);
+        b = 255;
+      }
+      const c = (v) => Math.round(Math.min(Math.max(v, 0), 255));
+      return `rgb(${c(r)},${c(g)},${c(b)})`;
+    };
+
+    function render(h) {
+      const { cct, lux, medi } = at(h);
+      const colour = kelvin(cct);
+      const strength = Math.min(1, lux / 420);
+
+      const hh = String(Math.floor(h) % 24).padStart(2, '0');
+      const mm = String(Math.round((h % 1) * 60)).padStart(2, '0');
+      $('cc-time').textContent = `${hh}:${mm}`;
+      $('cc-cct').textContent = `${cct} K`;
+      $('cc-lux').textContent = String(lux);
+      $('cc-medi').textContent = String(medi);
+
+      const v = $('cc-verdict');
+      if (medi >= 250) {
+        v.textContent = 'meets daytime target';
+        v.style.color = 'var(--success)';
+      } else if (medi <= 10) {
+        v.textContent = 'within evening ceiling';
+        v.style.color = 'var(--success)';
+      } else {
+        v.textContent = 'between targets';
+        v.style.color = 'var(--warning)';
+      }
+      $('cc-medi').style.color = medi >= 250 || medi <= 10 ? 'var(--success)' : 'var(--accent)';
+
+      // room
+      $('cc-wall-a').setAttribute('stop-color', colour);
+      $('cc-wall-b').setAttribute('stop-color', colour);
+      $('cc-wall-a').setAttribute('stop-opacity', String(0.12 + strength * 0.42));
+      $('cc-wall-b').setAttribute('stop-opacity', String(0.03 + strength * 0.12));
+      $('cc-lamp').setAttribute('fill', colour);
+      $('cc-cone').setAttribute('fill', colour);
+      $('cc-cone').setAttribute('opacity', String(0.1 + strength * 0.3));
+
+      // daylight through the window: bright and blue by day, near-black at night
+      const day = Math.max(0, Math.sin(((h - 6) / 12) * Math.PI));
+      $('cc-win-a').setAttribute('stop-color', day > 0.05 ? '#bfe4ff' : '#0d1420');
+      $('cc-win-b').setAttribute('stop-color', day > 0.05 ? '#6fc3ff' : '#0a1018');
+      $('cc-window').setAttribute('opacity', String(0.25 + day * 0.75));
+
+      // playhead
+      const head = $('cc-head');
+      head.querySelector('line').setAttribute('x1', xAt(h));
+      head.querySelector('line').setAttribute('x2', xAt(h));
+      head.querySelector('circle').setAttribute('cx', xAt(h));
+      head.querySelector('circle').setAttribute('cy', yAt(medi));
+    }
+
+    slider.addEventListener('input', () => {
+      stop();
+      render(Number(slider.value));
+    });
+
+    let raf = null;
+    let last = 0;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function stop() {
+      if (raf) cancelAnimationFrame(raf);
+      raf = null;
+      play.textContent = '▶ Play';
+    }
+
+    function frame(ts) {
+      if (!last) last = ts;
+      // Clamp the step: browsers suspend rAF in a background tab, so the first
+      // frame after returning can carry a multi-second delta and skip half a day.
+      const dt = Math.min((ts - last) / 1000, 0.05);
+      last = ts;
+      let h = Number(slider.value) + dt * 2.2; // ~11 s for a full day
+      if (h >= 24) h = 0;
+      slider.value = String(h);
+      render(h);
+      raf = requestAnimationFrame(frame);
+    }
+
+    // Don't leave it "playing" while nobody can see it.
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden && raf) stop();
+    });
+
+    play.addEventListener('click', () => {
+      if (raf) return stop();
+      // Respect reduced-motion by stepping rather than animating.
+      if (reduced) {
+        const h = (Number(slider.value) + 3) % 24;
+        slider.value = String(h);
+        render(h);
+        return;
+      }
+      last = 0;
+      play.textContent = '❚❚ Pause';
+      raf = requestAnimationFrame(frame);
+    });
+
+    render(8);
+  })();
+</script>

@@ -1,6 +1,6 @@
 ---
 import Figure from '../Figure.astro';
-import { kelvinToRgb } from '../../lib/diagram';
+import { kelvinToRgb, mder } from '../../lib/diagram';
 
 const W = 640;
 const H = 232;
@@ -20,15 +20,16 @@ const xAt = (k: number) => X0 + frac(k) * (X1 - X0);
 
 const stops = Array.from({ length: 26 }, (_, i) => K_MIN * Math.pow(K_MAX / K_MIN, i / 25));
 
-/** M-DER values match the table in the circadian article. */
+/** M-DER comes from the shared table, so this can never drift from the article
+ *  or from the animated day cycle. */
 const marks = [
-  { k: 2200, label: '2200 K', use: 'curfew, ecology', mder: 0.35 },
-  { k: 2700, label: '2700 K', use: 'residential, hotel', mder: 0.45 },
-  { k: 3000, label: '3000 K', use: 'hospitality, retail', mder: 0.52 },
-  { k: 4000, label: '4000 K', use: 'office, education', mder: 0.75 },
-  { k: 5000, label: '5000 K', use: 'clinical, industrial', mder: 0.9 },
-  { k: 6500, label: '6500 K', use: 'colour matching', mder: 1.0 },
-];
+  { k: 2200, use: 'curfew, ecology' },
+  { k: 2700, use: 'residential, hotel' },
+  { k: 3000, use: 'hospitality, retail' },
+  { k: 4000, use: 'office, education' },
+  { k: 5000, use: 'clinical, industrial' },
+  { k: 6500, use: 'colour matching' },
+].map((m) => ({ ...m, label: `${m.k} K`, mder: mder(m.k) }));
 
 const BAR_BASE = 208;
 ---

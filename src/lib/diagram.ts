@@ -128,6 +128,35 @@ export function wavelengthToRgb(nm: number): string {
 }
 
 /**
+ * Melanopic daylight efficacy ratio by CCT — the single source of truth for the
+ * article table, the Kelvin scale diagram and the animated day cycle, so a
+ * reader comparing them never sees three different numbers for 2700 K.
+ * Typical values for phosphor-converted white LEDs.
+ */
+export const MDER_TABLE: ReadonlyArray<readonly [number, number]> = [
+  [2200, 0.35],
+  [2700, 0.45],
+  [3000, 0.52],
+  [3500, 0.65],
+  [4000, 0.75],
+  [5000, 0.9],
+  [6500, 1.0],
+];
+
+/** Linear interpolation across MDER_TABLE, clamped at both ends. */
+export function mder(cct: number): number {
+  const t = MDER_TABLE;
+  if (cct <= t[0][0]) return t[0][1];
+  if (cct >= t[t.length - 1][0]) return t[t.length - 1][1];
+  for (let i = 0; i < t.length - 1; i++) {
+    const [k0, v0] = t[i];
+    const [k1, v1] = t[i + 1];
+    if (cct <= k1) return v0 + ((cct - k0) / (k1 - k0)) * (v1 - v0);
+  }
+  return t[t.length - 1][1];
+}
+
+/**
  * Approximate sRGB of a blackbody at a given CCT, for the Kelvin ramp.
  * Based on the widely used Tanner Helland piecewise fit.
  */

@@ -60,17 +60,37 @@ const glossary = defineCollection({
   }),
 });
 
+/**
+ * Events carry a mandatory `verified` date and `source`. An event whose dates
+ * and URL have not actually been checked cannot be published — the build fails
+ * with the offending field named. This exists because the first version of this
+ * file shipped guessed dates and a URL that pointed at an unrelated shop.
+ */
 const events = defineCollection({
   loader: file('./src/content/events.json'),
   schema: z.object({
     id: z.string(),
     name: z.string(),
     kind: z.enum(['conference', 'fair', 'award', 'deadline']),
-    start: z.string(),
-    end: z.string().optional(),
+    start: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'start must be YYYY-MM-DD'),
+    end: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'end must be YYYY-MM-DD').optional(),
     city: z.string(),
     country: z.string(),
+    venue: z.string().optional(),
     url: z.string().url(),
+    /** Date the dates and URL were last checked against the organiser. */
+    verified: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'verified must be YYYY-MM-DD'),
+    /** Where the information came from. Required, so claims stay traceable. */
+    source: z.string().min(10),
+    /**
+     * A distinctive phrase the destination page must contain. Required, because
+     * matching on words from the event name is not enough: `vietbuild.vn` is a
+     * building-materials shop whose title contains "Vietbuild" and it sailed
+     * through a name-based check. Pick something only the real organiser says.
+     */
+    expectText: z.string().min(4),
+    /** Set when the host blocks automated checks, so check-links.mjs can skip it. */
+    unverifiableUrl: z.string().optional(),
     note: z.string().optional(),
   }),
 });
@@ -92,4 +112,44 @@ const criteria = defineCollection({
   }),
 });
 
-export const collections = { learn, daily, glossary, events, criteria };
+/**
+ * Case studies. Images live in `public/projects/<slug>/` and are referenced by
+ * filename, so a non-developer can add a project by dropping files into a folder
+ * and editing one markdown file — no build tooling, no imports.
+ *
+ * `credit` is required: never publish a photograph without recording who took it
+ * and on what terms. This repository is public.
+ */
+const projects = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/projects' }),
+  schema: z.object({
+    title: z.string(),
+    summary: z.string(),
+    studio: z.string(),
+    location: z.string(),
+    year: z.number(),
+    typology: z.string(),
+    /** Folder under public/projects/ holding the images. */
+    folder: z.string(),
+    images: z
+      .array(
+        z.object({
+          src: z.string(),
+          alt: z.string().min(8),
+          caption: z.string().optional(),
+        })
+      )
+      .min(1),
+    credit: z.string().min(4),
+    /** Set true for the shipped example so the UI can label it honestly. */
+    placeholder: z.boolean().default(false),
+    facts: z
+      .array(z.object({ label: z.string(), value: z.string() }))
+      .default([]),
+    topics: z.array(z.string()).default([]),
+    updated: z.coerce.date(),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { learn, daily, glossary, events, criteria, projects };

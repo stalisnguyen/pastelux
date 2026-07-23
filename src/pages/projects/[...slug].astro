@@ -1,0 +1,153 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Lightbox from '../../components/Lightbox.astro';
+import SaveButton from '../../components/SaveButton.astro';
+import { url } from '../../site';
+
+export async function getStaticPaths() {
+  const projects = (await getCollection('projects')).filter((p) => !p.data.draft);
+  return projects.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const img = (src: string) => `${base}/projects/${d.folder}/${src}`;
+---
+
+<Base title={d.title} description={d.summary}>
+  <article class="pt-9 pb-4">
+    <nav class="text-[0.82rem] mb-5" style="color: var(--text-faint)" aria-label="Breadcrumb">
+      <a href={url('/projects')} class="no-underline hover:underline">Projects</a>
+      <span class="mx-1.5">/</span>
+      <span>{d.typology}</span>
+    </nav>
+
+    <h1 class="text-3xl md:text-[2.25rem] font-semibold leading-tight">{d.title}</h1>
+    <p class="mt-2 text-[1rem]" style="color: var(--text-faint)">
+      {d.studio} · {d.location} · {d.year}
+    </p>
+    <p class="mt-3 text-[1.08rem] leading-relaxed max-w-2xl" style="color: var(--text-muted)">
+      {d.summary}
+    </p>
+
+    <div class="flex items-center gap-4 mt-5 flex-wrap">
+      <SaveButton
+        id={`project:${entry.id}`}
+        title={d.title}
+        href={url(`/projects/${entry.id}`)}
+        source="Pastelux"
+        kind="article"
+      />
+      {d.topics.map((t) => <span class="chip">{t}</span>)}
+    </div>
+
+    {
+      d.placeholder && (
+        <p
+          class="card p-3.5 mt-6 text-[0.86rem] leading-relaxed"
+          style="border-color: color-mix(in srgb, var(--warning) 40%, transparent); color: var(--text-muted)"
+        >
+          <strong style="color: var(--warning)">Placeholder imagery.</strong> The photographs on this
+          entry are generated stand-ins that exist to demonstrate the layout. Replace the files in{' '}
+          <code class="font-mono text-[0.9em]">public/projects/{d.folder}/</code> and set{' '}
+          <code class="font-mono text-[0.9em]">placeholder: false</code>.
+        </p>
+      )
+    }
+
+    <!-- ---------------------------------------------------------- gallery -->
+    <div class="gallery mt-8">
+      {
+        d.images.map((im, i) => (
+          <a
+            href={img(im.src)}
+            class={i === 0 ? 'gal-item gal-wide' : 'gal-item'}
+            data-lb-item
+            data-full={img(im.src)}
+            data-alt={im.alt}
+            data-caption={im.caption ?? im.alt}
+            aria-label={`Open image ${i + 1}: ${im.alt}`}
+          >
+            <img src={img(im.src)} alt={im.alt} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
+          </a>
+        ))
+      }
+    </div>
+    <p class="text-[0.76rem] mt-2.5" style="color: var(--text-faint)">
+      {d.credit} · click any image to enlarge
+    </p>
+
+    <!-- ------------------------------------------------------------ facts -->
+    {
+      d.facts.length > 0 && (
+        <dl class="facts mt-9">
+          {d.facts.map((f) => (
+            <div class="card p-4">
+              <dt class="label !mb-1">{f.label}</dt>
+              <dd class="font-mono text-[0.95rem]" style="color: var(--accent)">
+                {f.value}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      )
+    }
+
+    <div class="prose mt-10">
+      <Content />
+    </div>
+
+    <p class="mt-12 pt-6 border-t text-[0.8rem]" style="border-color: var(--border); color: var(--text-faint)">
+      Updated {d.updated.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+    </p>
+  </article>
+
+  <Lightbox />
+</Base>
+
+<style>
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 0.6rem;
+  }
+  .gal-wide {
+    grid-column: 1 / -1;
+    aspect-ratio: 16 / 9;
+  }
+  .gal-item {
+    display: block;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: 10px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    cursor: zoom-in;
+  }
+  .gal-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.35s ease;
+  }
+  .gal-item:hover img {
+    transform: scale(1.035);
+  }
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.6rem;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .gal-item img {
+      transition: none;
+    }
+    .gal-item:hover img {
+      transform: none;
+    }
+  }
+</style>

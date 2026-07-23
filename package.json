@@ -9,6 +9,8 @@
     "build": "astro build && pagefind --site dist",
     "preview": "astro preview",
     "news": "node scripts/fetch-news.mjs",
+    "check": "node scripts/check-links.mjs",
+    "check:strict": "node scripts/check-links.mjs --strict",
     "astro": "astro"
   },
   "dependencies": {

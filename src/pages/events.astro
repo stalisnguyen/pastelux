@@ -35,7 +35,7 @@ const daysTo = (d: string) => Math.ceil((Date.parse(d) - now) / 86_400_000);
   <PageHeader
     eyebrow="Calendar"
     title="Events"
-    lede="Conferences, fairs and award deadlines. Dates are checked at the time of writing — always confirm on the organiser's site before booking anything."
+    lede="Conferences, fairs and award deadlines. Every entry records the date its details were last checked and the source they came from, and an automated job re-tests each link weekly. Still confirm with the organiser before booking anything."
   />
 
   <section aria-labelledby="upcoming-h" class="mb-12">
@@ -70,13 +70,16 @@ const daysTo = (d: string) => Math.ceil((Date.parse(d) - now) / 86_400_000);
                   </span>
                 </div>
                 <p class="text-[0.85rem] mt-1" style="color: var(--text-muted)">
-                  {e.data.city}, {e.data.country}
+                  {e.data.venue ? `${e.data.venue} · ` : ''}{e.data.city}, {e.data.country}
                 </p>
                 {e.data.note && (
                   <p class="text-[0.87rem] mt-2 leading-relaxed" style="color: var(--text-muted)">
                     {e.data.note}
                   </p>
                 )}
+                <p class="text-[0.72rem] mt-2.5" style="color: var(--text-faint)">
+                  Dates and link checked {e.data.verified} · {e.data.source}
+                </p>
               </div>
             </article>
           ))}

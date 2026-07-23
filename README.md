@@ -102,9 +102,10 @@ Commit to `main` and the site rebuilds itself.
 | To add | Edit |
 |---|---|
 | An article | a new `.mdx` file in `src/content/learn/` |
+| A case study | a new `.mdx` file in `src/content/projects/` + images in `public/projects/<folder>/` |
 | A glossary term | `src/content/glossary.json` |
 | A row in the criteria table | `src/content/criteria.json` |
-| An event | `src/content/events.json` |
+| An event | `src/content/events.json` — see the rules below |
 | A news source | `src/data/feeds.json` |
 
 An article's frontmatter looks like this:
@@ -125,6 +126,45 @@ draft: false
 
 The schemas live in `src/content.config.ts`. If a field is wrong, the build fails with a
 message naming the file and the field — it will not publish broken content.
+
+### Adding a case study
+
+1. Create `public/projects/my-project/` and drop the photographs in (plain `.jpg`/`.webp`;
+   no imports, no build step).
+2. Create `src/content/projects/my-project.mdx` and list the filenames under `images`,
+   each with an `alt` description.
+3. Fill in `credit` — it is required. **Never publish a photograph without recording who
+   took it and on what terms.** This repository is public: a photographer or client
+   usually holds the rights even to pictures of your own built work, so get permission
+   in writing before publishing.
+
+Set `placeholder: true` while you are still using stand-in images; the page then labels
+itself honestly instead of implying the imagery is real.
+
+### Adding an event — the rules
+
+The first version of this file shipped guessed dates and a Vietbuild link that pointed at
+an unrelated building-materials shop. The schema now makes that impossible to repeat:
+
+- `verified` — the date you checked, `YYYY-MM-DD`. Required.
+- `source` — where the information came from. Required.
+- `expectText` — a distinctive phrase the destination page must contain. Required, and
+  **not** a word from the event's own name: `vietbuild.vn` is a shop whose title contains
+  "Vietbuild" and it passed a name-based check. Pick something only the real organiser
+  says, like `Exhibition Corporation`.
+- `unverifiableUrl` — set only when the host blocks automated checks (IALD sits behind
+  Cloudflare and returns 403), with a note explaining why.
+
+Then run the checker before committing:
+
+```bash
+npm run check
+```
+
+It verifies every event URL and every news feed: HTTP status, whether the link silently
+redirects to a different domain, whether the page still contains `expectText`, whether an
+event's `verified` date has gone stale, and whether a feed has stopped publishing. It also
+runs weekly in CI and opens an issue when something breaks.
 
 ---
 

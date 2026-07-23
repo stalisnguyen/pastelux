@@ -1,0 +1,143 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import { url } from '../../site';
+
+const projects = (await getCollection('projects'))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.year - a.data.year);
+
+const typologies = [...new Set(projects.map((p) => p.data.typology))].sort();
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Base
+  title="Projects"
+  description="Case studies: the intent, the numbers behind it, the fixtures used and what the scheme taught."
+>
+  <PageHeader
+    eyebrow={`${projects.length} ${projects.length === 1 ? 'case study' : 'case studies'}`}
+    title="Projects"
+    lede="Built work, read the way a designer needs it — what the scheme was trying to do, the numbers behind it, and what it taught."
+  />
+
+  {
+    typologies.length > 1 && (
+      <div class="flex flex-wrap gap-2 mb-6" data-pagefind-ignore>
+        <button class="chip chip-accent typ-btn cursor-pointer" data-typ="all" type="button" aria-pressed="true">
+          All
+        </button>
+        {typologies.map((t) => (
+          <button class="chip typ-btn cursor-pointer" data-typ={t} type="button" aria-pressed="false">
+            {t}
+          </button>
+        ))}
+      </div>
+    )
+  }
+
+  {
+    projects.length === 0 ? (
+      <div class="card p-6 max-w-2xl">
+        <p class="font-medium">No case studies yet.</p>
+        <p class="text-[0.92rem] mt-1.5 leading-relaxed" style="color: var(--text-muted)">
+          Add one by creating <code class="font-mono text-[0.85em]">src/content/projects/&lt;slug&gt;.mdx</code>{' '}
+          and dropping the photographs into{' '}
+          <code class="font-mono text-[0.85em]">public/projects/&lt;slug&gt;/</code>. See the README
+          for the frontmatter fields.
+        </p>
+      </div>
+    ) : (
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 pb-6">
+        {projects.map((p) => (
+          <a
+            href={url(`/projects/${p.id}`)}
+            class="card no-underline block overflow-hidden proj-card"
+            style="color: var(--text)"
+            data-typ={p.data.typology}
+          >
+            <div class="proj-cover">
+              <img
+                src={`${base}/projects/${p.data.folder}/${p.data.images[0].src}`}
+                alt={p.data.images[0].alt}
+                loading="lazy"
+                decoding="async"
+              />
+              {p.data.placeholder && <span class="proj-flag">placeholder</span>}
+            </div>
+            <div class="p-4">
+              <p class="text-[0.72rem] font-mono" style="color: var(--accent)">
+                {p.data.typology} · {p.data.year}
+              </p>
+              <h2 class="font-semibold mt-1.5 leading-snug">{p.data.title}</h2>
+              <p class="text-[0.86rem] mt-1" style="color: var(--text-faint)">
+                {p.data.studio} · {p.data.location}
+              </p>
+              <p class="text-[0.88rem] mt-2 leading-relaxed" style="color: var(--text-muted)">
+                {p.data.summary}
+              </p>
+            </div>
+          </a>
+        ))}
+      </div>
+    )
+  }
+</Base>
+
+<style>
+  .proj-cover {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    background: var(--bg-elevated);
+    overflow: hidden;
+  }
+  .proj-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+  .proj-card:hover .proj-cover img {
+    transform: scale(1.03);
+  }
+  .proj-flag {
+    position: absolute;
+    top: 0.6rem;
+    left: 0.6rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.5rem;
+    border-radius: 999px;
+    background: rgb(0 0 0 / 0.6);
+    color: #ffd9a8;
+    border: 1px solid rgb(255 255 255 / 0.18);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .proj-cover img {
+      transition: none;
+    }
+    .proj-card:hover .proj-cover img {
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  const cards = [...document.querySelectorAll<HTMLElement>('.proj-card')];
+  const buttons = [...document.querySelectorAll<HTMLElement>('.typ-btn')];
+
+  buttons.forEach((btn) =>
+    btn.addEventListener('click', () => {
+      const typ = btn.dataset.typ!;
+      buttons.forEach((b) => {
+        const on = b === btn;
+        b.classList.toggle('chip-accent', on);
+        b.setAttribute('aria-pressed', String(on));
+      });
+      cards.forEach((c) => c.classList.toggle('hidden', typ !== 'all' && c.dataset.typ !== typ));
+    })
+  );
+</script>

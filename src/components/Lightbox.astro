@@ -1,0 +1,168 @@
+---
+/**
+ * Gallery lightbox. Progressive: the grid is plain links, so it works with
+ * JavaScript disabled — the script upgrades it to an overlay.
+ */
+---
+
+<dialog
+  id="lb"
+  class="lb"
+  aria-label="Image viewer"
+>
+  <button class="lb-close" data-lb-close aria-label="Close viewer">&times;</button>
+  <button class="lb-nav lb-prev" data-lb-prev aria-label="Previous image">&#8249;</button>
+  <button class="lb-nav lb-next" data-lb-next aria-label="Next image">&#8250;</button>
+
+  <figure class="lb-fig">
+    <img id="lb-img" alt="" />
+    <figcaption>
+      <span id="lb-cap"></span>
+      <span id="lb-count" class="lb-count"></span>
+    </figcaption>
+  </figure>
+</dialog>
+
+<style>
+  .lb {
+    /* A dialog is centred by `margin: auto` in the UA stylesheet, which offsets
+       a full-viewport overlay. Pin it instead. */
+    position: fixed;
+    inset: 0;
+    margin: 0;
+    width: 100vw;
+    max-width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    overflow: hidden;
+  }
+  .lb::backdrop {
+    background: rgb(0 0 0 / 0.88);
+    backdrop-filter: blur(6px);
+  }
+  .lb-fig {
+    margin: 0;
+    height: 100%;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    place-items: center;
+    padding: 3.2rem 1rem 1rem;
+    gap: 0.9rem;
+  }
+  .lb-fig img {
+    max-width: min(100%, 1400px);
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 6px;
+  }
+  .lb-fig figcaption {
+    color: #e9eef4;
+    font-size: 0.85rem;
+    text-align: center;
+    max-width: 62ch;
+    line-height: 1.55;
+    padding-bottom: 0.5rem;
+  }
+  .lb-count {
+    display: block;
+    margin-top: 0.35rem;
+    opacity: 0.55;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+  }
+  .lb-close,
+  .lb-nav {
+    position: fixed;
+    z-index: 2;
+    background: rgb(255 255 255 / 0.08);
+    border: 1px solid rgb(255 255 255 / 0.16);
+    color: #fff;
+    cursor: pointer;
+    border-radius: 999px;
+    line-height: 1;
+    transition: background 0.15s ease;
+  }
+  .lb-close:hover,
+  .lb-nav:hover {
+    background: rgb(255 255 255 / 0.2);
+  }
+  .lb-close {
+    top: 0.9rem;
+    right: 0.9rem;
+    width: 2.4rem;
+    height: 2.4rem;
+    font-size: 1.6rem;
+  }
+  .lb-nav {
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2.8rem;
+    height: 2.8rem;
+    font-size: 1.9rem;
+  }
+  .lb-prev {
+    left: 0.9rem;
+  }
+  .lb-next {
+    right: 0.9rem;
+  }
+  @media (max-width: 640px) {
+    .lb-nav {
+      top: auto;
+      bottom: 1rem;
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  const dialog = document.getElementById('lb') as HTMLDialogElement | null;
+  const img = document.getElementById('lb-img') as HTMLImageElement | null;
+  const cap = document.getElementById('lb-cap');
+  const count = document.getElementById('lb-count');
+  const triggers = [...document.querySelectorAll<HTMLAnchorElement>('[data-lb-item]')];
+
+  if (dialog && img && triggers.length) {
+    let index = 0;
+    let opener: HTMLElement | null = null;
+
+    const show = (i: number) => {
+      index = (i + triggers.length) % triggers.length;
+      const el = triggers[index];
+      img.src = el.dataset.full ?? el.href;
+      img.alt = el.dataset.alt ?? '';
+      if (cap) cap.textContent = el.dataset.caption ?? el.dataset.alt ?? '';
+      if (count) count.textContent = `${index + 1} / ${triggers.length}`;
+    };
+
+    triggers.forEach((el, i) =>
+      el.addEventListener('click', (ev) => {
+        ev.preventDefault();
+        opener = el;
+        show(i);
+        dialog.showModal();
+      })
+    );
+
+    const close = () => dialog.close();
+    document.querySelector('[data-lb-close]')?.addEventListener('click', close);
+    document.querySelector('[data-lb-prev]')?.addEventListener('click', () => show(index - 1));
+    document.querySelector('[data-lb-next]')?.addEventListener('click', () => show(index + 1));
+
+    // Click the backdrop (but not the image) to dismiss.
+    dialog.addEventListener('click', (ev) => {
+      if (ev.target === dialog || (ev.target as HTMLElement).classList.contains('lb-fig')) close();
+    });
+
+    dialog.addEventListener('keydown', (ev) => {
+      if (ev.key === 'ArrowRight') show(index + 1);
+      if (ev.key === 'ArrowLeft') show(index - 1);
+    });
+
+    // Return focus to the thumbnail that opened it.
+    dialog.addEventListener('close', () => opener?.focus());
+  }
+</script>
