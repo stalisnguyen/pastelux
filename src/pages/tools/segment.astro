@@ -1,0 +1,469 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import { url } from '../../site';
+---
+
+<Base
+  title="Segment a render"
+  description="Upload an interior render and get a flat-colour label map of the objects in it, to use as a selection mask — runs entirely in your browser."
+>
+  <PageHeader
+    eyebrow="Tools · Beta"
+    title="Segment a render"
+    lede="Upload a rendered interior; the tool labels the objects in it as flat colour regions you can use as a selection mask, then you download the result. It runs entirely in your browser — the image is never uploaded anywhere."
+  >
+    <p class="vi-block vi-def mt-2 text-[0.95rem] max-w-2xl leading-relaxed">
+      Tải lên một ảnh render nội thất; công cụ sẽ nhận diện và tô màu phẳng từng vùng vật thể để
+      bạn dùng làm mặt nạ chọn (selection mask), rồi tải kết quả về. Mọi thứ chạy ngay trong trình
+      duyệt — ảnh không được gửi đi đâu cả.
+    </p>
+  </PageHeader>
+
+  <!-- honest limitation -->
+  <div
+    class="card p-4 mb-6 text-[0.88rem] leading-relaxed max-w-3xl"
+    style="border-color: color-mix(in srgb, var(--warning) 40%, transparent)"
+  >
+    <strong style="color: var(--warning)">Read this first — what it can and cannot do.</strong>
+    <span style="color: var(--text-muted)">
+      This is not a V-Ray object or material pass. That information only exists in the 3D scene and
+      cannot be recovered from a flat image. What this does is label the render <em>by object
+      category</em> using an AI model: two identical sofas get the same colour, and edges may need a
+      little cleanup. It replaces most of the manual tracing, not the render element itself.
+    </span>
+    <p class="vi-block vi-def mt-2">
+      Đây không phải VRay object/material pass. Thông tin đó chỉ có trong scene 3D, không thể khôi
+      phục từ ảnh phẳng. Công cụ nhận diện <em>theo loại vật thể</em> bằng AI: hai chiếc sofa giống
+      nhau sẽ cùng màu, và mép có thể cần dặm lại đôi chút. Nó thay phần lớn công đoạn tách tay,
+      chứ không thay thế được render element gốc.
+    </p>
+  </div>
+
+  <!-- ============================================ step 1: input -->
+  <section class="card p-6 mb-4" aria-labelledby="s1">
+    <div class="flex items-baseline gap-2 mb-3">
+      <span class="chip chip-accent">1</span>
+      <h2 id="s1" class="text-lg font-semibold">Upload the render</h2>
+      <span class="vi-block-inline text-[0.9rem]" style="color: var(--vi-text)">Tải ảnh lên</span>
+    </div>
+
+    <label
+      id="drop"
+      class="block rounded-xl border-2 border-dashed cursor-pointer text-center py-10 px-4 transition-colors"
+      style="border-color: var(--border-strong); background: var(--bg-elevated)"
+    >
+      <input id="file" type="file" accept="image/jpeg,image/png,image/webp" class="sr-only" />
+      <svg
+        width="34"
+        height="34"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="var(--text-faint)"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="mx-auto mb-3"
+        aria-hidden="true"
+      >
+        <path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2" />
+        <path d="M12 15V3M7 8l5-5 5 5" />
+      </svg>
+      <p class="font-medium">Drop a JPEG or PNG here, or click to choose</p>
+      <p class="vi-block vi-def text-[0.85rem] mt-1" style="border:0;padding:0">
+        Kéo thả ảnh JPEG/PNG vào đây, hoặc bấm để chọn file
+      </p>
+    </label>
+  </section>
+
+  <!-- ============================================ step 2: process -->
+  <section id="s2wrap" class="card p-6 mb-4 hidden" aria-labelledby="s2">
+    <div class="flex items-baseline gap-2 mb-3 flex-wrap">
+      <span class="chip chip-accent">2</span>
+      <h2 id="s2" class="text-lg font-semibold">Label the objects</h2>
+      <span class="vi-block-inline text-[0.9rem]" style="color: var(--vi-text)">Nhận diện vật thể</span>
+      <button id="run" class="btn btn-primary ml-auto" type="button">
+        Segment
+      </button>
+    </div>
+
+    <p id="status" class="text-[0.9rem] mb-3" style="color: var(--text-muted)"></p>
+
+    <div class="grid gap-4">
+      <div class="relative rounded-lg overflow-hidden" style="background: var(--bg)">
+        <canvas id="preview" class="block w-full h-auto"></canvas>
+      </div>
+
+      <!-- view controls, shown after a result exists -->
+      <div id="controls" class="hidden flex-wrap items-center gap-x-6 gap-y-3">
+        <label class="flex items-center gap-2 text-[0.9rem] cursor-pointer">
+          <input id="labelsOnly" type="checkbox" class="accent-[var(--accent)]" />
+          <span>Labels only</span>
+          <span class="vi-block-inline" style="color: var(--vi-text)">· Chỉ hiện nhãn</span>
+        </label>
+
+        <label class="flex items-center gap-2 text-[0.9rem]">
+          <span>Overlay</span>
+          <span class="vi-block-inline" style="color: var(--vi-text)">· Độ mờ</span>
+          <input id="opacity" type="range" min="0" max="100" value="70" class="accent-[var(--accent)]" />
+        </label>
+      </div>
+
+      <!-- legend -->
+      <div id="legend" class="hidden">
+        <p class="label !mb-2">
+          Detected objects <span class="vi-block-inline" style="color: var(--vi-text)">· Vật thể nhận diện được</span>
+        </p>
+        <div id="legendItems" class="flex flex-wrap gap-2"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ step 3: save -->
+  <section id="s3wrap" class="card p-6 mb-6 hidden" aria-labelledby="s3">
+    <div class="flex items-baseline gap-2 mb-3 flex-wrap">
+      <span class="chip chip-accent">3</span>
+      <h2 id="s3" class="text-lg font-semibold">Save to your computer</h2>
+      <span class="vi-block-inline text-[0.9rem]" style="color: var(--vi-text)">Lưu về máy</span>
+    </div>
+    <p class="text-[0.86rem] mb-4" style="color: var(--text-muted)">
+      The download is the flat-colour label map at the original resolution, whatever the preview
+      shows — that is what you load into Photoshop as a mask.
+    </p>
+    <p class="vi-block vi-def text-[0.85rem] mb-4">
+      File tải về là bản đồ màu phẳng ở đúng độ phân giải gốc, bất kể phần xem trước đang hiển thị
+      gì — đó chính là thứ bạn đưa vào Photoshop làm mặt nạ. Nên chọn PNG để giữ mép sắc nét.
+    </p>
+    <div class="flex flex-wrap gap-3">
+      <button id="dlPng" class="btn btn-primary" type="button">Download PNG</button>
+      <button id="dlJpg" class="btn" type="button">Download JPEG</button>
+    </div>
+  </section>
+
+  <p class="text-[0.8rem] pb-6" style="color: var(--text-faint)">
+    First use downloads a small AI model (~15 MB) once, then it is cached. Uses your GPU if the
+    browser supports WebGPU, otherwise a slower CPU path. Back to
+    <a href={url('/tools')} class="no-underline hover:underline">all tools</a>.
+    <span class="vi-block-inline">
+      Lần đầu dùng sẽ tải một mô hình AI nhỏ (~15 MB), sau đó được lưu cache. Dùng GPU nếu trình
+      duyệt hỗ trợ WebGPU, nếu không thì chạy bằng CPU (chậm hơn).
+    </span>
+  </p>
+</Base>
+
+<script>
+  // ------------------------------------------------------------------------
+  // Everything here runs on the client. The model and library are fetched
+  // from a CDN on first use and cached by the browser; the image itself
+  // never leaves the machine.
+  // ------------------------------------------------------------------------
+  // Pinned to a verified version. npm/jsDelivr versions are immutable, so this
+  // cannot break under us the way a floating `@3` range could.
+  const TRANSFORMERS = 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.8.1';
+  const MODEL = 'Xenova/segformer-b0-finetuned-ade-512-512';
+
+  // Vietnamese names for the interior categories the model actually emits.
+  const VI: Record<string, string> = {
+    wall: 'tường', floor: 'sàn', flooring: 'sàn', ceiling: 'trần',
+    windowpane: 'cửa sổ', window: 'cửa sổ', door: 'cửa', 'double door': 'cửa',
+    painting: 'tranh', picture: 'tranh', poster: 'áp phích',
+    sofa: 'ghế sofa', couch: 'ghế sofa', chair: 'ghế', armchair: 'ghế bành',
+    'swivel chair': 'ghế xoay', seat: 'chỗ ngồi', stool: 'ghế đẩu', bench: 'ghế băng',
+    ottoman: 'đôn', pouf: 'đôn', table: 'bàn', 'coffee table': 'bàn trà', desk: 'bàn làm việc',
+    lamp: 'đèn', light: 'đèn', chandelier: 'đèn chùm', 'sconce': 'đèn tường',
+    curtain: 'rèm', drape: 'rèm', blind: 'rèm sáo', rug: 'thảm', mat: 'thảm',
+    carpet: 'thảm', cushion: 'gối tựa', pillow: 'gối', bed: 'giường', headboard: 'đầu giường',
+    cabinet: 'tủ', wardrobe: 'tủ quần áo', 'chest of drawers': 'tủ ngăn kéo',
+    sideboard: 'tủ thấp', shelf: 'kệ', bookcase: 'kệ sách', book: 'sách',
+    vase: 'bình', bottle: 'chai lọ', plant: 'cây', flower: 'hoa', tree: 'cây',
+    mirror: 'gương', television: 'tivi', 'tv': 'tivi', screen: 'màn hình',
+    monitor: 'màn hình', fireplace: 'lò sưởi', radiator: 'lò sưởi', stairs: 'cầu thang',
+    stairway: 'cầu thang', column: 'cột', pillar: 'cột', railing: 'lan can',
+    box: 'hộp', basket: 'giỏ', clock: 'đồng hồ', pot: 'chậu', tray: 'khay',
+    'kitchen island': 'đảo bếp', countertop: 'mặt bàn bếp', sink: 'bồn rửa',
+    person: 'người', glass: 'ly',
+  };
+
+  // A fixed, spread-out palette so masks stay distinguishable.
+  const PALETTE = [
+    [66, 133, 244], [219, 68, 55], [244, 180, 0], [15, 157, 88],
+    [171, 71, 188], [255, 112, 67], [38, 198, 218], [156, 204, 101],
+    [255, 138, 128], [124, 77, 255], [0, 172, 193], [255, 179, 0],
+    [93, 64, 55], [216, 27, 96], [67, 160, 71], [30, 136, 229],
+    [251, 140, 0], [142, 36, 170], [0, 137, 123], [192, 202, 51],
+    [233, 30, 99], [63, 81, 181], [0, 188, 212], [205, 220, 57],
+  ];
+
+  const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T | null;
+
+  const fileInput = $<HTMLInputElement>('file');
+  const drop = $('drop');
+  const s2 = $('s2wrap');
+  const s3 = $('s3wrap');
+  const runBtn = $<HTMLButtonElement>('run');
+  const statusEl = $('status');
+  const preview = $<HTMLCanvasElement>('preview');
+  const controls = $('controls');
+  const legend = $('legend');
+  const legendItems = $('legendItems');
+  const labelsOnly = $<HTMLInputElement>('labelsOnly');
+  const opacity = $<HTMLInputElement>('opacity');
+
+  let sourceImage: HTMLImageElement | null = null;
+  let labelCanvas: HTMLCanvasElement | null = null; // the flat-colour map at full res
+  let segmenter: any = null;
+
+  const setStatus = (msg: string, tone = 'var(--text-muted)') => {
+    if (statusEl) {
+      statusEl.textContent = msg;
+      statusEl.style.color = tone;
+    }
+  };
+
+  // -------------------------------------------------------------- upload
+  function handleFile(file: File) {
+    if (!file || !file.type.startsWith('image/')) return;
+    const img = new Image();
+    img.onload = () => {
+      sourceImage = img;
+      labelCanvas = null;
+      s2?.classList.remove('hidden');
+      s3?.classList.add('hidden');
+      controls?.classList.add('hidden');
+      legend?.classList.add('hidden');
+      drawPreview();
+      setStatus('Ready. Press Segment. · Sẵn sàng — bấm Segment.');
+      s2?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+    img.src = URL.createObjectURL(file);
+  }
+
+  fileInput?.addEventListener('change', () => {
+    if (fileInput.files?.[0]) handleFile(fileInput.files[0]);
+  });
+
+  ['dragover', 'dragenter'].forEach((ev) =>
+    drop?.addEventListener(ev, (e) => {
+      e.preventDefault();
+      (drop as HTMLElement).style.borderColor = 'var(--accent)';
+    })
+  );
+  ['dragleave', 'drop'].forEach((ev) =>
+    drop?.addEventListener(ev, (e) => {
+      e.preventDefault();
+      (drop as HTMLElement).style.borderColor = 'var(--border-strong)';
+    })
+  );
+  drop?.addEventListener('drop', (e) => {
+    const f = (e as DragEvent).dataTransfer?.files?.[0];
+    if (f) handleFile(f);
+  });
+
+  // -------------------------------------------------------------- preview
+  function drawPreview() {
+    if (!preview || !sourceImage) return;
+    const W = sourceImage.naturalWidth;
+    const H = sourceImage.naturalHeight;
+    preview.width = W;
+    preview.height = H;
+    const ctx = preview.getContext('2d')!;
+    ctx.clearRect(0, 0, W, H);
+
+    const only = labelsOnly?.checked;
+    const alpha = (Number(opacity?.value ?? 70)) / 100;
+
+    if (labelCanvas && only) {
+      ctx.drawImage(labelCanvas, 0, 0);
+    } else {
+      ctx.drawImage(sourceImage, 0, 0);
+      if (labelCanvas) {
+        ctx.globalAlpha = alpha;
+        ctx.drawImage(labelCanvas, 0, 0);
+        ctx.globalAlpha = 1;
+      }
+    }
+  }
+
+  labelsOnly?.addEventListener('change', drawPreview);
+  opacity?.addEventListener('input', drawPreview);
+
+  // -------------------------------------------------------------- model
+  async function ensureModel() {
+    if (segmenter) return;
+    setStatus('Loading the AI model… · Đang tải mô hình AI…');
+    const mod = await import(/* @vite-ignore */ TRANSFORMERS);
+    const { pipeline } = mod;
+
+    const onProgress = (p: any) => {
+      if (p?.status === 'progress' && p.total) {
+        const pct = Math.round((p.loaded / p.total) * 100);
+        setStatus(`Downloading model… ${pct}% · Đang tải mô hình… ${pct}%`);
+      }
+    };
+
+    // Prefer the GPU; fall back to CPU if WebGPU is unavailable or errors.
+    const device = (navigator as any).gpu ? 'webgpu' : 'wasm';
+    try {
+      segmenter = await pipeline('image-segmentation', MODEL, { device, progress_callback: onProgress });
+    } catch (err) {
+      if (device !== 'wasm') {
+        setStatus('GPU path failed, using CPU… · GPU lỗi, chuyển sang CPU…');
+        segmenter = await pipeline('image-segmentation', MODEL, { device: 'wasm', progress_callback: onProgress });
+      } else {
+        throw err;
+      }
+    }
+  }
+
+  // -------------------------------------------------------------- segment
+  runBtn?.addEventListener('click', async () => {
+    if (!sourceImage) return;
+    runBtn.disabled = true;
+    const t0 = performance.now();
+    try {
+      await ensureModel();
+      setStatus('Analysing the render… · Đang phân tích ảnh…');
+
+      // Feed the model a data URL of the source at native resolution.
+      const src = document.createElement('canvas');
+      src.width = sourceImage.naturalWidth;
+      src.height = sourceImage.naturalHeight;
+      src.getContext('2d')!.drawImage(sourceImage, 0, 0);
+      const dataUrl = src.toDataURL('image/png');
+
+      const output = await segmenter(dataUrl); // [{ label, score, mask }]
+      if (!Array.isArray(output) || !output.length) {
+        setStatus('No objects were detected. Try a clearer or larger render. · Không nhận diện được vật thể nào.', 'var(--warning)');
+        runBtn.disabled = false;
+        return;
+      }
+
+      buildLabelMap(output);
+      drawPreview();
+      controls?.classList.remove('hidden');
+      legend?.classList.remove('hidden');
+      s3?.classList.remove('hidden');
+      const secs = ((performance.now() - t0) / 1000).toFixed(1);
+      setStatus(`Done in ${secs}s — ${output.length} regions. Check the overlay, then download. · Xong sau ${secs}s — ${output.length} vùng.`, 'var(--success)');
+    } catch (err: any) {
+      console.error(err);
+      setStatus(
+        'Could not run the model. Needs a modern browser and an internet connection on first use. · Không chạy được mô hình — cần trình duyệt mới và kết nối mạng ở lần đầu.',
+        'var(--danger)'
+      );
+    } finally {
+      runBtn.disabled = false;
+    }
+  });
+
+  // Composite the per-class masks into one flat-colour canvas at full resolution.
+  function buildLabelMap(output: Array<{ label: string; score: number; mask: any }>) {
+    const W = sourceImage!.naturalWidth;
+    const H = sourceImage!.naturalHeight;
+
+    labelCanvas = document.createElement('canvas');
+    labelCanvas.width = W;
+    labelCanvas.height = H;
+    const ctx = labelCanvas.getContext('2d')!;
+    ctx.clearRect(0, 0, W, H);
+
+    // Paint larger regions first so small objects (a lamp, a vase) land on top.
+    const sized = output
+      .map((seg) => ({ seg, area: coverage(seg.mask) }))
+      .sort((a, b) => b.area - a.area);
+
+    const used: Array<{ label: string; color: number[] }> = [];
+    let ci = 0;
+
+    for (const { seg } of sized) {
+      const color = PALETTE[ci % PALETTE.length];
+      ci++;
+      used.push({ label: seg.label, color });
+      paintMask(ctx, seg.mask, color, W, H);
+    }
+
+    renderLegend(used);
+  }
+
+  function coverage(mask: any): number {
+    const d = mask.data;
+    let n = 0;
+    for (let i = 0; i < d.length; i++) if (d[i] > 127) n++;
+    return n;
+  }
+
+  // Turn a grayscale RawImage mask into a hard-edged coloured shape, scaled
+  // to the full image, and draw it onto the target context.
+  function paintMask(ctx: CanvasRenderingContext2D, mask: any, color: number[], W: number, H: number) {
+    const mw = mask.width;
+    const mh = mask.height;
+
+    // grayscale -> white with binary alpha, at the mask's native size
+    const src = document.createElement('canvas');
+    src.width = mw;
+    src.height = mh;
+    const sctx = src.getContext('2d')!;
+    const id = sctx.createImageData(mw, mh);
+    for (let i = 0; i < mw * mh; i++) {
+      const on = mask.data[i] > 127 ? 255 : 0;
+      id.data[i * 4] = 255;
+      id.data[i * 4 + 1] = 255;
+      id.data[i * 4 + 2] = 255;
+      id.data[i * 4 + 3] = on;
+    }
+    sctx.putImageData(id, 0, 0);
+
+    // scale to full res with nearest-neighbour (keep hard edges), then tint
+    const layer = document.createElement('canvas');
+    layer.width = W;
+    layer.height = H;
+    const lctx = layer.getContext('2d')!;
+    lctx.imageSmoothingEnabled = false;
+    lctx.drawImage(src, 0, 0, W, H);
+    lctx.globalCompositeOperation = 'source-in';
+    lctx.fillStyle = `rgb(${color[0]},${color[1]},${color[2]})`;
+    lctx.fillRect(0, 0, W, H);
+
+    ctx.drawImage(layer, 0, 0);
+  }
+
+  function renderLegend(used: Array<{ label: string; color: number[] }>) {
+    if (!legendItems) return;
+    // De-duplicate labels (a class can appear once here, but be safe).
+    const seen = new Set<string>();
+    legendItems.innerHTML = '';
+    for (const { label, color } of used) {
+      if (seen.has(label)) continue;
+      seen.add(label);
+      const key = label.toLowerCase().split(';')[0].trim();
+      const vi = VI[key];
+      const chip = document.createElement('span');
+      chip.className = 'chip';
+      chip.innerHTML =
+        `<span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:rgb(${color[0]},${color[1]},${color[2]})"></span>` +
+        `${label}${vi ? ` · <span style="color:var(--vi-text)">${vi}</span>` : ''}`;
+      legendItems.appendChild(chip);
+    }
+  }
+
+  // -------------------------------------------------------------- download
+  function download(type: 'image/png' | 'image/jpeg') {
+    if (!labelCanvas) return;
+    const ext = type === 'image/png' ? 'png' : 'jpg';
+    labelCanvas.toBlob(
+      (blob) => {
+        if (!blob) return;
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `labels.${ext}`;
+        a.click();
+        URL.revokeObjectURL(a.href);
+      },
+      type,
+      type === 'image/jpeg' ? 0.95 : undefined
+    );
+  }
+
+  $('dlPng')?.addEventListener('click', () => download('image/png'));
+  $('dlJpg')?.addEventListener('click', () => download('image/jpeg'));
+</script>
