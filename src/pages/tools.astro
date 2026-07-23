@@ -58,6 +58,33 @@ import { url } from '../site';
 
       <div class="grid sm:grid-cols-3 gap-3 mt-5" id="bs-out"></div>
 
+      <!-- Live section drawing; redraws on every input change. -->
+      <div
+        class="mt-5 rounded-lg p-3"
+        style="background: var(--bg); border: 1px solid var(--border)"
+      >
+        <svg
+          id="bs-svg"
+          viewBox="0 0 560 300"
+          role="img"
+          aria-label="Live section drawing of the beam"
+          style="display:block;width:100%;height:auto;font-family:var(--font-sans)"
+        >
+          <defs>
+            <linearGradient id="live-cone" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.45" />
+              <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.06" />
+            </linearGradient>
+            <radialGradient id="live-pool" cx="0.5" cy="0.5" r="0.5">
+              <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.6" />
+              <stop offset="70%" stop-color="var(--accent)" stop-opacity="0.2" />
+              <stop offset="100%" stop-color="var(--accent)" stop-opacity="0" />
+            </radialGradient>
+          </defs>
+          <g id="bs-draw"></g>
+        </svg>
+      </div>
+
       <div class="mt-5 scroll-x">
         <table class="datatable">
           <caption class="sr-only">Spot diameter by beam angle at the entered throw distance</caption>
@@ -230,7 +257,76 @@ import { url } from '../site';
             2
           )} m</td><td style="color: var(--text-muted)">${use}</td></tr>`
       ).join('');
+
+    drawBeam(d, a, dia, I, E);
   });
+
+  /** Redraws the section under the beam calculator from the current inputs. */
+  function drawBeam(d: number, a: number, dia: number, I: number, E: number) {
+    const g = document.getElementById('bs-draw');
+    if (!g) return;
+
+    const W = 560, FX = W / 2, FY = 40, FLOOR = 244;
+    const rad = (deg: number) => (deg * Math.PI) / 180;
+
+    // The drawing scales to fit whichever is more extreme, the throw or the spread,
+    // so the geometry stays legible from a 0.5 m throw to a 20 m one.
+    const halfBeam = Math.tan(rad(Math.min(a, 170)) / 2) * (FLOOR - FY);
+    const fit = Math.min(1, (W / 2 - 78) / Math.max(halfBeam, 1));
+    const hb = halfBeam * fit;
+    const hf = Math.min(Math.tan(rad(Math.min(a * 1.55, 178)) / 2) * (FLOOR - FY) * fit, W / 2 - 46);
+
+    const label = (x: number, y: number, t: string, cls = 'lbl', anchor = 'middle') =>
+      `<text x="${x}" y="${y}" text-anchor="${anchor}" class="${cls}">${t}</text>`;
+
+    g.innerHTML = `
+      <style>
+        .lbl { font-size: 10px; fill: var(--text-faint); font-family: var(--font-mono) }
+        .lbl-a { font-size: 11px; fill: var(--accent); font-family: var(--font-mono); font-weight: 500 }
+        .ln { stroke: var(--border-strong); fill: none; stroke-width: 1 }
+        .sl { stroke: var(--text-muted); fill: none; stroke-width: 1.4 }
+        .bm { stroke: var(--accent); fill: none; stroke-width: 1.6 }
+        .dsh { stroke: var(--border-strong); fill: none; stroke-width: 1; stroke-dasharray: 3 3 }
+      </style>
+
+      <line class="sl" x1="40" y1="${FY}" x2="${W - 40}" y2="${FY}"/>
+      ${label(44, FY - 8, 'ceiling', 'lbl', 'start')}
+
+      <path d="M ${FX} ${FY} L ${FX - hf} ${FLOOR} L ${FX + hf} ${FLOOR} Z"
+            fill="var(--accent)" fill-opacity="0.08"/>
+      <path d="M ${FX} ${FY} L ${FX - hb} ${FLOOR} L ${FX + hb} ${FLOOR} Z" fill="url(#live-cone)"/>
+      <line class="bm" x1="${FX}" y1="${FY}" x2="${FX - hb}" y2="${FLOOR}"/>
+      <line class="bm" x1="${FX}" y1="${FY}" x2="${FX + hb}" y2="${FLOOR}"/>
+      <line class="dsh" x1="${FX}" y1="${FY}" x2="${FX}" y2="${FLOOR}"/>
+
+      <rect x="${FX - 17}" y="${FY - 11}" width="34" height="11" rx="2"
+            fill="var(--surface)" stroke="var(--border-strong)"/>
+      <circle cx="${FX}" cy="${FY + 1}" r="3.4" fill="var(--accent)"/>
+
+      <path class="bm" stroke-width="1.2"
+            d="M ${FX - Math.tan(rad(Math.min(a, 170)) / 2) * 64} ${FY + 64}
+               A 64 64 0 0 0 ${FX + Math.tan(rad(Math.min(a, 170)) / 2) * 64} ${FY + 64}"/>
+      ${label(FX, FY + 86, a.toFixed(0) + '&#176;', 'lbl-a')}
+
+      <ellipse cx="${FX}" cy="${FLOOR}" rx="${hb}" ry="12" fill="url(#live-pool)"/>
+      <line class="sl" x1="40" y1="${FLOOR}" x2="${W - 40}" y2="${FLOOR}"/>
+
+      <line class="ln" x1="${FX + hf + 30}" y1="${FY}" x2="${FX + hf + 30}" y2="${FLOOR}"/>
+      <line class="ln" x1="${FX + hf + 25}" y1="${FY}" x2="${FX + hf + 35}" y2="${FY}"/>
+      <line class="ln" x1="${FX + hf + 25}" y1="${FLOOR}" x2="${FX + hf + 35}" y2="${FLOOR}"/>
+      <text x="${FX + hf + 40}" y="${(FY + FLOOR) / 2}" class="lbl" text-anchor="middle"
+            transform="rotate(-90 ${FX + hf + 40} ${(FY + FLOOR) / 2})">${fmt(d, 2)} m throw</text>
+
+      <line class="ln" x1="${FX - hb}" y1="${FLOOR + 26}" x2="${FX + hb}" y2="${FLOOR + 26}"/>
+      <line class="ln" x1="${FX - hb}" y1="${FLOOR + 21}" x2="${FX - hb}" y2="${FLOOR + 31}"/>
+      <line class="ln" x1="${FX + hb}" y1="${FLOOR + 21}" x2="${FX + hb}" y2="${FLOOR + 31}"/>
+      ${label(FX, FLOOR + 44, '&#216; ' + fmt(dia, 2) + ' m', 'lbl-a')}
+
+      ${label(FX - hb - 8, FLOOR - 8, fmt(E) + ' lx', 'lbl', 'end')}
+      ${label(FX + hb + 8, FLOOR - 8, fmt(I) + ' cd needed', 'lbl', 'start')}
+      ${fit < 1 ? label(46, FLOOR + 44, 'drawing scaled to fit', 'lbl', 'start') : ''}
+    `;
+  }
 
   // ------------------------------------------------------ inverse square law
   bind(['isl-I', 'isl-d', 'isl-t', 'isl-r'], () => {

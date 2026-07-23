@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import PageHeader from '../../components/PageHeader.astro';
+import ArticleGlyph from '../../components/ArticleGlyph.astro';
 import { url } from '../../site';
 
 const articles = (await getCollection('learn'))
@@ -51,6 +52,7 @@ const planned = [
           <div class="grid md:grid-cols-2 gap-3">
             {ch.articles.map((a) => (
               <a href={url(`/learn/${a.id}`)} class="card p-5 no-underline block" style="color: var(--text)">
+                <ArticleGlyph chapter={a.data.chapter} variant={a.data.order} height={86} />
                 <h3 class="font-semibold leading-snug">{a.data.title}</h3>
                 <p class="text-[0.9rem] mt-2 leading-relaxed" style="color: var(--text-muted)">
                   {a.data.summary}

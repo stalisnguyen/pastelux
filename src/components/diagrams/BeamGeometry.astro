@@ -1,0 +1,112 @@
+---
+import Figure from '../Figure.astro';
+import { deg, spotDiameter } from '../../lib/diagram';
+
+interface Props {
+  beam?: number;
+  throwM?: number;
+  caption?: string;
+}
+const { beam = 36, throwM = 3.25, caption } = Astro.props;
+
+const W = 640;
+const H = 330;
+const FX = W / 2; // fixture x
+const FY = 40; // fixture y
+const FLOOR = 268;
+const pxPerM = (FLOOR - FY) / throwM;
+
+const halfSpotPx = Math.tan(deg(beam) / 2) * (FLOOR - FY);
+const fieldPx = Math.tan(deg(beam * 1.55) / 2) * (FLOOR - FY);
+const spot = spotDiameter(throwM, beam);
+---
+
+<Figure
+  label={`Section showing a ${beam} degree beam at ${throwM} metre throw`}
+  caption={caption ??
+    `A ${beam}° beam at ${throwM} m throw lands a ${spot.toFixed(2)} m pool. Beam angle is measured where intensity falls to 50% of peak; the paler field angle, at 10%, is the spill you also have to design for.`}
+>
+  <svg viewBox={`0 0 ${W} ${H}`} role="img">
+    <defs>
+      <linearGradient id="bg-cone" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.42" />
+        <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.06" />
+      </linearGradient>
+      <linearGradient id="bg-field" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.16" />
+        <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.02" />
+      </linearGradient>
+      <radialGradient id="bg-pool" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.55" />
+        <stop offset="70%" stop-color="var(--accent)" stop-opacity="0.18" />
+        <stop offset="100%" stop-color="var(--accent)" stop-opacity="0" />
+      </radialGradient>
+    </defs>
+
+    <!-- ceiling -->
+    <line class="d-solid" x1="40" y1={FY} x2={W - 40} y2={FY} />
+    <text class="d-label" x="44" y={FY - 8}>ceiling</text>
+
+    <!-- field angle cone (10%) -->
+    <path
+      d={`M ${FX} ${FY} L ${FX - fieldPx} ${FLOOR} L ${FX + fieldPx} ${FLOOR} Z`}
+      fill="url(#bg-field)"
+    />
+    <!-- beam angle cone (50%) -->
+    <path
+      d={`M ${FX} ${FY} L ${FX - halfSpotPx} ${FLOOR} L ${FX + halfSpotPx} ${FLOOR} Z`}
+      fill="url(#bg-cone)"
+    />
+    <line class="d-beam" x1={FX} y1={FY} x2={FX - halfSpotPx} y2={FLOOR} />
+    <line class="d-beam" x1={FX} y1={FY} x2={FX + halfSpotPx} y2={FLOOR} />
+
+    <!-- luminaire -->
+    <rect x={FX - 17} y={FY - 11} width="34" height="11" rx="2" class="d-surface" />
+    <circle cx={FX} cy={FY + 1} r="3.4" class="d-accent" />
+
+    <!-- axis -->
+    <line class="d-dash" x1={FX} y1={FY} x2={FX} y2={FLOOR} />
+
+    <!-- beam angle arc -->
+    <path
+      class="d-beam"
+      stroke-width="1.2"
+      d={`M ${FX - Math.tan(deg(beam) / 2) * 70} ${FY + 70} A 70 70 0 0 0 ${
+        FX + Math.tan(deg(beam) / 2) * 70
+      } ${FY + 70}`}
+    />
+    <text class="d-label-strong" x={FX} y={FY + 92} text-anchor="middle" fill="var(--accent)">
+      {beam}°
+    </text>
+
+    <!-- floor and pool -->
+    <ellipse cx={FX} cy={FLOOR} rx={halfSpotPx} ry="13" fill="url(#bg-pool)" />
+    <line class="d-solid" x1="40" y1={FLOOR} x2={W - 40} y2={FLOOR} />
+
+    <!-- throw dimension -->
+    <g>
+      <line class="d-line" x1={FX + fieldPx + 34} y1={FY} x2={FX + fieldPx + 34} y2={FLOOR} />
+      <line class="d-line" x1={FX + fieldPx + 29} y1={FY} x2={FX + fieldPx + 39} y2={FY} />
+      <line class="d-line" x1={FX + fieldPx + 29} y1={FLOOR} x2={FX + fieldPx + 39} y2={FLOOR} />
+      <text
+        class="d-label"
+        x={FX + fieldPx + 44}
+        y={(FY + FLOOR) / 2}
+        transform={`rotate(-90 ${FX + fieldPx + 44} ${(FY + FLOOR) / 2})`}
+        text-anchor="middle">throw {throwM} m</text
+      >
+    </g>
+
+    <!-- spot dimension -->
+    <g>
+      <line class="d-line" x1={FX - halfSpotPx} y1={FLOOR + 30} x2={FX + halfSpotPx} y2={FLOOR + 30} />
+      <line class="d-line" x1={FX - halfSpotPx} y1={FLOOR + 25} x2={FX - halfSpotPx} y2={FLOOR + 35} />
+      <line class="d-line" x1={FX + halfSpotPx} y1={FLOOR + 25} x2={FX + halfSpotPx} y2={FLOOR + 35} />
+      <text class="d-label-strong" x={FX} y={FLOOR + 48} text-anchor="middle" fill="var(--accent)">
+        Ø {spot.toFixed(2)} m
+      </text>
+    </g>
+
+    <text class="d-label" x={FX + fieldPx + 8} y={FLOOR - 6}>field (10%)</text>
+  </svg>
+</Figure>

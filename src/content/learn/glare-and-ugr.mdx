@@ -25,6 +25,10 @@ UGR = 8 · log₁₀ [ (0.25 / Lb) · Σ ( L² · ω / p² ) ]
 - **p** — Guth position index, weighting how far off-axis it sits
 - **Lb** — background luminance
 
+import UGRGeometry from '../../components/diagrams/UGRGeometry.astro';
+
+<UGRGeometry />
+
 Read the inputs. Three of the four depend on the **room** and the **observer**, not on the
 luminaire. Room size, surface reflectance, mounting height, where the desk sits and which way the
 chair faces all change the result.

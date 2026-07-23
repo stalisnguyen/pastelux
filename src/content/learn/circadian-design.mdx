@@ -27,6 +27,11 @@ they drive circadian entrainment, melatonin suppression, alertness and pupil siz
 So the same 500 lux can be strongly alerting or nearly circadian-neutral, depending entirely on
 spectrum. The lumen cannot see that difference. That is the gap CIE S 026 fills.
 
+import SpectrumCurves from '../../components/diagrams/SpectrumCurves.astro';
+import KelvinScale from '../../components/diagrams/KelvinScale.astro';
+
+<SpectrumCurves />
+
 ## Melanopic EDI, and the arithmetic behind it
 
 **Melanopic Equivalent Daylight Illuminance (mEDI)** is illuminance weighted by the melanopsin
@@ -49,6 +54,8 @@ mEDI ≈ vertical photopic lux at the eye × M-DER
 | 4000 K LED | 0.75 |
 | 5000 K LED | 0.90 |
 | D65 daylight | 1.00 |
+
+<KelvinScale />
 
 Two things follow immediately, and both matter more than any product selection:
 

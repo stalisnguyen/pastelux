@@ -1,0 +1,110 @@
+---
+import Figure from '../Figure.astro';
+import { polarPath, deg, pt } from '../../lib/diagram';
+
+interface Props {
+  beams?: number[];
+  caption?: string;
+}
+const { beams = [15, 36, 90], caption } = Astro.props;
+
+const W = 640;
+const H = 300;
+const CX = W / 2;
+const CY = 66;
+const R = 190;
+
+const colours = ['var(--accent)', 'var(--accent-cool)', 'var(--text-muted)'];
+const rings = [0.25, 0.5, 0.75, 1];
+const spokes = [-75, -60, -45, -30, -15, 0, 15, 30, 45, 60, 75];
+---
+
+<Figure
+  label={`Polar photometric curves comparing ${beams.join('°, ')}° beam angles`}
+  caption={caption ??
+    'Polar intensity distribution for three optics of identical lumen output. The radius at any angle is the relative luminous intensity in that direction — the same flux, shaped three different ways.'}
+>
+  <svg viewBox={`0 0 ${W} ${H}`} role="img">
+    <!-- radial grid -->
+    {
+      rings.map((f) => (
+        <path
+          class="d-line"
+          d={`M ${pt(CX - R * f, CY)} A ${R * f} ${R * f} 0 0 0 ${pt(CX + R * f, CY)}`}
+          opacity="0.5"
+        />
+      ))
+    }
+    {
+      rings.map((f) => (
+        <text class="d-label" x={CX + 4} y={CY + R * f - 3} opacity="0.8">
+          {Math.round(f * 100)}%
+        </text>
+      ))
+    }
+
+    <!-- angular spokes -->
+    {
+      spokes.map((a) => (
+        <line
+          class="d-line"
+          x1={CX}
+          y1={CY}
+          x2={CX + Math.sin(deg(a)) * R}
+          y2={CY + Math.cos(deg(a)) * R}
+          opacity={a === 0 ? '0.9' : '0.35'}
+          stroke-dasharray={a === 0 ? '4 3' : undefined}
+        />
+      ))
+    }
+    {
+      [-75, -45, 0, 45, 75].map((a) => (
+        <text
+          class="d-label"
+          x={CX + Math.sin(deg(a)) * (R + 16)}
+          y={CY + Math.cos(deg(a)) * (R + 16) + 3}
+          text-anchor="middle"
+        >
+          {Math.abs(a)}°
+        </text>
+      ))
+    }
+
+    <!-- the luminaire itself -->
+    <rect x={CX - 22} y={CY - 13} width="44" height="13" rx="2.5" class="d-surface" />
+    <line class="d-solid" x1={CX - 22} y1={CY} x2={CX + 22} y2={CY} />
+
+    <!-- distribution curves -->
+    {
+      beams.map((b, i) => (
+        <path
+          d={polarPath(b, CX, CY, R)}
+          fill={colours[i % colours.length]}
+          fill-opacity="0.1"
+          stroke={colours[i % colours.length]}
+          stroke-width="2"
+          stroke-linejoin="round"
+        />
+      ))
+    }
+
+    <!-- legend -->
+    {
+      beams.map((b, i) => (
+        <g transform={`translate(${18}, ${H - 62 + i * 18})`}>
+          <line
+            x1="0"
+            y1="-3.5"
+            x2="22"
+            y2="-3.5"
+            stroke={colours[i % colours.length]}
+            stroke-width="2.5"
+          />
+          <text class="d-label-strong" x="30" y="0">
+            {b}° beam
+          </text>
+        </g>
+      ))
+    }
+  </svg>
+</Figure>

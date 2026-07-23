@@ -16,6 +16,11 @@ to none of the above.
 
 There are four quantities. They describe the same light at four successive moments in its life.
 
+import PhotometricChain from '../../components/diagrams/PhotometricChain.astro';
+import PolarCurve from '../../components/diagrams/PolarCurve.astro';
+
+<PhotometricChain />
+
 ## 1. Luminous flux — light leaving
 
 **Φv, in lumens.** The total light a source emits in all directions, weighted by the eye's
@@ -33,6 +38,8 @@ Candelas are what a photometric file stores: a table of intensity against vertic
 angle. The polar curve on a datasheet is a slice through that table. When you choose between a 15°
 and a 40° optic on the same LED module, the lumens barely change and the candelas at nadir change
 by roughly a factor of six.
+
+<PolarCurve />
 
 ## 3. Illuminance — light arriving
 

@@ -1,0 +1,87 @@
+---
+interface Props {
+  caption?: string;
+  /** Accessible description of what the drawing shows. */
+  label: string;
+  maxWidth?: string;
+  /** Removes the card frame — for glyphs and inline marks. */
+  bare?: boolean;
+}
+const { caption, label, maxWidth = '100%', bare = false } = Astro.props;
+---
+
+<figure class="fig" style={`max-width:${maxWidth}`} role="group" aria-label={label}>
+  <div class={bare ? '' : 'fig-frame'}>
+    <slot />
+  </div>
+  {caption && <figcaption class="fig-cap" set:html={caption} />}
+</figure>
+
+<style>
+  .fig {
+    margin-block: 1.9em;
+    width: 100%;
+  }
+  .fig-frame {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    padding: 1.15rem 1rem;
+    overflow-x: auto;
+  }
+  .fig-cap {
+    margin-top: 0.7rem;
+    font-size: 0.8rem;
+    line-height: 1.55;
+    color: var(--text-faint);
+    text-align: left;
+  }
+
+  /* Shared drawing conventions, so every diagram reads as one family. */
+  .fig :global(svg) {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    font-family: var(--font-sans);
+  }
+  .fig :global(.d-label) {
+    font-size: 9.5px;
+    fill: var(--text-faint);
+    font-family: var(--font-mono);
+  }
+  .fig :global(.d-label-strong) {
+    font-size: 10px;
+    fill: var(--text-muted);
+    font-weight: 500;
+  }
+  .fig :global(.d-accent) {
+    fill: var(--accent);
+  }
+  .fig :global(.d-line) {
+    stroke: var(--border-strong);
+    fill: none;
+    stroke-width: 1;
+  }
+  .fig :global(.d-solid) {
+    stroke: var(--text-muted);
+    fill: none;
+    stroke-width: 1.4;
+  }
+  .fig :global(.d-dash) {
+    stroke: var(--border-strong);
+    fill: none;
+    stroke-width: 1;
+    stroke-dasharray: 3 3;
+  }
+  .fig :global(.d-beam) {
+    stroke: var(--accent);
+    fill: none;
+    stroke-width: 1.6;
+  }
+  .fig :global(.d-surface) {
+    fill: var(--surface);
+    stroke: var(--border-strong);
+    stroke-width: 1;
+  }
+</style>

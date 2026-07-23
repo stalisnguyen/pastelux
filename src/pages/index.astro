@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import NewsCard from '../components/NewsCard.astro';
+import ArticleGlyph from '../components/ArticleGlyph.astro';
 import { site, url } from '../site';
 
 // Latest digest the bot has produced.
@@ -184,6 +185,7 @@ const daysTo = (d: string) =>
       {
         learn.slice(0, 6).map((a) => (
           <a href={url(`/learn/${a.id}`)} class="card p-4 no-underline block" style="color: var(--text)">
+            <ArticleGlyph chapter={a.data.chapter} variant={a.data.order} height={78} />
             <p class="text-[0.72rem] font-mono" style="color: var(--accent)">
               {String(a.data.chapter).padStart(2, '0')} · {a.data.chapterTitle}
             </p>

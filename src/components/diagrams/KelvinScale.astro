@@ -1,0 +1,105 @@
+---
+import Figure from '../Figure.astro';
+import { kelvinToRgb } from '../../lib/diagram';
+
+const W = 640;
+const H = 232;
+const X0 = 24;
+const X1 = W - 24;
+
+const K_MIN = 2000;
+const K_MAX = 6500;
+
+/**
+ * Logarithmic placement. On a linear axis 2200/2700/3000 K crowd into the first
+ * fifth of the scale and their labels collide — and log spacing is closer to how
+ * the colour shift actually reads anyway.
+ */
+const frac = (k: number) => Math.log(k / K_MIN) / Math.log(K_MAX / K_MIN);
+const xAt = (k: number) => X0 + frac(k) * (X1 - X0);
+
+const stops = Array.from({ length: 26 }, (_, i) => K_MIN * Math.pow(K_MAX / K_MIN, i / 25));
+
+/** M-DER values match the table in the circadian article. */
+const marks = [
+  { k: 2200, label: '2200 K', use: 'curfew, ecology', mder: 0.35 },
+  { k: 2700, label: '2700 K', use: 'residential, hotel', mder: 0.45 },
+  { k: 3000, label: '3000 K', use: 'hospitality, retail', mder: 0.52 },
+  { k: 4000, label: '4000 K', use: 'office, education', mder: 0.75 },
+  { k: 5000, label: '5000 K', use: 'clinical, industrial', mder: 0.9 },
+  { k: 6500, label: '6500 K', use: 'colour matching', mder: 1.0 },
+];
+
+const BAR_BASE = 208;
+---
+
+<Figure
+  label="Correlated colour temperature scale from 2000 K to 6500 K with typical applications and melanopic ratios"
+  caption="The same ramp runs through the whole site as the gradient bar. M-DER is the melanopic ratio: multiply vertical lux at the eye by it to get melanopic EDI. It roughly triples across the range — spectrum, not level, is the biggest lever in circadian design. Plotted on a log axis so the warm end stays readable."
+>
+  <svg viewBox={`0 0 ${W} ${H}`} role="img">
+    <defs>
+      <linearGradient id="kv-ramp" x1="0" y1="0" x2="1" y2="0">
+        {
+          stops.map((k) => (
+            <stop offset={`${frac(k) * 100}%`} stop-color={kelvinToRgb(k)} />
+          ))
+        }
+      </linearGradient>
+    </defs>
+
+    <rect x={X0} y="18" width={X1 - X0} height="24" rx="4" fill="url(#kv-ramp)" />
+    <text class="d-label" x={X0} y="12">warm</text>
+    <text class="d-label" x={X1} y="12" text-anchor="end">cool</text>
+
+    {
+      marks.map((m, i) => {
+        const x = xAt(m.k);
+        // Alternate the label blocks between two rows so neighbours never collide.
+        const row = i % 2 === 0 ? 0 : 30;
+        const isFirst = i === 0;
+        const isLast = i === marks.length - 1;
+        const anchor = isFirst ? 'start' : isLast ? 'end' : 'middle';
+        const dx = isFirst ? -3 : isLast ? 3 : 0;
+        return (
+          <g>
+            <line class="d-line" x1={x} y1="42" x2={x} y2={56 + row} opacity="0.9" />
+            <circle cx={x} cy="30" r="4.5" fill="none" stroke="var(--bg)" stroke-width="1.6" />
+            <text class="d-label-strong" x={x + dx} y={68 + row} text-anchor={anchor}>
+              {m.label}
+            </text>
+            <text class="d-label" x={x + dx} y={81 + row} text-anchor={anchor}>
+              {m.use}
+            </text>
+            <text class="d-label" x={x + dx} y={94 + row} text-anchor={anchor} fill="var(--accent-cool)">
+              M-DER {m.mder.toFixed(2)}
+            </text>
+          </g>
+        );
+      })
+    }
+
+    <!-- melanopic content bars -->
+    <line class="d-line" x1={X0} y1={BAR_BASE} x2={X1} y2={BAR_BASE} />
+    {
+      marks.map((m) => {
+        const x = xAt(m.k);
+        const h = m.mder * 46;
+        return (
+          <g>
+            <rect
+              x={x - 10}
+              y={BAR_BASE - h}
+              width="20"
+              height={h}
+              rx="2"
+              fill="var(--accent-cool)"
+              fill-opacity="0.5"
+            />
+          </g>
+        );
+      })
+    }
+    <text class="d-label" x={X0} y={H - 6}>melanopic content per lux, relative to D65</text>
+  </svg>
+</Figure>

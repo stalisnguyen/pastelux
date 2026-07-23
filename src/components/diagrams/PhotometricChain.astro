@@ -1,0 +1,151 @@
+---
+import Figure from '../Figure.astro';
+import { polarPath } from '../../lib/diagram';
+
+const W = 640;
+const H = 250;
+const COL = 160;
+const CY = 96;
+
+const steps = [
+  { n: '1', q: 'Luminous flux', sym: 'Φv', unit: 'lumen', ask: 'How much light exists?' },
+  { n: '2', q: 'Luminous intensity', sym: 'Iv', unit: 'candela', ask: 'Which way is it going?' },
+  { n: '3', q: 'Illuminance', sym: 'E', unit: 'lux', ask: 'How much lands here?' },
+  { n: '4', q: 'Luminance', sym: 'L', unit: 'cd/m²', ask: 'How bright does it look?' },
+];
+---
+
+<Figure
+  label="The four photometric quantities shown as four stages in the life of light"
+  caption="The same light, four moments. Codes regulate stage 3 because it is cheap to measure; the eye only ever responds to stage 4. Most disagreements on a project are two people standing at different stages of this diagram."
+>
+  <svg viewBox={`0 0 ${W} ${H}`} role="img">
+    <defs>
+      <radialGradient id="pc-flux" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.85" />
+        <stop offset="100%" stop-color="var(--accent)" stop-opacity="0" />
+      </radialGradient>
+      <linearGradient id="pc-cone" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.5" />
+        <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.06" />
+      </linearGradient>
+      <linearGradient id="pc-wall" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.55" />
+        <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.18" />
+      </linearGradient>
+    </defs>
+
+    <!-- ---------- 1. flux: emission in all directions ---------- -->
+    <g transform={`translate(${COL * 0 + 78}, ${CY})`}>
+      <circle cx="0" cy="0" r="38" fill="url(#pc-flux)" />
+      <circle cx="0" cy="0" r="7" class="d-accent" />
+      {
+        Array.from({ length: 12 }, (_, i) => {
+          const a = (i * Math.PI * 2) / 12;
+          return (
+            <line
+              x1={Math.cos(a) * 12}
+              y1={Math.sin(a) * 12}
+              x2={Math.cos(a) * 34}
+              y2={Math.sin(a) * 34}
+              stroke="var(--accent)"
+              stroke-width="1.4"
+              opacity="0.65"
+            />
+          );
+        })
+      }
+    </g>
+
+    <!-- ---------- 2. intensity: a distribution ---------- -->
+    <g transform={`translate(${COL * 1 + 78}, ${CY - 44})`}>
+      <rect x="-20" y="-10" width="40" height="10" rx="1.5" class="d-surface" />
+      <path
+        d={polarPath(46, 0, 0, 66)}
+        fill="var(--accent)"
+        fill-opacity="0.22"
+        stroke="var(--accent)"
+        stroke-width="1.8"
+      />
+      <line class="d-dash" x1="0" y1="0" x2="0" y2="66" />
+    </g>
+
+    <!-- ---------- 3. illuminance: landing on a plane ---------- -->
+    <g transform={`translate(${COL * 2 + 78}, ${CY - 44})`}>
+      <rect x="-16" y="-10" width="32" height="9" rx="1.5" class="d-surface" />
+      <path d="M 0 -1 L -40 74 L 40 74 Z" fill="url(#pc-cone)" />
+      <line class="d-solid" x1="-52" y1="74" x2="52" y2="74" />
+      {
+        [-26, -13, 0, 13, 26].map((x) => (
+          <line x1={x} y1="66" x2={x} y2="74" stroke="var(--accent)" stroke-width="1.4" opacity="0.9" />
+        ))
+      }
+      <text class="d-label" x="0" y="90" text-anchor="middle">lm / m²</text>
+    </g>
+
+    <!-- ---------- 4. luminance: what the eye sees ---------- -->
+    <g transform={`translate(${COL * 3 + 78}, ${CY - 44})`}>
+      <rect x="-40" y="0" width="80" height="56" rx="2" fill="url(#pc-wall)" stroke="var(--border-strong)" />
+      {
+        Array.from({ length: 5 }, (_, i) => (
+          <line
+            x1={-34 + i * 17}
+            y1="60"
+            x2={-14 + i * 17}
+            y2="86"
+            stroke="var(--accent)"
+            stroke-width="1"
+            opacity="0.5"
+          />
+        ))
+      }
+      <g transform="translate(0, 96)">
+        <circle cx="0" cy="0" r="8.5" fill="var(--surface)" stroke="var(--text-muted)" stroke-width="1.4" />
+        <circle cx="0" cy="-1" r="2.4" fill="var(--text-muted)" />
+      </g>
+    </g>
+
+    <!-- ---------- arrows between stages ---------- -->
+    {
+      [0, 1, 2].map((i) => (
+        <path
+          d={`M ${COL * i + 128} ${CY} L ${COL * (i + 1) + 26} ${CY}`}
+          stroke="var(--border-strong)"
+          stroke-width="1.2"
+          marker-end="url(#pc-arrow)"
+        />
+      ))
+    }
+    <defs>
+      <marker id="pc-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M 0 0 L 8 4 L 0 8 z" fill="var(--border-strong)" />
+      </marker>
+    </defs>
+
+    <!-- ---------- captions ---------- -->
+    {
+      steps.map((s, i) => (
+        <g transform={`translate(${COL * i + 78}, ${H - 62})`}>
+          <text class="d-label" x="0" y="0" text-anchor="middle" fill="var(--accent)">
+            {s.n}
+          </text>
+          <text class="d-label-strong" x="0" y="17" text-anchor="middle">
+            {s.q}
+          </text>
+          <text
+            class="d-label"
+            x="0"
+            y="32"
+            text-anchor="middle"
+            style="font-family: var(--font-mono)"
+          >
+            {s.sym} · {s.unit}
+          </text>
+          <text class="d-label" x="0" y="49" text-anchor="middle" opacity="0.85">
+            {s.ask}
+          </text>
+        </g>
+      ))
+    }
+  </svg>
+</Figure>

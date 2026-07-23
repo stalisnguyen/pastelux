@@ -1,0 +1,239 @@
+---
+import { polarPath, kelvinToRgb, deg } from '../lib/diagram';
+
+interface Props {
+  chapter: number;
+  /** Article order within its chapter — perturbs the drawing so two articles
+   *  in the same chapter don't sit side by side with identical artwork. */
+  variant?: number;
+  /** Compact variant for narrow cards. */
+  height?: number;
+}
+const { chapter, variant = 0, height = 96 } = Astro.props;
+
+const W = 320;
+const H = 100;
+const v = Math.abs(variant);
+const uid = `g${chapter}-${v}`;
+
+const rays = 12 + (v % 3) * 6;
+const ringCount = 4 + (v % 2);
+const spin = (v % 4) * 9;
+---
+
+<div class="glyph" style={`height:${height}px`} aria-hidden="true">
+  <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <linearGradient id={`${uid}-fade`} x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.4" />
+        <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.02" />
+      </linearGradient>
+      <linearGradient id={`${uid}-k`} x1="0" y1="0" x2="1" y2="0">
+        {
+          Array.from({ length: 14 }, (_, i) => 2000 + i * 350).map((k, i) => (
+            <stop offset={`${(i / 13) * 100}%`} stop-color={kelvinToRgb(k)} />
+          ))
+        }
+      </linearGradient>
+    </defs>
+
+    {/* 01 — Fundamentals: radiating flux */}
+    {
+      chapter === 1 && (
+        <g transform={`rotate(${spin} 160 50)`}>
+          {Array.from({ length: ringCount }, (_, i) => (
+            <circle
+              cx="160"
+              cy="50"
+              r={12 + i * (15 + (v % 2) * 4)}
+              fill="none"
+              stroke="var(--accent)"
+              stroke-width="1.2"
+              opacity={0.5 - i * 0.08}
+            />
+          ))}
+          {Array.from({ length: rays }, (_, i) => {
+            const a = deg((i * 360) / rays + spin);
+            return (
+              <line
+                x1={160 + Math.cos(a) * 14}
+                y1={50 + Math.sin(a) * 14}
+                x2={160 + Math.cos(a) * 78}
+                y2={50 + Math.sin(a) * 78}
+                stroke="var(--accent)"
+                stroke-width="1"
+                opacity="0.32"
+              />
+            );
+          })}
+          <circle cx="160" cy="50" r="7" fill="var(--accent)" opacity="0.9" />
+        </g>
+      )
+    }
+
+    {/* 02 — Light sources & colour: spectrum bands */}
+    {
+      chapter === 2 && (
+        <g>
+          <rect x="0" y="34" width={W} height="32" fill={`url(#${uid}-k)`} opacity="0.62" />
+          {Array.from({ length: 32 }, (_, i) => (
+            <rect
+              x={i * 10}
+              y={34 + (i % 3) * 4}
+              width="5"
+              height={32 - (i % 3) * 8}
+              fill="var(--bg)"
+              opacity="0.34"
+            />
+          ))}
+        </g>
+      )
+    }
+
+    {/* 03 — Optics & glare: beam cone over a distribution */}
+    {
+      chapter === 3 && (
+        <g>
+          <path d="M 160 6 L 84 100 L 236 100 Z" fill={`url(#${uid}-fade)`} />
+          <path
+            d={polarPath(30 + (v % 3) * 16, 160, 10, 74)}
+            fill="var(--accent)"
+            fill-opacity="0.14"
+            stroke="var(--accent)"
+            stroke-width="1.4"
+          />
+          <rect x="146" y="0" width="28" height="8" rx="1.5" fill="var(--surface)" stroke="var(--border-strong)" />
+        </g>
+      )
+    }
+
+    {/* 04 — Controls: addressable bus */}
+    {
+      chapter === 4 && (
+        <g>
+          <path d="M 12 50 H 308" stroke="var(--border-strong)" stroke-width="1.4" />
+          {Array.from({ length: 8 }, (_, i) => {
+            const x = 26 + i * 38;
+            const up = i % 2 === 0;
+            return (
+              <g>
+                <line x1={x} y1="50" x2={x} y2={up ? 26 : 74} stroke="var(--accent)" stroke-width="1.2" opacity="0.6" />
+                <circle cx={x} cy={up ? 22 : 78} r="6" fill="var(--accent)" opacity={0.28 + (i % 4) * 0.16} />
+                <circle cx={x} cy="50" r="2.6" fill="var(--accent-cool)" />
+              </g>
+            );
+          })}
+        </g>
+      )
+    }
+
+    {/* 05 — Human-centric: the daily curve */}
+    {
+      chapter === 5 && (
+        <g>
+          <path
+            d="M 0 84 C 60 84, 70 18, 160 18 S 260 84, 320 84"
+            fill="none"
+            stroke="var(--accent)"
+            stroke-width="2"
+            opacity="0.85"
+          />
+          <path
+            d="M 0 84 C 60 84, 70 18, 160 18 S 260 84, 320 84 L 320 100 L 0 100 Z"
+            fill={`url(#${uid}-fade)`}
+          />
+          {[40, 90, 160, 230, 280].map((x, i) => (
+            <circle cx={x} cy={i === 2 ? 18 : i === 1 || i === 3 ? 36 : 70} r="3" fill="var(--accent-cool)" />
+          ))}
+        </g>
+      )
+    }
+
+    {/* 06 — By typology: a plan grid */}
+    {
+      chapter === 6 && (
+        <g>
+          {Array.from({ length: 12 }, (_, i) => {
+            const x = 12 + (i % 6) * 50;
+            const y = 14 + Math.floor(i / 6) * 40;
+            return (
+              <rect
+                x={x}
+                y={y}
+                width="42"
+                height="32"
+                rx="2"
+                fill="var(--accent)"
+                fill-opacity={0.06 + ((i * 7) % 5) * 0.09}
+                stroke="var(--accent)"
+                stroke-opacity="0.28"
+              />
+            );
+          })}
+        </g>
+      )
+    }
+
+    {/* 07 — Sustainability & the night: cut-off under stars */}
+    {
+      chapter === 7 && (
+        <g>
+          {[
+            [30, 18],
+            [78, 30],
+            [128, 14],
+            [206, 22],
+            [262, 34],
+            [296, 16],
+            [172, 38],
+          ].map(([x, y]) => (
+            <circle cx={x} cy={y} r="1.6" fill="var(--text-muted)" opacity="0.8" />
+          ))}
+          <path d="M 160 52 L 108 100 L 212 100 Z" fill={`url(#${uid}-fade)`} />
+          <path d="M 142 44 L 178 44 L 184 52 L 136 52 Z" fill="var(--surface)" stroke="var(--border-strong)" />
+          <line x1="20" y1="52" x2="300" y2="52" stroke="var(--success)" stroke-width="1" stroke-dasharray="4 4" opacity="0.55" />
+          <circle cx="160" cy="50" r="2.6" fill="var(--accent)" />
+        </g>
+      )
+    }
+
+    {/* 08 — Practice & workflow: stage bars */}
+    {
+      chapter === 8 && (
+        <g>
+          {Array.from({ length: 6 }, (_, i) => (
+            <g>
+              <rect
+                x={14 + i * 50}
+                y={26 + i * 7}
+                width="42"
+                height="10"
+                rx="5"
+                fill="var(--accent)"
+                fill-opacity={0.75 - i * 0.1}
+              />
+              <circle cx={35 + i * 50} cy={31 + i * 7} r="3" fill="var(--bg-elevated)" />
+            </g>
+          ))}
+          <path d="M 14 22 H 302" stroke="var(--border-strong)" stroke-width="1" opacity="0.5" />
+        </g>
+      )
+    }
+  </svg>
+</div>
+
+<style>
+  .glyph {
+    width: 100%;
+    border-radius: 9px;
+    overflow: hidden;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    margin-bottom: 0.85rem;
+  }
+  .glyph svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+</style>

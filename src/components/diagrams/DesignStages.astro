@@ -1,0 +1,83 @@
+---
+import Figure from '../Figure.astro';
+
+const W = 640;
+const H = 300;
+const X0 = 24;
+const X1 = W - 24;
+const BAR_Y = 92;
+
+const stages = [
+  { name: 'Concept', out: 'narrative, strategy', risk: 'ceiling voids, cove details' },
+  { name: 'Schematic', out: 'fitting types, budget', risk: 'standards not written down' },
+  { name: 'Detailed', out: 'layouts, scene schedule', risk: 'finishes changed after sign-off' },
+  { name: 'Tender', out: 'specification', risk: 'substitution' },
+  { name: 'Construction', out: 'mock-ups, submittals', risk: 'no mock-up' },
+  { name: 'Focusing', out: 'aiming record', risk: 'not in the fee' },
+];
+
+const seg = (X1 - X0) / stages.length;
+/** Influence over the outcome decays; cost of change rises. */
+const influence = [1, 0.78, 0.55, 0.3, 0.13, 0.05];
+const cost = [0.05, 0.14, 0.3, 0.52, 0.8, 1];
+
+const curve = (vals: number[], base: number, h: number) =>
+  vals
+    .map((v, i) => `${X0 + seg * (i + 0.5)},${base - v * h}`)
+    .reduce((acc, p, i) => (i === 0 ? `M ${p}` : `${acc} L ${p}`), '');
+---
+
+<Figure
+  label="Timeline of lighting design stages with influence and cost-of-change curves"
+  caption="Influence over the result is highest at concept and gone by construction; the cost of changing anything moves the opposite way. Every one of the five most common failures listed in this article is a process failure at the left of this chart, discovered at the right."
+>
+  <svg viewBox={`0 0 ${W} ${H}`} role="img">
+    <defs>
+      <linearGradient id="ds-bar" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.85" />
+        <stop offset="100%" stop-color="var(--accent-cool)" stop-opacity="0.85" />
+      </linearGradient>
+    </defs>
+
+    <!-- curves -->
+    <path d={curve(influence, BAR_Y - 10, 58)} fill="none" stroke="var(--accent)" stroke-width="2" />
+    <path d={curve(cost, BAR_Y - 10, 58)} fill="none" stroke="var(--danger)" stroke-width="2" stroke-dasharray="4 3" />
+
+    <text class="d-label-strong" x={X0} y="22" fill="var(--accent)">influence over the outcome</text>
+    <text class="d-label-strong" x={X0} y="37" fill="var(--danger)">cost of change</text>
+
+    <!-- stage bar -->
+    <rect x={X0} y={BAR_Y} width={X1 - X0} height="9" rx="4.5" fill="url(#ds-bar)" />
+
+    {
+      stages.map((s, i) => {
+        const cx = X0 + seg * (i + 0.5);
+        return (
+          <g>
+            <circle cx={cx} cy={BAR_Y + 4.5} r="5" fill="var(--bg-elevated)" stroke="var(--text-muted)" stroke-width="1.5" />
+            <text class="d-label-strong" x={cx} y={BAR_Y + 28} text-anchor="middle">
+              {s.name}
+            </text>
+            <text class="d-label" x={cx} y={BAR_Y + 44} text-anchor="middle" opacity="0.9">
+              {s.out.split(', ')[0]}
+            </text>
+            {s.out.split(', ')[1] && (
+              <text class="d-label" x={cx} y={BAR_Y + 56} text-anchor="middle" opacity="0.9">
+                {s.out.split(', ')[1]}
+              </text>
+            )}
+            <line class="d-dash" x1={cx} y1={BAR_Y + 66} x2={cx} y2={BAR_Y + 82} />
+            <text class="d-label" x={cx} y={BAR_Y + 96} text-anchor="middle" fill="var(--danger)" opacity="0.9">
+              {s.risk.split(' ').slice(0, 2).join(' ')}
+            </text>
+            <text class="d-label" x={cx} y={BAR_Y + 108} text-anchor="middle" fill="var(--danger)" opacity="0.9">
+              {s.risk.split(' ').slice(2).join(' ')}
+            </text>
+          </g>
+        );
+      })
+    }
+
+    <text class="d-label" x={X0} y={H - 8} opacity="0.8">where it goes wrong ↑</text>
+  </svg>
+</Figure>

@@ -1,0 +1,83 @@
+---
+import Figure from '../Figure.astro';
+
+const W = 640;
+const H = 300;
+const CEIL = 48;
+const FLOOR = 250;
+const EYE_X = 92;
+const EYE_Y = 168;
+
+const fixtures = [150, 240, 330, 420, 510];
+---
+
+<Figure
+  label="Section showing the geometry that determines Unified Glare Rating"
+  caption="Three of the four inputs to UGR depend on the room and the observer, not on the luminaire — which is why 'UGR < 19' on a datasheet is a comparison between products, never a compliance statement about your project. Note where Lb sits in the formula: raising wall and ceiling luminance lowers UGR without touching a single fitting."
+>
+  <svg viewBox={`0 0 ${W} ${H}`} role="img">
+    <defs>
+      <linearGradient id="ug-bg" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="var(--accent-cool)" stop-opacity="0.16" />
+        <stop offset="100%" stop-color="var(--accent-cool)" stop-opacity="0.02" />
+      </linearGradient>
+    </defs>
+
+    <!-- room -->
+    <rect x="24" y={CEIL} width={W - 172} height={FLOOR - CEIL} fill="url(#ug-bg)" />
+    <line class="d-solid" x1="24" y1={CEIL} x2={W - 148} y2={CEIL} />
+    <line class="d-solid" x1="24" y1={FLOOR} x2={W - 148} y2={FLOOR} />
+    <line class="d-solid" x1={W - 148} y1={CEIL} x2={W - 148} y2={FLOOR} />
+
+    <text class="d-label" x={W - 156} y={(CEIL + FLOOR) / 2} text-anchor="end" fill="var(--accent-cool)">
+      Lb — background luminance
+    </text>
+
+    <!-- luminaires and sight lines -->
+    {
+      fixtures.map((x, i) => (
+        <g>
+          <rect x={x - 20} y={CEIL} width="40" height="9" rx="1.5" class="d-surface" />
+          <rect x={x - 18} y={CEIL + 9} width="36" height="3" fill="var(--accent)" fill-opacity={0.9 - i * 0.13} />
+          <line
+            x1={EYE_X + 12}
+            y1={EYE_Y}
+            x2={x}
+            y2={CEIL + 11}
+            stroke="var(--accent)"
+            stroke-width="1"
+            stroke-dasharray="3 3"
+            opacity={0.85 - i * 0.13}
+          />
+        </g>
+      ))
+    }
+
+    <!-- the nearest luminaire, annotated -->
+    <text class="d-label" x={fixtures[0]} y={CEIL - 8} text-anchor="middle" fill="var(--accent)">L, ω</text>
+
+    <!-- position index falls off with angle -->
+    <path
+      class="d-dash"
+      d={`M ${EYE_X + 62} ${EYE_Y - 46} A 78 78 0 0 1 ${EYE_X + 76} ${EYE_Y - 18}`}
+      stroke="var(--text-faint)"
+    />
+    <text class="d-label" x={EYE_X + 92} y={EYE_Y - 34}>p — position index</text>
+
+    <!-- observer -->
+    <g transform={`translate(${EYE_X}, ${EYE_Y})`}>
+      <circle cx="0" cy="0" r="9" fill="var(--surface)" stroke="var(--text-muted)" stroke-width="1.4" />
+      <circle cx="4" cy="-2" r="2.2" fill="var(--text-muted)" />
+      <path d="M 0 9 L 0 34" class="d-solid" />
+      <path d="M -11 34 L 11 34" class="d-solid" />
+      <text class="d-label-strong" x="0" y="52" text-anchor="middle">observer</text>
+    </g>
+
+    <!-- formula -->
+    <g transform={`translate(24, ${H - 22})`}>
+      <text class="d-label-strong" x="0" y="0" style="font-family: var(--font-mono)">
+        UGR = 8 · log₁₀ [ (0.25 / Lb) · Σ ( L² · ω / p² ) ]
+      </text>
+    </g>
+  </svg>
+</Figure>

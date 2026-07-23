@@ -1,0 +1,106 @@
+---
+import Figure from '../Figure.astro';
+import { spectrumPath, photopic, melanopic, wavelengthToRgb } from '../../lib/diagram';
+
+const W = 640;
+const H = 290;
+const X0 = 54;
+const X1 = W - 24;
+const BASE = 226;
+const HGT = 168;
+
+const NM_MIN = 380;
+const NM_MAX = 780;
+const xAt = (nm: number) => X0 + ((nm - NM_MIN) / (NM_MAX - NM_MIN)) * (X1 - X0);
+
+const ticks = [400, 450, 500, 550, 600, 650, 700, 750];
+const stops = Array.from({ length: 41 }, (_, i) => NM_MIN + i * 10);
+---
+
+<Figure
+  label="Photopic and melanopic action spectra plotted against wavelength"
+  caption="The lumen is defined by V(λ), which peaks at 555 nm. Melanopsin — the pigment driving circadian response — peaks near 490 nm. The gap between the two curves is the whole reason a second metric was needed: the same lux can be strongly alerting or nearly neutral. Curve shapes are schematic."
+>
+  <svg viewBox={`0 0 ${W} ${H}`} role="img">
+    <defs>
+      <linearGradient id="sp-strip" x1="0" y1="0" x2="1" y2="0">
+        {
+          stops.map((nm) => (
+            <stop
+              offset={`${((nm - NM_MIN) / (NM_MAX - NM_MIN)) * 100}%`}
+              stop-color={wavelengthToRgb(nm)}
+            />
+          ))
+        }
+      </linearGradient>
+    </defs>
+
+    <!-- y axis -->
+    <line class="d-line" x1={X0} y1={BASE} x2={X0} y2={BASE - HGT - 6} />
+    {
+      [0, 0.5, 1].map((f) => (
+        <>
+          <line class="d-line" x1={X0 - 4} y1={BASE - f * HGT} x2={X1} y2={BASE - f * HGT} opacity="0.35" />
+          <text class="d-label" x={X0 - 9} y={BASE - f * HGT + 3} text-anchor="end">
+            {f.toFixed(1)}
+          </text>
+        </>
+      ))
+    }
+    <text
+      class="d-label"
+      x="14"
+      y={BASE - HGT / 2}
+      text-anchor="middle"
+      transform={`rotate(-90 14 ${BASE - HGT / 2})`}>relative response</text
+    >
+
+    <!-- visible spectrum strip -->
+    <rect x={X0} y={BASE + 8} width={X1 - X0} height="13" fill="url(#sp-strip)" rx="2" />
+
+    <!-- x axis -->
+    <line class="d-line" x1={X0} y1={BASE} x2={X1} y2={BASE} />
+    {
+      ticks.map((nm) => (
+        <text class="d-label" x={xAt(nm)} y={BASE + 36} text-anchor="middle">
+          {nm}
+        </text>
+      ))
+    }
+    <text class="d-label" x={(X0 + X1) / 2} y={BASE + 52} text-anchor="middle">wavelength (nm)</text>
+
+    <!-- melanopic -->
+    <path
+      d={`${spectrumPath(melanopic, X0, X1, BASE, HGT)} L ${X1} ${BASE} L ${X0} ${BASE} Z`}
+      fill="var(--accent-cool)"
+      fill-opacity="0.14"
+    />
+    <path
+      d={spectrumPath(melanopic, X0, X1, BASE, HGT)}
+      fill="none"
+      stroke="var(--accent-cool)"
+      stroke-width="2.2"
+    />
+    <line class="d-dash" x1={xAt(490)} y1={BASE} x2={xAt(490)} y2={BASE - HGT} stroke="var(--accent-cool)" />
+    <text class="d-label-strong" x={xAt(490)} y={BASE - HGT - 12} text-anchor="middle" fill="var(--accent-cool)">
+      melanopic · 490 nm
+    </text>
+
+    <!-- photopic -->
+    <path
+      d={`${spectrumPath(photopic, X0, X1, BASE, HGT)} L ${X1} ${BASE} L ${X0} ${BASE} Z`}
+      fill="var(--accent)"
+      fill-opacity="0.14"
+    />
+    <path
+      d={spectrumPath(photopic, X0, X1, BASE, HGT)}
+      fill="none"
+      stroke="var(--accent)"
+      stroke-width="2.2"
+    />
+    <line class="d-dash" x1={xAt(555)} y1={BASE} x2={xAt(555)} y2={BASE - HGT} stroke="var(--accent)" />
+    <text class="d-label-strong" x={xAt(566)} y={BASE - HGT - 28} text-anchor="start" fill="var(--accent)">
+      photopic V(λ) · 555 nm
+    </text>
+  </svg>
+</Figure>

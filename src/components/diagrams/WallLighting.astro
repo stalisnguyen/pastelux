@@ -1,0 +1,119 @@
+---
+import Figure from '../Figure.astro';
+
+const W = 640;
+const H = 300;
+const TOP = 42;
+const FLOOR = 250;
+---
+
+<Figure
+  label="Section comparing wall washing and wall grazing"
+  caption="Same wall, same luminaire, two offsets. Washing sits roughly a third of the wall height away and flattens the surface into an even plane. Grazing sits close and rakes the light across it, so every texture throws a shadow. Neither is more correct — they answer different questions about the material."
+>
+  <svg viewBox={`0 0 ${W} ${H}`} role="img">
+    <defs>
+      <linearGradient id="wl-wash" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.34" />
+        <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.05" />
+      </linearGradient>
+      <linearGradient id="wl-washwall" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.42" />
+        <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.30" />
+      </linearGradient>
+      <linearGradient id="wl-grazewall" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.72" />
+        <stop offset="45%" stop-color="var(--accent)" stop-opacity="0.22" />
+        <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.04" />
+      </linearGradient>
+      <linearGradient id="wl-graze" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.42" />
+        <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.03" />
+      </linearGradient>
+    </defs>
+
+    <!-- ============ WASHING (left) ============ -->
+    <g>
+      <text class="d-label-strong" x="24" y="24" fill="var(--accent)">WALL WASHING</text>
+
+      <!-- ceiling + floor -->
+      <line class="d-solid" x1="24" y1={TOP} x2="290" y2={TOP} />
+      <line class="d-solid" x1="24" y1={FLOOR} x2="290" y2={FLOOR} />
+
+      <!-- light cone -->
+      <path d={`M 118 ${TOP + 8} L 40 ${TOP + 6} L 40 ${FLOOR} Z`} fill="url(#wl-wash)" />
+
+      <!-- wall, evenly lit -->
+      <rect x="28" y={TOP} width="12" height={FLOOR - TOP} fill="url(#wl-washwall)" />
+      <rect x="28" y={TOP} width="12" height={FLOOR - TOP} class="d-surface" fill="none" />
+
+      <!-- luminaire -->
+      <rect x="106" y={TOP - 9} width="26" height="9" rx="2" class="d-surface" />
+      <circle cx="119" cy={TOP + 1} r="2.8" class="d-accent" />
+
+      <!-- offset dimension -->
+      <line class="d-line" x1="40" y1={TOP + 30} x2="119" y2={TOP + 30} />
+      <line class="d-line" x1="40" y1={TOP + 25} x2="40" y2={TOP + 35} />
+      <line class="d-line" x1="119" y1={TOP + 25} x2="119" y2={TOP + 35} />
+      <text class="d-label" x="79" y={TOP + 24} text-anchor="middle">≈ h / 3</text>
+
+      <!-- even gradient indicator -->
+      {
+        [0.16, 0.38, 0.6, 0.82].map((f) => (
+          <line
+            x1="46"
+            y1={TOP + (FLOOR - TOP) * f}
+            x2="60"
+            y2={TOP + (FLOOR - TOP) * f}
+            stroke="var(--accent)"
+            stroke-width="1.6"
+            opacity="0.75"
+          />
+        ))
+      }
+      <text class="d-label" x="66" y={TOP + 118}>even, flat</text>
+      <text class="d-label" x="66" y={TOP + 131}>hides texture</text>
+    </g>
+
+    <line class="d-dash" x1="320" y1="14" x2="320" y2={H - 14} />
+
+    <!-- ============ GRAZING (right) ============ -->
+    <g>
+      <text class="d-label-strong" x="350" y="24" fill="var(--accent)">WALL GRAZING</text>
+
+      <line class="d-solid" x1="350" y1={TOP} x2={W - 24} y2={TOP} />
+      <line class="d-solid" x1="350" y1={FLOOR} x2={W - 24} y2={FLOOR} />
+
+      <path d={`M 379 ${TOP + 8} L 366 ${TOP + 6} L 366 ${FLOOR} Z`} fill="url(#wl-graze)" />
+
+      <!-- wall with texture, strong falloff -->
+      <rect x="354" y={TOP} width="12" height={FLOOR - TOP} fill="url(#wl-grazewall)" />
+      <rect x="354" y={TOP} width="12" height={FLOOR - TOP} class="d-surface" fill="none" />
+      {
+        [0.1, 0.24, 0.36, 0.5, 0.63, 0.78, 0.9].map((f, i) => (
+          <line
+            x1="354"
+            y1={TOP + (FLOOR - TOP) * f}
+            x2="366"
+            y2={TOP + (FLOOR - TOP) * f}
+            stroke="var(--bg)"
+            stroke-width={i % 2 ? 1.6 : 2.6}
+            opacity="0.85"
+          />
+        ))
+      }
+
+      <rect x="368" y={TOP - 9} width="22" height="9" rx="2" class="d-surface" />
+      <circle cx="379" cy={TOP + 1} r="2.8" class="d-accent" />
+
+      <line class="d-line" x1="366" y1={TOP + 30} x2="379" y2={TOP + 30} />
+      <line class="d-line" x1="366" y1={TOP + 25} x2="366" y2={TOP + 35} />
+      <line class="d-line" x1="379" y1={TOP + 25} x2="379" y2={TOP + 35} />
+      <text class="d-label" x="398" y={TOP + 34}>100–200 mm</text>
+
+      <text class="d-label" x="398" y={TOP + 112}>strong falloff</text>
+      <text class="d-label" x="398" y={TOP + 125}>reveals every</text>
+      <text class="d-label" x="398" y={TOP + 138}>imperfection</text>
+    </g>
+  </svg>
+</Figure>

@@ -43,6 +43,11 @@ peak. Field angle is the same idea at 10%, and describes the visible spill.
 spot diameter = 2 × distance × tan(beam angle ÷ 2)
 ```
 
+import BeamGeometry from '../../components/diagrams/BeamGeometry.astro';
+import WallLighting from '../../components/diagrams/WallLighting.astro';
+
+<BeamGeometry beam={36} throwM={3.25} />
+
 At 4 m throw:
 
 | Beam | Spot diameter | Character |
@@ -75,6 +80,8 @@ To wash a wall evenly rather than graze it, the rule of thumb is:
 For a 3 m wall: fixtures roughly 1 m off the wall at roughly 1–1.2 m centres. Move to 0.15 m off
 the wall and you are no longer washing, you are grazing — which is a legitimate choice, but a
 different one, and it will reveal every imperfection in the plaster.
+
+<WallLighting />
 
 ## Working example
 
