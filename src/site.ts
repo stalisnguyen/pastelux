@@ -17,11 +17,26 @@ export const nav = [
   { href: '/events', label: 'Events' },
 ];
 
+/**
+ * Four primary destinations in the mobile bar; everything else lives behind
+ * "More". The bar is chosen for what gets opened on site or between meetings —
+ * the morning digest, an article, a calculator, a lux figure to quote.
+ */
 export const mobileNav = [
   { href: '/', label: 'Today', icon: 'sun' },
   { href: '/learn', label: 'Learn', icon: 'book' },
   { href: '/tools', label: 'Tools', icon: 'calc' },
-  { href: '/saved', label: 'Saved', icon: 'heart' },
+  { href: '/standards', label: 'Standards', icon: 'rule' },
+];
+
+/** Reachable from the "More" sheet on mobile. */
+export const mobileMore = [
+  { href: '/projects', label: 'Projects', icon: 'image', hint: 'Case studies' },
+  { href: '/glossary', label: 'Glossary', icon: 'book', hint: 'Term definitions' },
+  { href: '/events', label: 'Events', icon: 'calendar', hint: 'Fairs and deadlines' },
+  { href: '/saved', label: 'Saved', icon: 'heart', hint: 'Your bookmarks' },
+  { href: '/archive', label: 'Archive', icon: 'clock', hint: 'Past digests' },
+  { href: '/about', label: 'About', icon: 'info', hint: 'Sources and colophon' },
 ];
 
 /** Topic tags shared by the news bot and the learn section. */

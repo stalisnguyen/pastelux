@@ -162,7 +162,11 @@
       if (ev.key === 'ArrowLeft') show(index - 1);
     });
 
-    // Return focus to the thumbnail that opened it.
-    dialog.addEventListener('close', () => opener?.focus());
+    // Return focus to the thumbnail that opened it. Watching the `open`
+    // attribute rather than the `close` event, because the event is not
+    // reliably dispatched everywhere and Escape bypasses our handlers.
+    new MutationObserver(() => {
+      if (!dialog.open) opener?.focus();
+    }).observe(dialog, { attributes: true, attributeFilter: ['open'] });
   }
 </script>

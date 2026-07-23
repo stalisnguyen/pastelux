@@ -1,50 +1,248 @@
 ---
-import { mobileNav, url } from '../site';
+import { mobileNav, mobileMore, url } from '../site';
 
 const path = Astro.url.pathname.replace(import.meta.env.BASE_URL.replace(/\/$/, ''), '') || '/';
 const isActive = (href: string) =>
   href === '/' ? path === '/' : path === href || path.startsWith(href + '/');
 
+/** True when the current page lives behind "More", so the button reads as active. */
+const moreActive = mobileMore.some((i) => isActive(i.href));
+
 const icons: Record<string, string> = {
   sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.5 1.5M17.6 17.6l1.5 1.5M19.1 4.9l-1.5 1.5M6.4 17.6l-1.5 1.5"/>',
   book: '<path d="M4 4.5A2.5 2.5 0 016.5 2H20v18H6.5A2.5 2.5 0 004 22z"/><path d="M4 17.5A2.5 2.5 0 016.5 15H20"/>',
   calc: '<rect x="4" y="2.5" width="16" height="19" rx="2.5"/><path d="M8 7h8M8 12h2M14 12h2M8 16.5h2M14 16.5h2"/>',
+  rule: '<rect x="2" y="7" width="20" height="10" rx="2"/><path d="M7 7v3M11 7v5M15 7v3M19 7v5"/>',
   heart:
     '<path d="M12 20.5l-1.4-1.3C5.6 14.9 2.7 12.3 2.7 9.1 2.7 6.5 4.7 4.5 7.3 4.5c1.5 0 2.9.7 3.8 1.8l.9 1 .9-1c.9-1.1 2.3-1.8 3.8-1.8 2.6 0 4.6 2 4.6 4.6 0 3.2-2.9 5.8-7.9 10.1z"/>',
+  image:
+    '<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.6"/><path d="M21 16l-5-5L5 20"/>',
+  calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+  clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.2 2"/>',
+  info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.6v.4"/>',
+  more: '<circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/>',
 };
 ---
 
-<nav
-  class="md:hidden fixed bottom-0 inset-x-0 z-40 border-t backdrop-blur-xl"
-  style="background: color-mix(in srgb, var(--bg) 92%, transparent); border-color: var(--border); padding-bottom: env(safe-area-inset-bottom)"
-  aria-label="Primary mobile"
->
-  <ul class="grid grid-cols-4">
+<nav class="mnav md:hidden" aria-label="Primary mobile">
+  <ul>
     {
       mobileNav.map((item) => (
         <li>
           <a
             href={url(item.href)}
-            class="flex flex-col items-center gap-1 py-2.5 no-underline text-[0.68rem] font-medium"
+            class="mnav-item"
             style={isActive(item.href) ? 'color: var(--accent)' : 'color: var(--text-muted)'}
             aria-current={isActive(item.href) ? 'page' : undefined}
           >
-            <svg
-              width="21"
-              height="21"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.7"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-              set:html={icons[item.icon]}
-            />
+            <svg viewBox="0 0 24 24" aria-hidden="true" set:html={icons[item.icon]} />
             {item.label}
           </a>
         </li>
       ))
     }
+    <li>
+      <button
+        id="more-open"
+        type="button"
+        class="mnav-item"
+        style={moreActive ? 'color: var(--accent)' : 'color: var(--text-muted)'}
+        aria-haspopup="dialog"
+        aria-expanded="false"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true" set:html={icons.more} />
+        More
+      </button>
+    </li>
   </ul>
 </nav>
+
+<dialog id="more-sheet" class="sheet md:hidden" aria-label="More sections">
+  <div class="sheet-grip"></div>
+  <p class="sheet-title">More</p>
+  <ul class="sheet-list">
+    {
+      mobileMore.map((item) => (
+        <li>
+          <a
+            href={url(item.href)}
+            class="sheet-link"
+            aria-current={isActive(item.href) ? 'page' : undefined}
+            style={isActive(item.href) ? 'color: var(--accent)' : ''}
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" set:html={icons[item.icon]} />
+            <span>
+              <strong>{item.label}</strong>
+              <em>{item.hint}</em>
+            </span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+  <button id="more-close" class="btn sheet-close" type="button">Close</button>
+</dialog>
+
+<style>
+  .mnav {
+    position: fixed;
+    bottom: 0;
+    inset-inline: 0;
+    z-index: 40;
+    border-top: 1px solid var(--border);
+    background: color-mix(in srgb, var(--bg) 92%, transparent);
+    backdrop-filter: blur(16px);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .mnav ul {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .mnav-item {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    padding: 0.5rem 0.1rem 0.55rem;
+    font-size: 0.62rem;
+    font-weight: 500;
+    text-decoration: none;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    font-family: inherit;
+    line-height: 1.2;
+    text-align: center;
+  }
+  .mnav-item svg {
+    width: 21px;
+    height: 21px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* ------------------------------------------------------------ sheet -- */
+  .sheet {
+    position: fixed;
+    inset: auto 0 0 0;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0.5rem 1rem calc(1rem + env(safe-area-inset-bottom));
+    border: 0;
+    border-top: 1px solid var(--border-strong);
+    border-radius: 16px 16px 0 0;
+    background: var(--bg-elevated);
+    color: var(--text);
+    box-shadow: 0 -12px 40px rgb(0 0 0 / 0.45);
+  }
+  .sheet::backdrop {
+    background: rgb(0 0 0 / 0.55);
+    backdrop-filter: blur(3px);
+  }
+  .sheet[open] {
+    animation: sheet-up 0.22s ease;
+  }
+  @keyframes sheet-up {
+    from {
+      transform: translateY(16px);
+      opacity: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sheet[open] {
+      animation: none;
+    }
+  }
+  .sheet-grip {
+    width: 36px;
+    height: 4px;
+    border-radius: 999px;
+    background: var(--border-strong);
+    margin: 0.25rem auto 0.7rem;
+  }
+  .sheet-title {
+    font-size: 0.72rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+  }
+  .sheet-list {
+    display: grid;
+    gap: 0.15rem;
+  }
+  .sheet-link {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.7rem 0.5rem;
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--text);
+  }
+  .sheet-link:hover,
+  .sheet-link:focus-visible {
+    background: var(--surface-hover);
+    text-decoration: none;
+  }
+  .sheet-link svg {
+    width: 20px;
+    height: 20px;
+    flex: none;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.85;
+  }
+  .sheet-link strong {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 550;
+  }
+  .sheet-link em {
+    display: block;
+    font-style: normal;
+    font-size: 0.78rem;
+    color: var(--text-faint);
+  }
+  .sheet-close {
+    width: 100%;
+    margin-top: 0.7rem;
+  }
+</style>
+
+<script>
+  const sheet = document.getElementById('more-sheet') as HTMLDialogElement | null;
+  const open = document.getElementById('more-open');
+
+  if (sheet && open) {
+    /**
+     * Mirror the dialog's real state onto aria-expanded by watching the `open`
+     * attribute rather than listening for the `close` event. The event is not
+     * reliably dispatched in every engine, and Escape closes the dialog
+     * natively without going through our handlers — the attribute always
+     * changes, so this catches every path.
+     */
+    const sync = () => open.setAttribute('aria-expanded', String(sheet.open));
+    new MutationObserver(sync).observe(sheet, {
+      attributes: true,
+      attributeFilter: ['open'],
+    });
+    sync();
+
+    open.addEventListener('click', () => sheet.showModal());
+    document.getElementById('more-close')?.addEventListener('click', () => sheet.close());
+
+    // Tap the backdrop to dismiss.
+    sheet.addEventListener('click', (ev) => {
+      if (ev.target === sheet) sheet.close();
+    });
+  }
+</script>
