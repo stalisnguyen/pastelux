@@ -1,0 +1,61 @@
+---
+---
+
+<button
+  id="theme-toggle"
+  class="btn !px-2 !py-1.5"
+  type="button"
+  aria-label="Toggle colour theme"
+  title="Toggle colour theme"
+>
+  <svg
+    class="dark-icon"
+    width="17"
+    height="17"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.8"
+    stroke-linecap="round"
+    aria-hidden="true"
+  >
+    <path d="M20.5 14.5A8.5 8.5 0 019.5 3.5a8.5 8.5 0 1011 11z"></path>
+  </svg>
+  <svg
+    class="light-icon"
+    width="17"
+    height="17"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.8"
+    stroke-linecap="round"
+    aria-hidden="true"
+  >
+    <circle cx="12" cy="12" r="4"></circle>
+    <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.5 1.5M17.6 17.6l1.5 1.5M19.1 4.9l-1.5 1.5M6.4 17.6l-1.5 1.5"
+    ></path>
+  </svg>
+</button>
+
+<style>
+  :global([data-theme='dark']) .light-icon,
+  :global([data-theme='light']) .dark-icon {
+    display: none;
+  }
+</style>
+
+<script>
+  const btn = document.getElementById('theme-toggle');
+  btn?.addEventListener('click', () => {
+    const root = document.documentElement;
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try {
+      localStorage.setItem('pastelux-theme', next);
+    } catch {}
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute('content', next === 'dark' ? '#0a0c0f' : '#fbfbfa');
+  });
+</script>

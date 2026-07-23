@@ -1,0 +1,94 @@
+---
+title: 'The four quantities, and which one you are actually designing'
+summary: 'Lumen, candela, lux and cd/m² describe the same light at four different moments. Confusing them is the root of most bad lighting arguments.'
+chapter: 1
+chapterTitle: 'Fundamentals'
+order: 1
+topics: ['optics']
+readingMinutes: 7
+updated: 2026-07-20
+---
+
+Every photometric argument on a project eventually reduces to two people using different
+quantities and assuming they mean the same thing. The manufacturer talks lumens, the code
+talks lux, the client talks "brightness", and the eye — the only judge that matters — responds
+to none of the above.
+
+There are four quantities. They describe the same light at four successive moments in its life.
+
+## 1. Luminous flux — light leaving
+
+**Φv, in lumens.** The total light a source emits in all directions, weighted by the eye's
+photopic sensitivity curve V(λ), which peaks at 555 nm.
+
+Lumens are a total. They carry no information about direction. A 3000 lm bare lamp and a 3000 lm
+narrow-beam projector are the same number and completely different design instruments. This is why
+"how many lumens do I need?" is not answerable and "what distribution do I need?" is.
+
+## 2. Luminous intensity — light heading somewhere
+
+**Iv, in candelas.** Flux per unit solid angle in a specific direction.
+
+Candelas are what a photometric file stores: a table of intensity against vertical and horizontal
+angle. The polar curve on a datasheet is a slice through that table. When you choose between a 15°
+and a 40° optic on the same LED module, the lumens barely change and the candelas at nadir change
+by roughly a factor of six.
+
+## 3. Illuminance — light arriving
+
+**E, in lux (lm/m²).** Flux landing on a surface, per unit area.
+
+This is what a light meter reads and what essentially every standard regulates, because it is
+cheap to measure and easy to verify on site. It is a property of the surface, not of the source —
+the same luminaire produces different lux on a desk, on the floor and on the wall behind it.
+
+Illuminance is also the quantity most likely to mislead you. A room can meet 500 lx on the working
+plane and still feel like a car park, because horizontal illuminance says nothing about what the
+vertical surfaces are doing. EN 12464-1:2021 responded to exactly this by adding requirements for
+cylindrical, wall and ceiling illuminance alongside the old horizontal number.
+
+## 4. Luminance — light seen
+
+**L, in cd/m² (nits).** Intensity per unit projected area of a surface, as seen from the observer's
+position.
+
+This is the only one of the four the eye actually responds to. Brightness, contrast, modelling,
+glare, sparkle — all of it is luminance. For a matte (Lambertian) surface:
+
+```
+L = E × ρ / π
+```
+
+where ρ is the reflectance. A wall at 200 lx with ρ = 0.8 reads at about 51 cd/m². The same 200 lx
+on a dark timber wall at ρ = 0.15 reads at 9.5 cd/m² — a surface five times darker, from an
+identical lux calculation that both would pass.
+
+> Design in lux because that is what you can verify. Judge in luminance, because that is what
+> your client will see.
+
+## The chain in one line
+
+| | Quantity | Symbol | Unit | Question it answers |
+|---|---|---|---|---|
+| 1 | Luminous flux | Φv | lm | How much light exists? |
+| 2 | Luminous intensity | Iv | cd | Which way is it going? |
+| 3 | Illuminance | E | lx | How much lands here? |
+| 4 | Luminance | L | cd/m² | How bright does it look? |
+
+## Two habits worth forming
+
+**State the plane.** "300 lux" is incomplete. 300 lux horizontal at 0.8 m, 300 lux vertical at
+1.6 m, and 300 lux cylindrical are three different specifications and three different schemes.
+Write the plane and the height into the spec every time.
+
+**Sanity-check in luminance before you commit.** Take your calculated illuminance on the key
+surfaces, multiply by the *actual* finish reflectance, divide by π. If the feature wall lands
+within 3:1 of the ambient background, the "feature" will not read as one.
+
+## Where this goes wrong on real projects
+
+The single most common failure is a scheme calculated entirely in horizontal illuminance and
+delivered into a room whose finishes were changed after the lighting was signed off. Nothing in
+the lux calculation moved. Every luminance in the room did. Confirm final reflectances at the end
+of detailed design and re-run the numbers — it takes an afternoon and it is the difference between
+the render and the building.

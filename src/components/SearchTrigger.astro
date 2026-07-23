@@ -1,0 +1,154 @@
+---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<button
+  id="search-open"
+  type="button"
+  class="btn !py-1.5 !px-2.5 md:!pr-2"
+  aria-label="Search the site"
+  aria-haspopup="dialog"
+>
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    aria-hidden="true"
+  >
+    <circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path>
+  </svg>
+  <span class="hidden md:inline" style="color: var(--text-muted)">Search</span>
+  <kbd
+    class="hidden md:inline font-mono text-[0.7rem] px-1.5 py-0.5 rounded border"
+    style="border-color: var(--border); color: var(--text-faint)">⌘K</kbd
+  >
+</button>
+
+<dialog
+  id="search-dialog"
+  class="w-[min(46rem,92vw)] rounded-xl p-0 backdrop:bg-black/60 backdrop:backdrop-blur-sm"
+  style="background: var(--bg-elevated); border: 1px solid var(--border-strong); color: var(--text); box-shadow: var(--shadow)"
+  aria-label="Site search"
+>
+  <div class="flex items-center gap-3 px-4 py-3 border-b" style="border-color: var(--border)">
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="var(--text-faint)"
+      stroke-width="2"
+      stroke-linecap="round"
+      aria-hidden="true"
+    >
+      <circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path>
+    </svg>
+    <input
+      id="search-input"
+      type="search"
+      autocomplete="off"
+      placeholder="Search articles, terms, standards…"
+      class="flex-1 bg-transparent border-0 outline-none text-base"
+      style="color: var(--text)"
+      aria-label="Search query"
+    />
+    <button id="search-close" class="btn !px-2 !py-1 text-xs" type="button">Esc</button>
+  </div>
+  <div id="search-results" class="max-h-[60vh] overflow-y-auto p-2 text-sm">
+    <p class="px-3 py-6 text-center" style="color: var(--text-faint)">
+      Start typing to search.
+    </p>
+  </div>
+</dialog>
+
+<script is:inline define:vars={{ base }}>
+  (() => {
+    const dialog = document.getElementById('search-dialog');
+    const input = document.getElementById('search-input');
+    const results = document.getElementById('search-results');
+    if (!dialog || !input || !results) return;
+
+    let pagefind = null;
+    let loadFailed = false;
+
+    async function ensureIndex() {
+      if (pagefind || loadFailed) return;
+      try {
+        // Pagefind only exists after `npm run build`; in `astro dev` this 404s.
+        pagefind = await import(/* @vite-ignore */ `${base}/pagefind/pagefind.js`);
+        await pagefind.options({ excerptLength: 22 });
+      } catch {
+        loadFailed = true;
+      }
+    }
+
+    const message = (text) => {
+      results.innerHTML = `<p class="px-3 py-6 text-center" style="color: var(--text-faint)">${text}</p>`;
+    };
+
+    async function open() {
+      dialog.showModal();
+      input.focus();
+      await ensureIndex();
+      if (loadFailed) {
+        message('Search index is built by <code>npm run build</code> — not available in dev mode.');
+      }
+    }
+
+    document.getElementById('search-open')?.addEventListener('click', open);
+    document.getElementById('search-close')?.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        dialog.open ? dialog.close() : open();
+      }
+    });
+
+    let seq = 0;
+    let timer;
+    input.addEventListener('input', () => {
+      clearTimeout(timer);
+      timer = setTimeout(run, 140);
+    });
+
+    async function run() {
+      const q = input.value.trim();
+      if (!q) return message('Start typing to search.');
+      await ensureIndex();
+      if (loadFailed || !pagefind) {
+        return message('Search index unavailable. Run <code>npm run build</code> first.');
+      }
+      const mine = ++seq;
+      const search = await pagefind.search(q);
+      if (mine !== seq) return;
+      if (!search.results.length) return message(`No results for “${escapeHtml(q)}”.`);
+
+      const top = await Promise.all(search.results.slice(0, 8).map((r) => r.data()));
+      if (mine !== seq) return;
+      results.innerHTML = top
+        .map(
+          (d) => `
+          <a href="${d.url}" class="block px-3 py-2.5 rounded-lg no-underline hover:bg-[var(--surface-hover)]" style="color: var(--text)">
+            <div class="font-medium">${escapeHtml(d.meta?.title ?? d.url)}</div>
+            <div class="text-[0.82rem] mt-0.5" style="color: var(--text-muted)">${d.excerpt}</div>
+          </a>`
+        )
+        .join('');
+    }
+
+    function escapeHtml(s) {
+      return s.replace(
+        /[&<>"']/g,
+        (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]
+      );
+    }
+  })();
+</script>

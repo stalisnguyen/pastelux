@@ -1,0 +1,98 @@
+---
+title: 'Beam angles, spot sizes and the inverse square law'
+summary: 'The three pieces of hand arithmetic that let you sketch a scheme in a meeting without opening Dialux.'
+chapter: 1
+chapterTitle: 'Fundamentals'
+order: 2
+topics: ['optics']
+readingMinutes: 6
+updated: 2026-07-18
+---
+
+Calculation software is for verification. In a design meeting you need answers in seconds, and
+three formulas cover most of what gets asked.
+
+## Inverse square law
+
+Illuminance from a point source falls with the square of distance:
+
+```
+E = I / d²
+```
+
+With the surface tilted at angle θ from the beam's normal:
+
+```
+E = I × cos θ / d²
+```
+
+So a 5000 cd spotlight at 4 m gives 5000 / 16 = **313 lux** on axis. At 6 m it gives 139 lux.
+Moving a fixture 50% further away costs you 56% of the light.
+
+**The validity limit matters.** The inverse square law assumes a point source, which in practice
+means the distance must be at least about five times the largest dimension of the emitting
+surface. It is fine for a downlight at 3 m. It is wrong for a 1.5 m linear fitting at 2 m, where
+the falloff is closer to 1/d.
+
+## Beam angle to spot size
+
+Beam angle is the full angle between the two directions where intensity has fallen to 50% of
+peak. Field angle is the same idea at 10%, and describes the visible spill.
+
+```
+spot diameter = 2 × distance × tan(beam angle ÷ 2)
+```
+
+At 4 m throw:
+
+| Beam | Spot diameter | Character |
+|---|---|---|
+| 10° | 0.7 m | Object accent, single sculpture |
+| 15° | 1.05 m | Artwork, table centre |
+| 24° | 1.70 m | General accent, seating group |
+| 36° | 2.60 m | Wide accent, circulation |
+| 60° | 4.60 m | General downlight |
+
+Two numbers worth memorising: at a 3 m throw a 24° beam gives roughly a 1.3 m pool, and a 60°
+beam roughly 3.5 m. Most residential and hospitality sketching happens around those.
+
+## Spacing to height ratio
+
+For even general lighting on a horizontal plane, spacing between luminaires should not exceed
+roughly 1.0–1.5 × the mounting height above the working plane, depending on the distribution.
+
+For a 2.7 m ceiling and a 0.8 m desk, the height above the plane is 1.9 m, so downlights want to
+sit at roughly 1.9–2.6 m centres. If the architect's reflected ceiling plan shows 4 m centres,
+the room will be scalloped and patchy no matter which fixture you pick.
+
+## Wall washing geometry
+
+To wash a wall evenly rather than graze it, the rule of thumb is:
+
+- Offset from the wall ≈ **one third of the wall height**
+- Spacing between washers ≈ **the same as the offset**, or slightly more
+
+For a 3 m wall: fixtures roughly 1 m off the wall at roughly 1–1.2 m centres. Move to 0.15 m off
+the wall and you are no longer washing, you are grazing — which is a legitimate choice, but a
+different one, and it will reveal every imperfection in the plaster.
+
+## Working example
+
+*A 4 m high hotel lobby. The client wants a 2 m diameter pool of light on a round table, at
+roughly 300 lux, with a sharp edge.*
+
+1. Throw is 4 m minus 0.75 m table height = **3.25 m**.
+2. Required beam ≈ 2 × arctan(1.0 / 3.25) = **34°**. Specify a 36° optic.
+3. Required peak intensity: I = E × d² = 300 × 3.25² = **3170 cd**.
+4. Ask the manufacturer for a 36° fitting with ≥3200 cd centre-beam. If the datasheet says
+   2000 cd, you need two fittings, a narrower optic, or a lower target.
+
+That is a complete, defensible answer in about ninety seconds, and it is right to within the
+tolerance of the finishes.
+
+## Do not skip the software
+
+Hand calculations get you the concept and keep you credible in a room. They cannot handle
+interreflection, and interreflection is where 20–40% of the light in a bright, light-coloured
+room comes from. Sketch by hand, verify in Dialux, Relux or AGi32, and always mock up anything
+where texture or a specific finish is doing the work.

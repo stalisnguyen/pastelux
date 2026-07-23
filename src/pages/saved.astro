@@ -1,0 +1,82 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+---
+
+<Base title="Saved" description="Your bookmarked articles and headlines." indexable={false}>
+  <PageHeader
+    eyebrow="Bookmarks"
+    title="Saved"
+    lede="Stored in this browser only — no account, no server, nothing tracked. Clearing site data clears the list."
+  />
+
+  <div id="saved-list" class="grid gap-3 max-w-3xl pb-6"></div>
+
+  <p id="saved-empty" class="card p-6 max-w-3xl" style="color: var(--text-muted)">
+    Nothing saved yet. Tap the heart on any headline or article.
+  </p>
+
+  <div class="mt-6 max-w-3xl hidden" id="saved-actions">
+    <button id="saved-export" class="btn" type="button">Export as JSON</button>
+    <button id="saved-clear" class="btn" type="button">Clear all</button>
+  </div>
+</Base>
+
+<script>
+  import { readSaved, removeSaved } from '../lib/saved';
+
+  const list = document.getElementById('saved-list')!;
+  const empty = document.getElementById('saved-empty')!;
+  const actions = document.getElementById('saved-actions')!;
+
+  const esc = (s: string) =>
+    s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
+
+  function render() {
+    const items = readSaved();
+    empty.classList.toggle('hidden', items.length > 0);
+    actions.classList.toggle('hidden', items.length === 0);
+
+    list.innerHTML = items
+      .map(
+        (i) => `
+      <article class="card p-4 flex items-start gap-4">
+        <div class="flex-1 min-w-0">
+          <p class="text-xs mb-1" style="color: var(--accent)">${esc(i.source || i.kind)}</p>
+          <h2 class="font-medium leading-snug">
+            <a href="${esc(i.href)}" ${i.kind === 'news' ? 'target="_blank" rel="noopener noreferrer"' : ''} class="no-underline hover:underline" style="color: var(--text)">${esc(i.title)}</a>
+          </h2>
+          <p class="text-[0.75rem] mt-1.5" style="color: var(--text-faint)">
+            saved ${new Date(i.savedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+          </p>
+        </div>
+        <button class="remove btn !px-2 !py-1 !text-xs shrink-0" data-id="${esc(i.id)}" type="button" aria-label="Remove">Remove</button>
+      </article>`
+      )
+      .join('');
+
+    list.querySelectorAll<HTMLElement>('.remove').forEach((btn) =>
+      btn.addEventListener('click', () => {
+        removeSaved(btn.dataset.id!);
+        render();
+      })
+    );
+  }
+
+  document.getElementById('saved-export')?.addEventListener('click', () => {
+    const blob = new Blob([JSON.stringify(readSaved(), null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'pastelux-saved.json';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+
+  document.getElementById('saved-clear')?.addEventListener('click', () => {
+    if (!confirm('Remove all saved items? This cannot be undone.')) return;
+    for (const i of readSaved()) removeSaved(i.id);
+    render();
+  });
+
+  render();
+</script>

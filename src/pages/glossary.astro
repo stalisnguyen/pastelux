@@ -1,0 +1,150 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { TOPIC_LABEL } from '../site';
+
+const terms = (await getCollection('glossary')).sort((a, b) =>
+  a.data.term.localeCompare(b.data.term)
+);
+const byId = new Map(terms.map((t) => [t.id, t.data.term]));
+const topics = [...new Set(terms.flatMap((t) => t.data.topics))].sort();
+---
+
+<Base
+  title="Glossary"
+  description="Working definitions of the photometric, colour, control and practice terms used in architectural lighting design."
+>
+  <PageHeader
+    eyebrow={`${terms.length} terms`}
+    title="Glossary"
+    lede="Definitions written for use, not for exams — each one says what the term means and what it changes about a decision."
+  />
+
+  <div class="flex flex-wrap gap-2 mb-6 pb-6 border-b" style="border-color: var(--border)" data-pagefind-ignore>
+    <button class="chip chip-accent filter-btn cursor-pointer" data-topic="all" type="button" aria-pressed="true">
+      All
+    </button>
+    {
+      topics.map((t) => (
+        <button class="chip filter-btn cursor-pointer" data-topic={t} type="button" aria-pressed="false">
+          {TOPIC_LABEL[t] ?? t}
+        </button>
+      ))
+    }
+    <input
+      id="glossary-filter"
+      type="search"
+      placeholder="Filter…"
+      class="field !w-auto !py-1 !text-[0.85rem] ml-auto min-w-[10rem]"
+      aria-label="Filter terms"
+    />
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-3 pb-6" id="glossary-list">
+    {
+      terms.map((t) => (
+        <article
+          class="card p-5 term-item scroll-mt-24"
+          id={t.id}
+          data-topics={t.data.topics.join(' ')}
+          data-text={`${t.data.term} ${t.data.vi ?? ''} ${t.data.symbol ?? ''} ${t.data.definition}`.toLowerCase()}
+        >
+          <div class="flex items-baseline gap-2 flex-wrap">
+            <h2 class="text-[1.08rem] font-semibold">{t.data.term}</h2>
+            {t.data.symbol && (
+              <span class="font-mono text-[0.8rem]" style="color: var(--accent)">
+                {t.data.symbol}
+              </span>
+            )}
+            {t.data.unit && (
+              <span class="font-mono text-[0.75rem]" style="color: var(--text-faint)">
+                {t.data.unit}
+              </span>
+            )}
+          </div>
+
+          {t.data.vi && (
+            <p class="text-[0.82rem] mt-0.5" style="color: var(--text-faint)">
+              vi: {t.data.vi}
+            </p>
+          )}
+
+          <p class="text-[0.92rem] mt-2.5 leading-relaxed" style="color: var(--text-muted)">
+            {t.data.definition}
+          </p>
+
+          {t.data.note && (
+            <p
+              class="text-[0.87rem] mt-3 pl-3 border-l-2 leading-relaxed"
+              style="border-color: var(--accent); color: var(--text-muted)"
+            >
+              {t.data.note}
+            </p>
+          )}
+
+          {t.data.seeAlso.length > 0 && (
+            <p class="text-[0.8rem] mt-3" style="color: var(--text-faint)">
+              See also:{' '}
+              {t.data.seeAlso
+                .filter((s) => byId.has(s))
+                .map((s, i, arr) => (
+                  <>
+                    <a href={`#${s}`} class="no-underline hover:underline">
+                      {byId.get(s)}
+                    </a>
+                    {i < arr.length - 1 ? ', ' : ''}
+                  </>
+                ))}
+            </p>
+          )}
+        </article>
+      ))
+    }
+  </div>
+
+  <p id="glossary-empty" class="hidden py-10 text-center" style="color: var(--text-faint)">
+    No terms match that filter.
+  </p>
+</Base>
+
+<script>
+  const items = [...document.querySelectorAll<HTMLElement>('.term-item')];
+  const buttons = [...document.querySelectorAll<HTMLElement>('.filter-btn')];
+  const input = document.getElementById('glossary-filter') as HTMLInputElement | null;
+  const empty = document.getElementById('glossary-empty');
+
+  let topic = 'all';
+
+  function apply() {
+    const q = (input?.value ?? '').trim().toLowerCase();
+    let shown = 0;
+    for (const el of items) {
+      const okTopic = topic === 'all' || (el.dataset.topics ?? '').split(' ').includes(topic);
+      const okText = !q || (el.dataset.text ?? '').includes(q);
+      const show = okTopic && okText;
+      el.classList.toggle('hidden', !show);
+      if (show) shown++;
+    }
+    empty?.classList.toggle('hidden', shown > 0);
+  }
+
+  buttons.forEach((btn) =>
+    btn.addEventListener('click', () => {
+      topic = btn.dataset.topic!;
+      buttons.forEach((b) => {
+        const on = b === btn;
+        b.classList.toggle('chip-accent', on);
+        b.setAttribute('aria-pressed', String(on));
+      });
+      apply();
+    })
+  );
+
+  input?.addEventListener('input', apply);
+
+  // Deep links from the "term of the day" card should highlight the target.
+  if (location.hash) {
+    document.querySelector(location.hash)?.classList.add('ring-2');
+  }
+</script>

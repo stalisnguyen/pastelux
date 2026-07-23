@@ -1,0 +1,47 @@
+---
+import { site, url } from '../site';
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t mt-8" style="border-color: var(--border)">
+  <div class="container-page py-10">
+    <div class="flex flex-wrap gap-8 justify-between">
+      <div class="max-w-sm">
+        <p class="font-semibold">{site.name}</p>
+        <p class="text-sm mt-1.5 leading-relaxed" style="color: var(--text-muted)">
+          {site.description}
+        </p>
+      </div>
+
+      <div class="flex gap-10 text-sm">
+        <div>
+          <p class="label">Knowledge</p>
+          <ul class="space-y-1.5" style="color: var(--text-muted)">
+            <li><a href={url('/learn')} class="no-underline hover:underline">Articles</a></li>
+            <li><a href={url('/standards')} class="no-underline hover:underline">Standards</a></li>
+            <li><a href={url('/glossary')} class="no-underline hover:underline">Glossary</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="label">Daily</p>
+          <ul class="space-y-1.5" style="color: var(--text-muted)">
+            <li><a href={url('/')} class="no-underline hover:underline">Today</a></li>
+            <li><a href={url('/archive')} class="no-underline hover:underline">Archive</a></li>
+            <li><a href={url('/events')} class="no-underline hover:underline">Events</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="mt-8 pt-6 border-t flex flex-wrap gap-x-6 gap-y-2 text-xs"
+      style="border-color: var(--border); color: var(--text-faint)"
+    >
+      <span>© {year} {site.name}</span>
+      <a href={url('/about')} class="no-underline hover:underline">About &amp; sources</a>
+      <span
+        >Headlines are linked to their publishers. Summaries are written here, not copied.</span
+      >
+    </div>
+  </div>
+</footer>

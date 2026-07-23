@@ -1,0 +1,467 @@
+[
+  {
+    "id": "luminous-flux",
+    "term": "Luminous flux",
+    "vi": "Quang thông",
+    "symbol": "Φv",
+    "unit": "lumen (lm)",
+    "definition": "The total light emitted by a source in all directions, weighted by the human eye's photopic sensitivity curve V(λ). It says nothing about where the light goes.",
+    "note": "Two luminaires with identical lumen output can produce completely different design results — distribution is what you actually specify.",
+    "topics": ["optics"],
+    "seeAlso": ["luminous-intensity", "illuminance", "luminaire-efficacy"]
+  },
+  {
+    "id": "luminous-intensity",
+    "term": "Luminous intensity",
+    "vi": "Cường độ sáng",
+    "symbol": "Iv",
+    "unit": "candela (cd)",
+    "definition": "Luminous flux per unit solid angle in a given direction. This is the quantity plotted in a polar photometric diagram and stored in an IES/LDT file.",
+    "topics": ["optics"],
+    "seeAlso": ["luminous-flux", "photometric-file", "beam-angle"]
+  },
+  {
+    "id": "illuminance",
+    "term": "Illuminance",
+    "vi": "Độ rọi",
+    "symbol": "E",
+    "unit": "lux (lx) = lm/m²",
+    "definition": "Luminous flux arriving on a surface per unit area. It is what a light meter reads and what almost every code and standard regulates.",
+    "note": "Illuminance is a property of the surface, not of the light source, and it is not what the eye sees — the eye sees luminance.",
+    "topics": ["optics", "standards"],
+    "seeAlso": ["luminance", "maintained-illuminance", "inverse-square-law"]
+  },
+  {
+    "id": "luminance",
+    "term": "Luminance",
+    "vi": "Độ chói",
+    "symbol": "L",
+    "unit": "cd/m² (nit)",
+    "definition": "Luminous intensity per unit projected area of a surface — the photometric quantity the eye actually responds to, and therefore the real driver of brightness, contrast and glare.",
+    "note": "L = E × ρ / π for a perfectly diffuse (Lambertian) surface of reflectance ρ.",
+    "topics": ["optics"],
+    "seeAlso": ["illuminance", "ugr", "reflectance"]
+  },
+  {
+    "id": "maintained-illuminance",
+    "term": "Maintained illuminance",
+    "vi": "Độ rọi duy trì",
+    "symbol": "Ēm",
+    "unit": "lux",
+    "definition": "The average illuminance on the reference surface below which the installation must not fall at any point in the maintenance cycle. Standards specify Ēm, not initial illuminance.",
+    "note": "Design initial = Ēm ÷ MF. Getting the maintenance factor wrong is the most common way a compliant calculation becomes a non-compliant building.",
+    "topics": ["standards"],
+    "seeAlso": ["maintenance-factor", "illuminance", "uniformity"]
+  },
+  {
+    "id": "maintenance-factor",
+    "term": "Maintenance factor",
+    "vi": "Hệ số duy trì",
+    "symbol": "MF",
+    "definition": "The product of lamp lumen maintenance (LLMF), lamp survival (LSF), luminaire dirt depreciation (LMF) and room surface dirt depreciation (RSMF), over the chosen cleaning interval.",
+    "note": "Typical LED office value 0.80–0.90; dusty industrial or coastal exterior can fall to 0.60. Never leave it at the software default without stating the assumption.",
+    "topics": ["standards", "practice"],
+    "seeAlso": ["maintained-illuminance", "l70"]
+  },
+  {
+    "id": "uniformity",
+    "term": "Uniformity",
+    "vi": "Độ đồng đều",
+    "symbol": "Uo",
+    "definition": "The ratio of minimum to average illuminance over a defined area. EN 12464-1 sets a minimum Uo for the task area, the immediate surrounding area and the background area separately.",
+    "topics": ["standards"],
+    "seeAlso": ["maintained-illuminance", "task-area"]
+  },
+  {
+    "id": "task-area",
+    "term": "Task area",
+    "vi": "Vùng nhiệm vụ",
+    "definition": "The partial area of a room where the visual task is carried out. EN 12464-1 tiers requirements outward: task area, immediate surrounding area (≥0.5 m band), then background area (≥3 m band).",
+    "note": "If the task location is unknown, the whole room must be treated as task area — which is far more expensive. Pin the task locations down early.",
+    "topics": ["standards"],
+    "seeAlso": ["uniformity", "maintained-illuminance"]
+  },
+  {
+    "id": "ugr",
+    "term": "UGR",
+    "vi": "Chỉ số chói loá thống nhất",
+    "symbol": "UGR",
+    "definition": "Unified Glare Rating — a logarithmic index of discomfort glare from a lighting installation, computed from luminaire luminance, solid angle, position index and background luminance.",
+    "note": "UGR is a room-and-observer property, not a luminaire property. A luminaire quoting 'UGR<19' has only been evaluated in a reference room; verify in yours.",
+    "topics": ["optics", "standards"],
+    "seeAlso": ["luminance", "glare", "cut-off-angle"]
+  },
+  {
+    "id": "glare",
+    "term": "Glare",
+    "vi": "Chói loá",
+    "definition": "Any condition where luminance in the field of view is excessive or too unevenly distributed. Split into discomfort glare (annoyance, measured by UGR/GR) and disability glare (measurable loss of visual performance).",
+    "topics": ["optics"],
+    "seeAlso": ["ugr", "cut-off-angle", "luminance"]
+  },
+  {
+    "id": "cut-off-angle",
+    "term": "Cut-off angle",
+    "vi": "Góc chắn sáng",
+    "unit": "degrees",
+    "definition": "The angle from the downward vertical beyond which the bare light source is no longer visible. Deeper cut-off means better glare control and less spill.",
+    "topics": ["optics", "facade"],
+    "seeAlso": ["full-cutoff", "ugr", "beam-angle"]
+  },
+  {
+    "id": "full-cutoff",
+    "term": "Full cut-off",
+    "vi": "Chắn sáng toàn phần",
+    "definition": "An exterior classification where zero luminous intensity is emitted at or above 90° from nadir, and no more than 10% at or above 80°. The baseline requirement for dark-sky-friendly exterior lighting.",
+    "note": "Increasingly written into planning conditions rather than merely recommended.",
+    "topics": ["facade", "sustainability"],
+    "seeAlso": ["obtrusive-light", "uplight-ratio", "cut-off-angle"]
+  },
+  {
+    "id": "obtrusive-light",
+    "term": "Obtrusive light",
+    "vi": "Ánh sáng gây phiền nhiễu",
+    "definition": "Spill light that causes nuisance, discomfort or harm — light trespass into windows, source intensity toward observers, upward waste light, and building-façade luminance. Limited by environmental zone E0–E4.",
+    "topics": ["facade", "sustainability", "standards"],
+    "seeAlso": ["full-cutoff", "uplight-ratio", "dark-sky"]
+  },
+  {
+    "id": "uplight-ratio",
+    "term": "Upward light ratio",
+    "vi": "Tỷ lệ ánh sáng hắt lên",
+    "symbol": "ULR",
+    "definition": "The proportion of a luminaire's total flux emitted above the horizontal when mounted in its installed position. The headline number in light-pollution limits.",
+    "topics": ["facade", "sustainability"],
+    "seeAlso": ["full-cutoff", "obtrusive-light"]
+  },
+  {
+    "id": "dark-sky",
+    "term": "Dark sky compliance",
+    "vi": "Tuân thủ bầu trời tối",
+    "definition": "A design approach that limits upward waste light, blue content and over-illumination to protect the night sky and nocturnal ecology. Typically combines full cut-off optics, ≤3000 K (often ≤2200 K near habitats), curfew dimming and warmer spectra.",
+    "topics": ["sustainability", "facade"],
+    "seeAlso": ["full-cutoff", "obtrusive-light", "cct"]
+  },
+  {
+    "id": "cct",
+    "term": "Correlated colour temperature",
+    "vi": "Nhiệt độ màu tương quan",
+    "symbol": "CCT",
+    "unit": "kelvin (K)",
+    "definition": "The temperature of the Planckian radiator whose perceived colour most closely matches that of the source. A one-dimensional shorthand for a two-dimensional chromaticity.",
+    "note": "Two sources at the same CCT can look visibly different if their Duv differs. Always specify CCT and a Duv or chromaticity tolerance.",
+    "topics": ["optics"],
+    "seeAlso": ["duv", "cri", "tm-30"]
+  },
+  {
+    "id": "duv",
+    "term": "Duv",
+    "vi": "Độ lệch Duv",
+    "symbol": "Duv",
+    "definition": "The signed distance of a source's chromaticity from the Planckian locus. Positive reads green/yellow, negative reads pink/magenta.",
+    "note": "±0.006 is the usual acceptance window for architectural work; skin tones and merchandise reveal a green cast long before a lux meter does.",
+    "topics": ["optics"],
+    "seeAlso": ["cct", "macadam-ellipse"]
+  },
+  {
+    "id": "macadam-ellipse",
+    "term": "MacAdam ellipse (SDCM)",
+    "vi": "Elip MacAdam",
+    "symbol": "SDCM",
+    "definition": "A region of chromaticity space within which colour differences are imperceptible to an average observer. Binning tolerance is quoted in steps: 3-step, 5-step, and so on.",
+    "note": "Specify ≤3 SDCM for any run of visible linear or wall-washing luminaires; 5 SDCM is visible on a white wall.",
+    "topics": ["optics", "product"],
+    "seeAlso": ["duv", "cct", "binning"]
+  },
+  {
+    "id": "binning",
+    "term": "Binning",
+    "vi": "Phân loại bin LED",
+    "definition": "The factory sorting of LED dies by flux, forward voltage and chromaticity. Tighter bins cost more but are the only way to guarantee visual consistency across a large installation.",
+    "topics": ["product", "optics"],
+    "seeAlso": ["macadam-ellipse", "cct"]
+  },
+  {
+    "id": "cri",
+    "term": "Colour rendering index",
+    "vi": "Chỉ số hoàn màu",
+    "symbol": "Ra / CRI",
+    "definition": "The average colour shift of eight pastel test samples (R1–R8) under the source versus a reference illuminant of the same CCT, scaled to 100.",
+    "note": "Ra ignores saturated colours. Always call up R9 (strong red) alongside Ra — Ra 90 / R9 50 will still make skin and timber look dead.",
+    "topics": ["optics"],
+    "seeAlso": ["tm-30", "r9", "cct"]
+  },
+  {
+    "id": "r9",
+    "term": "R9",
+    "vi": "Chỉ số R9",
+    "definition": "The special colour rendering index for the strong red test sample. Critical for skin tones, meat, timber and textiles, and routinely the weakest number on a datasheet.",
+    "note": "Specify R9 ≥ 50 as a floor, ≥ 90 for retail food, healthcare and hospitality.",
+    "topics": ["optics"],
+    "seeAlso": ["cri", "tm-30"]
+  },
+  {
+    "id": "tm-30",
+    "term": "TM-30 (Rf / Rg)",
+    "vi": "TM-30",
+    "definition": "IES method using 99 real-world colour samples. Rf is fidelity (how accurately colours are rendered) and Rg is gamut (whether they are saturated or muted) — two numbers instead of CRI's one.",
+    "note": "A source can have high Rf and low Rg and look flat. Rf ≥ 85 with Rg 95–110 is a good general architectural target.",
+    "topics": ["optics", "standards"],
+    "seeAlso": ["cri", "r9"]
+  },
+  {
+    "id": "luminaire-efficacy",
+    "term": "Luminaire efficacy",
+    "vi": "Hiệu suất phát sáng bộ đèn",
+    "unit": "lm/W",
+    "definition": "Delivered luminous flux of the complete luminaire divided by its total input power, driver losses included. Distinct from bare LED-chip efficacy, which is always the higher number.",
+    "topics": ["product", "sustainability"],
+    "seeAlso": ["lpd", "luminous-flux"]
+  },
+  {
+    "id": "lpd",
+    "term": "Lighting power density",
+    "vi": "Mật độ công suất chiếu sáng",
+    "symbol": "LPD",
+    "unit": "W/m²",
+    "definition": "Installed lighting load per unit floor area — the metric almost every energy code caps, including ASHRAE 90.1, Part L and Vietnam's QCVN 09 series.",
+    "note": "Controls credits (occupancy, daylight harvesting) can offset LPD in some codes but not all. Check before you bank on them.",
+    "topics": ["sustainability", "standards"],
+    "seeAlso": ["luminaire-efficacy", "daylight-harvesting"]
+  },
+  {
+    "id": "melanopic-edi",
+    "term": "Melanopic EDI",
+    "vi": "Độ rọi tương đương melanopic",
+    "symbol": "mEDI",
+    "unit": "lux",
+    "definition": "Melanopic Equivalent Daylight Illuminance — vertical illuminance at the eye weighted by the melanopsin response curve rather than V(λ). Defined in CIE S 026, it is the practical output of circadian lighting design.",
+    "note": "Widely cited daytime target: ≥250 lx mEDI at eye level; evening ≤10 lx; night ≤1 lx. Measured vertically at ~1.2 m seated, not horizontally on the desk.",
+    "topics": ["circadian", "standards"],
+    "seeAlso": ["cie-s-026", "mder", "circadian-stimulus"]
+  },
+  {
+    "id": "mder",
+    "term": "Melanopic DER",
+    "vi": "Tỷ số M/P",
+    "symbol": "M-DER",
+    "definition": "Melanopic Daylight Efficacy Ratio — the ratio of melanopic to photopic content of a source. Multiply photopic vertical lux by M-DER to get mEDI.",
+    "note": "Roughly 0.45 at 2700 K, 0.65 at 3500 K, 0.9 at 5000 K, 1.0 for D65 daylight. It is the fastest way to sanity-check a circadian scheme by hand.",
+    "topics": ["circadian"],
+    "seeAlso": ["melanopic-edi", "cie-s-026"]
+  },
+  {
+    "id": "cie-s-026",
+    "term": "CIE S 026",
+    "vi": "Tiêu chuẩn CIE S 026",
+    "definition": "The CIE system for metrology of optical radiation for ipRGC-influenced responses to light. It defines the five α-opic quantities and the melanopic EDI metric used by WELL and by most circadian design guidance.",
+    "note": "It is a measurement framework, not a design guide — it tells you how to quantify, not what to target.",
+    "topics": ["circadian", "standards"],
+    "seeAlso": ["melanopic-edi", "mder", "well-l03"]
+  },
+  {
+    "id": "well-l03",
+    "term": "WELL Feature L03",
+    "vi": "WELL L03",
+    "definition": "The Circadian Lighting Design feature of the WELL Building Standard, awarding points for achieving defined melanopic EDI thresholds at work-plane eye level during daytime hours.",
+    "topics": ["circadian", "standards"],
+    "seeAlso": ["melanopic-edi", "cie-s-026"]
+  },
+  {
+    "id": "circadian-stimulus",
+    "term": "Circadian Stimulus",
+    "vi": "Kích thích nhịp sinh học",
+    "symbol": "CS",
+    "definition": "An alternative circadian metric from the Lighting Research Center, based on nocturnal melatonin suppression. CS ≥ 0.3 for at least an hour in the morning is the common recommendation.",
+    "note": "CS and melanopic EDI are different models and give different answers. State which one you are designing to.",
+    "topics": ["circadian"],
+    "seeAlso": ["melanopic-edi"]
+  },
+  {
+    "id": "tunable-white",
+    "term": "Tunable white",
+    "vi": "Ánh sáng trắng điều chỉnh được",
+    "definition": "A luminaire with two or more white channels whose relative output is varied to shift CCT, usually along or near the Planckian locus.",
+    "note": "Ask whether the fixture holds constant output across the tuning range — many lose 20–35% of lumens at the extremes, which wrecks the lux calculation.",
+    "topics": ["circadian", "controls", "product"],
+    "seeAlso": ["cct", "dali", "melanopic-edi"]
+  },
+  {
+    "id": "dali",
+    "term": "DALI-2 / D4i",
+    "vi": "Giao thức DALI-2",
+    "definition": "Digital Addressable Lighting Interface — a bidirectional, addressable digital control bus. DALI-2 adds certified interoperability for control devices; D4i extends it with luminaire-embedded data and power for sensors.",
+    "note": "Only DALI-2-certified parts are guaranteed to interoperate. 'DALI compatible' on a datasheet is not the same claim.",
+    "topics": ["controls"],
+    "seeAlso": ["dali-plus", "dmx", "zero-ten"]
+  },
+  {
+    "id": "dali-plus",
+    "term": "DALI+",
+    "vi": "DALI+",
+    "definition": "DALI messaging carried over IP-based and wireless carriers (currently Thread) instead of the two-wire bus, letting wireless zones share one commissioning model with wired ones.",
+    "topics": ["controls"],
+    "seeAlso": ["dali", "matter"]
+  },
+  {
+    "id": "matter",
+    "term": "Matter",
+    "vi": "Giao thức Matter",
+    "definition": "An IP-based application-layer standard for interoperable smart devices over Wi-Fi and Thread. Increasingly relevant where residential and hospitality lighting meets building systems.",
+    "note": "Matter targets consumer interoperability, not the addressability and scene fidelity architectural schemes need. Treat it as a gateway layer, not a replacement for DALI or DMX.",
+    "topics": ["controls"],
+    "seeAlso": ["dali-plus", "dali"]
+  },
+  {
+    "id": "dmx",
+    "term": "DMX512 / RDM",
+    "vi": "DMX512",
+    "definition": "A unidirectional 512-channel protocol from stage lighting, standard for colour-changing and dynamic façade work. RDM adds a return path for addressing and status.",
+    "note": "Choose DMX when you need smooth high-rate colour and effects; choose DALI when you need addressable status, energy reporting and building integration.",
+    "topics": ["controls", "facade"],
+    "seeAlso": ["dali", "pixel-pitch"]
+  },
+  {
+    "id": "zero-ten",
+    "term": "0–10 V / 1–10 V",
+    "vi": "Điều khiển 0–10V",
+    "definition": "Analogue dimming over a low-voltage pair. Cheap and universal, but not addressable, polarity-sensitive and prone to voltage drop over long runs.",
+    "topics": ["controls"],
+    "seeAlso": ["dali"]
+  },
+  {
+    "id": "daylight-harvesting",
+    "term": "Daylight harvesting",
+    "vi": "Tận dụng ánh sáng tự nhiên",
+    "definition": "Closed- or open-loop dimming of electric lighting in response to measured daylight, so total illuminance stays at target while energy falls.",
+    "note": "Closed-loop needs careful sensor placement and commissioning; badly aimed sensors are the single most common cause of occupant complaints.",
+    "topics": ["controls", "sustainability"],
+    "seeAlso": ["lpd", "daylight-factor"]
+  },
+  {
+    "id": "daylight-factor",
+    "term": "Daylight factor",
+    "vi": "Hệ số ánh sáng tự nhiên",
+    "symbol": "DF",
+    "unit": "%",
+    "definition": "Indoor illuminance from daylight as a percentage of unobstructed exterior horizontal illuminance under a CIE overcast sky. A geometry metric, independent of orientation and climate.",
+    "note": "Superseded for performance work by climate-based metrics such as sDA and ASE, which do account for orientation and real weather data.",
+    "topics": ["sustainability"],
+    "seeAlso": ["daylight-harvesting"]
+  },
+  {
+    "id": "photometric-file",
+    "term": "Photometric file (IES / LDT)",
+    "vi": "File trắc quang",
+    "definition": "A measured table of luminous intensity by angle. IESNA LM-63 (.ies) is the North American format; EULUMDAT (.ldt) the European one. Both are the input every calculation engine actually uses.",
+    "note": "Check the file's declared lumen output matches the ordered configuration — many libraries ship a single file for a whole product family.",
+    "topics": ["optics", "practice"],
+    "seeAlso": ["luminous-intensity", "beam-angle"]
+  },
+  {
+    "id": "beam-angle",
+    "term": "Beam angle",
+    "vi": "Góc chiếu",
+    "unit": "degrees",
+    "definition": "The full angle between the two directions where intensity falls to 50% of peak. The field angle, at 10% of peak, describes the wider visible spill.",
+    "note": "Spot diameter ≈ 2 × distance × tan(beam angle ÷ 2).",
+    "topics": ["optics"],
+    "seeAlso": ["photometric-file", "inverse-square-law", "cut-off-angle"]
+  },
+  {
+    "id": "inverse-square-law",
+    "term": "Inverse square law",
+    "vi": "Định luật nghịch đảo bình phương",
+    "definition": "Illuminance from a point source falls with the square of distance: E = I / d². With an incidence angle θ from the surface normal, E = I × cos θ / d².",
+    "note": "Only valid when distance is at least about five times the largest luminaire dimension — it does not apply near a long linear fixture.",
+    "topics": ["optics"],
+    "seeAlso": ["illuminance", "luminous-intensity", "beam-angle"]
+  },
+  {
+    "id": "reflectance",
+    "term": "Reflectance",
+    "vi": "Hệ số phản xạ",
+    "symbol": "ρ",
+    "definition": "The fraction of incident light a surface reflects. EN 12464-1 gives recommended ranges: ceiling 0.7–0.9, walls 0.5–0.8, floor 0.2–0.4.",
+    "note": "Reflectance assumptions drive indirect and cove schemes more than fixture selection does. Confirm the interior designer's actual finishes before you calculate.",
+    "topics": ["optics", "practice"],
+    "seeAlso": ["luminance", "uniformity"]
+  },
+  {
+    "id": "l70",
+    "term": "L70 / L90 (LM-80, TM-21)",
+    "vi": "Tuổi thọ L70",
+    "definition": "The operating hours at which an LED retains 70% (or 90%) of initial output. LM-80 is the measurement method, TM-21 the projection method used to extrapolate it.",
+    "note": "A quoted L70 is meaningless without its drive current and case temperature. Two products at 'L70 50,000 h' can differ by a factor of two in the real ceiling void.",
+    "topics": ["product"],
+    "seeAlso": ["maintenance-factor", "luminaire-efficacy"]
+  },
+  {
+    "id": "wall-washing",
+    "term": "Wall washing",
+    "vi": "Rửa tường",
+    "definition": "Even vertical illumination of a wall from top to bottom, with the luminaire set well off the wall — typically at one third of the wall height — to flatten the gradient and hide surface texture.",
+    "topics": ["practice", "optics"],
+    "seeAlso": ["wall-grazing", "scallop"]
+  },
+  {
+    "id": "wall-grazing",
+    "term": "Wall grazing",
+    "vi": "Chiếu sượt tường",
+    "definition": "The opposite of wall washing: mounting close to the wall so light skims the surface at a shallow angle, throwing texture into strong relief. Used for stone, brick and board-formed concrete.",
+    "topics": ["practice", "optics"],
+    "seeAlso": ["wall-washing", "scallop"]
+  },
+  {
+    "id": "scallop",
+    "term": "Scallop",
+    "vi": "Vệt sáng hình vỏ sò",
+    "definition": "The arc-shaped pattern a downlight throws where its beam intersects an adjacent wall. Deliberate and rhythmic it is a feature; accidental and uneven it is a defect.",
+    "topics": ["practice"],
+    "seeAlso": ["wall-washing", "beam-angle"]
+  },
+  {
+    "id": "cove",
+    "term": "Cove lighting",
+    "vi": "Chiếu sáng hắt trần",
+    "definition": "Light concealed in a recess or ledge and directed up onto the ceiling or down a wall, so the source is never seen and the surface becomes the apparent luminaire.",
+    "note": "The cove depth and the distance from the emitting face to the lip decide whether you get a clean gradient or a hot line. Detail it with the architect, not after.",
+    "topics": ["practice"],
+    "seeAlso": ["wall-washing", "reflectance"]
+  },
+  {
+    "id": "mock-up",
+    "term": "Mock-up",
+    "vi": "Mẫu thử tại chỗ",
+    "definition": "A full-size on-site trial of a lighting detail with the real luminaire, real finish and real geometry, before the order is placed.",
+    "note": "The cheapest insurance in the entire process. Calculation software cannot predict how a specific stone reads under a specific grazing angle.",
+    "topics": ["practice"],
+    "seeAlso": ["focusing", "wall-grazing"]
+  },
+  {
+    "id": "focusing",
+    "term": "Focusing / aiming",
+    "vi": "Chỉnh hướng đèn",
+    "definition": "The night-time site session where every adjustable luminaire is aimed, locked, dimmed and its accessories fitted. The stage where the design is finally either delivered or lost.",
+    "note": "Budget it explicitly in the fee proposal and require the contractor to provide access equipment and an electrician on standby.",
+    "topics": ["practice"],
+    "seeAlso": ["mock-up"]
+  },
+  {
+    "id": "pixel-pitch",
+    "term": "Pixel pitch",
+    "vi": "Khoảng cách điểm ảnh",
+    "definition": "The centre-to-centre spacing of individually controllable points in a media façade or linear pixel run. It sets the minimum viewing distance at which content resolves as an image rather than as dots.",
+    "topics": ["facade", "controls"],
+    "seeAlso": ["dmx"]
+  },
+  {
+    "id": "flicker",
+    "term": "Flicker (PstLM / SVM)",
+    "vi": "Nhấp nháy",
+    "definition": "Temporal light modulation from the driver. PstLM quantifies visible flicker and SVM the stroboscopic effect. Both are now regulated in the EU under the ecodesign rules.",
+    "note": "Specify PstLM ≤ 1.0 and SVM ≤ 0.4 generally, and tighter for broadcast, sports and any space with rotating machinery.",
+    "topics": ["product", "standards", "controls"],
+    "seeAlso": ["dali", "zero-ten"]
+  }
+]

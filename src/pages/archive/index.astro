@@ -1,0 +1,73 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import { url } from '../../site';
+
+const digests = (await getCollection('daily')).sort((a, b) =>
+  b.data.date.localeCompare(a.data.date)
+);
+
+const byMonth = new Map<string, typeof digests>();
+for (const d of digests) {
+  const key = d.data.date.slice(0, 7);
+  if (!byMonth.has(key)) byMonth.set(key, []);
+  byMonth.get(key)!.push(d);
+}
+
+const monthLabel = (key: string) =>
+  new Date(`${key}-01T00:00:00Z`).toLocaleDateString('en-GB', {
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'UTC',
+  });
+---
+
+<Base title="Archive" description="Every daily digest published on Pastelux.">
+  <PageHeader
+    eyebrow={`${digests.length} ${digests.length === 1 ? 'digest' : 'digests'}`}
+    title="Archive"
+    lede="Every morning's digest, kept."
+  />
+
+  {
+    digests.length === 0 ? (
+      <div class="card p-6">
+        <p class="font-medium">Nothing archived yet.</p>
+        <p class="text-[0.92rem] mt-1.5" style="color: var(--text-muted)">
+          Digests appear here once the scheduled job has run at least once.
+        </p>
+      </div>
+    ) : (
+      <div class="grid gap-8 pb-6">
+        {[...byMonth.entries()].map(([month, days]) => (
+          <section aria-labelledby={`m-${month}`}>
+            <div class="flex items-center gap-3 mb-3">
+              <h2 id={`m-${month}`} class="text-[0.95rem] font-semibold" style="color: var(--text-muted)">
+                {monthLabel(month)}
+              </h2>
+              <span class="h-px flex-1" style="background: var(--border)" />
+            </div>
+            <div class="grid gap-2">
+              {days.map((d) => (
+                <a
+                  href={url(`/archive/${d.data.date}`)}
+                  class="card px-4 py-3 no-underline flex items-baseline gap-4"
+                  style="color: var(--text)"
+                >
+                  <span class="font-mono text-[0.85rem]" style="color: var(--accent)">
+                    {d.data.date}
+                  </span>
+                  <span class="text-[0.9rem] truncate" style="color: var(--text-muted)">
+                    {d.data.items[0]?.title ?? 'No items'}
+                  </span>
+                  <span class="ml-auto chip shrink-0">{d.data.items.length}</span>
+                </a>
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
+    )
+  }
+</Base>

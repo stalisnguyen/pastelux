@@ -1,0 +1,211 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import { url } from '../../site';
+
+const groups = [
+  {
+    region: 'Vietnam',
+    accent: true,
+    items: [
+      {
+        code: 'TCVN 7114-1:2008',
+        title: 'Ergonomics — Lighting of work places, Part 1: Indoor',
+        note: 'The national adoption of ISO 8995-1 / CIE S 008. Illuminance, UGR and Ra requirements by space type. Structurally close to the 2002 edition of EN 12464-1, so values largely align with the European table — but the newer EN concepts (task-area modifiers, cylindrical illuminance) are not present.',
+        status: 'current',
+      },
+      {
+        code: 'TCVN 7114-3:2008',
+        title: 'Lighting of work places, Part 3: Outdoor work places',
+        note: 'Exterior work areas. Pair it with local planning conditions for obtrusive light.',
+        status: 'current',
+      },
+      {
+        code: 'QCVN 09:2017/BXD',
+        title: 'National technical regulation on energy efficiency buildings',
+        note: 'Mandatory regulation, not a voluntary standard. Sets lighting power density caps by space type alongside envelope and HVAC requirements. Applies to buildings above the floor-area threshold stated in the regulation — check the current threshold and any amendment before relying on it.',
+        status: 'mandatory',
+      },
+      {
+        code: 'TCXDVN 333:2005',
+        title: 'Exterior lighting of public works and technical infrastructure',
+        note: 'Exterior and urban lighting design. Older document; confirm current status with the local authority for the project.',
+        status: 'check',
+      },
+      {
+        code: 'QCVN 06:2022/BXD',
+        title: 'Fire safety for buildings',
+        note: 'Contains the emergency and escape lighting obligations that sit alongside the lighting design.',
+        status: 'mandatory',
+      },
+    ],
+  },
+  {
+    region: 'Europe',
+    items: [
+      {
+        code: 'EN 12464-1:2021',
+        title: 'Light and lighting — Lighting of work places, Part 1: Indoor',
+        note: 'The reference document for indoor workplace lighting. The 2021 revision was substantial: task-area context modifiers, explicit cylindrical illuminance, wall and ceiling illuminance requirements, and revised treatment of daylight provision. Do not design to the 2011 table by habit.',
+        status: 'current',
+      },
+      {
+        code: 'EN 12464-2:2014',
+        title: 'Lighting of work places, Part 2: Outdoor work places',
+        note: 'Exterior work areas, including obtrusive light limits by environmental zone.',
+        status: 'current',
+      },
+      {
+        code: 'EN 1838:2013',
+        title: 'Emergency lighting',
+        note: 'Escape route, open area and high-risk task area lighting. Frequently the constraint that reshapes a ceiling layout.',
+        status: 'current',
+      },
+      {
+        code: 'EN 12193',
+        title: 'Sports lighting',
+        note: 'Class I–III by level of competition, with vertical illuminance and uniformity for broadcast.',
+        status: 'current',
+      },
+      {
+        code: 'EU 2019/2020',
+        title: 'Ecodesign requirements for light sources',
+        note: 'Sets the flicker limits now routinely specified — PstLM ≤ 1.0 and SVM ≤ 0.4 — plus efficacy floors.',
+        status: 'mandatory',
+      },
+    ],
+  },
+  {
+    region: 'International & North America',
+    items: [
+      {
+        code: 'CIE S 026:2018',
+        title: 'System for metrology of optical radiation for ipRGC-influenced responses to light',
+        note: 'Defines the five α-opic quantities and melanopic EDI. The measurement basis for essentially all current circadian design guidance, including WELL. A metrology standard — it tells you how to quantify, not what to target.',
+        status: 'current',
+      },
+      {
+        code: 'CIE 150:2017',
+        title: 'Limiting the effects of obtrusive light from outdoor installations',
+        note: 'The environmental-zone framework (E0–E4) and the limits for upward light, trespass, source intensity and façade luminance.',
+        status: 'current',
+      },
+      {
+        code: 'IES LP-6-25',
+        title: 'Lighting Practice: lighting control systems',
+        note: 'The 2025 revision added spectral tunability, circadian effects, cybersecurity for controls, and non-energy benefits — a good marker of where the discipline has moved.',
+        status: 'current',
+      },
+      {
+        code: 'IES TM-30-24',
+        title: 'Method for evaluating light source colour rendition',
+        note: 'Rf (fidelity) and Rg (gamut) over 99 real-world samples, plus the colour vector graphic.',
+        status: 'current',
+      },
+      {
+        code: 'IES LM-80 / TM-21',
+        title: 'LED lumen maintenance measurement and projection',
+        note: 'LM-80 measures, TM-21 projects. An L70 claim without the drive current and case temperature it was derived at is not a specification.',
+        status: 'current',
+      },
+      {
+        code: 'ANSI/IES LP-1, LP-2, LP-3',
+        title: 'Lighting practice: designing quality lighting for people',
+        note: 'The IES design-process documents. Useful counterweight to purely numerical compliance.',
+        status: 'current',
+      },
+      {
+        code: 'WELL v2 — L01…L09',
+        title: 'WELL Building Standard, Light concept',
+        note: 'L03 Circadian Lighting Design is the melanopic EDI credit. Others cover glare control, visual balance, electric light quality and occupant control.',
+        status: 'current',
+      },
+      {
+        code: 'ASHRAE 90.1',
+        title: 'Energy standard for buildings',
+        note: 'The LPD reference used by LEED and by many national codes as a baseline.',
+        status: 'current',
+      },
+    ],
+  },
+];
+
+const statusStyle: Record<string, string> = {
+  mandatory: 'color: var(--danger); border-color: color-mix(in srgb, var(--danger) 35%, transparent)',
+  check: 'color: var(--warning); border-color: color-mix(in srgb, var(--warning) 35%, transparent)',
+  current: '',
+};
+const statusLabel: Record<string, string> = {
+  mandatory: 'mandatory',
+  check: 'verify status',
+  current: '',
+};
+---
+
+<Base
+  title="Standards"
+  description="The Vietnamese, European and international standards that govern architectural lighting design, and what each one is actually for."
+>
+  <PageHeader
+    eyebrow="Reference"
+    title="Standards"
+    lede="What applies, what changed recently, and which document answers which question."
+  >
+    <div class="mt-6 flex flex-wrap gap-3">
+      <a href={url('/standards/compare')} class="btn btn-primary">Illuminance criteria table →</a>
+    </div>
+  </PageHeader>
+
+  <div
+    class="card p-4 mb-9 text-[0.9rem] leading-relaxed"
+    style="border-color: color-mix(in srgb, var(--warning) 40%, transparent)"
+  >
+    <strong style="color: var(--warning)">Read this first.</strong>
+    <span style="color: var(--text-muted)">
+      These pages summarise scope and intent. They are not a substitute for the standards
+      themselves, which are copyrighted and must be purchased. Always design and certify against
+      the current purchased edition, and confirm which version the project's contract calls up —
+      it is often not the newest one.
+    </span>
+  </div>
+
+  <div class="grid gap-10 pb-6">
+    {
+      groups.map((g) => (
+        <section aria-labelledby={`grp-${g.region}`}>
+          <div class="flex items-center gap-3 mb-4">
+            <h2
+              id={`grp-${g.region}`}
+              class="text-lg font-semibold"
+              style={g.accent ? 'color: var(--accent)' : ''}
+            >
+              {g.region}
+            </h2>
+            <span class="h-px flex-1" style="background: var(--border)" />
+          </div>
+
+          <div class="grid gap-3">
+            {g.items.map((s) => (
+              <article class="card p-5">
+                <div class="flex items-baseline gap-3 flex-wrap">
+                  <h3 class="font-mono font-medium text-[0.95rem]" style="color: var(--accent-cool)">
+                    {s.code}
+                  </h3>
+                  {statusLabel[s.status] && (
+                    <span class="chip" style={statusStyle[s.status]}>
+                      {statusLabel[s.status]}
+                    </span>
+                  )}
+                </div>
+                <p class="font-medium mt-1.5">{s.title}</p>
+                <p class="text-[0.9rem] mt-2 leading-relaxed" style="color: var(--text-muted)">
+                  {s.note}
+                </p>
+              </article>
+            ))}
+          </div>
+        </section>
+      ))
+    }
+  </div>
+</Base>

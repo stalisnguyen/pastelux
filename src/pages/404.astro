@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../site';
+---
+
+<Base title="Not found" indexable={false}>
+  <div class="py-24 text-center">
+    <p class="font-mono text-5xl" style="color: var(--accent)">404</p>
+    <h1 class="text-2xl font-semibold mt-4">Nothing here</h1>
+    <p class="mt-2" style="color: var(--text-muted)">
+      That page does not exist. Try searching with <kbd class="font-mono text-[0.8em]">⌘K</kbd>.
+    </p>
+    <div class="mt-7 flex gap-3 justify-center flex-wrap">
+      <a href={url('/')} class="btn btn-primary no-underline">Today</a>
+      <a href={url('/learn')} class="btn no-underline">Learn</a>
+      <a href={url('/glossary')} class="btn no-underline">Glossary</a>
+    </div>
+  </div>
+</Base>

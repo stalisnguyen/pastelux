@@ -1,0 +1,103 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import feedConfig from '../data/feeds.json';
+import { site, url } from '../site';
+
+const active = feedConfig.feeds.filter((f: any) => !f.disabled);
+const paused = feedConfig.feeds.filter((f: any) => f.disabled);
+---
+
+<Base title="About" description="How this site is built, where the daily digest comes from, and how to add to it.">
+  <PageHeader
+    eyebrow="Colophon"
+    title={`About ${site.name}`}
+    lede="A reference site for architectural lighting design, with a digest of the industry refreshed every morning."
+  />
+
+  <div class="prose pb-6">
+    <h2>Two layers</h2>
+    <p>
+      The site separates what changes daily from what does not. <strong>Learn</strong>,
+      <strong>Standards</strong>, <strong>Tools</strong> and the <strong>Glossary</strong> are the
+      fixed layer — written by hand and revised when the discipline moves. <strong>Today</strong>,
+      the <strong>Archive</strong> and <strong>Events</strong> are the moving layer, assembled by a
+      scheduled job.
+    </p>
+
+    <h2>How the daily digest works</h2>
+    <p>
+      A GitHub Action runs each morning. It reads the RSS feeds listed below, drops anything already
+      published in the previous fortnight, filters for professional relevance, writes a short
+      original summary of each remaining item, tags it, and commits the result as a JSON file. The
+      site then rebuilds and deploys.
+    </p>
+    <p>
+      Only the <strong>headline, publisher, link and a summary written here</strong> are stored.
+      Source article text is never copied into this repository, and every item links back to its
+      publisher. If the summariser is unavailable the job still publishes, marked as headlines-only,
+      rather than failing.
+    </p>
+
+    <h2>Sources</h2>
+    <ul>
+      {
+        active.map((f: any) => (
+          <li>
+            <a href={f.site} target="_blank" rel="noopener noreferrer">
+              {f.name}
+            </a>{' '}
+            — {f.about}
+          </li>
+        ))
+      }
+    </ul>
+
+    {
+      paused.length > 0 && (
+        <>
+          <h3>Currently unavailable</h3>
+          <ul>
+            {paused.map((f: any) => (
+              <li>
+                <a href={f.site} target="_blank" rel="noopener noreferrer">
+                  {f.name}
+                </a>{' '}
+                — {f.disabled}
+              </li>
+            ))}
+          </ul>
+        </>
+      )
+    }
+
+    <h2>On the numbers</h2>
+    <p>
+      Every figure on this site is a working reference, not a certification. Standards are
+      copyrighted documents that must be purchased, editions differ, and the version your contract
+      calls up is often not the newest one. Use the
+      <a href={url('/standards/compare')}>criteria table</a> to orient yourself quickly, then verify
+      against the purchased standard before anything leaves your office.
+    </p>
+
+    <h2>Adding to it</h2>
+    <ul>
+      <li><strong>An article</strong> — add an <code>.mdx</code> file to <code>src/content/learn/</code></li>
+      <li><strong>A glossary term</strong> — add an object to <code>src/content/glossary.json</code></li>
+      <li><strong>A criteria row</strong> — add an object to <code>src/content/criteria.json</code></li>
+      <li><strong>An event</strong> — add an object to <code>src/content/events.json</code></li>
+      <li><strong>A news source</strong> — add a feed to <code>src/data/feeds.json</code></li>
+    </ul>
+    <p>
+      Commit to <code>main</code> and the site rebuilds itself. All of these files can be edited
+      directly in GitHub's web editor — no local setup needed.
+    </p>
+
+    <h2>Built with</h2>
+    <p>
+      Astro, Tailwind CSS and Pagefind, deployed as a static site on GitHub Pages. No database, no
+      server, no analytics, no cookies. Bookmarks live in your browser's local storage and are never
+      transmitted anywhere.
+    </p>
+  </div>
+</Base>

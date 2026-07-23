@@ -1,0 +1,199 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import NewsCard from '../components/NewsCard.astro';
+import { site, url } from '../site';
+
+// Latest digest the bot has produced.
+const digests = (await getCollection('daily')).sort((a, b) => b.data.date.localeCompare(a.data.date));
+const today = digests[0];
+
+const glossary = await getCollection('glossary');
+const learn = (await getCollection('learn')).filter((a) => !a.data.draft);
+const events = await getCollection('events');
+
+const term =
+  glossary.find((g) => g.id === today?.data.termOfDay) ?? glossary[0];
+const feature =
+  learn.find((a) => a.id === today?.data.projectOfDay) ?? learn[0];
+
+const nextEvents = events
+  .filter((e) => Date.parse(e.data.start) >= Date.now())
+  .sort((a, b) => a.data.start.localeCompare(b.data.start))
+  .slice(0, 3);
+
+const stamp = today
+  ? new Date(`${today.data.date}T00:00:00Z`).toLocaleDateString('en-GB', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+      timeZone: 'UTC',
+    })
+  : '';
+
+const daysTo = (d: string) =>
+  Math.ceil((Date.parse(d) - Date.now()) / 86_400_000);
+---
+
+<Base>
+  <!-- ---------------------------------------------------------- masthead -->
+  <section class="pt-10 pb-8">
+    <div class="flex flex-wrap items-end gap-x-6 gap-y-2">
+      <div>
+        <p class="label !mb-1.5" style="color: var(--accent)">Today</p>
+        <h1 class="text-3xl md:text-[2.5rem] font-semibold tracking-tight">
+          {site.tagline}
+        </h1>
+      </div>
+      {stamp && <p class="text-sm ml-auto pb-1.5" style="color: var(--text-faint)">{stamp}</p>}
+    </div>
+    <div class="kbar h-[2px] w-full mt-6 rounded-full opacity-70"></div>
+  </section>
+
+  <div class="grid lg:grid-cols-[minmax(0,1fr)_320px] gap-8 lg:gap-10 items-start">
+    <!-- ------------------------------------------------------- digest -->
+    <section aria-labelledby="digest-heading">
+      <div class="flex items-baseline justify-between mb-4">
+        <h2 id="digest-heading" class="text-lg font-semibold">From the industry</h2>
+        <a href={url('/archive')} class="text-[0.85rem] no-underline hover:underline">Archive →</a>
+      </div>
+
+      {
+        today?.data.degraded && (
+          <p
+            class="card p-3 mb-4 text-[0.85rem]"
+            style="color: var(--warning); border-color: color-mix(in srgb, var(--warning) 35%, transparent)"
+          >
+            Summaries are unavailable for this digest — headlines and links only.
+          </p>
+        )
+      }
+
+      {
+        today && today.data.items.length > 0 ? (
+          <div class="grid gap-3">
+            {today.data.items.map((item) => (
+              <NewsCard item={item} />
+            ))}
+          </div>
+        ) : (
+          <div class="card p-6">
+            <p class="font-medium">No digest yet.</p>
+            <p class="text-[0.92rem] mt-1.5" style="color: var(--text-muted)">
+              Run <code class="font-mono text-[0.85em]">npm run news</code> locally, or wait for the
+              scheduled GitHub Action to publish the first one.
+            </p>
+          </div>
+        )
+      }
+    </section>
+
+    <!-- -------------------------------------------------------- rail -->
+    <aside class="grid gap-5 lg:sticky lg:top-20">
+      {
+        term && (
+          <section class="card p-5" aria-labelledby="term-heading">
+            <p id="term-heading" class="label" style="color: var(--accent)">
+              Term of the day
+            </p>
+            <h3 class="text-[1.15rem] font-semibold mt-1">
+              <a href={`${url('/glossary')}#${term.id}`} class="no-underline" style="color: var(--text)">
+                {term.data.term}
+              </a>
+            </h3>
+            {(term.data.symbol || term.data.unit) && (
+              <p class="font-mono text-[0.8rem] mt-1" style="color: var(--text-faint)">
+                {[term.data.symbol, term.data.unit].filter(Boolean).join('  ·  ')}
+              </p>
+            )}
+            <p class="text-[0.9rem] mt-2.5 leading-relaxed" style="color: var(--text-muted)">
+              {term.data.definition}
+            </p>
+            <a href={url('/glossary')} class="text-[0.82rem] no-underline hover:underline mt-3 inline-block">
+              All {glossary.length} terms →
+            </a>
+          </section>
+        )
+      }
+
+      {
+        feature && (
+          <section class="card p-5" aria-labelledby="read-heading">
+            <p id="read-heading" class="label" style="color: var(--accent-cool)">
+              Read today
+            </p>
+            <h3 class="text-[1.05rem] font-semibold mt-1 leading-snug">
+              <a href={url(`/learn/${feature.id}`)} class="no-underline" style="color: var(--text)">
+                {feature.data.title}
+              </a>
+            </h3>
+            <p class="text-[0.9rem] mt-2 leading-relaxed" style="color: var(--text-muted)">
+              {feature.data.summary}
+            </p>
+            <p class="text-[0.78rem] mt-3" style="color: var(--text-faint)">
+              {feature.data.chapterTitle} · {feature.data.readingMinutes} min
+            </p>
+          </section>
+        )
+      }
+
+      <section class="card p-5" aria-labelledby="tools-heading">
+        <p id="tools-heading" class="label">Quick tools</p>
+        <ul class="mt-1 text-[0.92rem] grid gap-1.5">
+          <li><a href={url('/tools#lumen')} class="no-underline hover:underline">Lumen method</a></li>
+          <li><a href={url('/tools#beam')} class="no-underline hover:underline">Beam angle → spot size</a></li>
+          <li><a href={url('/tools#isl')} class="no-underline hover:underline">Inverse square law</a></li>
+          <li><a href={url('/tools#medi')} class="no-underline hover:underline">Melanopic EDI</a></li>
+          <li><a href={url('/standards/compare')} class="no-underline hover:underline">Illuminance criteria table</a></li>
+        </ul>
+      </section>
+
+      {
+        nextEvents.length > 0 && (
+          <section class="card p-5" aria-labelledby="events-heading">
+            <p id="events-heading" class="label">Coming up</p>
+            <ul class="mt-1 grid gap-3">
+              {nextEvents.map((e) => (
+                <li class="text-[0.9rem]">
+                  <a href={e.data.url} target="_blank" rel="noopener noreferrer" class="no-underline hover:underline" style="color: var(--text)">
+                    {e.data.name}
+                  </a>
+                  <p class="text-[0.78rem] mt-0.5" style="color: var(--text-faint)">
+                    {e.data.city} · in {daysTo(e.data.start)} days
+                  </p>
+                </li>
+              ))}
+            </ul>
+            <a href={url('/events')} class="text-[0.82rem] no-underline hover:underline mt-3 inline-block">
+              All events →
+            </a>
+          </section>
+        )
+      }
+    </aside>
+  </div>
+
+  <!-- ------------------------------------------------------ knowledge -->
+  <section class="mt-14" aria-labelledby="learn-heading">
+    <div class="flex items-baseline justify-between mb-4">
+      <h2 id="learn-heading" class="text-lg font-semibold">The fixed layer</h2>
+      <a href={url('/learn')} class="text-[0.85rem] no-underline hover:underline">All articles →</a>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+      {
+        learn.slice(0, 6).map((a) => (
+          <a href={url(`/learn/${a.id}`)} class="card p-4 no-underline block" style="color: var(--text)">
+            <p class="text-[0.72rem] font-mono" style="color: var(--accent)">
+              {String(a.data.chapter).padStart(2, '0')} · {a.data.chapterTitle}
+            </p>
+            <h3 class="font-semibold mt-1.5 leading-snug text-[1rem]">{a.data.title}</h3>
+            <p class="text-[0.88rem] mt-1.5 leading-relaxed" style="color: var(--text-muted)">
+              {a.data.summary}
+            </p>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</Base>

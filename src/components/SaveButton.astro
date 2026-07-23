@@ -1,0 +1,66 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  href: string;
+  source?: string;
+  kind?: 'news' | 'article' | 'term';
+}
+const { id, title, href, source = '', kind = 'news' } = Astro.props;
+---
+
+<button
+  class="save-btn text-[0.82rem] inline-flex items-center gap-1.5 bg-transparent border-0 cursor-pointer p-0"
+  style="color: var(--text-faint)"
+  type="button"
+  data-id={id}
+  data-title={title}
+  data-href={href}
+  data-source={source}
+  data-kind={kind}
+  aria-pressed="false"
+>
+  <svg
+    width="14"
+    height="14"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <path
+      d="M12 20.5l-1.4-1.3C5.6 14.9 2.7 12.3 2.7 9.1 2.7 6.5 4.7 4.5 7.3 4.5c1.5 0 2.9.7 3.8 1.8l.9 1 .9-1c.9-1.1 2.3-1.8 3.8-1.8 2.6 0 4.6 2 4.6 4.6 0 3.2-2.9 5.8-7.9 10.1z"
+    ></path>
+  </svg>
+  <span class="save-label">Save</span>
+</button>
+
+<script>
+  import { isSaved, toggleSaved } from '../lib/saved';
+
+  function paint(btn: HTMLElement) {
+    const on = isSaved(btn.dataset.id!);
+    btn.setAttribute('aria-pressed', String(on));
+    btn.style.color = on ? 'var(--accent)' : 'var(--text-faint)';
+    btn.querySelector('svg')?.setAttribute('fill', on ? 'currentColor' : 'none');
+    const label = btn.querySelector('.save-label');
+    if (label) label.textContent = on ? 'Saved' : 'Save';
+  }
+
+  document.querySelectorAll<HTMLElement>('.save-btn').forEach((btn) => {
+    paint(btn);
+    btn.addEventListener('click', () => {
+      toggleSaved({
+        id: btn.dataset.id!,
+        title: btn.dataset.title!,
+        href: btn.dataset.href!,
+        source: btn.dataset.source ?? '',
+        kind: btn.dataset.kind ?? 'news',
+        savedAt: new Date().toISOString(),
+      });
+      paint(btn);
+    });
+  });
+</script>

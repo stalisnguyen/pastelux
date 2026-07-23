@@ -1,0 +1,99 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import { url } from '../../site';
+
+const articles = (await getCollection('learn'))
+  .filter((a) => !a.data.draft)
+  .sort((a, b) => a.data.chapter - b.data.chapter || a.data.order - b.data.order);
+
+const chapters = [...new Set(articles.map((a) => a.data.chapter))].map((n) => ({
+  number: n,
+  title: articles.find((a) => a.data.chapter === n)!.data.chapterTitle,
+  articles: articles.filter((a) => a.data.chapter === n),
+}));
+
+/** Chapters planned but not yet written — shown so the gaps are visible. */
+const planned = [
+  { number: 6, title: 'By typology', note: 'Office, retail, hospitality, museum, healthcare, landscape' },
+  { number: 9, title: 'Tools & software', note: 'Dialux evo, Relux, AGi32, Rhino + Grasshopper' },
+].filter((p) => !chapters.some((c) => c.number === p.number));
+---
+
+<Base
+  title="Learn"
+  description="The fixed knowledge layer: photometrics, colour, glare, controls, circadian design, the night sky and practice."
+>
+  <PageHeader
+    eyebrow="The fixed layer"
+    title="Learn"
+    lede="Written once, revised when the standards move. Everything here is the part of the craft that does not change every morning."
+  />
+
+  <div class="grid gap-10 pb-6">
+    {
+      chapters.map((ch) => (
+        <section aria-labelledby={`ch-${ch.number}`}>
+          <div class="flex items-center gap-3 mb-4">
+            <span class="font-mono text-sm" style="color: var(--accent)">
+              {String(ch.number).padStart(2, '0')}
+            </span>
+            <h2 id={`ch-${ch.number}`} class="text-lg font-semibold">
+              {ch.title}
+            </h2>
+            <span class="h-px flex-1" style="background: var(--border)" />
+            <span class="text-xs" style="color: var(--text-faint)">
+              {ch.articles.length} {ch.articles.length === 1 ? 'article' : 'articles'}
+            </span>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-3">
+            {ch.articles.map((a) => (
+              <a href={url(`/learn/${a.id}`)} class="card p-5 no-underline block" style="color: var(--text)">
+                <h3 class="font-semibold leading-snug">{a.data.title}</h3>
+                <p class="text-[0.9rem] mt-2 leading-relaxed" style="color: var(--text-muted)">
+                  {a.data.summary}
+                </p>
+                <div class="flex items-center gap-2 mt-3.5 flex-wrap">
+                  <span class="chip">{a.data.readingMinutes} min read</span>
+                  {a.data.topics.map((t) => (
+                    <span class="chip">{t}</span>
+                  ))}
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+      ))
+    }
+
+    {
+      planned.length > 0 && (
+        <section aria-labelledby="planned">
+          <div class="flex items-center gap-3 mb-4">
+            <h2 id="planned" class="text-lg font-semibold" style="color: var(--text-muted)">
+              Planned
+            </h2>
+            <span class="h-px flex-1" style="background: var(--border)" />
+          </div>
+          <div class="grid md:grid-cols-2 gap-3">
+            {planned.map((p) => (
+              <div class="card p-5 border-dashed">
+                <p class="font-mono text-[0.72rem]" style="color: var(--text-faint)">
+                  {String(p.number).padStart(2, '0')}
+                </p>
+                <h3 class="font-semibold mt-1" style="color: var(--text-muted)">
+                  {p.title}
+                </h3>
+                <p class="text-[0.88rem] mt-1.5" style="color: var(--text-faint)">
+                  {p.note}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </div>
+</Base>

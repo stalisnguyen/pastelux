@@ -1,0 +1,139 @@
+---
+title: 'Circadian design without the hand-waving'
+summary: 'CIE S 026, melanopic EDI and what a defensible human-centric specification looks like in 2026.'
+chapter: 5
+chapterTitle: 'Human-centric lighting'
+order: 1
+topics: ['circadian', 'standards']
+readingMinutes: 9
+updated: 2026-07-22
+---
+
+"Human-centric lighting" was a marketing term for most of the last decade. Since CIE S 026 gave
+the field a measurable quantity and WELL turned that quantity into a credit, it has become
+something you can specify, calculate and be held to.
+
+The shift is simple to state: **lux is no longer the only illuminance that matters.**
+
+## Why the eye needed a second metric
+
+The photopic curve V(λ), which defines the lumen, describes the cone response that governs vision.
+It peaks at 555 nm, in the green.
+
+Intrinsically photosensitive retinal ganglion cells — ipRGCs, discovered in the early 2000s — do
+not contribute to image formation. They contain melanopsin, peak around 490 nm in the blue, and
+they drive circadian entrainment, melatonin suppression, alertness and pupil size.
+
+So the same 500 lux can be strongly alerting or nearly circadian-neutral, depending entirely on
+spectrum. The lumen cannot see that difference. That is the gap CIE S 026 fills.
+
+## Melanopic EDI, and the arithmetic behind it
+
+**Melanopic Equivalent Daylight Illuminance (mEDI)** is illuminance weighted by the melanopsin
+response instead of V(λ), expressed in the equivalent lux of D65 daylight.
+
+The practical shortcut:
+
+```
+mEDI ≈ vertical photopic lux at the eye × M-DER
+```
+
+**M-DER** (melanopic daylight efficacy ratio) is a property of the spectrum alone. Typical values:
+
+| Source | M-DER (approx.) |
+|---|---|
+| 2200 K LED | 0.35 |
+| 2700 K LED | 0.45 |
+| 3000 K LED | 0.52 |
+| 3500 K LED | 0.65 |
+| 4000 K LED | 0.75 |
+| 5000 K LED | 0.90 |
+| D65 daylight | 1.00 |
+
+Two things follow immediately, and both matter more than any product selection:
+
+**It is vertical, at the eye.** Roughly 1.2 m above floor for a seated occupant, facing the normal
+direction of view. Your 500 lx horizontal desk calculation tells you very little — vertical
+illuminance at the eye in a typical office is often only 30–50% of the horizontal figure.
+
+**Spectrum can double or halve your result.** 300 lx vertical at 2700 K gives about 135 mEDI.
+The same 300 lx at 5000 K gives about 270 mEDI. Identical lux, identical energy, entirely
+different biological outcome.
+
+## The targets people actually cite
+
+From the 2022 international consensus recommendations, now widely referenced in WELL and in
+practice:
+
+| Period | Target mEDI (vertical, at eye) |
+|---|---|
+| Daytime | **≥ 250 lx** |
+| Evening, 3 h before sleep | **≤ 10 lx** |
+| Sleep environment | **≤ 1 lx** |
+
+The daytime figure is the demanding one. Hitting 250 mEDI from electric light alone at 3000 K
+requires roughly 480 lx vertical at the eye — which in a typical open plan means somewhere
+between 700 and 1000 lx horizontal. That is an energy and glare problem, and often a code problem.
+
+## Which is why the answer is usually not the luminaire
+
+Three levers, in order of effectiveness:
+
+**1. Daylight.** Overcast daylight through a window delivers thousands of mEDI. No electric scheme
+competes on cost or quality. Seat plan, glazing, blind control strategy and internal partition
+heights determine circadian performance in a daylit building far more than the fittings do. Push
+these decisions into concept stage, where you can still influence them.
+
+**2. Vertical surfaces.** Since mEDI is vertical at the eye, lighting the walls is
+disproportionately effective. A wall-washed room delivers markedly higher mEDI than a downlit one
+at the same horizontal lux, and it lowers UGR at the same time. This is the highest-leverage move
+available to a lighting designer working inside a fixed architecture.
+
+**3. Then tunable white.** Genuinely useful — but check two things before you specify it:
+
+- **Constant output across the tuning range.** Many tunable fittings lose 20–35% of lumens at the
+  extremes. If your lux calculation used the 4000 K figure and the space runs at 2700 K in the
+  evening, you are below target and nobody noticed.
+- **Who commissions it, and who maintains it.** A tunable installation with no owner is a fixed
+  installation at whatever CCT it was left on. Write the schedule into the O&M manual and name
+  the responsible party.
+
+## Evening is easier, and more neglected
+
+The ≤10 lx evening target is far easier to hit than the daytime one, and often more valuable —
+especially in residential, hospitality and healthcare, where late-evening light exposure is
+directly implicated in sleep quality.
+
+Practical moves: warm CCT after dark (2200–2700 K), low mounting heights, indirect and
+surface-mounted sources, and a genuine curfew scene rather than a global dim. A 5% dim of a
+4000 K scheme still has high melanopic content per lux; a switch to 2200 K at 20% does not.
+
+## What a defensible specification contains
+
+> Design daytime target: ≥ 250 lx melanopic EDI (CIE S 026) measured vertically at 1.2 m
+> in the seated direction of view, at all regularly occupied workstations, between 09:00 and 15:00,
+> with blinds in their typical operating position.
+> Evening scene (after 19:00): ≤ 10 lx melanopic EDI, CCT ≤ 2700 K.
+> Contractor to submit α-opic toolbox calculations per CIE S 026 for each luminaire type.
+
+Note what that pins down: the metric, the plane, the height, the direction, the location, the
+time, and the blind position. Every one of those is a place a circadian claim usually goes vague,
+and every one of them changes the answer.
+
+## Two honest caveats
+
+**CS and mEDI disagree.** Circadian Stimulus, from the Lighting Research Center, is built on a
+melatonin-suppression model and will give you a different answer from melanopic EDI for the same
+installation. Neither is wrong; they model different things. State which one you designed to, and
+do not mix them within a project.
+
+**The evidence base is still moving.** The direction of travel — bright and cool by day, dim and
+warm by night — is well supported. Precise dose-response thresholds for specific populations are
+not settled. Design robustly, avoid promising health outcomes in writing, and be careful about
+what appears in the client-facing report.
+
+## The one-minute check
+
+Stand at the workstation. Hold the meter at eye height, facing the direction the occupant faces.
+Read the lux. Multiply by the M-DER from the table above. If you are below 250, more downlight
+will not fix it — you need daylight, brighter vertical surfaces, or a cooler spectrum.

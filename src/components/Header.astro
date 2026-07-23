@@ -1,0 +1,56 @@
+---
+import { nav, site, url } from '../site';
+import ThemeToggle from './ThemeToggle.astro';
+import SearchTrigger from './SearchTrigger.astro';
+
+const path = Astro.url.pathname.replace(import.meta.env.BASE_URL.replace(/\/$/, ''), '') || '/';
+const isActive = (href: string) =>
+  href === '/' ? path === '/' : path === href || path.startsWith(href + '/');
+---
+
+<header
+  class="sticky top-0 z-40 backdrop-blur-xl border-b"
+  style="background: color-mix(in srgb, var(--bg) 86%, transparent); border-color: var(--border)"
+>
+  <div class="container-page flex h-14 items-center gap-4">
+    <a
+      href={url('/')}
+      class="flex items-center gap-2.5 shrink-0 no-underline"
+      style="color: var(--text)"
+      aria-label={`${site.name} home`}
+    >
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="12" cy="12" r="4.2" fill="var(--accent)"></circle>
+        <g stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round" opacity="0.55">
+          <path d="M12 1.6v3M12 19.4v3M1.6 12h3M19.4 12h3"></path>
+          <path d="M4.7 4.7l2.1 2.1M17.2 17.2l2.1 2.1M19.3 4.7l-2.1 2.1M6.8 17.2l-2.1 2.1"></path>
+        </g>
+      </svg>
+      <span class="font-semibold tracking-tight text-[1.05rem]">{site.name}</span>
+    </a>
+
+    <nav class="hidden md:flex items-center gap-0.5 ml-2" aria-label="Main">
+      {
+        nav.map((item) => (
+          <a
+            href={url(item.href)}
+            class="px-2.5 py-1.5 rounded-lg text-[0.9rem] font-medium no-underline transition-colors hover:no-underline"
+            style={
+              isActive(item.href)
+                ? 'color: var(--text); background: var(--surface)'
+                : 'color: var(--text-muted)'
+            }
+            aria-current={isActive(item.href) ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="ml-auto flex items-center gap-2">
+      <SearchTrigger />
+      <ThemeToggle />
+    </div>
+  </div>
+</header>

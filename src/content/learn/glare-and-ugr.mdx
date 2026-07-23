@@ -1,0 +1,91 @@
+---
+title: 'Glare: why UGR<19 on a datasheet proves nothing'
+summary: 'UGR is a property of a room and an observer, not of a luminaire. Here is what it actually measures and how to control glare when the number cannot help you.'
+chapter: 3
+chapterTitle: 'Optics & glare'
+order: 1
+topics: ['optics', 'standards']
+readingMinutes: 7
+updated: 2026-07-12
+---
+
+Discomfort glare is the most common complaint about a finished lighting installation, and UGR is
+the most commonly misused number in the industry.
+
+## What UGR actually computes
+
+The Unified Glare Rating aggregates every luminaire in the field of view:
+
+```
+UGR = 8 · log₁₀ [ (0.25 / Lb) · Σ ( L² · ω / p² ) ]
+```
+
+- **L** — luminance of each luminaire in the observer's direction
+- **ω** — solid angle it subtends at the eye
+- **p** — Guth position index, weighting how far off-axis it sits
+- **Lb** — background luminance
+
+Read the inputs. Three of the four depend on the **room** and the **observer**, not on the
+luminaire. Room size, surface reflectance, mounting height, where the desk sits and which way the
+chair faces all change the result.
+
+So when a datasheet says "UGR < 19", it means: *in the standard reference room, with reference
+reflectances, viewed crosswise from a reference position.* It is a comparison tool between
+products. **It is not a compliance statement about your project.** Compliance is demonstrated by
+calculating UGR in your geometry, and every mainstream calculation package does it.
+
+## The scale
+
+| UGR | Perception | Typical application |
+|---|---|---|
+| 16 | Imperceptible | Technical drawing, precision inspection |
+| 19 | Just perceptible | Offices, classrooms, meeting rooms |
+| 22 | Perceptible, acceptable | Reception, retail, canteens |
+| 25 | Noticeable | Circulation, storage, plant |
+| 28 | Uncomfortable | Corridors, rough industrial |
+
+Each step of 3 is roughly a doubling of perceived glare. The jump from 19 to 22 is not a rounding
+difference; it is a different experience of the room.
+
+## Where the number stops helping
+
+UGR is defined for reasonably small, reasonably uniform luminaires in a reasonably rectangular
+room. It is **not valid** for:
+
+- **Large-area sources** — luminous ceilings, backlit panels above ~1.5 m
+- **Indirect and cove schemes** — the ceiling becomes the source; use ceiling luminance directly
+- **Linear runs viewed end-on** — the geometry falls outside the model
+- **Exterior lighting** — use GR (Glare Rating) instead
+- **Non-uniform luminaires** — a fitting with visible bright LED dots behind a clear lens can
+  compute a good UGR and still be unbearable
+
+That last case is worth dwelling on. UGR uses average luminance across the emitting surface. A
+diffused panel at 3000 cd/m² average and a clear-lensed fitting whose individual dies hit
+2,000,000 cd/m² can return the same UGR. One is comfortable and the other causes afterimages.
+This is the single biggest gap between the metric and the experience.
+
+## Controlling glare when the number cannot
+
+**Cut-off.** The most reliable tool. Deep recess, honeycomb louvre, or a snoot so the source is
+not visible within the normal 45–85° viewing cone.
+
+**Surface luminance, not just cut-off.** Ask for the luminance table at 45°, 55°, 65°, 75° and
+85° from nadir. EN 12464-1 gives limiting values for screen-based work. A fitting that hides its
+source but still puts 8000 cd/m² at 75° will reflect in every monitor in the room.
+
+**Raise the background.** Look again at the formula — Lb is in the denominator. Putting light on
+the walls and ceiling lowers UGR *without touching a single luminaire*. This is why a scheme of
+bare downlights in a dark room feels harsh at 300 lx while the same lux with washed walls feels
+calm. It is also the cheapest fix available on a project already in construction.
+
+**Reduce source count in view.** Fewer, better fittings beat many small ones. The Σ in the
+formula is a sum.
+
+**Check the actual seat.** Run the UGR calculation from where people will genuinely sit and face
+— not from the software's default observer grid marching down the room centreline.
+
+## The site test that beats every calculation
+
+Stand where the occupant will stand. Look where they will look — at a screen, at a colleague's
+face, down the corridor. If you have to squint or your eye is pulled toward a fitting rather than
+toward the space, the number does not matter. Something needs to change.

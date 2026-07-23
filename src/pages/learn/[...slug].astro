@@ -1,0 +1,107 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import SaveButton from '../../components/SaveButton.astro';
+import { url } from '../../site';
+
+export async function getStaticPaths() {
+  const articles = (await getCollection('learn')).filter((a) => !a.data.draft);
+  const sorted = articles.sort(
+    (a, b) => a.data.chapter - b.data.chapter || a.data.order - b.data.order
+  );
+  return sorted.map((entry, i) => ({
+    params: { slug: entry.id },
+    props: { entry, prev: sorted[i - 1] ?? null, next: sorted[i + 1] ?? null },
+  }));
+}
+
+const { entry, prev, next } = Astro.props;
+const { Content, headings } = await render(entry);
+const toc = headings.filter((h) => h.depth === 2);
+
+const updated = entry.data.updated.toLocaleDateString('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+<Base title={entry.data.title} description={entry.data.summary}>
+  <div class="grid lg:grid-cols-[minmax(0,1fr)_220px] gap-10 items-start">
+    <article class="pt-9 pb-4">
+      <nav class="text-[0.82rem] mb-5" style="color: var(--text-faint)" aria-label="Breadcrumb">
+        <a href={url('/learn')} class="no-underline hover:underline">Learn</a>
+        <span class="mx-1.5">/</span>
+        <span>{String(entry.data.chapter).padStart(2, '0')} · {entry.data.chapterTitle}</span>
+      </nav>
+
+      <h1 class="text-3xl md:text-[2.25rem] font-semibold leading-tight">{entry.data.title}</h1>
+      <p class="mt-3 text-[1.08rem] leading-relaxed max-w-2xl" style="color: var(--text-muted)">
+        {entry.data.summary}
+      </p>
+
+      <div class="flex items-center gap-4 mt-5 pb-6 mb-8 border-b flex-wrap" style="border-color: var(--border)">
+        <span class="text-[0.82rem]" style="color: var(--text-faint)">
+          {entry.data.readingMinutes} min read · updated {updated}
+        </span>
+        <SaveButton
+          id={`learn:${entry.id}`}
+          title={entry.data.title}
+          href={url(`/learn/${entry.id}`)}
+          source="Pastelux"
+          kind="article"
+        />
+      </div>
+
+      <div class="prose">
+        <Content />
+      </div>
+
+      <nav
+        class="mt-14 pt-6 border-t grid sm:grid-cols-2 gap-3"
+        style="border-color: var(--border)"
+        aria-label="Article navigation"
+      >
+        {
+          prev ? (
+            <a href={url(`/learn/${prev.id}`)} class="card p-4 no-underline" style="color: var(--text)">
+              <p class="text-[0.72rem] label !mb-1">← Previous</p>
+              <p class="font-medium text-[0.95rem] leading-snug">{prev.data.title}</p>
+            </a>
+          ) : (
+            <span />
+          )
+        }
+        {
+          next && (
+            <a
+              href={url(`/learn/${next.id}`)}
+              class="card p-4 no-underline sm:text-right"
+              style="color: var(--text)"
+            >
+              <p class="text-[0.72rem] label !mb-1">Next →</p>
+              <p class="font-medium text-[0.95rem] leading-snug">{next.data.title}</p>
+            </a>
+          )
+        }
+      </nav>
+    </article>
+
+    {
+      toc.length > 1 && (
+        <aside class="hidden lg:block sticky top-20 pt-24" data-pagefind-ignore>
+          <p class="label">On this page</p>
+          <ul class="grid gap-2 text-[0.85rem] border-l pl-3.5" style="border-color: var(--border)">
+            {toc.map((h) => (
+              <li>
+                <a href={`#${h.slug}`} class="no-underline hover:underline" style="color: var(--text-muted)">
+                  {h.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </aside>
+      )
+    }
+  </div>
+</Base>

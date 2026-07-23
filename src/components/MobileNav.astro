@@ -1,0 +1,50 @@
+---
+import { mobileNav, url } from '../site';
+
+const path = Astro.url.pathname.replace(import.meta.env.BASE_URL.replace(/\/$/, ''), '') || '/';
+const isActive = (href: string) =>
+  href === '/' ? path === '/' : path === href || path.startsWith(href + '/');
+
+const icons: Record<string, string> = {
+  sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.5 1.5M17.6 17.6l1.5 1.5M19.1 4.9l-1.5 1.5M6.4 17.6l-1.5 1.5"/>',
+  book: '<path d="M4 4.5A2.5 2.5 0 016.5 2H20v18H6.5A2.5 2.5 0 004 22z"/><path d="M4 17.5A2.5 2.5 0 016.5 15H20"/>',
+  calc: '<rect x="4" y="2.5" width="16" height="19" rx="2.5"/><path d="M8 7h8M8 12h2M14 12h2M8 16.5h2M14 16.5h2"/>',
+  heart:
+    '<path d="M12 20.5l-1.4-1.3C5.6 14.9 2.7 12.3 2.7 9.1 2.7 6.5 4.7 4.5 7.3 4.5c1.5 0 2.9.7 3.8 1.8l.9 1 .9-1c.9-1.1 2.3-1.8 3.8-1.8 2.6 0 4.6 2 4.6 4.6 0 3.2-2.9 5.8-7.9 10.1z"/>',
+};
+---
+
+<nav
+  class="md:hidden fixed bottom-0 inset-x-0 z-40 border-t backdrop-blur-xl"
+  style="background: color-mix(in srgb, var(--bg) 92%, transparent); border-color: var(--border); padding-bottom: env(safe-area-inset-bottom)"
+  aria-label="Primary mobile"
+>
+  <ul class="grid grid-cols-4">
+    {
+      mobileNav.map((item) => (
+        <li>
+          <a
+            href={url(item.href)}
+            class="flex flex-col items-center gap-1 py-2.5 no-underline text-[0.68rem] font-medium"
+            style={isActive(item.href) ? 'color: var(--accent)' : 'color: var(--text-muted)'}
+            aria-current={isActive(item.href) ? 'page' : undefined}
+          >
+            <svg
+              width="21"
+              height="21"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.7"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              set:html={icons[item.icon]}
+            />
+            {item.label}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>

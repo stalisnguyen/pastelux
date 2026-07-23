@@ -1,0 +1,163 @@
+{
+  "feeds": [
+    {
+      "name": "arc",
+      "url": "https://www.arc-magazine.com/feed/",
+      "site": "https://www.arc-magazine.com/",
+      "about": "The leading international magazine for lighting in architecture (formerly mondo*arc). Projects, interviews, industry news."
+    },
+    {
+      "name": "darc",
+      "url": "https://www.darcmagazine.com/feed/",
+      "site": "https://www.darcmagazine.com/",
+      "about": "Decorative lighting and lighting-in-design, from the same publisher as arc."
+    },
+    {
+      "name": "LightNOW",
+      "url": "https://www.lightnowblog.com/feed/",
+      "site": "https://www.lightnowblog.com/",
+      "about": "Follows IES and North American standards activity more closely than anyone else."
+    },
+    {
+      "name": "A1 Lighting",
+      "url": "https://www.a1lightingmagazine.com/feed/",
+      "site": "https://www.a1lightingmagazine.com/",
+      "about": "UK trade coverage, including a dedicated architectural lighting section."
+    },
+    {
+      "name": "Lighting Design Alliance",
+      "url": "https://www.lightingdesignalliance.com/feed/",
+      "site": "https://www.lightingdesignalliance.com/",
+      "about": "Practice-side writing from a working architectural lighting studio."
+    },
+    {
+      "name": "ArchDaily",
+      "url": "https://www.archdaily.com/search/projects/categories/lighting/feed",
+      "site": "https://www.archdaily.com/",
+      "about": "ArchDaily's lighting project category only, not the general firehose."
+    },
+    {
+      "name": "Dezeen",
+      "url": "https://www.dezeen.com/feed/",
+      "site": "https://www.dezeen.com/",
+      "about": "General design and architecture. Filtered hard for lighting relevance."
+    },
+    {
+      "name": "LEDs Magazine",
+      "url": "https://www.ledsmagazine.com/rss/all",
+      "site": "https://www.ledsmagazine.com/",
+      "about": "LED sources, drivers, optics and standards. Strong on the technology and testing side.",
+      "disabled": "Returns HTTP 403 to automated clients. Worth retrying periodically — the content is excellent.",
+      "//": "Set disabled to false, or delete the key, to re-enable."
+    },
+    {
+      "name": "LED professional",
+      "url": "https://www.led-professional.com/feed",
+      "site": "https://www.led-professional.com/",
+      "about": "Technical and R&D-oriented coverage of solid-state lighting.",
+      "disabled": "No working RSS endpoint found at the usual paths (404). Check the site for a current feed URL."
+    }
+  ],
+
+  "//": "Matched on word boundaries with an open suffix: 'optic' catches 'optics', but 'led' never matches 'called'. An item is kept if it hits one 'strong' term or two 'weak' ones. Manufacturer names are 'strong' because trade-press headlines often name only the company.",
+  "keywords": {
+    "strong": [
+      "lighting design",
+      "lighting designer",
+      "architectural lighting",
+      "luminaire",
+      "illuminance",
+      "luminance",
+      "photometric",
+      "circadian",
+      "melanopic",
+      "dark sky",
+      "light pollution",
+      "dali",
+      "ugr",
+      "colour rendering",
+      "color rendering",
+      "tm-30",
+      "cie s 026",
+      "en 12464",
+      "iald",
+      "facade lighting",
+      "façade lighting",
+      "lighting scheme",
+      "lighting standard",
+      "tunable white",
+      "human centric lighting",
+      "light + building",
+      "darc award",
+      "lighting control",
+      "smart lighting",
+      "lighting industry",
+      "lighting manufacturer",
+      "luminaire manufacturer",
+      "lighting brand",
+      "lighting product",
+      "lighting installation",
+      "lighting expo",
+      "light expo",
+      "euroluce",
+      "light festival",
+      "light art",
+      "signify",
+      "casambi",
+      "zumtobel",
+      "iguzzini",
+      "artemide",
+      "erco",
+      "flos"
+    ],
+    "weak": [
+      "lighting",
+      "lit",
+      "led",
+      "lumen",
+      "lux",
+      "kelvin",
+      "glare",
+      "daylight",
+      "illuminat",
+      "luminous",
+      "optic",
+      "dimming",
+      "lighting control",
+      "colour temperature",
+      "color temperature",
+      "cct",
+      "cri",
+      "spectrum",
+      "downlight",
+      "spotlight",
+      "chandelier",
+      "pendant",
+      "lamp"
+    ],
+    "reject": [
+      "lighting deal",
+      "black friday",
+      "coupon",
+      "discount code",
+      "best smart bulbs",
+      "amazon prime",
+      "giveaway",
+      "sponsored post"
+    ]
+  },
+
+  "//topics": "Substring rules that assign topic tags when the AI summariser is unavailable.",
+  "topicRules": {
+    "circadian": ["circadian", "melanopic", "human centric", "human-centric", "wellbeing", "well building", "tunable white", "cie s 026"],
+    "standards": ["standard", "en 12464", "iso ", "ies lp", "ies rp", "code", "regulation", "compliance", "ansi", "cie "],
+    "controls": ["dali", "dmx", "matter", "thread", "control", "dimming", "sensor", "bms", "commissioning", "zigbee"],
+    "facade": ["facade", "façade", "exterior", "urban lighting", "streetlight", "street lighting", "landscape lighting", "media facade"],
+    "sustainability": ["sustainab", "carbon", "circular", "energy", "dark sky", "light pollution", "recycl", "lca", "ecodesign"],
+    "optics": ["optic", "lens", "reflector", "beam", "glare", "ugr", "spectrum", "colour rendering", "color rendering", "tm-30", "cri"],
+    "product": ["launch", "unveil", "introduc", "new range", "new luminaire", "product", "portfolio"],
+    "awards": ["award", "winner", "shortlist", "competition", "conference", "expo", "fair", "iald", "darc"],
+    "research": ["research", "study", "university", "trial", "paper", "findings"],
+    "practice": ["appoint", "acquisition", "merger", "studio", "practice", "hires", "office opens", "partnership"]
+  }
+}

@@ -1,0 +1,82 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import MobileNav from '../components/MobileNav.astro';
+import { site } from '../site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Set false on index-style pages you don't want in the search index. */
+  indexable?: boolean;
+  wide?: boolean;
+}
+
+const {
+  title,
+  description = site.description,
+  indexable = true,
+  wide = false,
+} = Astro.props;
+
+const pageTitle = title ? `${title} — ${site.name}` : `${site.name} — ${site.tagline}`;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://example.com');
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#0a0c0f" />
+    <link rel="icon" href={`${import.meta.env.BASE_URL}favicon.svg`} type="image/svg+xml" />
+    <link rel="sitemap" href={`${import.meta.env.BASE_URL}sitemap-index.xml`} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    {/* Apply the saved theme before first paint so the page never flashes. */}
+    <script is:inline>
+      (() => {
+        try {
+          const saved = localStorage.getItem('pastelux-theme');
+          const prefersLight =
+            window.matchMedia('(prefers-color-scheme: light)').matches;
+          const theme = saved ?? (prefersLight ? 'light' : 'dark');
+          document.documentElement.dataset.theme = theme;
+        } catch {}
+      })();
+    </script>
+  </head>
+
+  <body class="min-h-screen flex flex-col">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:m-3 focus:rounded-lg focus:px-4 focus:py-2"
+      style="background: var(--accent); color: var(--accent-ink)">Skip to content</a
+    >
+
+    <div class="kbar h-[3px] w-full shrink-0"></div>
+    <Header />
+
+    <main id="main" class="flex-1 pb-24 md:pb-16" data-pagefind-body={indexable ? '' : undefined}>
+      <div class={wide ? 'w-full' : 'container-page'}>
+        <slot />
+      </div>
+    </main>
+
+    <Footer />
+    <MobileNav />
+  </body>
+</html>

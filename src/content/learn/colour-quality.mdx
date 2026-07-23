@@ -1,0 +1,95 @@
+---
+title: 'Colour quality: what CRI hides and TM-30 reveals'
+summary: 'Ra 90 is not a specification. Duv, R9, SDCM and TM-30 are where colour is actually won or lost.'
+chapter: 2
+chapterTitle: 'Light sources & colour'
+order: 1
+topics: ['optics', 'product']
+readingMinutes: 8
+updated: 2026-07-15
+---
+
+A datasheet that says "3000 K, Ra 90" has told you almost nothing. Two products meeting that
+description can render a client's marble lobby as warm cream or as slightly sour green, and only
+one of them will survive the site walk.
+
+## CCT is a shorthand, not an address
+
+Correlated colour temperature reduces a two-dimensional chromaticity to one number: the
+temperature of the blackbody radiator that looks most similar. Any point on a line perpendicular
+to the Planckian locus maps to the same CCT.
+
+Which means **two 3000 K sources can sit visibly apart** — one slightly above the locus (green),
+one below (pink). The distance is **Duv**, and it is the number that decides whether your white
+walls look clean.
+
+- Positive Duv → green/yellow cast. Skin looks ill. Marble looks dirty.
+- Negative Duv → pink/magenta cast. Often flattering, sometimes cloying.
+- Architectural acceptance window: **|Duv| ≤ 0.006**, tighter for hospitality and healthcare.
+
+Specify CCT **and** Duv, or specify a chromaticity target with an SDCM tolerance. Never CCT alone.
+
+## SDCM: the number that keeps a run of lights looking like one product
+
+MacAdam ellipses describe how far chromaticity can drift before an average observer notices.
+Tolerance is quoted in steps.
+
+| Tolerance | Where it belongs |
+|---|---|
+| 2 SDCM | Museum, high-end retail, visible continuous runs |
+| 3 SDCM | Default for any architectural project |
+| 5 SDCM | Acceptable only where fittings are never seen together |
+| 7 SDCM | Industrial and back-of-house only |
+
+A 5-SDCM run of coves on a white ceiling shows visible banding. This is one of the most common
+and most expensive post-completion complaints in the industry, and it is entirely avoidable at
+specification stage for a small cost premium.
+
+## CRI, and its blind spot
+
+Ra averages the colour shift of eight **pastel** test samples, R1–R8. Nothing saturated is in
+that average. A phosphor-converted LED can be optimised to score well on eight desaturated
+patches while rendering deep red as brown.
+
+That is why **R9** — strong red — is the number to demand alongside Ra:
+
+- **R9 ≥ 50**: minimum for anything with people in it
+- **R9 ≥ 90**: retail food, healthcare, hospitality, timber and textile-heavy interiors
+
+Skin tone, raw meat, red wine, teak, brick and every warm textile in the building depend on R9.
+It is routinely the weakest figure on a datasheet, and it is routinely left off the spec.
+
+## TM-30: two numbers instead of one
+
+IES TM-30 uses 99 real-world colour samples and reports two figures:
+
+- **Rf — fidelity.** How accurately colours match the reference. Analogous to Ra but far more
+  robust. Target **Rf ≥ 85**.
+- **Rg — gamut.** Whether the source saturates or mutes colour overall. 100 is neutral,
+  above 100 saturates, below 100 mutes. Target **Rg 95–110** for general architectural work.
+
+The pair matters because they are independent. A source can have Rf 92 and Rg 88 — accurate but
+visibly flat and lifeless. Retail often deliberately wants Rg 105–115 to make merchandise pop.
+Rf alone cannot express that intent; Ra cannot express it at all.
+
+TM-30 also produces a colour vector graphic showing *which* hue bins are shifted and in which
+direction. When a client says "the reds look wrong", that graphic is how you find out whether
+they are right.
+
+## A specification that actually protects you
+
+> Nominal 3000 K, Duv 0.000 ± 0.004, ≤3 SDCM initial and maintained,
+> Ra ≥ 90, R9 ≥ 50, TM-30 Rf ≥ 85 and Rg 95–110.
+> Chromaticity maintenance ≤ 3 SDCM over the warranty period.
+> LM-80 data with TM-21 projection at the specified drive current and Tc to be provided.
+
+Two clauses in there do most of the work and are almost always missing. **"Maintained"** SDCM
+stops a supplier delivering a tight initial bin that drifts apart within two years. And
+**LM-80 data at the actual drive current and case temperature** stops an L70 figure measured on
+a cool bench being applied to a fitting sealed in an insulated ceiling void at 65 °C.
+
+## The practical check
+
+Before you commit to a product across a whole building, get three samples from **different
+production batches**, run them side by side on a white wall for an hour, and look at them next to
+the actual finish samples. Every number above is a proxy for that fifteen-minute test.

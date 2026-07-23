@@ -1,0 +1,77 @@
+[
+  {
+    "id": "ldi-2026",
+    "name": "LDI — Live Design International",
+    "kind": "fair",
+    "start": "2026-11-20",
+    "end": "2026-11-22",
+    "city": "Las Vegas",
+    "country": "USA",
+    "url": "https://www.ldishow.com/",
+    "note": "Entertainment and architainment lighting; strongest place to see DMX/pixel control in the flesh."
+  },
+  {
+    "id": "iald-enlighten-europe-2026",
+    "name": "IALD Enlighten Europe",
+    "kind": "conference",
+    "start": "2026-10-08",
+    "end": "2026-10-10",
+    "city": "TBC",
+    "country": "Europe",
+    "url": "https://www.iald.org/",
+    "note": "Boutique conference for architectural lighting designers. Registration opened in 2026 — confirm dates and venue on the IALD site."
+  },
+  {
+    "id": "hklf-autumn-2026",
+    "name": "HK International Lighting Fair (Autumn)",
+    "kind": "fair",
+    "start": "2026-10-27",
+    "end": "2026-10-30",
+    "city": "Hong Kong",
+    "country": "China",
+    "url": "https://www.hktdc.com/",
+    "note": "The closest large-scale sourcing fair to Vietnam; useful for OEM and supply-chain contacts."
+  },
+  {
+    "id": "vietbuild-hcmc-2026",
+    "name": "Vietbuild HCMC",
+    "kind": "fair",
+    "start": "2026-09-16",
+    "end": "2026-09-20",
+    "city": "Ho Chi Minh City",
+    "country": "Vietnam",
+    "url": "https://vietbuild.vn/",
+    "note": "Local construction and building-products fair. Verify exact dates each edition."
+  },
+  {
+    "id": "iald-awards-2027-entry",
+    "name": "IALD International Lighting Design Awards — entry opens",
+    "kind": "deadline",
+    "start": "2026-09-01",
+    "city": "Chicago",
+    "country": "USA",
+    "url": "https://www.iald.org/Awards",
+    "note": "Placeholder date. Check the IALD awards page for the current call for entries."
+  },
+  {
+    "id": "darc-awards-2026",
+    "name": "[d]arc awards",
+    "kind": "award",
+    "start": "2026-12-03",
+    "city": "London",
+    "country": "UK",
+    "url": "https://www.darcawards.com/",
+    "note": "Peer-voted, run by arc magazine. Structural, decorative, kinetic and place categories."
+  },
+  {
+    "id": "light-building-2028",
+    "name": "Light + Building",
+    "kind": "fair",
+    "start": "2028-03-12",
+    "end": "2028-03-17",
+    "city": "Frankfurt",
+    "country": "Germany",
+    "url": "https://light-building.messefrankfurt.com/",
+    "note": "The industry's biggest biennial fair. The 2026 edition has already run; next cycle shown."
+  }
+]

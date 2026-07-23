@@ -1,0 +1,48 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import NewsCard from '../../components/NewsCard.astro';
+import { url } from '../../site';
+
+export async function getStaticPaths() {
+  const digests = (await getCollection('daily')).sort((a, b) =>
+    b.data.date.localeCompare(a.data.date)
+  );
+  return digests.map((entry, i) => ({
+    params: { date: entry.data.date },
+    props: { entry, newer: digests[i - 1] ?? null, older: digests[i + 1] ?? null },
+  }));
+}
+
+const { entry, newer, older } = Astro.props;
+
+const stamp = new Date(`${entry.data.date}T00:00:00Z`).toLocaleDateString('en-GB', {
+  weekday: 'long',
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+  timeZone: 'UTC',
+});
+---
+
+<Base title={`Digest — ${entry.data.date}`} description={`Architectural lighting industry digest for ${stamp}.`}>
+  <PageHeader eyebrow="Digest" title={stamp}>
+    <nav class="mt-5 flex gap-3 items-center text-[0.85rem]" aria-label="Digest navigation">
+      {older && <a href={url(`/archive/${older.data.date}`)} class="no-underline hover:underline">← {older.data.date}</a>}
+      <a href={url('/archive')} class="no-underline hover:underline" style="color: var(--text-muted)">All digests</a>
+      {newer && <a href={url(`/archive/${newer.data.date}`)} class="no-underline hover:underline">{newer.data.date} →</a>}
+    </nav>
+  </PageHeader>
+
+  <div class="grid gap-3 max-w-3xl pb-6">
+    {entry.data.items.map((item) => <NewsCard item={item} />)}
+    {
+      entry.data.items.length === 0 && (
+        <p class="card p-6" style="color: var(--text-muted)">
+          No items were published for this date.
+        </p>
+      )
+    }
+  </div>
+</Base>

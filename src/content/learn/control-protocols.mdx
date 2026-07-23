@@ -1,0 +1,108 @@
+---
+title: 'Choosing a control protocol in 2026'
+summary: '0–10 V, DALI-2, D4i, DALI+, DMX and Matter — what each is genuinely for, and the questions that decide between them.'
+chapter: 4
+chapterTitle: 'Controls'
+order: 1
+topics: ['controls']
+readingMinutes: 8
+updated: 2026-07-19
+---
+
+Control is where lighting schemes are most often compromised, usually because the protocol was
+chosen by the electrical contractor on price rather than by the designer on intent.
+
+## The field, briefly
+
+**0–10 V / 1–10 V.** Analogue. A low-voltage pair carries a dimming level to a whole circuit.
+Cheap, universal, and understood by every electrician on earth. Not addressable — the circuit is
+the smallest unit of control. Polarity-sensitive, susceptible to voltage drop on long runs, and
+gives you no feedback whatsoever. Legitimate for simple, static installations with few zones.
+
+**DALI-2.** Digital, addressable, bidirectional. Up to 64 addresses per bus, 16 groups, 16 scenes.
+Every fitting is individually reachable and reports its own status and faults. DALI-2 (unlike the
+original DALI) certifies control devices as well as gear, so certified parts genuinely
+interoperate. This is the default for commercial architectural work and should be your starting
+assumption.
+
+**D4i.** DALI-2 plus a defined data model inside the luminaire — energy metering, diagnostics,
+lifetime and temperature data — and a bus supply for a sensor mounted on the fitting. The
+foundation for luminaire-level analytics and for connected outdoor lighting.
+
+**DALI+.** DALI messaging carried over IP and wireless (Thread) rather than the two-wire bus.
+Lets a wireless retrofit zone share one commissioning model and one control language with the
+wired new-build parts of the same estate. Actively maturing through 2026, with wireless-to-DALI
+gateways now common at the fair stands.
+
+**DMX512 / RDM.** From stage lighting. 512 unidirectional channels per universe, high refresh
+rate, built for smooth colour and movement. The standard choice for colour-changing façades,
+media walls and any pixel work. RDM adds a return path for addressing and status.
+
+**Matter.** IP-based application layer over Wi-Fi and Thread, aimed at consumer interoperability.
+Increasingly present where residential and hospitality lighting meets the wider smart-building
+stack. It is not a replacement for DALI or DMX in architectural work — it lacks the addressability
+granularity and scene fidelity — but it is a real integration layer at the boundary.
+
+## Three questions that decide it
+
+**1. Do you need to address the individual fitting?**
+If a single luminaire ever needs a different level or colour from its neighbour on the same
+circuit, you need addressability. That rules out 0–10 V immediately. In practice this is true of
+almost every scheme with any design ambition.
+
+**2. Do you need smooth colour at high refresh?**
+Colour-changing façades, media content, anything with movement: DMX. DALI can change colour
+(device type 8) but its refresh rate makes fades visibly steppy on large fields.
+
+**3. Do you need the installation to report back?**
+Energy sub-metering, lamp-failure alerts, hours-run for maintenance planning: DALI-2, and D4i if
+you want data at the luminaire rather than the driver.
+
+A very common and entirely correct answer on a mixed project: **DALI-2 for the interior,
+DMX for the façade, a gateway between them, and one front end.**
+
+## The parts everyone underestimates
+
+**Commissioning is a work package, not a switch.** It needs a named party, a fee line, a defined
+scene schedule agreed with the client, site attendance and a written record. Uncommissioned
+DALI is more expensive and less capable than 0–10 V. Every scheme that "never worked properly"
+failed here.
+
+**Write the scene schedule during design.** Room by room: scene name, which groups, what level,
+what CCT, what fade time, what triggers it. It is a table you can produce in detailed design and
+it is the single most valuable document you will hand the commissioning engineer.
+
+**Bus topology and load.** DALI is 64 addresses, 250 mA typical bus supply, 300 m maximum cable
+run. Fittings with multiple channels (tunable white, RGBW) consume multiple addresses — a tunable
+white fitting is commonly two. Count addresses at the schedule stage, not on site.
+
+**Emergency lighting is a parallel system.** Self-test emergency gear can sit on DALI, but the
+emergency function must remain independent of the control system's health. Coordinate it early
+with the fire strategy; retrofitting this is painful.
+
+**"DALI compatible" ≠ DALI-2 certified.** Only certified products carry an interoperability
+guarantee. Ask for the certificate number, and check it on the DALI Alliance register.
+
+## Cybersecurity is now in scope
+
+IES LP-6-25 added guidance on cybersecurity for lighting controls, which tells you where the
+industry has arrived. Once lighting sits on the building IP network, it becomes an attack surface
+and an IT stakeholder appears.
+
+Practical minimum: put lighting on its own VLAN, change default credentials at commissioning and
+record that you did, establish who owns firmware updates for the lifetime of the installation,
+and get the IT team into a coordination meeting before the gateway is specified rather than after
+their security review blocks handover.
+
+## Rules of thumb
+
+- Simple, static, few zones, tight budget → **0–10 V**, and be honest with the client about what
+  they are giving up.
+- Any commercial project with design intent → **DALI-2**, D4i where luminaire data has value.
+- Colour, movement, pixels, façade → **DMX/RDM**.
+- Wireless retrofit inside a wired estate → **DALI+ with gateways**.
+- Residential and hospitality touching a wider smart-home stack → DALI or DMX at the core,
+  **Matter at the boundary**.
+
+And whatever you choose: budget the commissioning, write the scene schedule, and name the person
+who owns the system in year three.

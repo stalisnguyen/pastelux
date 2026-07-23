@@ -1,0 +1,79 @@
+---
+import { TOPIC_LABEL } from '../site';
+import SaveButton from './SaveButton.astro';
+
+interface Props {
+  item: {
+    title: string;
+    url: string;
+    source: string;
+    published: string;
+    summary: string;
+    topics: string[];
+  };
+}
+const { item } = Astro.props;
+
+const when = new Date(item.published);
+const stamp = Number.isNaN(when.valueOf())
+  ? ''
+  : when.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+---
+
+<article class="card p-4 md:p-5 card-interactive">
+  <div class="flex items-center gap-2 flex-wrap text-xs mb-2">
+    <span class="font-medium" style="color: var(--accent)">{item.source}</span>
+    {stamp && <span style="color: var(--text-faint)">· {stamp}</span>}
+    <div class="ml-auto flex items-center gap-1.5">
+      {item.topics.slice(0, 2).map((t) => <span class="chip">{TOPIC_LABEL[t] ?? t}</span>)}
+    </div>
+  </div>
+
+  <h3 class="text-[1.05rem] font-semibold leading-snug">
+    <a
+      href={item.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="no-underline hover:underline"
+      style="color: var(--text)">{item.title}</a
+    >
+  </h3>
+
+  {
+    item.summary && (
+      <p class="mt-2 text-[0.92rem] leading-relaxed" style="color: var(--text-muted)">
+        {item.summary}
+      </p>
+    )
+  }
+
+  <div class="mt-3 flex items-center gap-3">
+    <a
+      href={item.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="text-[0.82rem] no-underline hover:underline inline-flex items-center gap-1"
+    >
+      Read at {item.source}
+      <svg
+        width="12"
+        height="12"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.4"
+        stroke-linecap="round"
+        aria-hidden="true"
+      >
+        <path d="M7 17L17 7M9 7h8v8"></path>
+      </svg>
+    </a>
+    <SaveButton
+      id={item.url}
+      title={item.title}
+      href={item.url}
+      source={item.source}
+      kind="news"
+    />
+  </div>
+</article>

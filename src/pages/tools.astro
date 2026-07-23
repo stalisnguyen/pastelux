@@ -1,0 +1,302 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { url } from '../site';
+---
+
+<Base
+  title="Tools"
+  description="Lumen method, beam-to-spot, inverse square law, melanopic EDI and unit conversion — calculators that run entirely in the browser."
+>
+  <PageHeader
+    eyebrow="Calculators"
+    title="Tools"
+    lede="Everything runs in your browser — nothing is sent anywhere, and the page works offline once loaded. For sketching and sanity checks, not for certification."
+  />
+
+  <div class="grid gap-5 pb-6">
+    <!-- ------------------------------------------------ lumen method -->
+    <section id="lumen" class="card p-6 scroll-mt-20" aria-labelledby="lumen-h">
+      <h2 id="lumen-h" class="text-lg font-semibold">Lumen method</h2>
+      <p class="text-[0.9rem] mt-1.5 mb-5" style="color: var(--text-muted)">
+        Total flux needed for a target maintained illuminance, and the number of luminaires that
+        implies. Room index is computed from the geometry.
+      </p>
+
+      <div class="grid sm:grid-cols-3 gap-4">
+        <div><label class="label" for="lm-L">Room length (m)</label><input class="field" id="lm-L" type="number" value="10" step="0.1" min="0.1" /></div>
+        <div><label class="label" for="lm-W">Room width (m)</label><input class="field" id="lm-W" type="number" value="8" step="0.1" min="0.1" /></div>
+        <div><label class="label" for="lm-H">Mounting ht above plane (m)</label><input class="field" id="lm-H" type="number" value="2.0" step="0.1" min="0.1" /></div>
+        <div><label class="label" for="lm-E">Target Ēm (lx)</label><input class="field" id="lm-E" type="number" value="500" step="10" min="1" /></div>
+        <div><label class="label" for="lm-UF">Utilisation factor</label><input class="field" id="lm-UF" type="number" value="0.60" step="0.01" min="0.05" max="1" /></div>
+        <div><label class="label" for="lm-MF">Maintenance factor</label><input class="field" id="lm-MF" type="number" value="0.80" step="0.01" min="0.05" max="1" /></div>
+        <div class="sm:col-span-3"><label class="label" for="lm-lum">Flux per luminaire (lm)</label><input class="field" id="lm-lum" type="number" value="3000" step="100" min="1" /></div>
+      </div>
+
+      <div class="grid sm:grid-cols-4 gap-3 mt-5" id="lm-out"></div>
+      <p class="text-[0.8rem] mt-4" style="color: var(--text-faint)">
+        Utilisation factor comes from the manufacturer's UF table for your room index and surface
+        reflectances. 0.4 is a reasonable guess for a dark room with narrow optics, 0.7 for a
+        bright room with wide ones. This method gives an average only — it says nothing about
+        uniformity or glare.
+      </p>
+    </section>
+
+    <!-- ------------------------------------------------- beam to spot -->
+    <section id="beam" class="card p-6 scroll-mt-20" aria-labelledby="beam-h">
+      <h2 id="beam-h" class="text-lg font-semibold">Beam angle → spot size</h2>
+      <p class="text-[0.9rem] mt-1.5 mb-5" style="color: var(--text-muted)">
+        Pool diameter at a given throw, and the peak intensity needed to hit a target illuminance
+        on axis.
+      </p>
+
+      <div class="grid sm:grid-cols-3 gap-4">
+        <div><label class="label" for="bs-d">Throw distance (m)</label><input class="field" id="bs-d" type="number" value="3.25" step="0.05" min="0.1" /></div>
+        <div><label class="label" for="bs-a">Beam angle (°)</label><input class="field" id="bs-a" type="number" value="36" step="1" min="1" max="170" /></div>
+        <div><label class="label" for="bs-E">Target E on axis (lx)</label><input class="field" id="bs-E" type="number" value="300" step="10" min="1" /></div>
+      </div>
+
+      <div class="grid sm:grid-cols-3 gap-3 mt-5" id="bs-out"></div>
+
+      <div class="mt-5 scroll-x">
+        <table class="datatable">
+          <caption class="sr-only">Spot diameter by beam angle at the entered throw distance</caption>
+          <thead><tr><th scope="col">Beam</th><th scope="col">Diameter</th><th scope="col">Typical use</th></tr></thead>
+          <tbody id="bs-table"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------- inverse square law -->
+    <section id="isl" class="card p-6 scroll-mt-20" aria-labelledby="isl-h">
+      <h2 id="isl-h" class="text-lg font-semibold">Inverse square law</h2>
+      <p class="text-[0.9rem] mt-1.5 mb-5" style="color: var(--text-muted)">
+        E = I · cos θ / d². Also converts illuminance to luminance for a matte surface, which is
+        what the eye actually sees.
+      </p>
+
+      <div class="grid sm:grid-cols-4 gap-4">
+        <div><label class="label" for="isl-I">Intensity (cd)</label><input class="field" id="isl-I" type="number" value="5000" step="100" min="0" /></div>
+        <div><label class="label" for="isl-d">Distance (m)</label><input class="field" id="isl-d" type="number" value="4" step="0.1" min="0.05" /></div>
+        <div><label class="label" for="isl-t">Incidence angle θ (°)</label><input class="field" id="isl-t" type="number" value="0" step="5" min="0" max="89" /></div>
+        <div><label class="label" for="isl-r">Surface reflectance ρ</label><input class="field" id="isl-r" type="number" value="0.7" step="0.05" min="0" max="1" /></div>
+      </div>
+
+      <div class="grid sm:grid-cols-3 gap-3 mt-5" id="isl-out"></div>
+      <p class="text-[0.8rem] mt-4" style="color: var(--text-faint)">
+        Valid only when the distance is at least about five times the largest luminaire dimension.
+        Do not use it close to a long linear fitting.
+      </p>
+    </section>
+
+    <!-- -------------------------------------------------- melanopic -->
+    <section id="medi" class="card p-6 scroll-mt-20" aria-labelledby="medi-h">
+      <h2 id="medi-h" class="text-lg font-semibold">Melanopic EDI</h2>
+      <p class="text-[0.9rem] mt-1.5 mb-5" style="color: var(--text-muted)">
+        Vertical photopic lux at the eye × M-DER. Checked against the widely cited consensus
+        targets.
+      </p>
+
+      <div class="grid sm:grid-cols-3 gap-4">
+        <div>
+          <label class="label" for="me-E">Vertical lux at eye</label>
+          <input class="field" id="me-E" type="number" value="300" step="10" min="0" />
+        </div>
+        <div>
+          <label class="label" for="me-cct">Source CCT</label>
+          <select class="field" id="me-cct">
+            <option value="0.35">2200 K</option>
+            <option value="0.45">2700 K</option>
+            <option value="0.52" selected>3000 K</option>
+            <option value="0.65">3500 K</option>
+            <option value="0.75">4000 K</option>
+            <option value="0.90">5000 K</option>
+            <option value="1.00">6500 K / D65</option>
+            <option value="custom">Custom M-DER…</option>
+          </select>
+        </div>
+        <div>
+          <label class="label" for="me-mder">M-DER</label>
+          <input class="field" id="me-mder" type="number" value="0.52" step="0.01" min="0" max="1.5" />
+        </div>
+      </div>
+
+      <div class="grid sm:grid-cols-2 gap-3 mt-5" id="me-out"></div>
+      <p class="text-[0.8rem] mt-4" style="color: var(--text-faint)">
+        M-DER values here are typical for phosphor-converted white LEDs. For a real specification,
+        take M-DER from the manufacturer's spectral data via the CIE S 026 toolbox — two products
+        at the same CCT can differ by 15% or more.
+        <a href={url('/learn/circadian-design')} class="no-underline hover:underline">Read the article →</a>
+      </p>
+    </section>
+
+    <!-- ---------------------------------------------------- converter -->
+    <section id="convert" class="card p-6 scroll-mt-20" aria-labelledby="conv-h">
+      <h2 id="conv-h" class="text-lg font-semibold">Unit converter</h2>
+      <p class="text-[0.9rem] mt-1.5 mb-5" style="color: var(--text-muted)">
+        The conversions that come up when a drawing set arrives in the other convention.
+      </p>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div><label class="label" for="cv-fc">Footcandles</label><input class="field" id="cv-fc" type="number" value="50" step="1" /></div>
+        <div><label class="label" for="cv-lx">Lux</label><input class="field" id="cv-lx" type="number" value="538" step="1" /></div>
+        <div><label class="label" for="cv-fl">Foot-lamberts</label><input class="field" id="cv-fl" type="number" value="10" step="1" /></div>
+        <div><label class="label" for="cv-nit">cd/m² (nits)</label><input class="field" id="cv-nit" type="number" value="34.3" step="0.1" /></div>
+      </div>
+      <p class="text-[0.8rem] mt-4" style="color: var(--text-faint)">
+        1 fc = 10.764 lx · 1 fL = 3.426 cd/m²
+      </p>
+    </section>
+  </div>
+</Base>
+
+<script>
+  // ---------------------------------------------------------------- helpers
+  const $ = <T extends HTMLElement = HTMLInputElement>(id: string) =>
+    document.getElementById(id) as T | null;
+  const num = (id: string) => Number(($(id) as HTMLInputElement | null)?.value ?? 0);
+
+  /** Result tile. `tone` colours the value for pass/fail readouts. */
+  function tile(label: string, value: string, sub = '', tone = '') {
+    return `<div class="rounded-lg p-3" style="background: var(--bg-elevated); border: 1px solid var(--border)">
+      <p class="label !mb-1">${label}</p>
+      <p class="font-mono text-xl" style="color: ${tone || 'var(--accent)'}">${value}</p>
+      ${sub ? `<p class="text-[0.75rem] mt-0.5" style="color: var(--text-faint)">${sub}</p>` : ''}
+    </div>`;
+  }
+
+  const fmt = (n: number, d = 0) =>
+    Number.isFinite(n)
+      ? n.toLocaleString('en-GB', { minimumFractionDigits: d, maximumFractionDigits: d })
+      : '—';
+
+  function bind(ids: string[], fn: () => void) {
+    ids.forEach((id) => {
+      const el = $(id);
+      el?.addEventListener('input', fn);
+      el?.addEventListener('change', fn);
+    });
+    fn();
+  }
+
+  // ------------------------------------------------------------ lumen method
+  bind(['lm-L', 'lm-W', 'lm-H', 'lm-E', 'lm-UF', 'lm-MF', 'lm-lum'], () => {
+    const L = num('lm-L'), W = num('lm-W'), H = num('lm-H');
+    const E = num('lm-E'), UF = num('lm-UF'), MF = num('lm-MF'), lum = num('lm-lum');
+
+    const area = L * W;
+    const K = (L * W) / (H * (L + W));           // room index
+    const totalFlux = (E * area) / (UF * MF);
+    const count = totalFlux / lum;
+    const nUp = Math.ceil(count);
+    const achieved = (nUp * lum * UF * MF) / area;
+
+    const out = $('lm-out');
+    if (out)
+      out.innerHTML =
+        tile('Floor area', `${fmt(area, 1)} m²`) +
+        tile('Room index K', fmt(K, 2), K < 0.75 ? 'narrow room' : K > 3 ? 'wide room' : 'typical') +
+        tile('Total flux required', `${fmt(totalFlux)} lm`) +
+        tile('Luminaires', `${fmt(nUp)}`, `${fmt(achieved)} lx achieved`);
+  });
+
+  // ------------------------------------------------------------ beam to spot
+  const BEAMS = [
+    [10, 'Object accent, single sculpture'],
+    [15, 'Artwork, table centre'],
+    [24, 'General accent, seating group'],
+    [36, 'Wide accent, circulation'],
+    [60, 'General downlight'],
+    [90, 'Wall wash, broad ambient'],
+  ] as const;
+
+  bind(['bs-d', 'bs-a', 'bs-E'], () => {
+    const d = num('bs-d'), a = num('bs-a'), E = num('bs-E');
+    const dia = 2 * d * Math.tan((a * Math.PI) / 180 / 2);
+    const I = E * d * d;
+
+    const out = $('bs-out');
+    if (out)
+      out.innerHTML =
+        tile('Spot diameter', `${fmt(dia, 2)} m`, `at ${fmt(d, 2)} m throw`) +
+        tile('Lit area', `${fmt(Math.PI * (dia / 2) ** 2, 2)} m²`) +
+        tile('Peak intensity needed', `${fmt(I)} cd`, `for ${fmt(E)} lx on axis`);
+
+    const tbl = $('bs-table');
+    if (tbl)
+      tbl.innerHTML = BEAMS.map(
+        ([deg, use]) =>
+          `<tr><td class="num">${deg}°</td><td class="num" style="color: var(--accent)">${fmt(
+            2 * d * Math.tan((deg * Math.PI) / 180 / 2),
+            2
+          )} m</td><td style="color: var(--text-muted)">${use}</td></tr>`
+      ).join('');
+  });
+
+  // ------------------------------------------------------ inverse square law
+  bind(['isl-I', 'isl-d', 'isl-t', 'isl-r'], () => {
+    const I = num('isl-I'), d = num('isl-d'), t = num('isl-t'), r = num('isl-r');
+    const E = (I * Math.cos((t * Math.PI) / 180)) / (d * d);
+    const Lum = (E * r) / Math.PI;
+
+    const out = $('isl-out');
+    if (out)
+      out.innerHTML =
+        tile('Illuminance', `${fmt(E, 1)} lx`, t > 0 ? `with cos ${t}° = ${fmt(Math.cos((t * Math.PI) / 180), 3)}` : 'normal incidence') +
+        tile('Luminance', `${fmt(Lum, 1)} cd/m²`, `matte surface, ρ = ${r}`) +
+        tile('At double distance', `${fmt(E / 4, 1)} lx`, '25% of the value');
+  });
+
+  // ---------------------------------------------------------------- melanopic
+  const cctSel = $<HTMLSelectElement>('me-cct');
+  cctSel?.addEventListener('change', () => {
+    if (cctSel.value !== 'custom') {
+      ($('me-mder') as HTMLInputElement).value = cctSel.value;
+      ($('me-mder') as HTMLInputElement).dispatchEvent(new Event('input'));
+    }
+  });
+
+  bind(['me-E', 'me-mder', 'me-cct'], () => {
+    const E = num('me-E'), mder = num('me-mder');
+    const medi = E * mder;
+
+    let verdict: string, tone: string;
+    if (medi >= 250) {
+      verdict = 'Meets the ≥250 lx daytime target';
+      tone = 'var(--success)';
+    } else if (medi >= 150) {
+      verdict = 'Below the 250 lx daytime target';
+      tone = 'var(--warning)';
+    } else if (medi <= 10) {
+      verdict = 'Within the ≤10 lx evening target';
+      tone = 'var(--success)';
+    } else {
+      verdict = 'Well below daytime target; too bright for evening';
+      tone = 'var(--danger)';
+    }
+
+    const need = mder > 0 ? 250 / mder : Infinity;
+    const out = $('me-out');
+    if (out)
+      out.innerHTML =
+        tile('Melanopic EDI', `${fmt(medi)} lx`, verdict, tone) +
+        tile('Vertical lux for 250 mEDI', `${fmt(need)} lx`, 'at this spectrum');
+  });
+
+  // ---------------------------------------------------------------- converter
+  const FC = 10.7639, FL = 3.42626;
+  let guard = false;
+  const link = (from: string, to: string, f: (v: number) => number) => {
+    $(from)?.addEventListener('input', () => {
+      if (guard) return;
+      guard = true;
+      ($(to) as HTMLInputElement).value = String(
+        Math.round(f(num(from)) * 1000) / 1000
+      );
+      guard = false;
+    });
+  };
+  link('cv-fc', 'cv-lx', (v) => v * FC);
+  link('cv-lx', 'cv-fc', (v) => v / FC);
+  link('cv-fl', 'cv-nit', (v) => v * FL);
+  link('cv-nit', 'cv-fl', (v) => v / FL);
+</script>

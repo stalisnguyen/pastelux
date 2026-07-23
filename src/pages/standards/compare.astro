@@ -1,0 +1,166 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import { url } from '../../site';
+
+const rows = await getCollection('criteria');
+const groups = [...new Set(rows.map((r) => r.data.group))];
+---
+
+<Base
+  title="Illuminance criteria compared"
+  description="Maintained illuminance, UGR, uniformity and colour rendering by space type, compared across EN 12464-1, IES practice and Vietnamese TCVN."
+  wide={false}
+>
+  <PageHeader
+    eyebrow="Standards"
+    title="Illuminance criteria, compared"
+    lede="Maintained illuminance, glare, uniformity and colour rendering by space type — EN 12464-1:2021 alongside typical IES practice and Vietnamese TCVN 7114-1."
+  />
+
+  <div
+    class="card p-4 mb-6 text-[0.88rem] leading-relaxed"
+    style="border-color: color-mix(in srgb, var(--warning) 40%, transparent)"
+  >
+    <strong style="color: var(--warning)">Indicative values — verify before use.</strong>
+    <span style="color: var(--text-muted)">
+      This table exists to orient you quickly, not to certify a design. The EN column reflects
+      commonly cited EN 12464-1:2021 reference values; the IES column is indicative of typical
+      North American practice rather than a single quoted figure; the VN column reflects TCVN
+      7114-1:2008. Confirm every number against the current purchased standard and the version
+      your contract calls up. EN 12464-1:2021 also applies context modifiers and separate
+      cylindrical, wall and ceiling illuminance requirements that a single number cannot express.
+    </span>
+  </div>
+
+  <div class="flex flex-wrap items-center gap-2 mb-4" data-pagefind-ignore>
+    <button class="chip chip-accent grp-btn cursor-pointer" data-group="all" type="button" aria-pressed="true">
+      All
+    </button>
+    {
+      groups.map((g) => (
+        <button class="chip grp-btn cursor-pointer" data-group={g} type="button" aria-pressed="false">
+          {g}
+        </button>
+      ))
+    }
+    <input
+      id="crit-filter"
+      type="search"
+      placeholder="Filter spaces…"
+      class="field !w-auto !py-1 !text-[0.85rem] ml-auto min-w-[10rem]"
+      aria-label="Filter spaces"
+    />
+  </div>
+
+  <div class="card scroll-x">
+    <table class="datatable">
+      <caption class="sr-only">
+        Lighting criteria by space type across EN 12464-1, IES practice and TCVN 7114-1
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col" class="min-w-[15rem]">Space</th>
+          <th scope="col" title="Maintained illuminance, EN 12464-1:2021">Ēm (lx)<br /><span class="font-normal normal-case tracking-normal opacity-70">EN</span></th>
+          <th scope="col" title="Unified Glare Rating limit">UGR</th>
+          <th scope="col" title="Minimum uniformity on the task area">Uo</th>
+          <th scope="col" title="Minimum colour rendering index">Ra</th>
+          <th scope="col" class="min-w-[9rem]">IES (lx)</th>
+          <th scope="col">VN (lx)</th>
+        </tr>
+      </thead>
+      <tbody id="crit-body">
+        {
+          rows.map((r) => (
+            <tr
+              class="crit-row"
+              data-group={r.data.group}
+              data-text={`${r.data.group} ${r.data.space}`.toLowerCase()}
+            >
+              <td>
+                <p class="font-medium">{r.data.space}</p>
+                <p class="text-[0.75rem] mt-0.5" style="color: var(--text-faint)">
+                  {r.data.group}
+                </p>
+                {r.data.note && (
+                  <p class="text-[0.78rem] mt-1.5 leading-relaxed" style="color: var(--text-muted)">
+                    {r.data.note}
+                  </p>
+                )}
+              </td>
+              <td class="num">
+                <button
+                  class="copy-val bg-transparent border-0 p-0 cursor-pointer font-mono"
+                  style="color: var(--accent)"
+                  data-value={r.data.em}
+                  title="Copy value"
+                  type="button"
+                >
+                  {r.data.em}
+                </button>
+              </td>
+              <td class="num">{r.data.ugr}</td>
+              <td class="num">{r.data.uo}</td>
+              <td class="num">{r.data.ra}</td>
+              <td class="num" style="color: var(--text-muted)">
+                {r.data.ies}
+              </td>
+              <td class="num" style="color: var(--text-muted)">
+                {r.data.vn}
+              </td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <p class="text-[0.82rem] mt-4 pb-4" style="color: var(--text-faint)">
+    Click any EN value to copy it. Full standard list on the
+    <a href={url('/standards')} class="no-underline hover:underline">standards page</a>.
+  </p>
+</Base>
+
+<script>
+  const rows = [...document.querySelectorAll<HTMLElement>('.crit-row')];
+  const buttons = [...document.querySelectorAll<HTMLElement>('.grp-btn')];
+  const input = document.getElementById('crit-filter') as HTMLInputElement | null;
+  let group = 'all';
+
+  function apply() {
+    const q = (input?.value ?? '').trim().toLowerCase();
+    for (const r of rows) {
+      const okGroup = group === 'all' || r.dataset.group === group;
+      const okText = !q || (r.dataset.text ?? '').includes(q);
+      r.classList.toggle('hidden', !(okGroup && okText));
+    }
+  }
+
+  buttons.forEach((btn) =>
+    btn.addEventListener('click', () => {
+      group = btn.dataset.group!;
+      buttons.forEach((b) => {
+        const on = b === btn;
+        b.classList.toggle('chip-accent', on);
+        b.setAttribute('aria-pressed', String(on));
+      });
+      apply();
+    })
+  );
+  input?.addEventListener('input', apply);
+
+  document.querySelectorAll<HTMLElement>('.copy-val').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const value = btn.dataset.value ?? '';
+      try {
+        await navigator.clipboard.writeText(value);
+      } catch {
+        return;
+      }
+      const original = btn.textContent;
+      btn.textContent = 'copied';
+      setTimeout(() => (btn.textContent = original), 900);
+    });
+  });
+</script>
