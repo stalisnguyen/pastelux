@@ -99,9 +99,7 @@ const topics = [...new Set(terms.flatMap((t) => t.data.topics))].sort();
           </div>
 
           {t.data.vi && (
-            <p class="vi-block text-[0.82rem] mt-0.5" style="color: var(--text-faint)">
-              {t.data.vi}
-            </p>
+            <p class="vi-block vi-term text-[0.83rem] mt-0.5 font-medium">{t.data.vi}</p>
           )}
 
           <p class="text-[0.92rem] mt-2.5 leading-relaxed" style="color: var(--text-muted)">
@@ -124,17 +122,18 @@ const topics = [...new Set(terms.flatMap((t) => t.data.topics))].sort();
           )}
 
           {t.data.viNote && (
-            <p class="vi-block vi-def text-[0.85rem] mt-2 pl-3 border-l-2 leading-relaxed" style="border-color: color-mix(in srgb, var(--accent) 45%, transparent)">
-              {t.data.viNote}
-            </p>
+            <p class="vi-block vi-def text-[0.85rem] mt-2 leading-relaxed">{t.data.viNote}</p>
           )}
 
           {t.data.viExample && (
-            <div class="vi-block mt-3 rounded-lg p-3" style="background: var(--bg-elevated); border: 1px solid var(--border)">
-              <p class="label !mb-1" style="color: var(--accent-cool)">
-                Ví dụ
+            <div
+              class="vi-block mt-3 rounded-lg p-3"
+              style="background: var(--bg-elevated); border: 1px solid var(--vi-rule)"
+            >
+              <p class="label !mb-1" style="color: var(--vi-text)">Ví dụ</p>
+              <p class="text-[0.85rem] leading-[1.75]" style="color: var(--vi-text)">
+                {t.data.viExample}
               </p>
-              <p class="vi-def text-[0.85rem] leading-relaxed">{t.data.viExample}</p>
             </div>
           )}
 

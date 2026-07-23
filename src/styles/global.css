@@ -45,6 +45,11 @@
   --warning: #fbbf24;
   --danger: #f87171;
 
+  /* Vietnamese layer — cool-tinted so it separates from the English at a
+     glance without being harder to read. 8.4:1 on --bg (AAA). */
+  --vi-text: #8fb3c9;
+  --vi-rule: #3d5f77;
+
   --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px -12px rgb(0 0 0 / 0.6);
   color-scheme: dark;
 }
@@ -69,6 +74,10 @@
   --success: #15803d;
   --warning: #a16207;
   --danger: #b91c1c;
+
+  /* 7.1:1 on the light background. */
+  --vi-text: #33607d;
+  --vi-rule: #9dc0d4;
 
   --shadow: 0 1px 2px rgb(16 24 40 / 0.06), 0 8px 24px -12px rgb(16 24 40 / 0.18);
   color-scheme: light;
@@ -395,17 +404,28 @@
   /* ---- Vietnamese annotations ----
      Additive, never a replacement: the English term is what appears on a
      drawing or a datasheet, so it always stays visible. These read as a
-     quieter second voice under it, and can be hidden entirely. */
+     quieter second voice under it, and can be hidden entirely.
+
+     Set apart by colour and a left rule rather than by italics. Vietnamese
+     stacks diacritics (ế, ộ, ữ) and at these sizes an italic muddies them —
+     the whole point is that this layer is *easier* to read, not harder. */
   .vi-def {
-    color: var(--text-muted);
+    color: var(--vi-text);
+    border-left: 2px solid var(--vi-rule);
+    padding-left: 0.7rem;
     /* Diacritics need a little more room to breathe than Latin text. */
-    line-height: 1.72;
+    line-height: 1.75;
   }
   .vi-block {
     display: block;
   }
   .vi-off .vi-block {
     display: none;
+  }
+  /* The term gloss sits directly under the heading, where a rule would fight
+     with the heading's own alignment. */
+  .vi-term {
+    color: var(--vi-text);
   }
 }
 
