@@ -1,6 +1,6 @@
 {
   "date": "2026-07-23",
-  "generatedAt": "2026-07-23T11:41:40.533Z",
+  "generatedAt": "2026-07-23T13:48:08.050Z",
   "degraded": true,
   "items": [
     {
@@ -45,17 +45,6 @@
       "summary": "",
       "topics": [
         "practice"
-      ]
-    },
-    {
-      "title": "Marie Servais takes over as head of Light + Building",
-      "url": "https://www.a1lightingmagazine.com/company-news/marie-servais-takes-over-as-head-of-light-building",
-      "source": "A1 Lighting",
-      "published": "Mon, 13 Jul 2026 13:06:33 +0000",
-      "summary": "",
-      "topics": [
-        "product",
-        "awards"
       ]
     },
     {
@@ -119,6 +108,16 @@
       "published": "Tue, 14 Jul 2026 08:52:10 +0000",
       "summary": "",
       "topics": []
+    },
+    {
+      "title": "Collingwood lights up Northampton Saints hospitality and net zero drive",
+      "url": "https://www.a1lightingmagazine.com/projects/collingwood-lights-up-northampton-saints-hospitality",
+      "source": "A1 Lighting",
+      "published": "Thu, 23 Jul 2026 11:58:55 +0000",
+      "summary": "",
+      "topics": [
+        "sustainability"
+      ]
     }
   ],
   "termOfDay": "task-area",

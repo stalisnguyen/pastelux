@@ -10,7 +10,8 @@
       "name": "darc",
       "url": "https://www.darcmagazine.com/feed/",
       "site": "https://www.darcmagazine.com/",
-      "about": "Decorative lighting and lighting-in-design, from the same publisher as arc."
+      "about": "Decorative lighting and lighting-in-design, from the same publisher as arc.",
+      "disabled": "Feed has not published since December 2025. Re-enable if it starts moving again — the magazine itself is still active."
     },
     {
       "name": "LightNOW",
@@ -28,7 +29,8 @@
       "name": "Lighting Design Alliance",
       "url": "https://www.lightingdesignalliance.com/feed/",
       "site": "https://www.lightingdesignalliance.com/",
-      "about": "Practice-side writing from a working architectural lighting studio."
+      "about": "Practice-side writing from a working architectural lighting studio.",
+      "disabled": "Feed has not published since July 2025. Kept here because the archive is worth reading, but it contributes nothing to a daily digest."
     },
     {
       "name": "ArchDaily",

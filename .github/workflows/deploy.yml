@@ -29,12 +29,27 @@ jobs:
 
       - run: npm ci
 
-      - name: Build
+      # Precedence: repository variables, then public/CNAME, then the project
+      # Pages URL. astro.config.mjs applies the same rule for local builds.
+      - name: Resolve site URL
         env:
-          # For https://<user>.github.io/<repo>/ these resolve automatically.
-          # Set a repository variable SITE_URL to override for a custom domain.
-          SITE_URL: ${{ vars.SITE_URL || format('https://{0}.github.io', github.repository_owner) }}
-          BASE_PATH: ${{ vars.BASE_PATH || format('/{0}', github.event.repository.name) }}
+          VAR_SITE: ${{ vars.SITE_URL }}
+          VAR_BASE: ${{ vars.BASE_PATH }}
+          OWNER: ${{ github.repository_owner }}
+          REPO: ${{ github.event.repository.name }}
+        run: |
+          if [ -n "$VAR_SITE" ]; then
+            SITE="$VAR_SITE"; BASE="${VAR_BASE:-/}"
+          elif [ -s public/CNAME ]; then
+            SITE="https://$(tr -d '[:space:]' < public/CNAME)"; BASE="/"
+          else
+            SITE="https://${OWNER}.github.io"; BASE="/${REPO}"
+          fi
+          echo "SITE_URL=$SITE" >> "$GITHUB_ENV"
+          echo "BASE_PATH=$BASE" >> "$GITHUB_ENV"
+          echo "Building for $SITE (base $BASE)"
+
+      - name: Build
         run: npm run build
 
       - uses: actions/upload-pages-artifact@v3

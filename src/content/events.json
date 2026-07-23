@@ -15,6 +15,36 @@
     "note": "Construction, building materials and interior/exterior decoration — the largest local trade fair, with a lighting and decoration section. Phase 1 ran 24–28 June 2026."
   },
   {
+    "id": "vietbuild-hanoi-2026-p2",
+    "name": "Vietbuild Hanoi 2026 — Phase 2",
+    "kind": "fair",
+    "start": "2026-09-24",
+    "end": "2026-09-28",
+    "city": "Hanoi",
+    "country": "Vietnam",
+    "venue": "Vietnam Exhibition Centre (VEC), Dong Anh",
+    "url": "https://vietbuildexhibition.com.vn/en/",
+    "verified": "2026-07-23",
+    "source": "tradefairdates and showsbee listings, cross-checked against VOV coverage of the 2026 Hanoi series. The organiser's own site does not publish a forward schedule, so these dates are second-hand — confirm before travelling",
+    "expectText": "Exhibition Corporation",
+    "note": "The Hanoi series runs in three phases a year. Phase 1 ran 26–30 March at the new VEC."
+  },
+  {
+    "id": "iald-enlighten-americas-2026",
+    "name": "IALD Enlighten Americas 2026",
+    "kind": "conference",
+    "start": "2026-10-15",
+    "end": "2026-10-17",
+    "city": "Austin",
+    "country": "USA",
+    "url": "https://iald.org/Event?EventKey=EA26",
+    "verified": "2026-07-23",
+    "source": "IALD event listing (EA26), corroborated by Inside Lighting's events calendar and GVA Lighting",
+    "expectText": "Enlighten Americas",
+    "unverifiableUrl": "iald.org sits behind Cloudflare and returns 403 to any automated check. This URL was confirmed by hand, so the link checker skips it rather than reporting a false failure.",
+    "note": "The Americas half of the Enlighten series. Same boutique format as the Europe edition."
+  },
+  {
     "id": "hklf-autumn-2026",
     "name": "HKTDC Hong Kong International Lighting Fair (Autumn Edition)",
     "kind": "fair",
@@ -43,6 +73,20 @@
     "source": "LDI Show official site (show overview). Expo runs 6–8 December; Pro Training runs 2–8 December",
     "expectText": "Live Design",
     "note": "Entertainment and architainment lighting — the strongest place to see DMX and pixel control in the flesh."
+  },
+  {
+    "id": "vietbuild-hanoi-2026-p3",
+    "name": "Vietbuild Hanoi 2026 — Phase 3",
+    "kind": "fair",
+    "start": "2026-11-11",
+    "end": "2026-11-14",
+    "city": "Hanoi",
+    "country": "Vietnam",
+    "url": "https://vietbuildexhibition.com.vn/en/",
+    "verified": "2026-07-23",
+    "source": "tradefairdates listing for the Hanoi Phase 3 edition. Second-hand, as the organiser publishes no forward schedule — confirm before travelling",
+    "expectText": "Exhibition Corporation",
+    "note": "Venue not yet announced at the time of checking."
   },
   {
     "id": "light-building-2028",
