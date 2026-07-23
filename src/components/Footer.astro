@@ -43,5 +43,52 @@ const year = new Date().getFullYear();
         >Headlines are linked to their publishers. Summaries are written here, not copied.</span
       >
     </div>
+
+    <!-- A small dedication. The site name is already both of ours: Pastel + lux. -->
+    <p class="dedication mt-6 text-xs flex items-center gap-1.5" style="color: var(--text-faint)">
+      <span>Made by <b>Stalis</b> for <b>Pastel</b>, with</span>
+      <svg
+        class="heart"
+        width="13"
+        height="13"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+        style="fill: #ff5c7c"
+      >
+        <path
+          d="M12 21s-8-5.1-10.2-9.6C.5 8.4 2 5 5.3 5c2 0 3.3 1.1 4.2 2.3L12 10l2.5-2.7C15.4 6.1 16.7 5 18.7 5 22 5 23.5 8.4 22.2 11.4 20 15.9 12 21 12 21z"
+        ></path>
+      </svg>
+      <span class="sr-only">love</span>
+      <span class="vi-block-inline" style="color: var(--vi-text)">· Stalis làm tặng Pastel</span>
+    </p>
   </div>
 </footer>
+
+<style>
+  .heart {
+    transform-origin: center;
+    animation: heartbeat 2.6s ease-in-out infinite;
+  }
+  @keyframes heartbeat {
+    0%,
+    18%,
+    100% {
+      transform: scale(1);
+    }
+    8% {
+      transform: scale(1.22);
+    }
+    12% {
+      transform: scale(1.06);
+    }
+  }
+  .dedication:hover .heart {
+    animation-duration: 0.9s;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .heart {
+      animation: none;
+    }
+  }
+</style>
