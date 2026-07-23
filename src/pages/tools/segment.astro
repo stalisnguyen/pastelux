@@ -5,17 +5,18 @@ import { url } from '../../site';
 ---
 
 <Base
-  title="Segment a render"
-  description="Upload an interior render and get a solid flat-colour label map — objects separated, wall planes split by orientation — to use as a selection mask. Runs entirely in your browser."
+  title="Segment a render for lighting"
+  description="Separate a render into per-object and per-wall-plane selection masks for lighting work in post — light each region individually. Runs entirely in your browser."
 >
   <PageHeader
     eyebrow="Tools · Beta"
-    title="Segment a render"
-    lede="Upload a rendered interior; the tool separates it into solid flat-colour regions — each object, and each wall plane — that you can use as selection masks, then you download the result. It runs entirely in your browser; the image is never uploaded."
+    title="Segment a render for lighting"
+    lede="For the lighting pass in post-production. Upload a render and the tool separates it into solid flat-colour regions — each object, and each wall plane — so you can select and light each one individually in Photoshop, the way you would light them in the scene. Then you download the mask. It runs entirely in your browser; the image is never uploaded."
   >
     <p class="vi-block vi-def mt-2 text-[0.95rem] max-w-2xl leading-relaxed">
-      Tải lên một ảnh render nội thất; công cụ tách thành các vùng màu phẳng đặc — từng vật thể, và
-      từng mảng tường theo hướng — để bạn dùng làm mặt nạ chọn, rồi tải kết quả về. Mọi thứ chạy
+      Dành cho khâu chỉnh sáng hậu kỳ. Tải lên một ảnh render, công cụ tách thành các vùng màu phẳng
+      đặc — từng vật thể, và từng mảng tường theo hướng — để bạn chọn và chiếu sáng riêng từng vùng
+      trong Photoshop, đúng như cách bạn xử lý ánh sáng trong scene. Rồi tải mặt nạ về. Mọi thứ chạy
       ngay trong trình duyệt, ảnh không gửi đi đâu.
     </p>
   </PageHeader>
@@ -24,20 +25,21 @@ import { url } from '../../site';
     class="card p-4 mb-6 text-[0.88rem] leading-relaxed max-w-3xl"
     style="border-color: color-mix(in srgb, var(--warning) 40%, transparent)"
   >
-    <strong style="color: var(--warning)">What it does and where it stops.</strong>
+    <strong style="color: var(--warning)">What it gives you, and where it stops.</strong>
     <span style="color: var(--text-muted)">
-      It labels the render by object category (lighting-independent — shadows do not split an
-      object), separates distinct objects into their own colours, and splits large surfaces such as
-      walls into planes by their orientation, so you can light each plane separately. It is a
-      geometric approximation, not a V-Ray object pass: very thin elements (a slim light strip) and
-      small distant objects may still be missed — switch the model to <em>Detailed</em> for those.
+      It turns the render into masks for a lighting pass: each object separated, and each wall plane
+      split by orientation, so you can grade the light on every surface independently — a wall
+      grazed here, an accent lifted there. The regions are lighting-independent: a shadow or a bright
+      hotspot does not break an object into pieces. It is a geometric approximation, not a V-Ray
+      object pass — very thin elements such as a slim light strip, and small distant objects, may
+      still be missed; switch the model to <em>Detailed</em> for those.
     </span>
     <p class="vi-block vi-def mt-2">
-      Công cụ nhận diện theo loại vật thể (không bị ảnh hưởng bởi ánh sáng — bóng đổ không làm tách
-      một vật), tách các vật riêng thành màu riêng, và chia các bề mặt lớn như tường thành từng mảng
-      theo hướng để bạn chiếu sáng riêng từng mảng. Đây là xấp xỉ hình học, không phải VRay object
-      pass: vật rất mảnh (ống đèn) hoặc vật nhỏ ở xa vẫn có thể bị bỏ sót — chuyển sang model
-      <em>Detailed</em> để bắt tốt hơn.
+      Công cụ biến ảnh render thành mặt nạ cho khâu chỉnh sáng: tách riêng từng vật, và chia mỗi mảng
+      tường theo hướng, để bạn chỉnh ánh sáng riêng cho từng bề mặt — chỗ này rửa tường, chỗ kia nhấn
+      sáng. Các vùng không phụ thuộc ánh sáng: một vệt bóng hay điểm sáng chói không làm vỡ một vật
+      thành nhiều mảnh. Đây là xấp xỉ hình học, không phải VRay object pass — vật rất mảnh (ống đèn)
+      hoặc vật nhỏ ở xa vẫn có thể bị bỏ sót; chuyển sang model <em>Detailed</em> để bắt tốt hơn.
     </p>
   </div>
 

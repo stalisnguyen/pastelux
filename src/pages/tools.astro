@@ -28,18 +28,19 @@ import { url } from '../site';
       style="color: var(--text); border-color: color-mix(in srgb, var(--accent-cool) 40%, transparent)"
     >
       <div class="flex items-baseline gap-2 flex-wrap">
-        <h2 class="text-lg font-semibold">Segment a render → label map</h2>
+        <h2 class="text-lg font-semibold">Segment a render for lighting</h2>
         <span class="chip chip-accent">Beta</span>
         <span class="ml-auto text-[0.85rem]" style="color: var(--accent-cool)">Open →</span>
       </div>
       <p class="text-[0.9rem] mt-1.5" style="color: var(--text-muted)">
-        Upload an interior render; get a flat-colour label map of the objects in it to use as a
-        selection mask. Runs in your browser — the image is never uploaded.
+        Turn a render into per-object and per-wall-plane selection masks for the lighting pass, so
+        you can grade each surface individually in post. Runs in your browser — the image is never
+        uploaded.
       </p>
       <p class="vi-block vi-def text-[0.86rem] mt-1.5">
-        Tải lên ảnh render nội thất; nhận về bản đồ màu phẳng theo từng vật thể để làm mặt nạ chọn
-        trong Photoshop. Chạy ngay trong trình duyệt, ảnh không gửi đi đâu — thay cho việc tách tay
-        từng vật.
+        Biến ảnh render thành mặt nạ theo từng vật và từng mảng tường cho khâu chỉnh sáng, để bạn
+        xử lý ánh sáng riêng từng bề mặt trong hậu kỳ. Chạy ngay trong trình duyệt, ảnh không gửi đi
+        đâu — thay cho việc tách tay từng vật.
       </p>
     </a>
 
