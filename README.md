@@ -33,22 +33,37 @@ compiled output. To test search, run a full build and preview it:
 npm run build && npm run preview
 ```
 
-## Publishing to GitHub Pages
+## Where it is published
 
-1. Create a repository and push this directory to `main`.
-2. In the repository, go to **Settings → Pages** and set **Source** to **GitHub Actions**.
-3. Push. The `Deploy to GitHub Pages` workflow builds and publishes automatically.
+Live at **<https://pasteluxvn.com>**, from `main`, via the `Deploy to GitHub Pages`
+workflow. `stalisnguyen.github.io/pastelux` now 301-redirects to the custom domain.
 
-The site URL and base path are derived from the repository name, so
-`https://<user>.github.io/<repo>/` works with no configuration.
+### How the domain is configured
 
-For a custom domain, set two repository variables under
-**Settings → Secrets and variables → Actions → Variables**:
+`public/CNAME` is the **single source of truth**. GitHub Pages reads it to serve the
+custom domain, and both `astro.config.mjs` and the deploy workflow derive `site` and
+`base` from the same file — so the served domain and the built asset paths cannot drift
+apart. (The classic failure is a site answering on a custom domain while every asset
+still points at `/<repo>/`.)
 
-| Variable | Example |
-|---|---|
-| `SITE_URL` | `https://pastelux.com` |
-| `BASE_PATH` | `/` |
+Precedence is: repository variables → `public/CNAME` → `<user>.github.io/<repo>`.
+Delete `public/CNAME` and everything falls back to the project Pages URL automatically.
+
+To move to a different domain: change `public/CNAME`, set the same value under
+**Settings → Pages → Custom domain**, and point DNS at GitHub:
+
+| Type | Host | Value |
+|---|---|---|
+| A | `@` | `185.199.108.153` |
+| A | `@` | `185.199.109.153` |
+| A | `@` | `185.199.110.153` |
+| A | `@` | `185.199.111.153` |
+| CNAME | `www` | `<user>.github.io.` |
+
+Leave any MX and SPF records alone — deleting them silently breaks email on the domain.
+
+HTTPS is issued automatically by GitHub once DNS resolves; it can take up to an hour.
+Tick **Enforce HTTPS** in Settings → Pages once it becomes available.
 
 ## The daily digest
 
