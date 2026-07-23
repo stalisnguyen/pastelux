@@ -51,6 +51,26 @@
   },
   {
     "topics": [
+      "product",
+      "optics",
+      "practice"
+    ],
+    "seeAlso": [
+      "downlight",
+      "aiming-angle",
+      "focusing"
+    ],
+    "id": "adjustable-spot",
+    "term": "Adjustable downlight / directional spot",
+    "vi": "Đèn rọi chỉnh hướng",
+    "definition": "A recessed fitting on a gimbal, typically adjustable ±30–40° and rotatable. The fitting that does most of the actual design work: accenting, grazing, picking out texture.",
+    "viDefinition": "Đèn âm trần gắn khớp xoay, thường chỉnh được ±30–40° và xoay tròn. Đây là loại làm phần lớn công việc thiết kế thật sự: tạo điểm nhấn, chiếu sượt, làm nổi vân vật liệu.",
+    "note": "Specify a locking mechanism and budget a focusing visit. An unlocked head drifts within a year and the scheme quietly disappears.",
+    "viNote": "Phải yêu cầu có cơ cấu khoá và tính trước một buổi chỉnh đèn. Đầu đèn không khoá sẽ lệch trong vòng một năm, và phương án âm thầm biến mất.",
+    "viExample": "Sảnh khách sạn có 12 đèn rọi tranh: nếu không khoá góc, sau đợt vệ sinh trần đầu tiên là mỗi đèn chiếu một hướng."
+  },
+  {
+    "topics": [
       "optics",
       "practice"
     ],
@@ -103,6 +123,21 @@
     "viExample": "Bảo tàng 120 đèn rọi: kèm bảng ghi góc ngắm và số hiệu từng đèn vào hồ sơ hoàn công, để 5 năm sau vẫn phục hồi được đúng hiệu ứng."
   },
   {
+    "topics": [
+      "product"
+    ],
+    "seeAlso": [
+      "ip-rating",
+      "high-bay"
+    ],
+    "id": "batten",
+    "term": "Batten",
+    "vi": "Đèn máng",
+    "definition": "A bare linear fitting, often IP65, for plant rooms, car parks and back of house. Cheap, robust and without pretension.",
+    "viDefinition": "Đèn tuyến tính trần trụi, thường đạt IP65, dùng cho phòng kỹ thuật, bãi xe và khu vực hậu cần. Rẻ, bền, không màu mè.",
+    "viExample": "Bãi xe tầng hầm: đèn máng IP65 gắn nổi dưới dầm là đúng lựa chọn — bền, dễ thay, và không ai cần nó đẹp."
+  },
+  {
     "id": "beam-angle",
     "term": "Beam angle",
     "vi": "Góc chiếu",
@@ -136,6 +171,25 @@
       "cct"
     ],
     "viExample": "Đặt 200 bộ đèn cùng mã nhưng hai lô sản xuất cách nhau 6 tháng — nếu không khoá bin trong hợp đồng, hai lô có thể lệch màu thấy rõ khi lắp cạnh nhau."
+  },
+  {
+    "topics": [
+      "product",
+      "facade"
+    ],
+    "seeAlso": [
+      "full-cutoff",
+      "obtrusive-light",
+      "glare"
+    ],
+    "id": "bollard",
+    "term": "Bollard",
+    "vi": "Đèn trụ thấp",
+    "definition": "A short post, typically 0.6–1.2 m, lighting a path or a planting bed from above.",
+    "viDefinition": "Trụ đèn thấp, thường cao 0,6–1,2 m, chiếu sáng lối đi hoặc bồn cây từ trên xuống.",
+    "note": "Choose downward-emitting types. A bollard with a glowing head is a glare source at eye level for anyone seated, and contributes almost nothing useful to the ground.",
+    "viNote": "Hãy chọn loại chỉ phát sáng xuống dưới. Đèn trụ có phần đầu phát sáng chính là nguồn chói ngang tầm mắt người ngồi, mà lại gần như không góp gì cho mặt đất.",
+    "viExample": "Lối đi công viên: đèn trụ chóa kín chiếu xuống cho 20 lux trên lối mà không chói. Loại đầu phát sáng cho ít lux hơn và làm người ngồi ghế băng khó chịu."
   },
   {
     "id": "cie-s-026",
@@ -406,6 +460,25 @@
     "viExample": "Mặt đứng đổi màu theo nhạc trong lễ hội: DMX. Cùng toà nhà đó, đèn hành lang bên trong: DALI. Nối hai hệ bằng gateway."
   },
   {
+    "topics": [
+      "product",
+      "optics"
+    ],
+    "seeAlso": [
+      "wall-washer-fitting",
+      "adjustable-spot",
+      "illuminance"
+    ],
+    "id": "downlight",
+    "term": "Downlight",
+    "vi": "Đèn âm trần chiếu xuống",
+    "definition": "A recessed fitting with a fixed, symmetric distribution pointing straight down. Delivers horizontal illuminance efficiently and does almost nothing else.",
+    "viDefinition": "Bộ đèn âm trần có phân bố cố định, đối xứng, chiếu thẳng xuống. Tạo độ rọi ngang hiệu quả và gần như không làm được gì khác.",
+    "note": "The most over-used fitting in the industry. It lights floors and the tops of heads; walls and faces stay dark, which is why a room can hit 500 lx and still look grim.",
+    "viNote": "Đây là loại đèn bị lạm dụng nhất trong nghề. Nó chiếu sáng sàn và đỉnh đầu; tường và khuôn mặt vẫn tối — đó là lý do một căn phòng đạt đủ 500 lux mà vẫn trông tệ.",
+    "viExample": "Văn phòng chỉ dùng downlight: đo đủ 500 lux trên bàn nhưng nhân viên vẫn than \"tối\". Thêm một lớp rửa tường là cảm giác thay đổi hẳn, dù chỉ số lux gần như không đổi."
+  },
+  {
     "id": "duv",
     "term": "Duv",
     "vi": "Độ lệch Duv",
@@ -476,6 +549,25 @@
       "zero-ten"
     ],
     "viExample": "Xưởng có máy tiện quay: driver nhấp nháy sẽ khiến trục quay trông như đứng yên — nguy hiểm chết người. Bắt buộc SVM ≤ 0,4."
+  },
+  {
+    "topics": [
+      "product",
+      "facade"
+    ],
+    "seeAlso": [
+      "obtrusive-light",
+      "uplight-ratio",
+      "full-cutoff"
+    ],
+    "id": "floodlight",
+    "term": "Floodlight",
+    "vi": "Đèn pha",
+    "definition": "A wide-beam, high-output exterior fitting aimed at a surface from a distance — a façade, a sign, a sports pitch.",
+    "viDefinition": "Đèn ngoài trời chùm rộng, công suất lớn, chiếu vào một bề mặt từ xa — mặt đứng công trình, biển hiệu, hoặc sân thể thao.",
+    "note": "The family most likely to generate obtrusive-light complaints. Specify glare shields and barn doors at concept, not after the neighbours object.",
+    "viNote": "Đây là họ đèn dễ bị khiếu nại về ánh sáng phiền nhiễu nhất. Hãy chỉ định tấm chắn chói và cánh chắn ngay từ concept, đừng đợi hàng xóm phản ứng.",
+    "viExample": "Chiếu mặt đứng từ cột đối diện: không có cánh chắn thì ánh sáng vượt qua mép công trình và rọi thẳng vào căn hộ phía sau."
   },
   {
     "id": "focusing",
@@ -551,6 +643,21 @@
       "product"
     ],
     "seeAlso": [
+      "mounting-height",
+      "batten"
+    ],
+    "id": "high-bay",
+    "term": "High bay / low bay",
+    "vi": "Đèn nhà xưởng",
+    "definition": "Wide, efficient distributions for warehouses and factories, selected by mounting height. Above roughly 8 m is high bay territory.",
+    "viDefinition": "Đèn phân bố rộng, hiệu suất cao cho kho và nhà xưởng, chọn theo cao độ lắp. Trên khoảng 8 m thì thuộc nhóm high bay.",
+    "viExample": "Kho cao 10 m: dùng high bay chùm hẹp để ánh sáng xuống tới sàn thay vì tán ra hai bên kệ."
+  },
+  {
+    "topics": [
+      "product"
+    ],
+    "seeAlso": [
       "ip-rating"
     ],
     "id": "ik-rating",
@@ -581,6 +688,25 @@
       "inverse-square-law"
     ],
     "viExample": "Văn phòng yêu cầu 500 lux trên mặt bàn cao 0,75 m. Máy đo đặt nằm ngang trên bàn phải đọc được ít nhất 500."
+  },
+  {
+    "topics": [
+      "product",
+      "facade"
+    ],
+    "seeAlso": [
+      "ip-rating",
+      "surge-protection",
+      "glare"
+    ],
+    "id": "inground-uplight",
+    "term": "Inground uplight",
+    "vi": "Đèn âm sàn hắt lên",
+    "definition": "A fitting recessed flush into paving or planting, aimed up at a tree, a column or a façade.",
+    "viDefinition": "Đèn lắp chìm ngang mặt lát hoặc mặt đất, hắt lên cây, cột hoặc mặt đứng công trình.",
+    "note": "Beautiful and maintenance-hungry. It fills with water, gets walked on and driven over, and is the single most common exterior failure. Demand a drainage detail, IP67 minimum, and never place one where a person will stand and look down into it.",
+    "viNote": "Đẹp nhưng ngốn bảo trì. Nó ngập nước, bị giẫm lên, bị xe cán qua, và là loại hỏng nhiều nhất trong các đèn ngoài trời. Hãy yêu cầu chi tiết thoát nước, tối thiểu IP67, và đừng bao giờ đặt ở chỗ người ta sẽ đứng lên rồi nhìn xuống.",
+    "viExample": "Hắt gốc cây trong sân: đặt lệch khỏi lối đi bộ và có hố thoát nước bên dưới. Đặt giữa lối đi thì vừa chói mắt vừa hỏng trong một mùa mưa."
   },
   {
     "id": "inverse-square-law",
@@ -671,6 +797,24 @@
     "viExample": "Đèn 30 W dùng driver 700 mA. Nếu driver chỉ đạt 50.000 giờ trong khi LED đạt 100.000 giờ, thì tuổi thọ thực của bộ đèn là 50.000 giờ, không phải 100.000."
   },
   {
+    "topics": [
+      "product"
+    ],
+    "seeAlso": [
+      "cove",
+      "macadam-ellipse",
+      "binning"
+    ],
+    "id": "tape-light",
+    "term": "LED tape / strip",
+    "vi": "Đèn LED dây",
+    "definition": "Flexible LED on a reel, cut to length and usually mounted in an aluminium profile that doubles as a heat sink.",
+    "viDefinition": "Dải LED mềm cuộn thành cuộn, cắt theo chiều dài cần dùng, thường lắp trong profile nhôm vừa làm khung vừa tản nhiệt.",
+    "note": "Ask about binning across reels, the drive current and how the profile sheds heat. Tape run hot in a sealed channel fails early and unevenly, which is worse than failing all at once.",
+    "viNote": "Hãy hỏi về bin màu giữa các cuộn, dòng điều khiển, và profile tản nhiệt thế nào. LED dây chạy nóng trong rãnh kín sẽ hỏng sớm và hỏng không đều — còn tệ hơn là hỏng đồng loạt.",
+    "viExample": "Hắt trần 30 m dùng 6 cuộn 5 m: nếu không khoá bin, sáu đoạn sẽ hơi khác màu nhau và nhìn dọc trần là thấy ngay."
+  },
+  {
     "id": "lpd",
     "term": "Lighting power density",
     "vi": "Mật độ công suất chiếu sáng",
@@ -689,6 +833,25 @@
       "daylight-harvesting"
     ],
     "viExample": "Văn phòng 200 m², quy chuẩn cho 9 W/m² → tổng công suất chiếu sáng tối đa 1.800 W. Nếu bộ đèn 110 lm/W, đó là khoảng 198.000 lm để chia cho cả sàn."
+  },
+  {
+    "topics": [
+      "product",
+      "optics"
+    ],
+    "seeAlso": [
+      "louvre",
+      "ugr",
+      "trimless"
+    ],
+    "id": "linear-luminaire",
+    "term": "Linear luminaire",
+    "vi": "Đèn tuyến tính",
+    "definition": "A continuous or modular strip fitting, recessed, surfaced or suspended. Lensed for general light, or with a deep honeycomb louvre for low-glare screen work.",
+    "viDefinition": "Bộ đèn dạng dải liên tục hoặc lắp ghép, có thể âm trần, gắn nổi hoặc thả trần. Dùng kính tán xạ cho ánh sáng chung, hoặc lưới tổ ong sâu cho công việc màn hình ít chói.",
+    "note": "Write \"continuous run, no visible joints\" into the schedule. A break every 1.2 m reads as a defect and is very expensive to fix afterwards.",
+    "viNote": "Hãy ghi rõ \"chạy liên tục, không thấy mối nối\" trong bảng thống kê. Cứ 1,2 m lại hở một khe thì nhìn như lỗi thi công, và sửa sau rất tốn kém.",
+    "viExample": "Dãy đèn tuyến tính 12 m trên trần văn phòng: nếu nhà thầu ghép từ 10 module 1,2 m mà không có phụ kiện nối liền, sẽ thấy 9 vạch tối."
   },
   {
     "topics": [
@@ -1005,6 +1168,42 @@
     "viExample": "Nhà vệ sinh dùng PIR là hợp lý. Phòng làm việc cá nhân dùng PIR sẽ tắt đèn khi người ta ngồi đọc yên — chỗ đó cần loại kết hợp hoặc chỉnh thời gian trễ dài hơn."
   },
   {
+    "topics": [
+      "product"
+    ],
+    "seeAlso": [
+      "diffuser",
+      "ugr",
+      "luminance"
+    ],
+    "id": "panel-light",
+    "term": "Panel / troffer",
+    "vi": "Đèn panel",
+    "definition": "A large diffusing surface at low luminance, usually 600 × 600 or 1200 × 300. Efficient, glare-free and almost entirely without design intent.",
+    "viDefinition": "Tấm phát sáng lớn có độ chói thấp, thường 600 × 600 hoặc 1200 × 300 mm. Hiệu suất cao, ít chói, và gần như không mang ý đồ thiết kế nào.",
+    "note": "Fine for a back office. Wrong anywhere anyone is meant to feel something about the space.",
+    "viNote": "Dùng cho khu vực hậu cần thì ổn. Sai chỗ ở bất cứ nơi nào người ta được kỳ vọng cảm nhận điều gì đó về không gian.",
+    "viExample": "Phòng kế toán: panel là hợp lý và rẻ. Sảnh đón khách cùng toà nhà: panel làm không gian trông như phòng khám."
+  },
+  {
+    "topics": [
+      "product"
+    ],
+    "seeAlso": [
+      "sparkle",
+      "glare",
+      "layered-lighting"
+    ],
+    "id": "pendant",
+    "term": "Pendant",
+    "vi": "Đèn thả",
+    "definition": "A fitting suspended on a cable or rod. Either a decorative object you are meant to look at, or a functional source you are meant to look past — rarely both.",
+    "viDefinition": "Bộ đèn treo bằng dây hoặc thanh. Hoặc là vật trang trí để người ta ngắm, hoặc là nguồn sáng chức năng để người ta nhìn xuyên qua — hiếm khi vừa là cả hai.",
+    "note": "Decide which of the two it is before you select it. A decorative pendant asked to do task lighting glares; a functional one asked to be a feature disappoints.",
+    "viNote": "Hãy quyết định nó thuộc loại nào TRƯỚC khi chọn. Đèn trang trí bị bắt làm nhiệm vụ chiếu sáng chức năng thì gây chói; đèn chức năng bị kỳ vọng làm điểm nhấn thì nhạt nhẽo.",
+    "viExample": "Đèn thả trên bàn ăn: nếu là loại trang trí hở bóng, hãy dim xuống và bổ sung một đèn rọi âm trần cho mặt bàn."
+  },
+  {
     "id": "photometric-file",
     "term": "Photometric file (IES / LDT)",
     "vi": "File trắc quang",
@@ -1071,6 +1270,25 @@
       "tm-30"
     ],
     "viExample": "Đèn Ra 90 nhưng R9 chỉ 20 sẽ làm da người trông tái và gỗ óc chó trông như gỗ tạp. Yêu cầu R9 ≥ 50 trong spec để tránh."
+  },
+  {
+    "topics": [
+      "product",
+      "optics"
+    ],
+    "seeAlso": [
+      "wall-washing",
+      "scallop",
+      "downlight"
+    ],
+    "id": "wall-washer-fitting",
+    "term": "Recessed wall washer",
+    "vi": "Đèn rửa tường âm trần",
+    "definition": "A recessed fitting with an asymmetric optic, often with a kicker reflector, built to produce an even gradient down a wall from close to the ceiling.",
+    "viDefinition": "Đèn âm trần có quang học bất đối xứng, thường kèm chóa hắt, thiết kế để tạo dải sáng đều từ trên xuống dưới bức tường khi lắp gần trần.",
+    "note": "A downlight aimed at a wall is not a wall washer. It gives you a scallop, not a wash — the optic is the whole difference.",
+    "viNote": "Downlight quay nghiêng vào tường KHÔNG phải đèn rửa tường. Nó cho vệt hình vỏ sò chứ không phải dải sáng đều — khác biệt nằm hoàn toàn ở quang học.",
+    "viExample": "Tường 3 m: đèn rửa tường đặt cách tường khoảng 1 m, cách nhau 1–1,2 m, cho tường sáng đều từ đỉnh xuống chân."
   },
   {
     "id": "reflectance",
@@ -1193,6 +1411,24 @@
   },
   {
     "topics": [
+      "product",
+      "practice"
+    ],
+    "seeAlso": [
+      "glare",
+      "adaptation"
+    ],
+    "id": "step-light",
+    "term": "Step light / handrail light",
+    "vi": "Đèn bậc thang, đèn tay vịn",
+    "definition": "Low-level, low-output fittings marking a change of level. Recessed into a riser, a wall or the underside of a handrail.",
+    "viDefinition": "Đèn công suất thấp lắp ở cao độ thấp để đánh dấu chỗ thay đổi cao độ. Âm vào cổ bậc, vào tường, hoặc dưới tay vịn.",
+    "note": "Check the luminance from a descending viewpoint, not a standing one. That is where they dazzle, and it is exactly when a person most needs to see the tread.",
+    "viNote": "Hãy kiểm tra độ chói từ góc nhìn của người ĐANG ĐI XUỐNG, không phải người đứng. Đó là lúc đèn gây chói, và cũng đúng lúc người ta cần nhìn rõ mặt bậc nhất.",
+    "viExample": "Cầu thang ngoài trời: đèn bậc gắn ngang tầm mắt người xuống dốc sẽ làm loá và che mất mặt bậc — nguy hiểm hơn là không có đèn."
+  },
+  {
+    "topics": [
       "practice"
     ],
     "seeAlso": [
@@ -1277,6 +1513,43 @@
       "r9"
     ],
     "viExample": "Cửa hàng thời trang muốn quần áo màu rực: chọn Rf 88 / Rg 108. Phòng trưng bày bảo tàng cần trung thực tuyệt đối: Rf 95 / Rg 100."
+  },
+  {
+    "topics": [
+      "product",
+      "practice"
+    ],
+    "seeAlso": [
+      "adjustable-spot",
+      "accent-lighting"
+    ],
+    "id": "track-light",
+    "term": "Track / magnetic track",
+    "vi": "Đèn ray, ray nam châm",
+    "definition": "A live rail carrying spots, linear modules or pendants that clip anywhere along it. Magnetic systems run at 48 V in a recessed channel and are currently the most flexible interior approach.",
+    "viDefinition": "Thanh ray dẫn điện cho phép gắn đèn rọi, module tuyến tính hoặc đèn thả ở bất kỳ vị trí nào. Loại ray nam châm chạy 48 V trong rãnh âm trần, hiện là giải pháp linh hoạt nhất cho nội thất.",
+    "note": "The right answer whenever the layout will change — galleries, showrooms, retail. The trade-off is that the fittings are always visible, so the track becomes a design element.",
+    "viNote": "Đây là lựa chọn đúng khi bố trí còn thay đổi — phòng tranh, showroom, cửa hàng. Đổi lại, đèn luôn lộ ra nên bản thân thanh ray trở thành một yếu tố thiết kế.",
+    "viExample": "Showroom đổi hàng theo mùa: dùng ray nam châm âm trần, mỗi lần đổi bày chỉ cần trượt đèn, không phải đục trần."
+  },
+  {
+    "topics": [
+      "product",
+      "practice"
+    ],
+    "seeAlso": [
+      "downlight",
+      "driver",
+      "linear-luminaire"
+    ],
+    "id": "trimless",
+    "term": "Trimless / plaster-in",
+    "vi": "Đèn không viền (âm chìm)",
+    "definition": "A recessed fitting with no visible flange — the ceiling finish runs right up to the aperture, so only a clean hole of light is seen.",
+    "viDefinition": "Đèn âm trần không có viền lộ ra — lớp hoàn thiện trần chạy sát tới miệng đèn, nên chỉ thấy một lỗ sáng gọn gàng.",
+    "note": "Must be coordinated with the ceiling contractor before boards go up, and it is effectively unmaintainable unless the driver is remote and accessible.",
+    "viNote": "Phải phối hợp với nhà thầu trần TRƯỚC khi đóng tấm, và gần như không bảo trì được trừ khi driver đặt rời ở vị trí với tới được.",
+    "viExample": "Trần thạch cao sảnh căn hộ cao cấp: đèn trimless đẹp hơn hẳn, nhưng nếu driver nằm trong hộp kín thì hỏng một cái là phải phá trần."
   },
   {
     "id": "tunable-white",
