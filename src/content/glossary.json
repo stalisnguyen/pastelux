@@ -1,5 +1,751 @@
 [
   {
+    "id": "zero-ten",
+    "term": "0–10 V / 1–10 V",
+    "vi": "Điều khiển 0–10V",
+    "definition": "Analogue dimming over a low-voltage pair. Cheap and universal, but not addressable, polarity-sensitive and prone to voltage drop over long runs.",
+    "viDefinition": "Điều chỉnh độ sáng bằng tín hiệu analog qua một cặp dây điện áp thấp. Rẻ và phổ biến, nhưng không định địa chỉ được, kén cực tính và dễ sụt áp trên tuyến dài.",
+    "topics": [
+      "controls"
+    ],
+    "seeAlso": [
+      "dali"
+    ],
+    "viExample": "Kho hàng 20 bộ đèn cùng bật/tắt và dim chung một mức: 0–10 V là đủ và rẻ. Nhưng nếu sau này muốn chia 4 khu riêng thì phải kéo lại dây."
+  },
+  {
+    "topics": [
+      "practice"
+    ],
+    "seeAlso": [
+      "contrast-ratio",
+      "ambient-lighting",
+      "layered-lighting"
+    ],
+    "id": "accent-lighting",
+    "term": "Accent lighting",
+    "vi": "Chiếu sáng điểm nhấn",
+    "definition": "Directional light aimed at a specific object or surface to lift it above its surroundings. Its effect is entirely relative — it works by contrast, not by level.",
+    "viDefinition": "Ánh sáng có hướng nhắm vào một vật thể hoặc bề mặt cụ thể để làm nó nổi lên khỏi xung quanh. Hiệu quả hoàn toàn mang tính tương đối — nó ăn thua ở độ tương phản, không phải ở mức lux.",
+    "note": "A 5:1 ratio against the ambient reads as \"highlighted\"; 15:1 reads as \"dramatic\". Below 3:1 the viewer will not register it as an accent at all.",
+    "viNote": "Tỷ lệ 5:1 so với nền cho cảm giác \"được làm nổi\"; 15:1 cho cảm giác \"kịch tính\". Dưới 3:1 thì mắt người không nhận ra đó là điểm nhấn.",
+    "viExample": "Tượng trong sảnh nền 100 lux: rọi 500 lux (5:1) là nổi bật vừa phải. Nếu chỉ rọi 250 lux (2,5:1) thì khách đi qua không để ý."
+  },
+  {
+    "topics": [
+      "practice",
+      "optics"
+    ],
+    "seeAlso": [
+      "luminance",
+      "contrast-ratio"
+    ],
+    "id": "adaptation",
+    "term": "Adaptation",
+    "vi": "Thích nghi thị giác",
+    "definition": "The eye adjusting to a prevailing luminance. It happens fast toward brighter and slowly toward darker — full dark adaptation takes many minutes.",
+    "viDefinition": "Quá trình mắt điều chỉnh theo mức độ chói xung quanh. Thích nghi sang sáng thì nhanh, sang tối thì rất chậm — thích nghi tối hoàn toàn mất nhiều phút.",
+    "note": "This is why a car park ramp needs 300 lx by day but only 75 lx at night, and why a 50 lx gallery entered straight from a daylit lobby reads as pitch black.",
+    "viNote": "Đây là lý do dốc xuống hầm xe cần 300 lux ban ngày nhưng chỉ 75 lux ban đêm, và tại sao phòng trưng bày 50 lux bước thẳng từ sảnh đầy nắng vào sẽ trông tối đen.",
+    "viExample": "Bảo tàng: thiết kế một hành lang chuyển tiếp giảm dần từ 300 lux xuống 100 lux rồi mới vào phòng 50 lux, để mắt kịp thích nghi."
+  },
+  {
+    "topics": [
+      "optics",
+      "practice"
+    ],
+    "seeAlso": [
+      "focusing",
+      "throw-distance",
+      "mounting-height"
+    ],
+    "id": "aiming-angle",
+    "term": "Aiming angle",
+    "vi": "Góc ngắm",
+    "definition": "The tilt of an adjustable luminaire from vertical. Together with mounting height it fixes where the beam lands and how much of it reflects back toward the viewer.",
+    "viDefinition": "Độ nghiêng của bộ đèn điều chỉnh được so với phương thẳng đứng. Cùng với cao độ lắp, nó quyết định chùm sáng rơi vào đâu và bao nhiêu phần phản xạ ngược về phía người nhìn.",
+    "note": "For artwork, 30° from vertical is the usual starting point: steep enough to avoid the viewer's shadow, shallow enough to avoid specular reflection off glazing.",
+    "viNote": "Với tranh treo tường, 30° so với phương đứng là điểm khởi đầu thông dụng: đủ dốc để bóng người xem không che tranh, đủ thoải để không bị phản chiếu gương trên mặt kính.",
+    "viExample": "Rọi tranh có kính: ngắm 30°. Nếu ngắm 45°, ánh sáng phản chiếu thẳng vào mắt người đứng xem và không nhìn được tranh."
+  },
+  {
+    "topics": [
+      "practice"
+    ],
+    "seeAlso": [
+      "layered-lighting",
+      "accent-lighting",
+      "contrast-ratio"
+    ],
+    "id": "ambient-lighting",
+    "term": "Ambient lighting",
+    "vi": "Chiếu sáng nền",
+    "definition": "The general level that lets people move safely and read the shape of the room. It sets the background luminance against which every other layer is judged.",
+    "viDefinition": "Mức sáng chung để người ta di chuyển an toàn và đọc được hình khối căn phòng. Nó tạo ra độ chói nền — thước đo để đánh giá mọi lớp sáng còn lại.",
+    "viExample": "Nhà hàng: lớp nền chỉ 50–80 lux là đủ. Chính vì nền thấp nên đèn rọi 200 lux trên mặt bàn mới tạo được cảm giác ấm cúng và tập trung."
+  },
+  {
+    "topics": [
+      "practice"
+    ],
+    "seeAlso": [
+      "focusing",
+      "commissioning",
+      "aiming-angle"
+    ],
+    "id": "as-built",
+    "term": "As-built drawings",
+    "vi": "Bản vẽ hoàn công",
+    "definition": "The record of what was actually installed, including every deviation from the design. For lighting this must carry final fitting positions, circuits, DALI addresses and aiming angles.",
+    "viDefinition": "Hồ sơ ghi lại những gì thực sự đã lắp, kể cả mọi sai khác so với thiết kế. Với chiếu sáng, hồ sơ này phải có vị trí đèn cuối cùng, mạch điện, địa chỉ DALI và góc ngắm.",
+    "note": "Without recorded aiming angles, the first lamp replacement undoes the focusing session you paid for.",
+    "viNote": "Không ghi lại góc ngắm thì ngay lần thay đèn đầu tiên, cả buổi chỉnh đèn bạn đã trả tiền sẽ bị xoá sạch.",
+    "viExample": "Bảo tàng 120 đèn rọi: kèm bảng ghi góc ngắm và số hiệu từng đèn vào hồ sơ hoàn công, để 5 năm sau vẫn phục hồi được đúng hiệu ứng."
+  },
+  {
+    "id": "beam-angle",
+    "term": "Beam angle",
+    "vi": "Góc chiếu",
+    "unit": "degrees",
+    "definition": "The full angle between the two directions where intensity falls to 50% of peak. The field angle, at 10% of peak, describes the wider visible spill.",
+    "viDefinition": "Góc mở toàn phần giữa hai hướng mà tại đó cường độ sáng giảm còn 50% so với đỉnh. Góc trường (field angle), lấy ở mức 10%, mô tả vùng loang rộng hơn mà mắt vẫn thấy.",
+    "note": "Spot diameter ≈ 2 × distance × tan(beam angle ÷ 2).",
+    "viNote": "Đường kính vệt sáng ≈ 2 × khoảng cách × tan(góc chiếu ÷ 2).",
+    "topics": [
+      "optics"
+    ],
+    "seeAlso": [
+      "photometric-file",
+      "inverse-square-law",
+      "cut-off-angle"
+    ],
+    "viExample": "Đèn 24° treo cách bàn 3 m → vệt sáng đường kính 2 × 3 × tan(12°) = 1,28 m. Vừa đủ phủ một bàn tròn 6 người."
+  },
+  {
+    "id": "binning",
+    "term": "Binning",
+    "vi": "Phân loại bin LED",
+    "definition": "The factory sorting of LED dies by flux, forward voltage and chromaticity. Tighter bins cost more but are the only way to guarantee visual consistency across a large installation.",
+    "viDefinition": "Việc nhà máy phân loại chip LED theo quang thông, điện áp thuận và toạ độ màu. Bin chặt hơn thì đắt hơn, nhưng đó là cách duy nhất đảm bảo màu đồng đều trên công trình lớn.",
+    "topics": [
+      "product",
+      "optics"
+    ],
+    "seeAlso": [
+      "macadam-ellipse",
+      "cct"
+    ],
+    "viExample": "Đặt 200 bộ đèn cùng mã nhưng hai lô sản xuất cách nhau 6 tháng — nếu không khoá bin trong hợp đồng, hai lô có thể lệch màu thấy rõ khi lắp cạnh nhau."
+  },
+  {
+    "id": "cie-s-026",
+    "term": "CIE S 026",
+    "vi": "Tiêu chuẩn CIE S 026",
+    "definition": "The CIE system for metrology of optical radiation for ipRGC-influenced responses to light. It defines the five α-opic quantities and the melanopic EDI metric used by WELL and by most circadian design guidance.",
+    "viDefinition": "Hệ thống của CIE để đo lường bức xạ quang học tác động lên tế bào ipRGC. Nó định nghĩa năm đại lượng α-opic và chỉ số melanopic EDI mà WELL cùng phần lớn hướng dẫn circadian đang dùng.",
+    "note": "It is a measurement framework, not a design guide — it tells you how to quantify, not what to target.",
+    "viNote": "Đây là khung ĐO LƯỜNG, không phải hướng dẫn thiết kế — nó cho biết cách định lượng, không cho biết nên nhắm tới ngưỡng nào.",
+    "topics": [
+      "circadian",
+      "standards"
+    ],
+    "seeAlso": [
+      "melanopic-edi",
+      "mder",
+      "well-l03"
+    ],
+    "viExample": "Khi nhà sản xuất gửi file phổ SPD, bạn nạp vào bộ công cụ CIE S 026 để lấy M-DER thật của đèn đó, thay vì dùng con số ước lượng theo CCT."
+  },
+  {
+    "id": "circadian-stimulus",
+    "term": "Circadian Stimulus",
+    "vi": "Kích thích nhịp sinh học",
+    "symbol": "CS",
+    "definition": "An alternative circadian metric from the Lighting Research Center, based on nocturnal melatonin suppression. CS ≥ 0.3 for at least an hour in the morning is the common recommendation.",
+    "viDefinition": "Một chỉ số circadian khác, do Lighting Research Center đưa ra, dựa trên mức ức chế melatonin ban đêm. Khuyến nghị phổ biến là CS ≥ 0,3 trong ít nhất một giờ buổi sáng.",
+    "note": "CS and melanopic EDI are different models and give different answers. State which one you are designing to.",
+    "viNote": "CS và melanopic EDI là hai mô hình khác nhau và cho kết quả khác nhau. Hãy nói rõ bạn thiết kế theo cái nào.",
+    "topics": [
+      "circadian"
+    ],
+    "seeAlso": [
+      "melanopic-edi"
+    ],
+    "viExample": "Cùng một phòng, tính theo CS có thể \"đạt\" trong khi tính theo mEDI lại \"chưa đạt\". Phải chọn một mô hình và ghi rõ trong hồ sơ, không trộn lẫn."
+  },
+  {
+    "id": "cri",
+    "term": "Colour rendering index",
+    "vi": "Chỉ số hoàn màu",
+    "symbol": "Ra / CRI",
+    "definition": "The average colour shift of eight pastel test samples (R1–R8) under the source versus a reference illuminant of the same CCT, scaled to 100.",
+    "viDefinition": "Mức sai lệch màu trung bình của tám mẫu màu nhạt dưới nguồn sáng đang xét, so với nguồn tham chiếu cùng CCT, quy về thang 100.",
+    "note": "Ra ignores saturated colours. Always call up R9 (strong red) alongside Ra — Ra 90 / R9 50 will still make skin and timber look dead.",
+    "viNote": "Ra bỏ qua các màu bão hoà. Luôn yêu cầu R9 (đỏ đậm) kèm theo Ra — Ra 90 mà R9 chỉ 50 thì da người và gỗ vẫn trông xỉn.",
+    "topics": [
+      "optics"
+    ],
+    "seeAlso": [
+      "tm-30",
+      "r9",
+      "cct"
+    ],
+    "viExample": "Đèn Ra 82 chiếu quầy thịt bò: thịt trông xám. Đổi sang Ra 95 / R9 90: thịt đỏ tươi. Cùng lux, cùng CCT."
+  },
+  {
+    "topics": [
+      "controls",
+      "practice"
+    ],
+    "seeAlso": [
+      "scene",
+      "dali",
+      "focusing"
+    ],
+    "id": "commissioning",
+    "term": "Commissioning",
+    "vi": "Hiệu chỉnh nghiệm thu",
+    "definition": "Programming the control system on site: addressing every fitting, building the groups, setting the scenes with the client present, and recording all of it.",
+    "viDefinition": "Lập trình hệ điều khiển tại công trường: gán địa chỉ từng bộ đèn, tạo nhóm, cài các cảnh sáng với sự có mặt của chủ đầu tư, và ghi lại toàn bộ.",
+    "note": "An uncommissioned DALI installation is more expensive and less capable than 0–10 V. Every scheme that \"never worked properly\" failed here.",
+    "viNote": "Một hệ DALI chưa hiệu chỉnh thì vừa đắt hơn vừa kém hơn 0–10 V. Mọi phương án bị than \"chẳng bao giờ chạy đúng\" đều hỏng ở khâu này.",
+    "viExample": "Ghi rõ trong hợp đồng: ai hiệu chỉnh, bao nhiêu ngày công, và phải bàn giao file cấu hình. Không có ba dòng đó thì thường không ai làm."
+  },
+  {
+    "topics": [
+      "practice",
+      "optics"
+    ],
+    "seeAlso": [
+      "accent-lighting",
+      "luminance",
+      "ambient-lighting"
+    ],
+    "id": "contrast-ratio",
+    "term": "Contrast ratio",
+    "vi": "Tỷ số tương phản",
+    "definition": "The ratio of luminance between a feature and its background. It, not absolute level, is what the eye reports as \"bright\".",
+    "viDefinition": "Tỷ số độ chói giữa vật được nhấn và nền phía sau. Chính nó — chứ không phải mức sáng tuyệt đối — là thứ mắt người diễn giải thành \"sáng\".",
+    "note": "Retail typically works between 3:1 and 10:1. Museums often stay under 3:1 to protect the reading of the whole surface.",
+    "viNote": "Bán lẻ thường làm việc trong khoảng 3:1 đến 10:1. Bảo tàng thường giữ dưới 3:1 để người xem đọc được toàn bộ bề mặt hiện vật.",
+    "viExample": "Quầy trưng bày trang sức nền 200 lux, rọi điểm 1.400 lux → 7:1. Đủ để hút mắt mà chưa gây khó chịu."
+  },
+  {
+    "id": "cct",
+    "term": "Correlated colour temperature",
+    "vi": "Nhiệt độ màu tương quan",
+    "symbol": "CCT",
+    "unit": "kelvin (K)",
+    "definition": "The temperature of the Planckian radiator whose perceived colour most closely matches that of the source. A one-dimensional shorthand for a two-dimensional chromaticity.",
+    "viDefinition": "Nhiệt độ của vật đen có màu gần giống màu nguồn sáng nhất. Đây là cách rút gọn một toạ độ màu hai chiều thành một con số duy nhất.",
+    "note": "Two sources at the same CCT can look visibly different if their Duv differs. Always specify CCT and a Duv or chromaticity tolerance.",
+    "viNote": "Hai nguồn cùng CCT vẫn có thể trông khác nhau rõ rệt nếu Duv khác nhau. Luôn ghi cả CCT và dung sai Duv hoặc toạ độ màu.",
+    "topics": [
+      "optics"
+    ],
+    "seeAlso": [
+      "duv",
+      "cri",
+      "tm-30"
+    ],
+    "viExample": "Khách sạn thường dùng 2700–3000 K cho cảm giác ấm áp; văn phòng 4000 K; phòng kiểm tra màu 6500 K. Cùng 3000 K nhưng Duv lệch thì hai đèn vẫn trông khác nhau."
+  },
+  {
+    "id": "cove",
+    "term": "Cove lighting",
+    "vi": "Chiếu sáng hắt trần",
+    "definition": "Light concealed in a recess or ledge and directed up onto the ceiling or down a wall, so the source is never seen and the surface becomes the apparent luminaire.",
+    "viDefinition": "Đèn giấu trong hốc hoặc gờ, hắt lên trần hoặc xuống tường, để không bao giờ nhìn thấy nguồn sáng — chính bề mặt được chiếu trở thành \"bộ đèn\" trong mắt người nhìn.",
+    "note": "The cove depth and the distance from the emitting face to the lip decide whether you get a clean gradient or a hot line. Detail it with the architect, not after.",
+    "viNote": "Độ sâu hốc và khoảng cách từ mặt phát sáng tới mép hốc quyết định bạn được dải sáng mượt hay một vệt cháy sáng. Hãy chốt chi tiết này cùng kiến trúc sư, đừng để sau.",
+    "topics": [
+      "practice"
+    ],
+    "seeAlso": [
+      "wall-washing",
+      "reflectance"
+    ],
+    "viExample": "Hốc hắt trần sâu 150 mm, đèn LED đặt lùi vào 80 mm so với mép: cho dải sáng mượt. Nếu chỉ lùi 20 mm sẽ thấy rõ vệt cháy sáng ngay mép hốc."
+  },
+  {
+    "id": "cut-off-angle",
+    "term": "Cut-off angle",
+    "vi": "Góc chắn sáng",
+    "unit": "degrees",
+    "definition": "The angle from the downward vertical beyond which the bare light source is no longer visible. Deeper cut-off means better glare control and less spill.",
+    "viDefinition": "Góc tính từ phương thẳng đứng xuống, vượt qua góc đó thì không còn nhìn thấy nguồn sáng trần. Góc chắn càng sâu thì kiểm soát chói càng tốt và ánh sáng thoát ra ngoài càng ít.",
+    "topics": [
+      "optics",
+      "facade"
+    ],
+    "seeAlso": [
+      "full-cutoff",
+      "ugr",
+      "beam-angle"
+    ],
+    "viExample": "Downlight âm trần sâu 80 mm, đường kính 90 mm → góc chắn khoảng 48°. Đứng cách 2 m nhìn tới sẽ không thấy nguồn sáng."
+  },
+  {
+    "id": "dali",
+    "term": "DALI-2 / D4i",
+    "vi": "Giao thức DALI-2",
+    "definition": "Digital Addressable Lighting Interface — a bidirectional, addressable digital control bus. DALI-2 adds certified interoperability for control devices; D4i extends it with luminaire-embedded data and power for sensors.",
+    "viDefinition": "Giao thức điều khiển số hai chiều, định địa chỉ được từng bộ đèn. DALI-2 bổ sung chứng nhận tương thích cho cả thiết bị điều khiển; D4i mở rộng thêm dữ liệu trong bộ đèn và nguồn cấp cho cảm biến.",
+    "note": "Only DALI-2-certified parts are guaranteed to interoperate. 'DALI compatible' on a datasheet is not the same claim.",
+    "viNote": "Chỉ linh kiện có chứng nhận DALI-2 mới đảm bảo hoạt động cùng nhau. Ghi \"DALI compatible\" trên datasheet KHÔNG phải là cam kết tương đương.",
+    "topics": [
+      "controls"
+    ],
+    "seeAlso": [
+      "dali-plus",
+      "dmx",
+      "zero-ten"
+    ],
+    "viExample": "Một dãy 40 downlight trên bus DALI: có thể chỉnh riêng đèn số 17 mà không đụng tới 39 đèn còn lại, và hệ thống báo ngay khi đèn nào hỏng."
+  },
+  {
+    "id": "dali-plus",
+    "term": "DALI+",
+    "vi": "DALI+",
+    "definition": "DALI messaging carried over IP-based and wireless carriers (currently Thread) instead of the two-wire bus, letting wireless zones share one commissioning model with wired ones.",
+    "viDefinition": "Bản tin DALI truyền qua nền IP và không dây (hiện là Thread) thay vì dây bus hai sợi, giúp khu vực không dây dùng chung một mô hình cấu hình với khu vực đi dây.",
+    "topics": [
+      "controls"
+    ],
+    "seeAlso": [
+      "dali",
+      "matter"
+    ],
+    "viExample": "Toà nhà cũ cải tạo: tầng mới đi dây DALI-2, tầng cũ không đục tường được nên dùng DALI+ qua Thread — cả hai chung một phần mềm cấu hình."
+  },
+  {
+    "id": "dark-sky",
+    "term": "Dark sky compliance",
+    "vi": "Tuân thủ bầu trời tối",
+    "definition": "A design approach that limits upward waste light, blue content and over-illumination to protect the night sky and nocturnal ecology. Typically combines full cut-off optics, ≤3000 K (often ≤2200 K near habitats), curfew dimming and warmer spectra.",
+    "viDefinition": "Cách tiếp cận thiết kế nhằm hạn chế ánh sáng hắt lên trời, giảm thành phần xanh lam và tránh chiếu sáng thừa, để bảo vệ bầu trời đêm và sinh vật hoạt động về đêm.",
+    "topics": [
+      "sustainability",
+      "facade"
+    ],
+    "seeAlso": [
+      "full-cutoff",
+      "obtrusive-light",
+      "cct"
+    ],
+    "viExample": "Dự án resort ven biển gần bãi rùa đẻ: dùng đèn 2200 K, full cut-off, tắt hoàn toàn phần trang trí sau 22h, chỉ giữ đèn lối đi ở mức thấp."
+  },
+  {
+    "id": "daylight-factor",
+    "term": "Daylight factor",
+    "vi": "Hệ số ánh sáng tự nhiên",
+    "symbol": "DF",
+    "unit": "%",
+    "definition": "Indoor illuminance from daylight as a percentage of unobstructed exterior horizontal illuminance under a CIE overcast sky. A geometry metric, independent of orientation and climate.",
+    "viDefinition": "Độ rọi trong nhà do ánh sáng tự nhiên, tính theo phần trăm so với độ rọi ngoài trời không bị che, dưới bầu trời u ám tiêu chuẩn CIE. Đây là chỉ số hình học, không phụ thuộc hướng nhà và khí hậu.",
+    "note": "Superseded for performance work by climate-based metrics such as sDA and ASE, which do account for orientation and real weather data.",
+    "viNote": "Trong công việc đánh giá hiệu năng, chỉ số này đã được thay bằng các chỉ số dựa trên khí hậu như sDA và ASE — những chỉ số có tính đến hướng nhà và dữ liệu thời tiết thực.",
+    "topics": [
+      "sustainability"
+    ],
+    "seeAlso": [
+      "daylight-harvesting"
+    ],
+    "viExample": "DF = 2% nghĩa là khi ngoài trời 10.000 lux thì trong phòng được 200 lux. Chỉ số này không phân biệt phòng quay hướng Bắc hay hướng Nam."
+  },
+  {
+    "id": "daylight-harvesting",
+    "term": "Daylight harvesting",
+    "vi": "Tận dụng ánh sáng tự nhiên",
+    "definition": "Closed- or open-loop dimming of electric lighting in response to measured daylight, so total illuminance stays at target while energy falls.",
+    "viDefinition": "Tự động giảm sáng đèn điện theo lượng ánh sáng tự nhiên đo được, để tổng độ rọi giữ nguyên mức mục tiêu trong khi điện năng giảm xuống.",
+    "note": "Closed-loop needs careful sensor placement and commissioning; badly aimed sensors are the single most common cause of occupant complaints.",
+    "viNote": "Kiểu vòng kín đòi hỏi đặt cảm biến và hiệu chỉnh rất cẩn thận; đặt sai hướng cảm biến là nguyên nhân phàn nàn phổ biến nhất của người sử dụng.",
+    "topics": [
+      "controls",
+      "sustainability"
+    ],
+    "seeAlso": [
+      "lpd",
+      "daylight-factor"
+    ],
+    "viExample": "Dãy bàn sát cửa sổ: buổi trưa cảm biến đo đủ sáng nên đèn tự giảm còn 20%, tổng độ rọi vẫn giữ 500 lux. Tiết kiệm khoảng 40% điện cho dãy đó."
+  },
+  {
+    "topics": [
+      "optics"
+    ],
+    "seeAlso": [
+      "luminance",
+      "glare",
+      "reflector"
+    ],
+    "id": "diffuser",
+    "term": "Diffuser",
+    "vi": "Tấm tán xạ",
+    "definition": "A translucent material that scatters light to enlarge the apparent source, lowering its luminance and softening shadows — at the cost of beam control and some output.",
+    "viDefinition": "Vật liệu mờ làm tán ánh sáng để nguồn sáng trông lớn hơn, nhờ đó giảm độ chói và làm mềm bóng đổ — đổi lại mất khả năng định hướng chùm và một phần quang thông.",
+    "viExample": "Đèn panel văn phòng: bỏ tấm tán xạ đi thì thấy rõ từng chấm LED và chói mắt; lắp vào thì bề mặt sáng đều nhưng mất khoảng 10–15% lumen."
+  },
+  {
+    "id": "dmx",
+    "term": "DMX512 / RDM",
+    "vi": "DMX512",
+    "definition": "A unidirectional 512-channel protocol from stage lighting, standard for colour-changing and dynamic façade work. RDM adds a return path for addressing and status.",
+    "viDefinition": "Giao thức một chiều 512 kênh, xuất phát từ sân khấu, là chuẩn cho đèn đổi màu và mặt đứng động. RDM bổ sung đường phản hồi để gán địa chỉ và báo trạng thái.",
+    "note": "Choose DMX when you need smooth high-rate colour and effects; choose DALI when you need addressable status, energy reporting and building integration.",
+    "viNote": "Chọn DMX khi cần đổi màu mượt với tốc độ cao; chọn DALI khi cần báo trạng thái, đo năng lượng và tích hợp với hệ thống toà nhà.",
+    "topics": [
+      "controls",
+      "facade"
+    ],
+    "seeAlso": [
+      "dali",
+      "pixel-pitch"
+    ],
+    "viExample": "Mặt đứng đổi màu theo nhạc trong lễ hội: DMX. Cùng toà nhà đó, đèn hành lang bên trong: DALI. Nối hai hệ bằng gateway."
+  },
+  {
+    "id": "duv",
+    "term": "Duv",
+    "vi": "Độ lệch Duv",
+    "symbol": "Duv",
+    "definition": "The signed distance of a source's chromaticity from the Planckian locus. Positive reads green/yellow, negative reads pink/magenta.",
+    "viDefinition": "Khoảng lệch có dấu giữa toạ độ màu của nguồn sáng và đường Planck. Dương thì ngả xanh lá/vàng, âm thì ngả hồng/tím.",
+    "note": "±0.006 is the usual acceptance window for architectural work; skin tones and merchandise reveal a green cast long before a lux meter does.",
+    "viNote": "±0,006 là ngưỡng chấp nhận thông thường cho công trình kiến trúc; da người và hàng hoá sẽ lộ sắc xanh lá từ rất lâu trước khi máy đo lux phát hiện ra.",
+    "topics": [
+      "optics"
+    ],
+    "seeAlso": [
+      "cct",
+      "macadam-ellipse"
+    ],
+    "viExample": "Hai đèn 3000 K treo cạnh nhau trên tường trắng: cái Duv +0,006 ngả xanh lá trông \"bẩn\", cái Duv −0,003 ngả hồng nhẹ trông sạch hơn. Máy đo lux không phân biệt được."
+  },
+  {
+    "topics": [
+      "standards",
+      "practice"
+    ],
+    "seeAlso": [
+      "dali"
+    ],
+    "id": "emergency-lighting",
+    "term": "Emergency lighting",
+    "vi": "Chiếu sáng sự cố",
+    "definition": "Lighting that operates when the normal supply fails, covering escape routes, open areas and high-risk tasks. Sized in lux along the centre line of the escape route, not as an average.",
+    "viDefinition": "Hệ chiếu sáng hoạt động khi mất điện lưới, phục vụ lối thoát nạn, khu vực trống và các vị trí nguy hiểm. Tính theo lux dọc tim đường thoát nạn, không tính theo giá trị trung bình.",
+    "note": "Frequently the constraint that reshapes a ceiling layout, and it is often coordinated too late. Bring it in at detailed design, not at tender.",
+    "viNote": "Đây thường là ràng buộc buộc phải vẽ lại bố trí trần, mà lại hay được phối hợp quá muộn. Hãy đưa vào từ giai đoạn thiết kế kỹ thuật, đừng để tới lúc đấu thầu.",
+    "viExample": "EN 1838 yêu cầu 1 lux dọc tim lối thoát nạn. Ở Việt Nam phải đối chiếu thêm QCVN 06:2022/BXD về an toàn cháy."
+  },
+  {
+    "topics": [
+      "practice"
+    ],
+    "seeAlso": [
+      "submittal",
+      "value-engineering",
+      "louvre"
+    ],
+    "id": "fixture-schedule",
+    "term": "Fixture schedule",
+    "vi": "Bảng thống kê đèn",
+    "definition": "The controlling document of a lighting package: every type, its code, quantity, lumen output, CCT, CRI, optic, finish, IP, control protocol, mounting detail and accessories.",
+    "viDefinition": "Tài liệu chi phối toàn bộ gói chiếu sáng: từng chủng loại, mã hiệu, số lượng, quang thông, nhiệt độ màu, chỉ số hoàn màu, quang học, màu hoàn thiện, cấp IP, giao thức điều khiển, chi tiết lắp và phụ kiện.",
+    "note": "If a requirement is not in the schedule, it will not be built. Accessories — louvres, snoots, glare shields — are the ones most often dropped.",
+    "viNote": "Yêu cầu nào không có trong bảng thống kê thì sẽ không được thi công. Phụ kiện — lưới chắn, snoot, tấm chắn chói — là thứ hay bị bỏ sót nhất.",
+    "viExample": "Ghi \"đèn rọi 15° có snoot\" trong bảng thống kê. Nếu chỉ ghi \"đèn rọi 15°\", nhà thầu sẽ mua loại không snoot vì rẻ hơn, và đúng theo hợp đồng."
+  },
+  {
+    "id": "flicker",
+    "term": "Flicker (PstLM / SVM)",
+    "vi": "Nhấp nháy",
+    "definition": "Temporal light modulation from the driver. PstLM quantifies visible flicker and SVM the stroboscopic effect. Both are now regulated in the EU under the ecodesign rules.",
+    "viDefinition": "Hiện tượng ánh sáng dao động theo thời gian do driver gây ra. PstLM đo mức nhấp nháy nhìn thấy được, SVM đo hiệu ứng hoạt nghiệm (vật quay trông như đứng yên). Cả hai đều đã được EU đưa vào quy định.",
+    "note": "Specify PstLM ≤ 1.0 and SVM ≤ 0.4 generally, and tighter for broadcast, sports and any space with rotating machinery.",
+    "viNote": "Thông thường yêu cầu PstLM ≤ 1,0 và SVM ≤ 0,4; chặt hơn nữa với trường quay, sân thể thao và mọi nơi có máy móc quay.",
+    "topics": [
+      "product",
+      "standards",
+      "controls"
+    ],
+    "seeAlso": [
+      "dali",
+      "zero-ten"
+    ],
+    "viExample": "Xưởng có máy tiện quay: driver nhấp nháy sẽ khiến trục quay trông như đứng yên — nguy hiểm chết người. Bắt buộc SVM ≤ 0,4."
+  },
+  {
+    "id": "focusing",
+    "term": "Focusing / aiming",
+    "vi": "Chỉnh hướng đèn",
+    "definition": "The night-time site session where every adjustable luminaire is aimed, locked, dimmed and its accessories fitted. The stage where the design is finally either delivered or lost.",
+    "viDefinition": "Buổi làm việc ban đêm tại công trường, khi từng bộ đèn điều chỉnh được sẽ được ngắm hướng, khoá lại, chỉnh độ sáng và lắp phụ kiện. Đây là lúc thiết kế hoặc thành hình, hoặc mất trắng.",
+    "note": "Budget it explicitly in the fee proposal and require the contractor to provide access equipment and an electrician on standby.",
+    "viNote": "Hãy ghi rõ khoản này trong đề xuất phí, và yêu cầu nhà thầu chuẩn bị thiết bị nâng cùng một thợ điện trực sẵn.",
+    "topics": [
+      "practice"
+    ],
+    "seeAlso": [
+      "mock-up"
+    ],
+    "viExample": "Bảo tàng 120 đèn rọi: cần khoảng 2 đêm, có xe nâng và thợ điện trực. Ghi lại góc ngắm từng đèn để sau này thay đèn vẫn đặt đúng."
+  },
+  {
+    "id": "full-cutoff",
+    "term": "Full cut-off",
+    "vi": "Chắn sáng toàn phần",
+    "definition": "An exterior classification where zero luminous intensity is emitted at or above 90° from nadir, and no more than 10% at or above 80°. The baseline requirement for dark-sky-friendly exterior lighting.",
+    "viDefinition": "Phân loại cho đèn ngoài trời: bằng 0 cường độ sáng tại và trên 90° so với phương thẳng đứng, và không quá 10% tại/trên 80°. Đây là yêu cầu nền cho chiếu sáng thân thiện với bầu trời đêm.",
+    "note": "Increasingly written into planning conditions rather than merely recommended.",
+    "viNote": "Ngày càng được đưa thẳng vào điều kiện cấp phép xây dựng chứ không còn là khuyến nghị.",
+    "topics": [
+      "facade",
+      "sustainability"
+    ],
+    "seeAlso": [
+      "obtrusive-light",
+      "uplight-ratio",
+      "cut-off-angle"
+    ],
+    "viExample": "Đèn sân vườn kiểu \"nấm\" có chóa che kín phía trên là full cut-off. Cùng loại đèn đó nhưng lắp nghiêng lên 20° để rọi cây thì không còn full cut-off nữa."
+  },
+  {
+    "id": "glare",
+    "term": "Glare",
+    "vi": "Chói loá",
+    "definition": "Any condition where luminance in the field of view is excessive or too unevenly distributed. Split into discomfort glare (annoyance, measured by UGR/GR) and disability glare (measurable loss of visual performance).",
+    "viDefinition": "Tình trạng độ chói trong tầm nhìn quá cao hoặc phân bố quá chênh lệch. Chia làm chói loá khó chịu (đo bằng UGR/GR) và chói loá mất khả năng nhìn (làm giảm thị lực thực sự).",
+    "topics": [
+      "optics"
+    ],
+    "seeAlso": [
+      "ugr",
+      "cut-off-angle",
+      "luminance"
+    ],
+    "viExample": "Đèn rọi hắt vào màn hình máy tính làm không đọc được chữ là chói loá mất khả năng nhìn. Dãy đèn quá sáng trong tầm mắt gây mỏi mắt cuối ngày là chói loá khó chịu."
+  },
+  {
+    "topics": [
+      "optics",
+      "practice"
+    ],
+    "seeAlso": [
+      "beam-angle",
+      "snoot"
+    ],
+    "id": "gobo",
+    "term": "Gobo",
+    "vi": "Khuôn tạo hình",
+    "definition": "A patterned template placed at the focal plane of a projector so the beam carries an image — foliage, a logo, a geometric break-up.",
+    "viDefinition": "Tấm khuôn có hoạ tiết đặt tại mặt phẳng tiêu của đèn chiếu, để chùm sáng mang theo một hình ảnh — tán lá, logo, hoặc hoa văn hình học.",
+    "note": "Glass gobos hold fine detail and colour; steel ones are cheaper but burn out and cannot render subtle patterns.",
+    "viNote": "Gobo thuỷ tinh giữ được chi tiết nhỏ và màu sắc; gobo thép rẻ hơn nhưng dễ cháy và không thể hiện được hoạ tiết tinh.",
+    "viExample": "Chiếu bóng lá cây lên tường sảnh khách sạn để tạo cảm giác ánh nắng xuyên tán — dùng gobo thuỷ tinh trong đèn chiếu góc hẹp."
+  },
+  {
+    "topics": [
+      "product"
+    ],
+    "seeAlso": [
+      "ip-rating"
+    ],
+    "id": "ik-rating",
+    "term": "IK rating",
+    "vi": "Cấp chống va đập IK",
+    "symbol": "IKxx",
+    "definition": "Resistance to mechanical impact, from IK00 (none) to IK10 (20 joules — roughly a 5 kg mass dropped 400 mm).",
+    "viDefinition": "Khả năng chịu va đập cơ học, từ IK00 (không chịu được) đến IK10 (20 joule — tương đương vật nặng 5 kg rơi từ độ cao 400 mm).",
+    "viExample": "Đèn hành lang trường học hoặc bãi xe nên IK08 trở lên. Đèn trang trí trong sảnh khách sạn thì IK02 là đủ."
+  },
+  {
+    "id": "illuminance",
+    "term": "Illuminance",
+    "vi": "Độ rọi",
+    "symbol": "E",
+    "unit": "lux (lx) = lm/m²",
+    "definition": "Luminous flux arriving on a surface per unit area. It is what a light meter reads and what almost every code and standard regulates.",
+    "viDefinition": "Lượng ánh sáng rơi xuống một bề mặt, tính trên mỗi mét vuông. Đây là thứ máy đo lux đọc được và gần như mọi tiêu chuẩn đều quy định theo nó.",
+    "note": "Illuminance is a property of the surface, not of the light source, and it is not what the eye sees — the eye sees luminance.",
+    "viNote": "Độ rọi là thuộc tính của bề mặt, không phải của nguồn sáng — và không phải thứ mắt nhìn thấy. Mắt nhìn thấy độ chói.",
+    "topics": [
+      "optics",
+      "standards"
+    ],
+    "seeAlso": [
+      "luminance",
+      "maintained-illuminance",
+      "inverse-square-law"
+    ],
+    "viExample": "Văn phòng yêu cầu 500 lux trên mặt bàn cao 0,75 m. Máy đo đặt nằm ngang trên bàn phải đọc được ít nhất 500."
+  },
+  {
+    "id": "inverse-square-law",
+    "term": "Inverse square law",
+    "vi": "Định luật nghịch đảo bình phương",
+    "definition": "Illuminance from a point source falls with the square of distance: E = I / d². With an incidence angle θ from the surface normal, E = I × cos θ / d².",
+    "viDefinition": "Độ rọi từ nguồn điểm giảm theo bình phương khoảng cách: E = I / d². Nếu mặt phẳng nghiêng một góc θ so với pháp tuyến thì E = I × cos θ / d².",
+    "note": "Only valid when distance is at least about five times the largest luminaire dimension — it does not apply near a long linear fixture.",
+    "viNote": "Chỉ đúng khi khoảng cách lớn hơn khoảng năm lần kích thước lớn nhất của bộ đèn — không áp dụng được khi đứng gần một đèn tuyến tính dài.",
+    "topics": [
+      "optics"
+    ],
+    "seeAlso": [
+      "illuminance",
+      "luminous-intensity",
+      "beam-angle"
+    ],
+    "viExample": "Đèn 5.000 cd ở 4 m cho 312 lux. Kéo lên 6 m chỉ còn 139 lux — xa hơn 50% mà mất 56% ánh sáng."
+  },
+  {
+    "topics": [
+      "product",
+      "facade"
+    ],
+    "seeAlso": [
+      "ik-rating"
+    ],
+    "id": "ip-rating",
+    "term": "IP rating",
+    "vi": "Cấp bảo vệ IP",
+    "symbol": "IPxx",
+    "definition": "Two digits describing sealing: the first against solid objects and dust (0–6), the second against water (0–9). IP65 means dust-tight and protected against water jets.",
+    "viDefinition": "Hai chữ số mô tả mức kín: số đầu chống vật rắn và bụi (0–6), số sau chống nước (0–9). IP65 nghĩa là kín bụi hoàn toàn và chịu được tia nước phun.",
+    "note": "A higher number is not automatically better. A fully sealed fitting cannot breathe, so condensation that gets in stays in. For covered exterior areas IP65 usually outlasts IP68.",
+    "viNote": "Số cao hơn không đương nhiên tốt hơn. Bộ đèn kín hoàn toàn thì không \"thở\" được, nên hơi nước đã lọt vào sẽ nằm lại bên trong. Với khu vực ngoài trời có mái che, IP65 thường bền hơn IP68.",
+    "viExample": "Đèn âm sàn ngoài trời hay bị ngập: cần IP67 trở lên. Đèn dưới mái hiên: IP65 là đủ, và thường bền hơn vì thoát ẩm tốt hơn."
+  },
+  {
+    "id": "l70",
+    "term": "L70 / L90 (LM-80, TM-21)",
+    "vi": "Tuổi thọ L70",
+    "definition": "The operating hours at which an LED retains 70% (or 90%) of initial output. LM-80 is the measurement method, TM-21 the projection method used to extrapolate it.",
+    "viDefinition": "Số giờ vận hành mà sau đó LED còn giữ 70% (hoặc 90%) quang thông ban đầu. LM-80 là phương pháp đo, TM-21 là phương pháp ngoại suy.",
+    "note": "A quoted L70 is meaningless without its drive current and case temperature. Two products at 'L70 50,000 h' can differ by a factor of two in the real ceiling void.",
+    "viNote": "Con số L70 vô nghĩa nếu không kèm dòng điện điều khiển và nhiệt độ vỏ khi đo. Hai sản phẩm cùng ghi \"L70 50.000 h\" có thể chênh nhau gấp đôi khi lắp trong trần thật.",
+    "topics": [
+      "product"
+    ],
+    "seeAlso": [
+      "maintenance-factor",
+      "luminaire-efficacy"
+    ],
+    "viExample": "Đèn ghi \"L70 50.000 giờ\" đo ở 25°C. Lắp trong hộp trần kín 65°C thì thực tế có thể chỉ còn 25.000 giờ — hỏi nhà sản xuất số liệu ở đúng nhiệt độ lắp đặt."
+  },
+  {
+    "topics": [
+      "practice"
+    ],
+    "seeAlso": [
+      "ambient-lighting",
+      "accent-lighting",
+      "scene"
+    ],
+    "id": "layered-lighting",
+    "term": "Layered lighting",
+    "vi": "Chiếu sáng phân lớp",
+    "definition": "Building a scheme from separate, separately controlled layers — ambient, task, accent and decorative — rather than one uniform wash. The layers are what make a room feel designed rather than lit.",
+    "viDefinition": "Xây dựng phương án bằng nhiều lớp riêng biệt, điều khiển độc lập — nền, chức năng, điểm nhấn và trang trí — thay vì một lớp sáng đều khắp. Chính các lớp này làm căn phòng trông \"được thiết kế\" chứ không chỉ \"được chiếu sáng\".",
+    "viExample": "Sảnh khách sạn: đèn hắt trần làm lớp nền, đèn bàn lễ tân làm lớp chức năng, đèn rọi tranh làm điểm nhấn, đèn chùm làm trang trí. Bốn mạch riêng, bốn cảnh sáng khác nhau cho sáng/tối/tiệc."
+  },
+  {
+    "topics": [
+      "product",
+      "controls"
+    ],
+    "seeAlso": [
+      "flicker",
+      "dali",
+      "l70"
+    ],
+    "id": "driver",
+    "term": "LED driver",
+    "vi": "Bộ nguồn LED",
+    "definition": "The power supply that converts mains voltage into the tightly regulated current an LED module needs. It sets the dimming protocol, the flicker performance and, in practice, the lifetime of the fitting.",
+    "viDefinition": "Bộ phận chuyển điện lưới thành dòng điện ổn định mà module LED cần. Chính nó quyết định giao thức dimming, mức nhấp nháy, và trên thực tế là tuổi thọ của cả bộ đèn.",
+    "note": "Drivers fail long before LEDs do. Ask whether it can be replaced without removing the luminaire — on a 6 m ceiling that difference is thousands of dollars over ten years.",
+    "viNote": "Driver hỏng trước LED rất lâu. Hãy hỏi có thay được driver mà không phải tháo cả bộ đèn không — với trần cao 6 m, khác biệt đó là hàng nghìn đô trong mười năm.",
+    "viExample": "Đèn 30 W dùng driver 700 mA. Nếu driver chỉ đạt 50.000 giờ trong khi LED đạt 100.000 giờ, thì tuổi thọ thực của bộ đèn là 50.000 giờ, không phải 100.000."
+  },
+  {
+    "id": "lpd",
+    "term": "Lighting power density",
+    "vi": "Mật độ công suất chiếu sáng",
+    "symbol": "LPD",
+    "unit": "W/m²",
+    "definition": "Installed lighting load per unit floor area — the metric almost every energy code caps, including ASHRAE 90.1, Part L and Vietnam's QCVN 09 series.",
+    "viDefinition": "Công suất chiếu sáng lắp đặt trên mỗi mét vuông sàn — chỉ tiêu mà gần như mọi quy chuẩn năng lượng đều khống chế, kể cả QCVN 09 của Việt Nam.",
+    "note": "Controls credits (occupancy, daylight harvesting) can offset LPD in some codes but not all. Check before you bank on them.",
+    "viNote": "Một số quy chuẩn cho phép bù trừ LPD nhờ hệ điều khiển (cảm biến hiện diện, tận dụng ánh sáng tự nhiên), nhưng không phải tất cả. Kiểm tra trước khi trông cậy vào điều đó.",
+    "topics": [
+      "sustainability",
+      "standards"
+    ],
+    "seeAlso": [
+      "luminaire-efficacy",
+      "daylight-harvesting"
+    ],
+    "viExample": "Văn phòng 200 m², quy chuẩn cho 9 W/m² → tổng công suất chiếu sáng tối đa 1.800 W. Nếu bộ đèn 110 lm/W, đó là khoảng 198.000 lm để chia cho cả sàn."
+  },
+  {
+    "topics": [
+      "optics"
+    ],
+    "seeAlso": [
+      "cut-off-angle",
+      "glare",
+      "snoot"
+    ],
+    "id": "louvre",
+    "term": "Louvre / honeycomb",
+    "vi": "Lưới chắn sáng, lưới tổ ong",
+    "definition": "A grid of cells fitted over the aperture that blocks light beyond a chosen cut-off angle. Honeycomb versions cut glare in every direction; blade louvres cut it in one plane.",
+    "viDefinition": "Tấm lưới nhiều ô gắn trước miệng đèn, chặn ánh sáng vượt quá góc chắn đã chọn. Loại tổ ong cắt chói theo mọi hướng; loại lá chỉ cắt theo một phương.",
+    "note": "Expect to lose 20–40% of output. That is the price of the fitting disappearing, and it is almost always worth paying.",
+    "viNote": "Sẽ mất khoảng 20–40% quang thông. Đó là cái giá để bộ đèn \"biến mất\" khỏi tầm nhìn, và gần như luôn đáng trả.",
+    "viExample": "Đèn rọi tranh trong bảo tàng: gắn lưới tổ ong để khách không nhìn thấy nguồn sáng khi đứng ngắm tranh, chỉ thấy bức tranh sáng lên."
+  },
+  {
+    "id": "luminaire-efficacy",
+    "term": "Luminaire efficacy",
+    "vi": "Hiệu suất phát sáng bộ đèn",
+    "unit": "lm/W",
+    "definition": "Delivered luminous flux of the complete luminaire divided by its total input power, driver losses included. Distinct from bare LED-chip efficacy, which is always the higher number.",
+    "viDefinition": "Quang thông thực tế của cả bộ đèn chia cho tổng công suất tiêu thụ, đã tính cả tổn hao driver. Khác với hiệu suất của riêng chip LED — con số đó luôn cao hơn.",
+    "topics": [
+      "product",
+      "sustainability"
+    ],
+    "seeAlso": [
+      "lpd",
+      "luminous-flux"
+    ],
+    "viExample": "Chip LED ghi 180 lm/W, nhưng cả bộ đèn sau khi tính chóa, kính và tổn hao driver chỉ còn 110 lm/W. Con số 110 mới là thứ dùng để tính LPD."
+  },
+  {
+    "id": "luminance",
+    "term": "Luminance",
+    "vi": "Độ chói",
+    "symbol": "L",
+    "unit": "cd/m² (nit)",
+    "definition": "Luminous intensity per unit projected area of a surface — the photometric quantity the eye actually responds to, and therefore the real driver of brightness, contrast and glare.",
+    "viDefinition": "Cường độ sáng trên một đơn vị diện tích biểu kiến của bề mặt — đây mới là đại lượng mắt thực sự phản ứng, nên nó quyết định cảm giác sáng, độ tương phản và chói loá.",
+    "note": "L = E × ρ / π for a perfectly diffuse (Lambertian) surface of reflectance ρ.",
+    "viNote": "Với bề mặt khuếch tán hoàn toàn: L = E × ρ / π, trong đó ρ là hệ số phản xạ.",
+    "topics": [
+      "optics"
+    ],
+    "seeAlso": [
+      "illuminance",
+      "ugr",
+      "reflectance"
+    ],
+    "viExample": "Tường trắng ρ = 0,8 nhận 200 lux → độ chói ≈ 200 × 0,8 / 3,14 = 51 cd/m². Cũng 200 lux đó chiếu lên tường gỗ sẫm ρ = 0,15 chỉ còn 9,5 cd/m² — tối hơn 5 lần, dù bảng tính lux vẫn \"đạt\"."
+  },
+  {
     "id": "luminous-flux",
     "term": "Luminous flux",
     "vi": "Quang thông",
@@ -38,45 +784,41 @@
     "viExample": "Đèn rọi 3.000 cd tại tâm chùm. Ở khoảng cách 4 m, độ rọi trên trục = 3.000 / 4² = 187 lux."
   },
   {
-    "id": "illuminance",
-    "term": "Illuminance",
-    "vi": "Độ rọi",
-    "symbol": "E",
-    "unit": "lux (lx) = lm/m²",
-    "definition": "Luminous flux arriving on a surface per unit area. It is what a light meter reads and what almost every code and standard regulates.",
-    "viDefinition": "Lượng ánh sáng rơi xuống một bề mặt, tính trên mỗi mét vuông. Đây là thứ máy đo lux đọc được và gần như mọi tiêu chuẩn đều quy định theo nó.",
-    "note": "Illuminance is a property of the surface, not of the light source, and it is not what the eye sees — the eye sees luminance.",
-    "viNote": "Độ rọi là thuộc tính của bề mặt, không phải của nguồn sáng — và không phải thứ mắt nhìn thấy. Mắt nhìn thấy độ chói.",
     "topics": [
-      "optics",
-      "standards"
-    ],
-    "seeAlso": [
-      "luminance",
-      "maintained-illuminance",
-      "inverse-square-law"
-    ],
-    "viExample": "Văn phòng yêu cầu 500 lux trên mặt bàn cao 0,75 m. Máy đo đặt nằm ngang trên bàn phải đọc được ít nhất 500."
-  },
-  {
-    "id": "luminance",
-    "term": "Luminance",
-    "vi": "Độ chói",
-    "symbol": "L",
-    "unit": "cd/m² (nit)",
-    "definition": "Luminous intensity per unit projected area of a surface — the photometric quantity the eye actually responds to, and therefore the real driver of brightness, contrast and glare.",
-    "viDefinition": "Cường độ sáng trên một đơn vị diện tích biểu kiến của bề mặt — đây mới là đại lượng mắt thực sự phản ứng, nên nó quyết định cảm giác sáng, độ tương phản và chói loá.",
-    "note": "L = E × ρ / π for a perfectly diffuse (Lambertian) surface of reflectance ρ.",
-    "viNote": "Với bề mặt khuếch tán hoàn toàn: L = E × ρ / π, trong đó ρ là hệ số phản xạ.",
-    "topics": [
-      "optics"
+      "practice"
     ],
     "seeAlso": [
       "illuminance",
-      "ugr",
-      "reflectance"
+      "melanopic-edi"
     ],
-    "viExample": "Tường trắng ρ = 0,8 nhận 200 lux → độ chói ≈ 200 × 0,8 / 3,14 = 51 cd/m². Cũng 200 lux đó chiếu lên tường gỗ sẫm ρ = 0,15 chỉ còn 9,5 cd/m² — tối hơn 5 lần, dù bảng tính lux vẫn \"đạt\"."
+    "id": "lux-meter",
+    "term": "Lux meter",
+    "vi": "Máy đo lux",
+    "definition": "A handheld photometer reading illuminance at its sensor. Accuracy depends on cosine correction and V(λ) matching — a phone app has neither.",
+    "viDefinition": "Máy đo cầm tay đọc độ rọi tại đầu cảm biến. Độ chính xác phụ thuộc vào hiệu chỉnh cosin và độ khớp với đường V(λ) — ứng dụng điện thoại không có cả hai thứ đó.",
+    "note": "Hold it flat on the plane being measured and stand out of its way; your own body can block 20% of the light.",
+    "viNote": "Đặt máy áp phẳng lên mặt phẳng cần đo và đứng tránh ra; chính cơ thể bạn có thể che tới 20% ánh sáng.",
+    "viExample": "Đo mEDI thì phải cầm máy DỰNG ĐỨNG ở tầm mắt hướng theo hướng nhìn — không phải đặt nằm trên bàn như đo lux thông thường."
+  },
+  {
+    "id": "macadam-ellipse",
+    "term": "MacAdam ellipse (SDCM)",
+    "vi": "Elip MacAdam",
+    "symbol": "SDCM",
+    "definition": "A region of chromaticity space within which colour differences are imperceptible to an average observer. Binning tolerance is quoted in steps: 3-step, 5-step, and so on.",
+    "viDefinition": "Vùng trong không gian màu mà bên trong đó mắt người bình thường không phân biệt được khác biệt màu. Dung sai ghi theo bậc: 3 bậc, 5 bậc…",
+    "note": "Specify ≤3 SDCM for any run of visible linear or wall-washing luminaires; 5 SDCM is visible on a white wall.",
+    "viNote": "Hãy yêu cầu ≤3 SDCM cho mọi dãy đèn tuyến tính hoặc đèn rửa tường nhìn thấy được; 5 SDCM sẽ lộ rõ trên tường trắng.",
+    "topics": [
+      "optics",
+      "product"
+    ],
+    "seeAlso": [
+      "duv",
+      "cct",
+      "binning"
+    ],
+    "viExample": "Dãy đèn cove dài 20 m dùng bin 5 SDCM: nhìn dọc trần sẽ thấy từng đoạn hơi khác màu. Đổi sang 3 SDCM thì liền mạch."
   },
   {
     "id": "maintained-illuminance",
@@ -118,327 +860,39 @@
     "viExample": "Văn phòng máy lạnh, vệ sinh 2 năm/lần: MF ≈ 0,85. Nhà xưởng bụi ven biển, vệ sinh 3 năm/lần: MF có thể chỉ 0,6 — chênh nhau tới 40% số đèn."
   },
   {
-    "id": "uniformity",
-    "term": "Uniformity",
-    "vi": "Độ đồng đều",
-    "symbol": "Uo",
-    "definition": "The ratio of minimum to average illuminance over a defined area. EN 12464-1 sets a minimum Uo for the task area, the immediate surrounding area and the background area separately.",
-    "viDefinition": "Tỷ số giữa độ rọi nhỏ nhất và độ rọi trung bình trên một vùng. EN 12464-1 quy định Uo riêng cho vùng nhiệm vụ, vùng lân cận và vùng nền.",
+    "id": "matter",
+    "term": "Matter",
+    "vi": "Giao thức Matter",
+    "definition": "An IP-based application-layer standard for interoperable smart devices over Wi-Fi and Thread. Increasingly relevant where residential and hospitality lighting meets building systems.",
+    "viDefinition": "Chuẩn tầng ứng dụng dựa trên IP cho các thiết bị thông minh chạy trên Wi-Fi và Thread. Ngày càng liên quan ở chỗ giao nhau giữa chiếu sáng nhà ở, khách sạn và hệ thống toà nhà.",
+    "note": "Matter targets consumer interoperability, not the addressability and scene fidelity architectural schemes need. Treat it as a gateway layer, not a replacement for DALI or DMX.",
+    "viNote": "Matter nhắm tới tương thích cho thiết bị tiêu dùng, không đủ khả năng định địa chỉ và độ mượt cảnh sáng mà công trình kiến trúc cần. Hãy coi nó là lớp cầu nối, không phải thứ thay thế DALI hay DMX.",
     "topics": [
-      "standards"
+      "controls"
     ],
     "seeAlso": [
-      "maintained-illuminance",
-      "task-area"
+      "dali-plus",
+      "dali"
     ],
-    "viExample": "Vùng nhiệm vụ đo được: trung bình 520 lux, thấp nhất 290 lux → Uo = 290 / 520 = 0,56. Không đạt yêu cầu 0,60 của EN 12464-1, dù trung bình đã vượt 500."
+    "viExample": "Căn hộ cao cấp: đèn kiến trúc chạy DALI, nhưng chủ nhà muốn điều khiển bằng iPhone — dùng gateway Matter làm cầu nối, không thay thế DALI."
   },
   {
-    "id": "task-area",
-    "term": "Task area",
-    "vi": "Vùng nhiệm vụ",
-    "definition": "The partial area of a room where the visual task is carried out. EN 12464-1 tiers requirements outward: task area, immediate surrounding area (≥0.5 m band), then background area (≥3 m band).",
-    "viDefinition": "Phần diện tích trong phòng nơi công việc thị giác diễn ra. EN 12464-1 quy định theo từng lớp mở rộng dần: vùng nhiệm vụ, vùng lân cận (dải ≥0,5 m), rồi vùng nền (dải ≥3 m).",
-    "note": "If the task location is unknown, the whole room must be treated as task area — which is far more expensive. Pin the task locations down early.",
-    "viNote": "Nếu chưa biết vị trí làm việc, cả phòng phải coi là vùng nhiệm vụ — tốn kém hơn nhiều. Hãy chốt vị trí này thật sớm.",
+    "id": "mder",
+    "term": "Melanopic DER",
+    "vi": "Tỷ số M/P",
+    "symbol": "M-DER",
+    "definition": "Melanopic Daylight Efficacy Ratio — the ratio of melanopic to photopic content of a source. Multiply photopic vertical lux by M-DER to get mEDI.",
+    "viDefinition": "Tỷ số giữa thành phần melanopic và thành phần thị giác của một nguồn sáng. Nhân độ rọi đứng (lux) với M-DER sẽ ra melanopic EDI.",
+    "note": "Roughly 0.45 at 2700 K, 0.65 at 3500 K, 0.9 at 5000 K, 1.0 for D65 daylight. It is the fastest way to sanity-check a circadian scheme by hand.",
+    "viNote": "Xấp xỉ 0,45 ở 2700 K; 0,65 ở 3500 K; 0,90 ở 5000 K; và 1,00 với ánh sáng ban ngày D65. Đây là cách nhanh nhất để kiểm tra nhẩm một phương án circadian.",
     "topics": [
-      "standards"
+      "circadian"
     ],
     "seeAlso": [
-      "uniformity",
-      "maintained-illuminance"
+      "melanopic-edi",
+      "cie-s-026"
     ],
-    "viExample": "Phòng làm việc 500 lux tại bàn → dải 0,5 m quanh bàn cần 300 lux, phần nền còn lại cần 100 lux. Không cần chiếu 500 lux cho cả phòng."
-  },
-  {
-    "id": "ugr",
-    "term": "UGR",
-    "vi": "Chỉ số chói loá thống nhất",
-    "symbol": "UGR",
-    "definition": "Unified Glare Rating — a logarithmic index of discomfort glare from a lighting installation, computed from luminaire luminance, solid angle, position index and background luminance.",
-    "viDefinition": "Chỉ số logarit đo mức khó chịu do chói loá, tính từ độ chói bộ đèn, góc khối, chỉ số vị trí và độ chói nền.",
-    "note": "UGR is a room-and-observer property, not a luminaire property. A luminaire quoting 'UGR<19' has only been evaluated in a reference room; verify in yours.",
-    "viNote": "UGR là thuộc tính của căn phòng và người quan sát, không phải của bộ đèn. Datasheet ghi \"UGR<19\" chỉ mới thử trong phòng tham chiếu — phải tính lại trong phòng của bạn.",
-    "topics": [
-      "optics",
-      "standards"
-    ],
-    "seeAlso": [
-      "luminance",
-      "glare",
-      "cut-off-angle"
-    ],
-    "viExample": "Cùng một bộ đèn: phòng tường trắng sáng cho UGR 18 (đạt), phòng tường gỗ sẫm cho UGR 22 (không đạt cho văn phòng). Đèn không đổi — chỉ căn phòng đổi."
-  },
-  {
-    "id": "glare",
-    "term": "Glare",
-    "vi": "Chói loá",
-    "definition": "Any condition where luminance in the field of view is excessive or too unevenly distributed. Split into discomfort glare (annoyance, measured by UGR/GR) and disability glare (measurable loss of visual performance).",
-    "viDefinition": "Tình trạng độ chói trong tầm nhìn quá cao hoặc phân bố quá chênh lệch. Chia làm chói loá khó chịu (đo bằng UGR/GR) và chói loá mất khả năng nhìn (làm giảm thị lực thực sự).",
-    "topics": [
-      "optics"
-    ],
-    "seeAlso": [
-      "ugr",
-      "cut-off-angle",
-      "luminance"
-    ],
-    "viExample": "Đèn rọi hắt vào màn hình máy tính làm không đọc được chữ là chói loá mất khả năng nhìn. Dãy đèn quá sáng trong tầm mắt gây mỏi mắt cuối ngày là chói loá khó chịu."
-  },
-  {
-    "id": "cut-off-angle",
-    "term": "Cut-off angle",
-    "vi": "Góc chắn sáng",
-    "unit": "degrees",
-    "definition": "The angle from the downward vertical beyond which the bare light source is no longer visible. Deeper cut-off means better glare control and less spill.",
-    "viDefinition": "Góc tính từ phương thẳng đứng xuống, vượt qua góc đó thì không còn nhìn thấy nguồn sáng trần. Góc chắn càng sâu thì kiểm soát chói càng tốt và ánh sáng thoát ra ngoài càng ít.",
-    "topics": [
-      "optics",
-      "facade"
-    ],
-    "seeAlso": [
-      "full-cutoff",
-      "ugr",
-      "beam-angle"
-    ],
-    "viExample": "Downlight âm trần sâu 80 mm, đường kính 90 mm → góc chắn khoảng 48°. Đứng cách 2 m nhìn tới sẽ không thấy nguồn sáng."
-  },
-  {
-    "id": "full-cutoff",
-    "term": "Full cut-off",
-    "vi": "Chắn sáng toàn phần",
-    "definition": "An exterior classification where zero luminous intensity is emitted at or above 90° from nadir, and no more than 10% at or above 80°. The baseline requirement for dark-sky-friendly exterior lighting.",
-    "viDefinition": "Phân loại cho đèn ngoài trời: bằng 0 cường độ sáng tại và trên 90° so với phương thẳng đứng, và không quá 10% tại/trên 80°. Đây là yêu cầu nền cho chiếu sáng thân thiện với bầu trời đêm.",
-    "note": "Increasingly written into planning conditions rather than merely recommended.",
-    "viNote": "Ngày càng được đưa thẳng vào điều kiện cấp phép xây dựng chứ không còn là khuyến nghị.",
-    "topics": [
-      "facade",
-      "sustainability"
-    ],
-    "seeAlso": [
-      "obtrusive-light",
-      "uplight-ratio",
-      "cut-off-angle"
-    ],
-    "viExample": "Đèn sân vườn kiểu \"nấm\" có chóa che kín phía trên là full cut-off. Cùng loại đèn đó nhưng lắp nghiêng lên 20° để rọi cây thì không còn full cut-off nữa."
-  },
-  {
-    "id": "obtrusive-light",
-    "term": "Obtrusive light",
-    "vi": "Ánh sáng gây phiền nhiễu",
-    "definition": "Spill light that causes nuisance, discomfort or harm — light trespass into windows, source intensity toward observers, upward waste light, and building-façade luminance. Limited by environmental zone E0–E4.",
-    "viDefinition": "Ánh sáng thừa gây phiền nhiễu, khó chịu hoặc tác hại — lọt vào cửa sổ nhà dân, chiếu thẳng vào mắt người đi đường, hắt lên trời, hoặc làm mặt đứng công trình quá chói. Giới hạn theo vùng môi trường E0–E4.",
-    "topics": [
-      "facade",
-      "sustainability",
-      "standards"
-    ],
-    "seeAlso": [
-      "full-cutoff",
-      "uplight-ratio",
-      "dark-sky"
-    ],
-    "viExample": "Đèn mặt đứng khách sạn hắt 8 lux vào cửa sổ chung cư đối diện lúc 23h. Giới hạn vùng E3 sau giờ giới nghiêm thường là 1–2 lux — sẽ bị khiếu nại."
-  },
-  {
-    "id": "uplight-ratio",
-    "term": "Upward light ratio",
-    "vi": "Tỷ lệ ánh sáng hắt lên",
-    "symbol": "ULR",
-    "definition": "The proportion of a luminaire's total flux emitted above the horizontal when mounted in its installed position. The headline number in light-pollution limits.",
-    "viDefinition": "Tỷ lệ quang thông bộ đèn phát lên phía trên phương ngang khi đã lắp đặt đúng tư thế thực tế. Đây là con số chính trong các giới hạn về ô nhiễm ánh sáng.",
-    "topics": [
-      "facade",
-      "sustainability"
-    ],
-    "seeAlso": [
-      "full-cutoff",
-      "obtrusive-light"
-    ],
-    "viExample": "Đèn pha lắp ngửa rọi lên tấm biển: ULR có thể tới 30%. Cũng đèn đó lắp trên cao chiếu xuống biển: ULR = 0%."
-  },
-  {
-    "id": "dark-sky",
-    "term": "Dark sky compliance",
-    "vi": "Tuân thủ bầu trời tối",
-    "definition": "A design approach that limits upward waste light, blue content and over-illumination to protect the night sky and nocturnal ecology. Typically combines full cut-off optics, ≤3000 K (often ≤2200 K near habitats), curfew dimming and warmer spectra.",
-    "viDefinition": "Cách tiếp cận thiết kế nhằm hạn chế ánh sáng hắt lên trời, giảm thành phần xanh lam và tránh chiếu sáng thừa, để bảo vệ bầu trời đêm và sinh vật hoạt động về đêm.",
-    "topics": [
-      "sustainability",
-      "facade"
-    ],
-    "seeAlso": [
-      "full-cutoff",
-      "obtrusive-light",
-      "cct"
-    ],
-    "viExample": "Dự án resort ven biển gần bãi rùa đẻ: dùng đèn 2200 K, full cut-off, tắt hoàn toàn phần trang trí sau 22h, chỉ giữ đèn lối đi ở mức thấp."
-  },
-  {
-    "id": "cct",
-    "term": "Correlated colour temperature",
-    "vi": "Nhiệt độ màu tương quan",
-    "symbol": "CCT",
-    "unit": "kelvin (K)",
-    "definition": "The temperature of the Planckian radiator whose perceived colour most closely matches that of the source. A one-dimensional shorthand for a two-dimensional chromaticity.",
-    "viDefinition": "Nhiệt độ của vật đen có màu gần giống màu nguồn sáng nhất. Đây là cách rút gọn một toạ độ màu hai chiều thành một con số duy nhất.",
-    "note": "Two sources at the same CCT can look visibly different if their Duv differs. Always specify CCT and a Duv or chromaticity tolerance.",
-    "viNote": "Hai nguồn cùng CCT vẫn có thể trông khác nhau rõ rệt nếu Duv khác nhau. Luôn ghi cả CCT và dung sai Duv hoặc toạ độ màu.",
-    "topics": [
-      "optics"
-    ],
-    "seeAlso": [
-      "duv",
-      "cri",
-      "tm-30"
-    ],
-    "viExample": "Khách sạn thường dùng 2700–3000 K cho cảm giác ấm áp; văn phòng 4000 K; phòng kiểm tra màu 6500 K. Cùng 3000 K nhưng Duv lệch thì hai đèn vẫn trông khác nhau."
-  },
-  {
-    "id": "duv",
-    "term": "Duv",
-    "vi": "Độ lệch Duv",
-    "symbol": "Duv",
-    "definition": "The signed distance of a source's chromaticity from the Planckian locus. Positive reads green/yellow, negative reads pink/magenta.",
-    "viDefinition": "Khoảng lệch có dấu giữa toạ độ màu của nguồn sáng và đường Planck. Dương thì ngả xanh lá/vàng, âm thì ngả hồng/tím.",
-    "note": "±0.006 is the usual acceptance window for architectural work; skin tones and merchandise reveal a green cast long before a lux meter does.",
-    "viNote": "±0,006 là ngưỡng chấp nhận thông thường cho công trình kiến trúc; da người và hàng hoá sẽ lộ sắc xanh lá từ rất lâu trước khi máy đo lux phát hiện ra.",
-    "topics": [
-      "optics"
-    ],
-    "seeAlso": [
-      "cct",
-      "macadam-ellipse"
-    ],
-    "viExample": "Hai đèn 3000 K treo cạnh nhau trên tường trắng: cái Duv +0,006 ngả xanh lá trông \"bẩn\", cái Duv −0,003 ngả hồng nhẹ trông sạch hơn. Máy đo lux không phân biệt được."
-  },
-  {
-    "id": "macadam-ellipse",
-    "term": "MacAdam ellipse (SDCM)",
-    "vi": "Elip MacAdam",
-    "symbol": "SDCM",
-    "definition": "A region of chromaticity space within which colour differences are imperceptible to an average observer. Binning tolerance is quoted in steps: 3-step, 5-step, and so on.",
-    "viDefinition": "Vùng trong không gian màu mà bên trong đó mắt người bình thường không phân biệt được khác biệt màu. Dung sai ghi theo bậc: 3 bậc, 5 bậc…",
-    "note": "Specify ≤3 SDCM for any run of visible linear or wall-washing luminaires; 5 SDCM is visible on a white wall.",
-    "viNote": "Hãy yêu cầu ≤3 SDCM cho mọi dãy đèn tuyến tính hoặc đèn rửa tường nhìn thấy được; 5 SDCM sẽ lộ rõ trên tường trắng.",
-    "topics": [
-      "optics",
-      "product"
-    ],
-    "seeAlso": [
-      "duv",
-      "cct",
-      "binning"
-    ],
-    "viExample": "Dãy đèn cove dài 20 m dùng bin 5 SDCM: nhìn dọc trần sẽ thấy từng đoạn hơi khác màu. Đổi sang 3 SDCM thì liền mạch."
-  },
-  {
-    "id": "binning",
-    "term": "Binning",
-    "vi": "Phân loại bin LED",
-    "definition": "The factory sorting of LED dies by flux, forward voltage and chromaticity. Tighter bins cost more but are the only way to guarantee visual consistency across a large installation.",
-    "viDefinition": "Việc nhà máy phân loại chip LED theo quang thông, điện áp thuận và toạ độ màu. Bin chặt hơn thì đắt hơn, nhưng đó là cách duy nhất đảm bảo màu đồng đều trên công trình lớn.",
-    "topics": [
-      "product",
-      "optics"
-    ],
-    "seeAlso": [
-      "macadam-ellipse",
-      "cct"
-    ],
-    "viExample": "Đặt 200 bộ đèn cùng mã nhưng hai lô sản xuất cách nhau 6 tháng — nếu không khoá bin trong hợp đồng, hai lô có thể lệch màu thấy rõ khi lắp cạnh nhau."
-  },
-  {
-    "id": "cri",
-    "term": "Colour rendering index",
-    "vi": "Chỉ số hoàn màu",
-    "symbol": "Ra / CRI",
-    "definition": "The average colour shift of eight pastel test samples (R1–R8) under the source versus a reference illuminant of the same CCT, scaled to 100.",
-    "viDefinition": "Mức sai lệch màu trung bình của tám mẫu màu nhạt dưới nguồn sáng đang xét, so với nguồn tham chiếu cùng CCT, quy về thang 100.",
-    "note": "Ra ignores saturated colours. Always call up R9 (strong red) alongside Ra — Ra 90 / R9 50 will still make skin and timber look dead.",
-    "viNote": "Ra bỏ qua các màu bão hoà. Luôn yêu cầu R9 (đỏ đậm) kèm theo Ra — Ra 90 mà R9 chỉ 50 thì da người và gỗ vẫn trông xỉn.",
-    "topics": [
-      "optics"
-    ],
-    "seeAlso": [
-      "tm-30",
-      "r9",
-      "cct"
-    ],
-    "viExample": "Đèn Ra 82 chiếu quầy thịt bò: thịt trông xám. Đổi sang Ra 95 / R9 90: thịt đỏ tươi. Cùng lux, cùng CCT."
-  },
-  {
-    "id": "r9",
-    "term": "R9",
-    "vi": "Chỉ số R9",
-    "definition": "The special colour rendering index for the strong red test sample. Critical for skin tones, meat, timber and textiles, and routinely the weakest number on a datasheet.",
-    "viDefinition": "Chỉ số hoàn màu riêng cho mẫu đỏ đậm. Cực kỳ quan trọng với da người, thịt, gỗ và vải, và thường là con số yếu nhất trên datasheet.",
-    "note": "Specify R9 ≥ 50 as a floor, ≥ 90 for retail food, healthcare and hospitality.",
-    "viNote": "Đặt sàn R9 ≥ 50; với thực phẩm bán lẻ, y tế và khách sạn thì ≥ 90.",
-    "topics": [
-      "optics"
-    ],
-    "seeAlso": [
-      "cri",
-      "tm-30"
-    ],
-    "viExample": "Đèn Ra 90 nhưng R9 chỉ 20 sẽ làm da người trông tái và gỗ óc chó trông như gỗ tạp. Yêu cầu R9 ≥ 50 trong spec để tránh."
-  },
-  {
-    "id": "tm-30",
-    "term": "TM-30 (Rf / Rg)",
-    "vi": "TM-30",
-    "definition": "IES method using 99 real-world colour samples. Rf is fidelity (how accurately colours are rendered) and Rg is gamut (whether they are saturated or muted) — two numbers instead of CRI's one.",
-    "viDefinition": "Phương pháp của IES dùng 99 mẫu màu thực tế. Rf đo độ trung thực (màu tái hiện chính xác đến đâu), Rg đo độ bão hoà (màu được làm rực lên hay bị làm nhạt đi) — hai con số thay vì một như CRI.",
-    "note": "A source can have high Rf and low Rg and look flat. Rf ≥ 85 with Rg 95–110 is a good general architectural target.",
-    "viNote": "Một nguồn có thể Rf cao mà Rg thấp, nhìn sẽ phẳng và thiếu sức sống. Mục tiêu chung cho kiến trúc: Rf ≥ 85 và Rg 95–110.",
-    "topics": [
-      "optics",
-      "standards"
-    ],
-    "seeAlso": [
-      "cri",
-      "r9"
-    ],
-    "viExample": "Cửa hàng thời trang muốn quần áo màu rực: chọn Rf 88 / Rg 108. Phòng trưng bày bảo tàng cần trung thực tuyệt đối: Rf 95 / Rg 100."
-  },
-  {
-    "id": "luminaire-efficacy",
-    "term": "Luminaire efficacy",
-    "vi": "Hiệu suất phát sáng bộ đèn",
-    "unit": "lm/W",
-    "definition": "Delivered luminous flux of the complete luminaire divided by its total input power, driver losses included. Distinct from bare LED-chip efficacy, which is always the higher number.",
-    "viDefinition": "Quang thông thực tế của cả bộ đèn chia cho tổng công suất tiêu thụ, đã tính cả tổn hao driver. Khác với hiệu suất của riêng chip LED — con số đó luôn cao hơn.",
-    "topics": [
-      "product",
-      "sustainability"
-    ],
-    "seeAlso": [
-      "lpd",
-      "luminous-flux"
-    ],
-    "viExample": "Chip LED ghi 180 lm/W, nhưng cả bộ đèn sau khi tính chóa, kính và tổn hao driver chỉ còn 110 lm/W. Con số 110 mới là thứ dùng để tính LPD."
-  },
-  {
-    "id": "lpd",
-    "term": "Lighting power density",
-    "vi": "Mật độ công suất chiếu sáng",
-    "symbol": "LPD",
-    "unit": "W/m²",
-    "definition": "Installed lighting load per unit floor area — the metric almost every energy code caps, including ASHRAE 90.1, Part L and Vietnam's QCVN 09 series.",
-    "viDefinition": "Công suất chiếu sáng lắp đặt trên mỗi mét vuông sàn — chỉ tiêu mà gần như mọi quy chuẩn năng lượng đều khống chế, kể cả QCVN 09 của Việt Nam.",
-    "note": "Controls credits (occupancy, daylight harvesting) can offset LPD in some codes but not all. Check before you bank on them.",
-    "viNote": "Một số quy chuẩn cho phép bù trừ LPD nhờ hệ điều khiển (cảm biến hiện diện, tận dụng ánh sáng tự nhiên), nhưng không phải tất cả. Kiểm tra trước khi trông cậy vào điều đó.",
-    "topics": [
-      "sustainability",
-      "standards"
-    ],
-    "seeAlso": [
-      "luminaire-efficacy",
-      "daylight-harvesting"
-    ],
-    "viExample": "Văn phòng 200 m², quy chuẩn cho 9 W/m² → tổng công suất chiếu sáng tối đa 1.800 W. Nếu bộ đèn 110 lm/W, đó là khoảng 198.000 lm để chia cho cả sàn."
+    "viExample": "Cùng 400 lux đứng tại mắt: đèn 2700 K cho mEDI 180; đèn 5000 K cho mEDI 360. Gấp đôi tác động sinh học mà không tốn thêm một watt nào."
   },
   {
     "id": "melanopic-edi",
@@ -462,74 +916,367 @@
     "viExample": "Bàn làm việc đo được 300 lux phương đứng tại mắt, đèn 3000 K (M-DER 0,52) → mEDI = 156 lux. Chưa đạt ngưỡng 250 — cần thêm ánh sáng tự nhiên hoặc chuyển sang phổ lạnh hơn."
   },
   {
-    "id": "mder",
-    "term": "Melanopic DER",
-    "vi": "Tỷ số M/P",
-    "symbol": "M-DER",
-    "definition": "Melanopic Daylight Efficacy Ratio — the ratio of melanopic to photopic content of a source. Multiply photopic vertical lux by M-DER to get mEDI.",
-    "viDefinition": "Tỷ số giữa thành phần melanopic và thành phần thị giác của một nguồn sáng. Nhân độ rọi đứng (lux) với M-DER sẽ ra melanopic EDI.",
-    "note": "Roughly 0.45 at 2700 K, 0.65 at 3500 K, 0.9 at 5000 K, 1.0 for D65 daylight. It is the fastest way to sanity-check a circadian scheme by hand.",
-    "viNote": "Xấp xỉ 0,45 ở 2700 K; 0,65 ở 3500 K; 0,90 ở 5000 K; và 1,00 với ánh sáng ban ngày D65. Đây là cách nhanh nhất để kiểm tra nhẩm một phương án circadian.",
+    "id": "mock-up",
+    "term": "Mock-up",
+    "vi": "Mẫu thử tại chỗ",
+    "definition": "A full-size on-site trial of a lighting detail with the real luminaire, real finish and real geometry, before the order is placed.",
+    "viDefinition": "Thử nghiệm tỷ lệ 1:1 ngay tại công trường với đúng bộ đèn, đúng vật liệu hoàn thiện và đúng hình học, trước khi đặt hàng.",
+    "note": "The cheapest insurance in the entire process. Calculation software cannot predict how a specific stone reads under a specific grazing angle.",
+    "viNote": "Đây là khoản bảo hiểm rẻ nhất trong toàn bộ quá trình. Không phần mềm nào dự đoán được một loại đá cụ thể sẽ trông ra sao dưới một góc chiếu sượt cụ thể.",
     "topics": [
-      "circadian"
+      "practice"
     ],
     "seeAlso": [
-      "melanopic-edi",
-      "cie-s-026"
+      "focusing",
+      "wall-grazing"
     ],
-    "viExample": "Cùng 400 lux đứng tại mắt: đèn 2700 K cho mEDI 180; đèn 5000 K cho mEDI 360. Gấp đôi tác động sinh học mà không tốn thêm một watt nào."
+    "viExample": "Trước khi đặt 300 đèn rọi tường đá, dựng thử 1 đèn trên 2 m² đá thật tại công trường vào buổi tối. Chi phí một đèn, tránh rủi ro cả gói."
   },
   {
-    "id": "cie-s-026",
-    "term": "CIE S 026",
-    "vi": "Tiêu chuẩn CIE S 026",
-    "definition": "The CIE system for metrology of optical radiation for ipRGC-influenced responses to light. It defines the five α-opic quantities and the melanopic EDI metric used by WELL and by most circadian design guidance.",
-    "viDefinition": "Hệ thống của CIE để đo lường bức xạ quang học tác động lên tế bào ipRGC. Nó định nghĩa năm đại lượng α-opic và chỉ số melanopic EDI mà WELL cùng phần lớn hướng dẫn circadian đang dùng.",
-    "note": "It is a measurement framework, not a design guide — it tells you how to quantify, not what to target.",
-    "viNote": "Đây là khung ĐO LƯỜNG, không phải hướng dẫn thiết kế — nó cho biết cách định lượng, không cho biết nên nhắm tới ngưỡng nào.",
     "topics": [
-      "circadian",
+      "practice",
+      "optics"
+    ],
+    "seeAlso": [
+      "task-area",
+      "reflectance"
+    ],
+    "id": "modelling",
+    "term": "Modelling",
+    "vi": "Tạo khối",
+    "definition": "The balance of directional and diffuse light that reveals three-dimensional form. Too directional and faces look harsh; too diffuse and everything goes flat.",
+    "viDefinition": "Sự cân bằng giữa ánh sáng có hướng và ánh sáng khuếch tán để làm lộ khối ba chiều. Quá thiên về hướng thì khuôn mặt trông gắt; quá khuếch tán thì mọi thứ bẹt dí.",
+    "note": "EN 12464-1 addresses this through cylindrical illuminance — the light arriving on a vertical cylinder standing where a person would.",
+    "viNote": "EN 12464-1 xử lý vấn đề này bằng độ rọi trụ — lượng ánh sáng đến một hình trụ đứng đặt tại vị trí người đứng.",
+    "viExample": "Phòng họp video call: chỉ có downlight trên đầu sẽ tạo hốc mắt tối và bóng dưới cằm. Thêm ánh sáng đứng từ tường phía trước là khuôn mặt lên hình đẹp hẳn."
+  },
+  {
+    "topics": [
+      "practice",
+      "optics"
+    ],
+    "seeAlso": [
+      "throw-distance",
+      "uniformity"
+    ],
+    "id": "mounting-height",
+    "term": "Mounting height",
+    "vi": "Cao độ lắp đặt",
+    "definition": "Height of the luminaire above the plane it serves — not above the floor. For a desk at 0.75 m under a 2.7 m ceiling, the mounting height is 1.95 m.",
+    "viDefinition": "Chiều cao của bộ đèn so với mặt phẳng nó phục vụ — không phải so với sàn. Với bàn cao 0,75 m dưới trần 2,7 m thì cao độ lắp là 1,95 m.",
+    "note": "Spacing between luminaires should not exceed roughly 1.0–1.5 × this figure, depending on the distribution.",
+    "viNote": "Khoảng cách giữa các bộ đèn không nên vượt quá khoảng 1,0–1,5 lần con số này, tuỳ vào kiểu phân bố ánh sáng.",
+    "viExample": "Trần 2,7 m, bàn 0,75 m → cao độ lắp 1,95 m → downlight nên đặt cách nhau khoảng 2–2,9 m. Nếu bản vẽ trần ghi 4 m thì phòng sẽ loang lổ."
+  },
+  {
+    "id": "obtrusive-light",
+    "term": "Obtrusive light",
+    "vi": "Ánh sáng gây phiền nhiễu",
+    "definition": "Spill light that causes nuisance, discomfort or harm — light trespass into windows, source intensity toward observers, upward waste light, and building-façade luminance. Limited by environmental zone E0–E4.",
+    "viDefinition": "Ánh sáng thừa gây phiền nhiễu, khó chịu hoặc tác hại — lọt vào cửa sổ nhà dân, chiếu thẳng vào mắt người đi đường, hắt lên trời, hoặc làm mặt đứng công trình quá chói. Giới hạn theo vùng môi trường E0–E4.",
+    "topics": [
+      "facade",
+      "sustainability",
       "standards"
     ],
     "seeAlso": [
-      "melanopic-edi",
-      "mder",
-      "well-l03"
+      "full-cutoff",
+      "uplight-ratio",
+      "dark-sky"
     ],
-    "viExample": "Khi nhà sản xuất gửi file phổ SPD, bạn nạp vào bộ công cụ CIE S 026 để lấy M-DER thật của đèn đó, thay vì dùng con số ước lượng theo CCT."
+    "viExample": "Đèn mặt đứng khách sạn hắt 8 lux vào cửa sổ chung cư đối diện lúc 23h. Giới hạn vùng E3 sau giờ giới nghiêm thường là 1–2 lux — sẽ bị khiếu nại."
   },
   {
-    "id": "well-l03",
-    "term": "WELL Feature L03",
-    "vi": "WELL L03",
-    "definition": "The Circadian Lighting Design feature of the WELL Building Standard, awarding points for achieving defined melanopic EDI thresholds at work-plane eye level during daytime hours.",
-    "viDefinition": "Hạng mục \"Circadian Lighting Design\" trong tiêu chuẩn WELL, chấm điểm dựa trên việc đạt được ngưỡng melanopic EDI tại tầm mắt người làm việc trong giờ ban ngày.",
     "topics": [
-      "circadian",
+      "controls",
+      "sustainability"
+    ],
+    "seeAlso": [
+      "daylight-harvesting",
+      "lpd"
+    ],
+    "id": "occupancy-sensor",
+    "term": "Occupancy / presence sensor",
+    "vi": "Cảm biến hiện diện",
+    "definition": "A detector that switches or dims lighting according to whether anyone is there. Occupancy sensors turn on automatically; presence sensors only turn off, leaving the on decision to the user.",
+    "viDefinition": "Thiết bị bật/giảm sáng theo việc có người hay không. Loại \"occupancy\" tự bật khi có người; loại \"presence\" chỉ tự tắt, còn việc bật thì để người dùng quyết định.",
+    "note": "PIR detects movement across its field and misses someone sitting still; microwave detects through partitions and often triggers from the corridor. Neither is right everywhere.",
+    "viNote": "Cảm biến hồng ngoại PIR chỉ bắt chuyển động ngang tầm nhìn nên bỏ sót người ngồi yên; cảm biến vi sóng xuyên được vách nên hay bị kích hoạt nhầm từ hành lang. Không loại nào đúng cho mọi chỗ.",
+    "viExample": "Nhà vệ sinh dùng PIR là hợp lý. Phòng làm việc cá nhân dùng PIR sẽ tắt đèn khi người ta ngồi đọc yên — chỗ đó cần loại kết hợp hoặc chỉnh thời gian trễ dài hơn."
+  },
+  {
+    "id": "photometric-file",
+    "term": "Photometric file (IES / LDT)",
+    "vi": "File trắc quang",
+    "definition": "A measured table of luminous intensity by angle. IESNA LM-63 (.ies) is the North American format; EULUMDAT (.ldt) the European one. Both are the input every calculation engine actually uses.",
+    "viDefinition": "Bảng số liệu đo cường độ sáng theo từng góc. IESNA LM-63 (.ies) là định dạng Bắc Mỹ, EULUMDAT (.ldt) là của châu Âu. Mọi phần mềm tính toán đều chạy trên file này.",
+    "note": "Check the file's declared lumen output matches the ordered configuration — many libraries ship a single file for a whole product family.",
+    "viNote": "Kiểm tra xem quang thông ghi trong file có khớp với cấu hình bạn đặt hàng không — nhiều thư viện dùng chung một file cho cả dòng sản phẩm.",
+    "topics": [
+      "optics",
+      "practice"
+    ],
+    "seeAlso": [
+      "luminous-intensity",
+      "beam-angle"
+    ],
+    "viExample": "Trước khi chạy Dialux, mở file .ies bằng notepad kiểm tra dòng quang thông — nhiều hãng gửi chung một file cho cả dòng 10 W đến 40 W."
+  },
+  {
+    "id": "pixel-pitch",
+    "term": "Pixel pitch",
+    "vi": "Khoảng cách điểm ảnh",
+    "definition": "The centre-to-centre spacing of individually controllable points in a media façade or linear pixel run. It sets the minimum viewing distance at which content resolves as an image rather than as dots.",
+    "viDefinition": "Khoảng cách tâm-tới-tâm giữa các điểm sáng điều khiển độc lập trên mặt đứng truyền thông hoặc dãy đèn pixel. Nó quyết định khoảng cách nhìn tối thiểu để nội dung hiện ra thành hình ảnh thay vì thành các chấm rời.",
+    "topics": [
+      "facade",
+      "controls"
+    ],
+    "seeAlso": [
+      "dmx"
+    ],
+    "viExample": "Mặt đứng pixel pitch 150 mm: đứng cách 30 m mới thấy thành hình. Đứng dưới chân toà nhà chỉ thấy các chấm sáng rời rạc."
+  },
+  {
+    "topics": [
+      "product"
+    ],
+    "seeAlso": [
+      "driver",
+      "lpd"
+    ],
+    "id": "power-factor",
+    "term": "Power factor",
+    "vi": "Hệ số công suất",
+    "symbol": "PF",
+    "definition": "The ratio of real power to apparent power drawn by the driver. A low power factor means the installation draws more current than its wattage suggests.",
+    "viDefinition": "Tỷ số giữa công suất thực và công suất biểu kiến mà driver tiêu thụ. Hệ số thấp nghĩa là hệ thống rút dòng lớn hơn mức công suất ghi trên đèn.",
+    "note": "Specify PF ≥ 0.9 for anything above about 25 W. Utilities in many countries penalise a poor site power factor, and the electrical engineer sizes cables from current, not watts.",
+    "viNote": "Yêu cầu PF ≥ 0,9 với đèn trên khoảng 25 W. Nhiều nơi tính phí phạt nếu hệ số công suất toàn công trình thấp, và kỹ sư điện chọn tiết diện dây theo dòng điện chứ không theo watt.",
+    "viExample": "200 bộ đèn 30 W, PF 0,95 → dòng khoảng 27 A. Cũng 200 bộ đó nhưng PF 0,6 → dòng khoảng 43 A, phải nâng tiết diện dây và aptomat."
+  },
+  {
+    "id": "r9",
+    "term": "R9",
+    "vi": "Chỉ số R9",
+    "definition": "The special colour rendering index for the strong red test sample. Critical for skin tones, meat, timber and textiles, and routinely the weakest number on a datasheet.",
+    "viDefinition": "Chỉ số hoàn màu riêng cho mẫu đỏ đậm. Cực kỳ quan trọng với da người, thịt, gỗ và vải, và thường là con số yếu nhất trên datasheet.",
+    "note": "Specify R9 ≥ 50 as a floor, ≥ 90 for retail food, healthcare and hospitality.",
+    "viNote": "Đặt sàn R9 ≥ 50; với thực phẩm bán lẻ, y tế và khách sạn thì ≥ 90.",
+    "topics": [
+      "optics"
+    ],
+    "seeAlso": [
+      "cri",
+      "tm-30"
+    ],
+    "viExample": "Đèn Ra 90 nhưng R9 chỉ 20 sẽ làm da người trông tái và gỗ óc chó trông như gỗ tạp. Yêu cầu R9 ≥ 50 trong spec để tránh."
+  },
+  {
+    "id": "reflectance",
+    "term": "Reflectance",
+    "vi": "Hệ số phản xạ",
+    "symbol": "ρ",
+    "definition": "The fraction of incident light a surface reflects. EN 12464-1 gives recommended ranges: ceiling 0.7–0.9, walls 0.5–0.8, floor 0.2–0.4.",
+    "viDefinition": "Tỷ lệ ánh sáng mà một bề mặt phản xạ lại. EN 12464-1 khuyến nghị: trần 0,7–0,9; tường 0,5–0,8; sàn 0,2–0,4.",
+    "note": "Reflectance assumptions drive indirect and cove schemes more than fixture selection does. Confirm the interior designer's actual finishes before you calculate.",
+    "viNote": "Giả định về hệ số phản xạ ảnh hưởng tới phương án chiếu gián tiếp và hắt trần nhiều hơn cả việc chọn đèn. Hãy xác nhận vật liệu hoàn thiện thực tế với bên thiết kế nội thất trước khi tính.",
+    "topics": [
+      "optics",
+      "practice"
+    ],
+    "seeAlso": [
+      "luminance",
+      "uniformity"
+    ],
+    "viExample": "Trần sơn trắng ρ = 0,8 và trần gỗ sẫm ρ = 0,2: cùng một đèn hắt trần, phương án trần gỗ cần gấp khoảng 4 lần công suất để ra cùng cảm giác sáng."
+  },
+  {
+    "topics": [
+      "optics"
+    ],
+    "seeAlso": [
+      "diffuser",
+      "beam-angle",
+      "luminous-intensity"
+    ],
+    "id": "reflector",
+    "term": "Reflector",
+    "vi": "Chóa phản quang",
+    "definition": "A shaped mirrored surface that redirects light into the intended distribution. Faceted reflectors blend the beam; specular ones keep it crisp.",
+    "viDefinition": "Bề mặt phản chiếu được tạo hình để hướng ánh sáng vào phân bố mong muốn. Chóa nhiều mặt cắt làm chùm sáng hoà đều; chóa gương giữ chùm sắc nét.",
+    "viExample": "Cùng một chip LED, đổi chóa từ 15° sang 40° làm cường độ tâm chùm giảm khoảng 6 lần trong khi tổng lumen gần như không đổi."
+  },
+  {
+    "topics": [
+      "controls",
+      "facade",
+      "optics"
+    ],
+    "seeAlso": [
+      "dmx",
+      "cri",
+      "tunable-white"
+    ],
+    "id": "rgbw",
+    "term": "RGBW / RGBWW",
+    "vi": "Hệ màu RGBW",
+    "definition": "Colour mixing using red, green and blue plus one or two dedicated white channels. The white channel is what makes pastel tones and usable white achievable at all.",
+    "viDefinition": "Phối màu bằng đỏ, lục, lam cộng thêm một hoặc hai kênh trắng riêng. Chính kênh trắng mới giúp tạo được các tông màu nhạt và ánh sáng trắng dùng được.",
+    "note": "RGB alone cannot make a white anyone wants to sit under — its CRI is dreadful. If the scheme ever needs white, specify a white channel.",
+    "viNote": "Chỉ RGB thì không tạo nổi ánh sáng trắng mà người ta muốn ngồi dưới — chỉ số hoàn màu rất tệ. Nếu phương án có lúc cần trắng, phải yêu cầu có kênh trắng riêng.",
+    "viExample": "Mặt đứng đổi màu dịp lễ dùng RGB là đủ. Nhưng nếu ngày thường cần chiếu trắng ấm 3000 K thì bắt buộc phải là RGBW."
+  },
+  {
+    "id": "scallop",
+    "term": "Scallop",
+    "vi": "Vệt sáng hình vỏ sò",
+    "definition": "The arc-shaped pattern a downlight throws where its beam intersects an adjacent wall. Deliberate and rhythmic it is a feature; accidental and uneven it is a defect.",
+    "viDefinition": "Vệt sáng hình vòng cung mà đèn downlight tạo ra trên bức tường kế bên khi chùm sáng cắt vào tường. Nếu chủ ý và đều nhịp thì là điểm nhấn; nếu vô tình và lệch lạc thì là lỗi.",
+    "topics": [
+      "practice"
+    ],
+    "seeAlso": [
+      "wall-washing",
+      "beam-angle"
+    ],
+    "viExample": "Hành lang có dãy downlight cách tường 40 cm: các vòng cung sáng đều nhau trên tường tạo nhịp đẹp. Nếu khoảng cách tới tường không đều, các vòng cung lệch nhau trông như lỗi thi công."
+  },
+  {
+    "topics": [
+      "controls",
+      "practice"
+    ],
+    "seeAlso": [
+      "commissioning",
+      "dali",
+      "layered-lighting"
+    ],
+    "id": "scene",
+    "term": "Scene",
+    "vi": "Cảnh sáng",
+    "definition": "A saved combination of levels and colours across groups, recalled by one command. Scenes are how a layered scheme is actually used day to day.",
+    "viDefinition": "Tổ hợp mức sáng và màu đã lưu sẵn cho các nhóm đèn, gọi lại chỉ bằng một lệnh. Cảnh sáng chính là cách một phương án phân lớp được sử dụng hằng ngày.",
+    "note": "Write the scene schedule during detailed design — room, name, groups, levels, CCT, fade time, trigger. It becomes the commissioning brief.",
+    "viNote": "Hãy lập bảng cảnh sáng ngay ở giai đoạn thiết kế kỹ thuật — phòng nào, tên cảnh, nhóm đèn, mức sáng, nhiệt độ màu, thời gian chuyển, và điều gì kích hoạt. Bảng này chính là đề bài cho bên hiệu chỉnh.",
+    "viExample": "Nhà hàng có 4 cảnh: Sáng (trưa, 100%), Chiều (70%), Tối (35%, 2700 K), Dọn dẹp (100% toàn bộ). Chuyển cảnh mất 3 giây để khách không nhận ra."
+  },
+  {
+    "topics": [
+      "optics"
+    ],
+    "seeAlso": [
+      "louvre",
+      "cut-off-angle"
+    ],
+    "id": "snoot",
+    "term": "Snoot",
+    "vi": "Ống chắn sáng",
+    "definition": "A tube extending past the lens that hides the source from oblique view and tightens the visible spill, without changing the beam itself.",
+    "viDefinition": "Ống nối dài phía trước thấu kính, che nguồn sáng khỏi tầm nhìn xiên và thu gọn vùng loang, nhưng không làm thay đổi chùm sáng chính.",
+    "viExample": "Đèn rọi trong nhà hàng treo ngay trên tầm mắt khách: thêm snoot 60 mm là khách không còn bị chói khi ngước lên."
+  },
+  {
+    "topics": [
+      "practice"
+    ],
+    "seeAlso": [
+      "glare",
+      "luminance"
+    ],
+    "id": "sparkle",
+    "term": "Sparkle",
+    "vi": "Hiệu ứng lấp lánh",
+    "definition": "Small, very high-luminance points in the field of view — crystal, polished metal, a bare filament. In small doses it reads as luxury; too much becomes glare.",
+    "viDefinition": "Những điểm sáng nhỏ có độ chói rất cao trong tầm nhìn — pha lê, kim loại đánh bóng, dây tóc trần. Liều lượng nhỏ cho cảm giác sang trọng; quá nhiều thì thành chói loá.",
+    "viExample": "Đèn chùm pha lê trong sảnh tiệc cưới: bản thân nó gần như không đóng góp lux nào, nhưng thiếu nó thì không gian mất hết cảm giác lễ hội."
+  },
+  {
+    "topics": [
+      "practice"
+    ],
+    "seeAlso": [
+      "fixture-schedule",
+      "value-engineering",
+      "photometric-file"
+    ],
+    "id": "submittal",
+    "term": "Submittal",
+    "vi": "Hồ sơ trình duyệt",
+    "definition": "The package a contractor sends for approval before ordering: datasheets, photometric files, samples and test reports for each proposed product.",
+    "viDefinition": "Bộ hồ sơ nhà thầu gửi để duyệt trước khi đặt hàng: datasheet, file trắc quang, mẫu vật và báo cáo thử nghiệm cho từng sản phẩm đề xuất.",
+    "note": "Review it against the written specification clause by clause, not against a general impression that the product looks similar.",
+    "viNote": "Hãy đối chiếu từng điều khoản trong spec, đừng duyệt theo cảm giác chung là \"sản phẩm trông cũng giống\".",
+    "viExample": "Nhà thầu trình đèn Ra 80 trong khi spec ghi Ra 90 / R9 ≥ 50. Bắt lỗi ở bước submittal tốn một email; bắt lỗi sau khi lắp 300 bộ thì tốn cả gói."
+  },
+  {
+    "topics": [
+      "product",
+      "facade"
+    ],
+    "seeAlso": [
+      "driver",
+      "ip-rating"
+    ],
+    "id": "surge-protection",
+    "term": "Surge protection",
+    "vi": "Chống sét lan truyền",
+    "definition": "A device that clamps voltage spikes travelling down the supply. Quoted in kV, commonly 2 kV line-to-line for interior and 10 kV for exterior or exposed positions.",
+    "viDefinition": "Thiết bị cắt các xung điện áp lan theo đường cấp nguồn. Ghi theo kV — thường 2 kV cho trong nhà và 10 kV cho ngoài trời hoặc vị trí phơi lộ.",
+    "note": "The single most common cause of mass exterior LED failure in tropical climates. Vietnam has a high lightning density; specify 10 kV surge protection on every exterior circuit.",
+    "viNote": "Đây là nguyên nhân phổ biến nhất khiến đèn LED ngoài trời chết hàng loạt ở vùng nhiệt đới. Việt Nam có mật độ sét cao — hãy yêu cầu chống sét 10 kV cho mọi mạch ngoài trời.",
+    "viExample": "Một dự án façade mất 40 bộ đèn sau một trận giông vì chỉ có chống sét 2 kV. Chi phí nâng lên 10 kV lúc đầu chỉ bằng khoảng 3% giá trị gói đèn."
+  },
+  {
+    "id": "task-area",
+    "term": "Task area",
+    "vi": "Vùng nhiệm vụ",
+    "definition": "The partial area of a room where the visual task is carried out. EN 12464-1 tiers requirements outward: task area, immediate surrounding area (≥0.5 m band), then background area (≥3 m band).",
+    "viDefinition": "Phần diện tích trong phòng nơi công việc thị giác diễn ra. EN 12464-1 quy định theo từng lớp mở rộng dần: vùng nhiệm vụ, vùng lân cận (dải ≥0,5 m), rồi vùng nền (dải ≥3 m).",
+    "note": "If the task location is unknown, the whole room must be treated as task area — which is far more expensive. Pin the task locations down early.",
+    "viNote": "Nếu chưa biết vị trí làm việc, cả phòng phải coi là vùng nhiệm vụ — tốn kém hơn nhiều. Hãy chốt vị trí này thật sớm.",
+    "topics": [
       "standards"
     ],
     "seeAlso": [
-      "melanopic-edi",
-      "cie-s-026"
+      "uniformity",
+      "maintained-illuminance"
     ],
-    "viExample": "Dự án chấm WELL cần chứng minh ≥250 lux mEDI tại tầm mắt người ngồi, đo phương đứng, trong khung giờ 9h–15h, với rèm ở vị trí sử dụng bình thường."
+    "viExample": "Phòng làm việc 500 lux tại bàn → dải 0,5 m quanh bàn cần 300 lux, phần nền còn lại cần 100 lux. Không cần chiếu 500 lux cho cả phòng."
   },
   {
-    "id": "circadian-stimulus",
-    "term": "Circadian Stimulus",
-    "vi": "Kích thích nhịp sinh học",
-    "symbol": "CS",
-    "definition": "An alternative circadian metric from the Lighting Research Center, based on nocturnal melatonin suppression. CS ≥ 0.3 for at least an hour in the morning is the common recommendation.",
-    "viDefinition": "Một chỉ số circadian khác, do Lighting Research Center đưa ra, dựa trên mức ức chế melatonin ban đêm. Khuyến nghị phổ biến là CS ≥ 0,3 trong ít nhất một giờ buổi sáng.",
-    "note": "CS and melanopic EDI are different models and give different answers. State which one you are designing to.",
-    "viNote": "CS và melanopic EDI là hai mô hình khác nhau và cho kết quả khác nhau. Hãy nói rõ bạn thiết kế theo cái nào.",
     "topics": [
-      "circadian"
+      "optics"
     ],
     "seeAlso": [
-      "melanopic-edi"
+      "inverse-square-law",
+      "beam-angle",
+      "aiming-angle"
     ],
-    "viExample": "Cùng một phòng, tính theo CS có thể \"đạt\" trong khi tính theo mEDI lại \"chưa đạt\". Phải chọn một mô hình và ghi rõ trong hồ sơ, không trộn lẫn."
+    "id": "throw-distance",
+    "term": "Throw distance",
+    "vi": "Khoảng cách chiếu",
+    "definition": "The straight-line distance from the luminaire to the surface it lights. Every intensity and spot-size calculation depends on it, and it is measured along the beam, not vertically.",
+    "viDefinition": "Khoảng cách thẳng từ bộ đèn tới bề mặt được chiếu. Mọi phép tính cường độ và kích thước vệt sáng đều dựa vào nó, và phải đo dọc theo chùm sáng chứ không đo theo phương thẳng đứng.",
+    "viExample": "Đèn gắn trần cao 4 m, rọi xiên xuống bức tranh ở độ cao 1,5 m và cách chân tường 2 m: khoảng cách chiếu là √(2,5² + 2²) = 3,2 m, không phải 2,5 m."
+  },
+  {
+    "id": "tm-30",
+    "term": "TM-30 (Rf / Rg)",
+    "vi": "TM-30",
+    "definition": "IES method using 99 real-world colour samples. Rf is fidelity (how accurately colours are rendered) and Rg is gamut (whether they are saturated or muted) — two numbers instead of CRI's one.",
+    "viDefinition": "Phương pháp của IES dùng 99 mẫu màu thực tế. Rf đo độ trung thực (màu tái hiện chính xác đến đâu), Rg đo độ bão hoà (màu được làm rực lên hay bị làm nhạt đi) — hai con số thay vì một như CRI.",
+    "note": "A source can have high Rf and low Rg and look flat. Rf ≥ 85 with Rg 95–110 is a good general architectural target.",
+    "viNote": "Một nguồn có thể Rf cao mà Rg thấp, nhìn sẽ phẳng và thiếu sức sống. Mục tiêu chung cho kiến trúc: Rf ≥ 85 và Rg 95–110.",
+    "topics": [
+      "optics",
+      "standards"
+    ],
+    "seeAlso": [
+      "cri",
+      "r9"
+    ],
+    "viExample": "Cửa hàng thời trang muốn quần áo màu rực: chọn Rf 88 / Rg 108. Phòng trưng bày bảo tàng cần trung thực tuyệt đối: Rf 95 / Rg 100."
   },
   {
     "id": "tunable-white",
@@ -552,229 +1299,75 @@
     "viExample": "Phòng bệnh nhân: 4000 K ban ngày cho tỉnh táo, 2700 K sau 19h để dễ ngủ. Nhớ kiểm tra đèn có giữ đủ lumen ở 2700 K không."
   },
   {
-    "id": "dali",
-    "term": "DALI-2 / D4i",
-    "vi": "Giao thức DALI-2",
-    "definition": "Digital Addressable Lighting Interface — a bidirectional, addressable digital control bus. DALI-2 adds certified interoperability for control devices; D4i extends it with luminaire-embedded data and power for sensors.",
-    "viDefinition": "Giao thức điều khiển số hai chiều, định địa chỉ được từng bộ đèn. DALI-2 bổ sung chứng nhận tương thích cho cả thiết bị điều khiển; D4i mở rộng thêm dữ liệu trong bộ đèn và nguồn cấp cho cảm biến.",
-    "note": "Only DALI-2-certified parts are guaranteed to interoperate. 'DALI compatible' on a datasheet is not the same claim.",
-    "viNote": "Chỉ linh kiện có chứng nhận DALI-2 mới đảm bảo hoạt động cùng nhau. Ghi \"DALI compatible\" trên datasheet KHÔNG phải là cam kết tương đương.",
-    "topics": [
-      "controls"
-    ],
-    "seeAlso": [
-      "dali-plus",
-      "dmx",
-      "zero-ten"
-    ],
-    "viExample": "Một dãy 40 downlight trên bus DALI: có thể chỉnh riêng đèn số 17 mà không đụng tới 39 đèn còn lại, và hệ thống báo ngay khi đèn nào hỏng."
-  },
-  {
-    "id": "dali-plus",
-    "term": "DALI+",
-    "vi": "DALI+",
-    "definition": "DALI messaging carried over IP-based and wireless carriers (currently Thread) instead of the two-wire bus, letting wireless zones share one commissioning model with wired ones.",
-    "viDefinition": "Bản tin DALI truyền qua nền IP và không dây (hiện là Thread) thay vì dây bus hai sợi, giúp khu vực không dây dùng chung một mô hình cấu hình với khu vực đi dây.",
-    "topics": [
-      "controls"
-    ],
-    "seeAlso": [
-      "dali",
-      "matter"
-    ],
-    "viExample": "Toà nhà cũ cải tạo: tầng mới đi dây DALI-2, tầng cũ không đục tường được nên dùng DALI+ qua Thread — cả hai chung một phần mềm cấu hình."
-  },
-  {
-    "id": "matter",
-    "term": "Matter",
-    "vi": "Giao thức Matter",
-    "definition": "An IP-based application-layer standard for interoperable smart devices over Wi-Fi and Thread. Increasingly relevant where residential and hospitality lighting meets building systems.",
-    "viDefinition": "Chuẩn tầng ứng dụng dựa trên IP cho các thiết bị thông minh chạy trên Wi-Fi và Thread. Ngày càng liên quan ở chỗ giao nhau giữa chiếu sáng nhà ở, khách sạn và hệ thống toà nhà.",
-    "note": "Matter targets consumer interoperability, not the addressability and scene fidelity architectural schemes need. Treat it as a gateway layer, not a replacement for DALI or DMX.",
-    "viNote": "Matter nhắm tới tương thích cho thiết bị tiêu dùng, không đủ khả năng định địa chỉ và độ mượt cảnh sáng mà công trình kiến trúc cần. Hãy coi nó là lớp cầu nối, không phải thứ thay thế DALI hay DMX.",
-    "topics": [
-      "controls"
-    ],
-    "seeAlso": [
-      "dali-plus",
-      "dali"
-    ],
-    "viExample": "Căn hộ cao cấp: đèn kiến trúc chạy DALI, nhưng chủ nhà muốn điều khiển bằng iPhone — dùng gateway Matter làm cầu nối, không thay thế DALI."
-  },
-  {
-    "id": "dmx",
-    "term": "DMX512 / RDM",
-    "vi": "DMX512",
-    "definition": "A unidirectional 512-channel protocol from stage lighting, standard for colour-changing and dynamic façade work. RDM adds a return path for addressing and status.",
-    "viDefinition": "Giao thức một chiều 512 kênh, xuất phát từ sân khấu, là chuẩn cho đèn đổi màu và mặt đứng động. RDM bổ sung đường phản hồi để gán địa chỉ và báo trạng thái.",
-    "note": "Choose DMX when you need smooth high-rate colour and effects; choose DALI when you need addressable status, energy reporting and building integration.",
-    "viNote": "Chọn DMX khi cần đổi màu mượt với tốc độ cao; chọn DALI khi cần báo trạng thái, đo năng lượng và tích hợp với hệ thống toà nhà.",
-    "topics": [
-      "controls",
-      "facade"
-    ],
-    "seeAlso": [
-      "dali",
-      "pixel-pitch"
-    ],
-    "viExample": "Mặt đứng đổi màu theo nhạc trong lễ hội: DMX. Cùng toà nhà đó, đèn hành lang bên trong: DALI. Nối hai hệ bằng gateway."
-  },
-  {
-    "id": "zero-ten",
-    "term": "0–10 V / 1–10 V",
-    "vi": "Điều khiển 0–10V",
-    "definition": "Analogue dimming over a low-voltage pair. Cheap and universal, but not addressable, polarity-sensitive and prone to voltage drop over long runs.",
-    "viDefinition": "Điều chỉnh độ sáng bằng tín hiệu analog qua một cặp dây điện áp thấp. Rẻ và phổ biến, nhưng không định địa chỉ được, kén cực tính và dễ sụt áp trên tuyến dài.",
-    "topics": [
-      "controls"
-    ],
-    "seeAlso": [
-      "dali"
-    ],
-    "viExample": "Kho hàng 20 bộ đèn cùng bật/tắt và dim chung một mức: 0–10 V là đủ và rẻ. Nhưng nếu sau này muốn chia 4 khu riêng thì phải kéo lại dây."
-  },
-  {
-    "id": "daylight-harvesting",
-    "term": "Daylight harvesting",
-    "vi": "Tận dụng ánh sáng tự nhiên",
-    "definition": "Closed- or open-loop dimming of electric lighting in response to measured daylight, so total illuminance stays at target while energy falls.",
-    "viDefinition": "Tự động giảm sáng đèn điện theo lượng ánh sáng tự nhiên đo được, để tổng độ rọi giữ nguyên mức mục tiêu trong khi điện năng giảm xuống.",
-    "note": "Closed-loop needs careful sensor placement and commissioning; badly aimed sensors are the single most common cause of occupant complaints.",
-    "viNote": "Kiểu vòng kín đòi hỏi đặt cảm biến và hiệu chỉnh rất cẩn thận; đặt sai hướng cảm biến là nguyên nhân phàn nàn phổ biến nhất của người sử dụng.",
-    "topics": [
-      "controls",
-      "sustainability"
-    ],
-    "seeAlso": [
-      "lpd",
-      "daylight-factor"
-    ],
-    "viExample": "Dãy bàn sát cửa sổ: buổi trưa cảm biến đo đủ sáng nên đèn tự giảm còn 20%, tổng độ rọi vẫn giữ 500 lux. Tiết kiệm khoảng 40% điện cho dãy đó."
-  },
-  {
-    "id": "daylight-factor",
-    "term": "Daylight factor",
-    "vi": "Hệ số ánh sáng tự nhiên",
-    "symbol": "DF",
-    "unit": "%",
-    "definition": "Indoor illuminance from daylight as a percentage of unobstructed exterior horizontal illuminance under a CIE overcast sky. A geometry metric, independent of orientation and climate.",
-    "viDefinition": "Độ rọi trong nhà do ánh sáng tự nhiên, tính theo phần trăm so với độ rọi ngoài trời không bị che, dưới bầu trời u ám tiêu chuẩn CIE. Đây là chỉ số hình học, không phụ thuộc hướng nhà và khí hậu.",
-    "note": "Superseded for performance work by climate-based metrics such as sDA and ASE, which do account for orientation and real weather data.",
-    "viNote": "Trong công việc đánh giá hiệu năng, chỉ số này đã được thay bằng các chỉ số dựa trên khí hậu như sDA và ASE — những chỉ số có tính đến hướng nhà và dữ liệu thời tiết thực.",
-    "topics": [
-      "sustainability"
-    ],
-    "seeAlso": [
-      "daylight-harvesting"
-    ],
-    "viExample": "DF = 2% nghĩa là khi ngoài trời 10.000 lux thì trong phòng được 200 lux. Chỉ số này không phân biệt phòng quay hướng Bắc hay hướng Nam."
-  },
-  {
-    "id": "photometric-file",
-    "term": "Photometric file (IES / LDT)",
-    "vi": "File trắc quang",
-    "definition": "A measured table of luminous intensity by angle. IESNA LM-63 (.ies) is the North American format; EULUMDAT (.ldt) the European one. Both are the input every calculation engine actually uses.",
-    "viDefinition": "Bảng số liệu đo cường độ sáng theo từng góc. IESNA LM-63 (.ies) là định dạng Bắc Mỹ, EULUMDAT (.ldt) là của châu Âu. Mọi phần mềm tính toán đều chạy trên file này.",
-    "note": "Check the file's declared lumen output matches the ordered configuration — many libraries ship a single file for a whole product family.",
-    "viNote": "Kiểm tra xem quang thông ghi trong file có khớp với cấu hình bạn đặt hàng không — nhiều thư viện dùng chung một file cho cả dòng sản phẩm.",
+    "id": "ugr",
+    "term": "UGR",
+    "vi": "Chỉ số chói loá thống nhất",
+    "symbol": "UGR",
+    "definition": "Unified Glare Rating — a logarithmic index of discomfort glare from a lighting installation, computed from luminaire luminance, solid angle, position index and background luminance.",
+    "viDefinition": "Chỉ số logarit đo mức khó chịu do chói loá, tính từ độ chói bộ đèn, góc khối, chỉ số vị trí và độ chói nền.",
+    "note": "UGR is a room-and-observer property, not a luminaire property. A luminaire quoting 'UGR<19' has only been evaluated in a reference room; verify in yours.",
+    "viNote": "UGR là thuộc tính của căn phòng và người quan sát, không phải của bộ đèn. Datasheet ghi \"UGR<19\" chỉ mới thử trong phòng tham chiếu — phải tính lại trong phòng của bạn.",
     "topics": [
       "optics",
-      "practice"
-    ],
-    "seeAlso": [
-      "luminous-intensity",
-      "beam-angle"
-    ],
-    "viExample": "Trước khi chạy Dialux, mở file .ies bằng notepad kiểm tra dòng quang thông — nhiều hãng gửi chung một file cho cả dòng 10 W đến 40 W."
-  },
-  {
-    "id": "beam-angle",
-    "term": "Beam angle",
-    "vi": "Góc chiếu",
-    "unit": "degrees",
-    "definition": "The full angle between the two directions where intensity falls to 50% of peak. The field angle, at 10% of peak, describes the wider visible spill.",
-    "viDefinition": "Góc mở toàn phần giữa hai hướng mà tại đó cường độ sáng giảm còn 50% so với đỉnh. Góc trường (field angle), lấy ở mức 10%, mô tả vùng loang rộng hơn mà mắt vẫn thấy.",
-    "note": "Spot diameter ≈ 2 × distance × tan(beam angle ÷ 2).",
-    "viNote": "Đường kính vệt sáng ≈ 2 × khoảng cách × tan(góc chiếu ÷ 2).",
-    "topics": [
-      "optics"
-    ],
-    "seeAlso": [
-      "photometric-file",
-      "inverse-square-law",
-      "cut-off-angle"
-    ],
-    "viExample": "Đèn 24° treo cách bàn 3 m → vệt sáng đường kính 2 × 3 × tan(12°) = 1,28 m. Vừa đủ phủ một bàn tròn 6 người."
-  },
-  {
-    "id": "inverse-square-law",
-    "term": "Inverse square law",
-    "vi": "Định luật nghịch đảo bình phương",
-    "definition": "Illuminance from a point source falls with the square of distance: E = I / d². With an incidence angle θ from the surface normal, E = I × cos θ / d².",
-    "viDefinition": "Độ rọi từ nguồn điểm giảm theo bình phương khoảng cách: E = I / d². Nếu mặt phẳng nghiêng một góc θ so với pháp tuyến thì E = I × cos θ / d².",
-    "note": "Only valid when distance is at least about five times the largest luminaire dimension — it does not apply near a long linear fixture.",
-    "viNote": "Chỉ đúng khi khoảng cách lớn hơn khoảng năm lần kích thước lớn nhất của bộ đèn — không áp dụng được khi đứng gần một đèn tuyến tính dài.",
-    "topics": [
-      "optics"
-    ],
-    "seeAlso": [
-      "illuminance",
-      "luminous-intensity",
-      "beam-angle"
-    ],
-    "viExample": "Đèn 5.000 cd ở 4 m cho 312 lux. Kéo lên 6 m chỉ còn 139 lux — xa hơn 50% mà mất 56% ánh sáng."
-  },
-  {
-    "id": "reflectance",
-    "term": "Reflectance",
-    "vi": "Hệ số phản xạ",
-    "symbol": "ρ",
-    "definition": "The fraction of incident light a surface reflects. EN 12464-1 gives recommended ranges: ceiling 0.7–0.9, walls 0.5–0.8, floor 0.2–0.4.",
-    "viDefinition": "Tỷ lệ ánh sáng mà một bề mặt phản xạ lại. EN 12464-1 khuyến nghị: trần 0,7–0,9; tường 0,5–0,8; sàn 0,2–0,4.",
-    "note": "Reflectance assumptions drive indirect and cove schemes more than fixture selection does. Confirm the interior designer's actual finishes before you calculate.",
-    "viNote": "Giả định về hệ số phản xạ ảnh hưởng tới phương án chiếu gián tiếp và hắt trần nhiều hơn cả việc chọn đèn. Hãy xác nhận vật liệu hoàn thiện thực tế với bên thiết kế nội thất trước khi tính.",
-    "topics": [
-      "optics",
-      "practice"
+      "standards"
     ],
     "seeAlso": [
       "luminance",
-      "uniformity"
+      "glare",
+      "cut-off-angle"
     ],
-    "viExample": "Trần sơn trắng ρ = 0,8 và trần gỗ sẫm ρ = 0,2: cùng một đèn hắt trần, phương án trần gỗ cần gấp khoảng 4 lần công suất để ra cùng cảm giác sáng."
+    "viExample": "Cùng một bộ đèn: phòng tường trắng sáng cho UGR 18 (đạt), phòng tường gỗ sẫm cho UGR 22 (không đạt cho văn phòng). Đèn không đổi — chỉ căn phòng đổi."
   },
   {
-    "id": "l70",
-    "term": "L70 / L90 (LM-80, TM-21)",
-    "vi": "Tuổi thọ L70",
-    "definition": "The operating hours at which an LED retains 70% (or 90%) of initial output. LM-80 is the measurement method, TM-21 the projection method used to extrapolate it.",
-    "viDefinition": "Số giờ vận hành mà sau đó LED còn giữ 70% (hoặc 90%) quang thông ban đầu. LM-80 là phương pháp đo, TM-21 là phương pháp ngoại suy.",
-    "note": "A quoted L70 is meaningless without its drive current and case temperature. Two products at 'L70 50,000 h' can differ by a factor of two in the real ceiling void.",
-    "viNote": "Con số L70 vô nghĩa nếu không kèm dòng điện điều khiển và nhiệt độ vỏ khi đo. Hai sản phẩm cùng ghi \"L70 50.000 h\" có thể chênh nhau gấp đôi khi lắp trong trần thật.",
+    "id": "uniformity",
+    "term": "Uniformity",
+    "vi": "Độ đồng đều",
+    "symbol": "Uo",
+    "definition": "The ratio of minimum to average illuminance over a defined area. EN 12464-1 sets a minimum Uo for the task area, the immediate surrounding area and the background area separately.",
+    "viDefinition": "Tỷ số giữa độ rọi nhỏ nhất và độ rọi trung bình trên một vùng. EN 12464-1 quy định Uo riêng cho vùng nhiệm vụ, vùng lân cận và vùng nền.",
     "topics": [
-      "product"
+      "standards"
     ],
     "seeAlso": [
-      "maintenance-factor",
-      "luminaire-efficacy"
+      "maintained-illuminance",
+      "task-area"
     ],
-    "viExample": "Đèn ghi \"L70 50.000 giờ\" đo ở 25°C. Lắp trong hộp trần kín 65°C thì thực tế có thể chỉ còn 25.000 giờ — hỏi nhà sản xuất số liệu ở đúng nhiệt độ lắp đặt."
+    "viExample": "Vùng nhiệm vụ đo được: trung bình 520 lux, thấp nhất 290 lux → Uo = 290 / 520 = 0,56. Không đạt yêu cầu 0,60 của EN 12464-1, dù trung bình đã vượt 500."
   },
   {
-    "id": "wall-washing",
-    "term": "Wall washing",
-    "vi": "Rửa tường",
-    "definition": "Even vertical illumination of a wall from top to bottom, with the luminaire set well off the wall — typically at one third of the wall height — to flatten the gradient and hide surface texture.",
-    "viDefinition": "Chiếu sáng đều mặt tường từ trên xuống dưới, đặt đèn cách xa tường — thường bằng một phần ba chiều cao tường — để làm phẳng độ dốc sáng và giấu đi khuyết điểm bề mặt.",
+    "id": "uplight-ratio",
+    "term": "Upward light ratio",
+    "vi": "Tỷ lệ ánh sáng hắt lên",
+    "symbol": "ULR",
+    "definition": "The proportion of a luminaire's total flux emitted above the horizontal when mounted in its installed position. The headline number in light-pollution limits.",
+    "viDefinition": "Tỷ lệ quang thông bộ đèn phát lên phía trên phương ngang khi đã lắp đặt đúng tư thế thực tế. Đây là con số chính trong các giới hạn về ô nhiễm ánh sáng.",
     "topics": [
-      "practice",
-      "optics"
+      "facade",
+      "sustainability"
     ],
     "seeAlso": [
-      "wall-grazing",
-      "scallop"
+      "full-cutoff",
+      "obtrusive-light"
     ],
-    "viExample": "Tường cao 3 m → đặt đèn cách tường khoảng 1 m, khoảng cách giữa các đèn 1–1,2 m. Kết quả: tường sáng đều từ trên xuống, phẳng và sạch."
+    "viExample": "Đèn pha lắp ngửa rọi lên tấm biển: ULR có thể tới 30%. Cũng đèn đó lắp trên cao chiếu xuống biển: ULR = 0%."
+  },
+  {
+    "topics": [
+      "practice"
+    ],
+    "seeAlso": [
+      "submittal",
+      "fixture-schedule",
+      "macadam-ellipse"
+    ],
+    "id": "value-engineering",
+    "term": "Value engineering",
+    "vi": "Cắt giảm chi phí (VE)",
+    "definition": "The cost-reduction exercise that arrives after tender, in which substitutions are proposed for specified products. Sometimes genuine engineering; often simply a cheaper part.",
+    "viDefinition": "Đợt cắt giảm chi phí sau đấu thầu, khi bên thi công đề xuất thay thế sản phẩm đã chỉ định. Đôi khi là cải tiến thật, nhưng thường chỉ là hàng rẻ hơn.",
+    "note": "You cannot argue against it with taste. You can only argue with the measurable criteria you wrote into the specification — which is why they must be there.",
+    "viNote": "Không thể phản đối bằng lý lẽ thẩm mỹ. Chỉ có thể phản đối bằng các tiêu chí đo được đã viết sẵn trong spec — đó chính là lý do phải viết chúng ngay từ đầu.",
+    "viExample": "Spec ghi rõ \"≤3 SDCM, duy trì trong thời hạn bảo hành\". Hàng thay thế 5 SDCM bị loại bằng một dòng, không cần tranh cãi."
   },
   {
     "id": "wall-grazing",
@@ -793,102 +1386,35 @@
     "viExample": "Tường đá tổ ong: đặt đèn cách 120 mm, ánh sáng lướt qua làm nổi từng vết đục. Nếu tường trát phẳng mà làm vậy, mọi vết bả lồi lõm sẽ lộ hết."
   },
   {
-    "id": "scallop",
-    "term": "Scallop",
-    "vi": "Vệt sáng hình vỏ sò",
-    "definition": "The arc-shaped pattern a downlight throws where its beam intersects an adjacent wall. Deliberate and rhythmic it is a feature; accidental and uneven it is a defect.",
-    "viDefinition": "Vệt sáng hình vòng cung mà đèn downlight tạo ra trên bức tường kế bên khi chùm sáng cắt vào tường. Nếu chủ ý và đều nhịp thì là điểm nhấn; nếu vô tình và lệch lạc thì là lỗi.",
+    "id": "wall-washing",
+    "term": "Wall washing",
+    "vi": "Rửa tường",
+    "definition": "Even vertical illumination of a wall from top to bottom, with the luminaire set well off the wall — typically at one third of the wall height — to flatten the gradient and hide surface texture.",
+    "viDefinition": "Chiếu sáng đều mặt tường từ trên xuống dưới, đặt đèn cách xa tường — thường bằng một phần ba chiều cao tường — để làm phẳng độ dốc sáng và giấu đi khuyết điểm bề mặt.",
     "topics": [
-      "practice"
+      "practice",
+      "optics"
     ],
     "seeAlso": [
-      "wall-washing",
-      "beam-angle"
+      "wall-grazing",
+      "scallop"
     ],
-    "viExample": "Hành lang có dãy downlight cách tường 40 cm: các vòng cung sáng đều nhau trên tường tạo nhịp đẹp. Nếu khoảng cách tới tường không đều, các vòng cung lệch nhau trông như lỗi thi công."
+    "viExample": "Tường cao 3 m → đặt đèn cách tường khoảng 1 m, khoảng cách giữa các đèn 1–1,2 m. Kết quả: tường sáng đều từ trên xuống, phẳng và sạch."
   },
   {
-    "id": "cove",
-    "term": "Cove lighting",
-    "vi": "Chiếu sáng hắt trần",
-    "definition": "Light concealed in a recess or ledge and directed up onto the ceiling or down a wall, so the source is never seen and the surface becomes the apparent luminaire.",
-    "viDefinition": "Đèn giấu trong hốc hoặc gờ, hắt lên trần hoặc xuống tường, để không bao giờ nhìn thấy nguồn sáng — chính bề mặt được chiếu trở thành \"bộ đèn\" trong mắt người nhìn.",
-    "note": "The cove depth and the distance from the emitting face to the lip decide whether you get a clean gradient or a hot line. Detail it with the architect, not after.",
-    "viNote": "Độ sâu hốc và khoảng cách từ mặt phát sáng tới mép hốc quyết định bạn được dải sáng mượt hay một vệt cháy sáng. Hãy chốt chi tiết này cùng kiến trúc sư, đừng để sau.",
+    "id": "well-l03",
+    "term": "WELL Feature L03",
+    "vi": "WELL L03",
+    "definition": "The Circadian Lighting Design feature of the WELL Building Standard, awarding points for achieving defined melanopic EDI thresholds at work-plane eye level during daytime hours.",
+    "viDefinition": "Hạng mục \"Circadian Lighting Design\" trong tiêu chuẩn WELL, chấm điểm dựa trên việc đạt được ngưỡng melanopic EDI tại tầm mắt người làm việc trong giờ ban ngày.",
     "topics": [
-      "practice"
+      "circadian",
+      "standards"
     ],
     "seeAlso": [
-      "wall-washing",
-      "reflectance"
+      "melanopic-edi",
+      "cie-s-026"
     ],
-    "viExample": "Hốc hắt trần sâu 150 mm, đèn LED đặt lùi vào 80 mm so với mép: cho dải sáng mượt. Nếu chỉ lùi 20 mm sẽ thấy rõ vệt cháy sáng ngay mép hốc."
-  },
-  {
-    "id": "mock-up",
-    "term": "Mock-up",
-    "vi": "Mẫu thử tại chỗ",
-    "definition": "A full-size on-site trial of a lighting detail with the real luminaire, real finish and real geometry, before the order is placed.",
-    "viDefinition": "Thử nghiệm tỷ lệ 1:1 ngay tại công trường với đúng bộ đèn, đúng vật liệu hoàn thiện và đúng hình học, trước khi đặt hàng.",
-    "note": "The cheapest insurance in the entire process. Calculation software cannot predict how a specific stone reads under a specific grazing angle.",
-    "viNote": "Đây là khoản bảo hiểm rẻ nhất trong toàn bộ quá trình. Không phần mềm nào dự đoán được một loại đá cụ thể sẽ trông ra sao dưới một góc chiếu sượt cụ thể.",
-    "topics": [
-      "practice"
-    ],
-    "seeAlso": [
-      "focusing",
-      "wall-grazing"
-    ],
-    "viExample": "Trước khi đặt 300 đèn rọi tường đá, dựng thử 1 đèn trên 2 m² đá thật tại công trường vào buổi tối. Chi phí một đèn, tránh rủi ro cả gói."
-  },
-  {
-    "id": "focusing",
-    "term": "Focusing / aiming",
-    "vi": "Chỉnh hướng đèn",
-    "definition": "The night-time site session where every adjustable luminaire is aimed, locked, dimmed and its accessories fitted. The stage where the design is finally either delivered or lost.",
-    "viDefinition": "Buổi làm việc ban đêm tại công trường, khi từng bộ đèn điều chỉnh được sẽ được ngắm hướng, khoá lại, chỉnh độ sáng và lắp phụ kiện. Đây là lúc thiết kế hoặc thành hình, hoặc mất trắng.",
-    "note": "Budget it explicitly in the fee proposal and require the contractor to provide access equipment and an electrician on standby.",
-    "viNote": "Hãy ghi rõ khoản này trong đề xuất phí, và yêu cầu nhà thầu chuẩn bị thiết bị nâng cùng một thợ điện trực sẵn.",
-    "topics": [
-      "practice"
-    ],
-    "seeAlso": [
-      "mock-up"
-    ],
-    "viExample": "Bảo tàng 120 đèn rọi: cần khoảng 2 đêm, có xe nâng và thợ điện trực. Ghi lại góc ngắm từng đèn để sau này thay đèn vẫn đặt đúng."
-  },
-  {
-    "id": "pixel-pitch",
-    "term": "Pixel pitch",
-    "vi": "Khoảng cách điểm ảnh",
-    "definition": "The centre-to-centre spacing of individually controllable points in a media façade or linear pixel run. It sets the minimum viewing distance at which content resolves as an image rather than as dots.",
-    "viDefinition": "Khoảng cách tâm-tới-tâm giữa các điểm sáng điều khiển độc lập trên mặt đứng truyền thông hoặc dãy đèn pixel. Nó quyết định khoảng cách nhìn tối thiểu để nội dung hiện ra thành hình ảnh thay vì thành các chấm rời.",
-    "topics": [
-      "facade",
-      "controls"
-    ],
-    "seeAlso": [
-      "dmx"
-    ],
-    "viExample": "Mặt đứng pixel pitch 150 mm: đứng cách 30 m mới thấy thành hình. Đứng dưới chân toà nhà chỉ thấy các chấm sáng rời rạc."
-  },
-  {
-    "id": "flicker",
-    "term": "Flicker (PstLM / SVM)",
-    "vi": "Nhấp nháy",
-    "definition": "Temporal light modulation from the driver. PstLM quantifies visible flicker and SVM the stroboscopic effect. Both are now regulated in the EU under the ecodesign rules.",
-    "viDefinition": "Hiện tượng ánh sáng dao động theo thời gian do driver gây ra. PstLM đo mức nhấp nháy nhìn thấy được, SVM đo hiệu ứng hoạt nghiệm (vật quay trông như đứng yên). Cả hai đều đã được EU đưa vào quy định.",
-    "note": "Specify PstLM ≤ 1.0 and SVM ≤ 0.4 generally, and tighter for broadcast, sports and any space with rotating machinery.",
-    "viNote": "Thông thường yêu cầu PstLM ≤ 1,0 và SVM ≤ 0,4; chặt hơn nữa với trường quay, sân thể thao và mọi nơi có máy móc quay.",
-    "topics": [
-      "product",
-      "standards",
-      "controls"
-    ],
-    "seeAlso": [
-      "dali",
-      "zero-ten"
-    ],
-    "viExample": "Xưởng có máy tiện quay: driver nhấp nháy sẽ khiến trục quay trông như đứng yên — nguy hiểm chết người. Bắt buộc SVM ≤ 0,4."
+    "viExample": "Dự án chấm WELL cần chứng minh ≥250 lux mEDI tại tầm mắt người ngồi, đo phương đứng, trong khung giờ 9h–15h, với rèm ở vị trí sử dụng bình thường."
   }
 ]

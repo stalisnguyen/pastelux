@@ -419,7 +419,12 @@
   .vi-block {
     display: block;
   }
-  .vi-off .vi-block {
+  /* For Vietnamese that sits inside a line of English rather than under it. */
+  .vi-block-inline {
+    display: inline;
+  }
+  .vi-off .vi-block,
+  .vi-off .vi-block-inline {
     display: none;
   }
   /* The term gloss sits directly under the heading, where a rule would fight

@@ -2,7 +2,9 @@
   {
     "id": "office-writing",
     "group": "Offices",
+    "viGroup": "Văn phòng",
     "space": "Writing, typing, reading, data processing",
+    "viSpace": "Viết, đánh máy, đọc, xử lý dữ liệu",
     "em": "500",
     "ugr": "≤19",
     "uo": "0.60",
@@ -14,7 +16,9 @@
   {
     "id": "office-cad",
     "group": "Offices",
+    "viGroup": "Văn phòng",
     "space": "CAD workstations",
+    "viSpace": "Chỗ ngồi làm CAD",
     "em": "500",
     "ugr": "≤19",
     "uo": "0.60",
@@ -26,7 +30,9 @@
   {
     "id": "office-meeting",
     "group": "Offices",
+    "viGroup": "Văn phòng",
     "space": "Conference and meeting rooms",
+    "viSpace": "Phòng họp, phòng hội thảo",
     "em": "500",
     "ugr": "≤19",
     "uo": "0.60",
@@ -38,7 +44,9 @@
   {
     "id": "office-reception",
     "group": "Offices",
+    "viGroup": "Văn phòng",
     "space": "Reception desk",
+    "viSpace": "Quầy lễ tân",
     "em": "300",
     "ugr": "≤22",
     "uo": "0.60",
@@ -49,7 +57,9 @@
   {
     "id": "office-archive",
     "group": "Offices",
+    "viGroup": "Văn phòng",
     "space": "Filing, copying, circulation",
+    "viSpace": "Lưu trữ, photocopy, lối đi nội bộ",
     "em": "300",
     "ugr": "≤25",
     "uo": "0.40",
@@ -60,7 +70,9 @@
   {
     "id": "circulation-corridor",
     "group": "Circulation",
+    "viGroup": "Giao thông",
     "space": "Corridors and traffic areas",
+    "viSpace": "Hành lang và lối đi",
     "em": "100",
     "ugr": "≤28",
     "uo": "0.40",
@@ -72,7 +84,9 @@
   {
     "id": "circulation-stairs",
     "group": "Circulation",
+    "viGroup": "Giao thông",
     "space": "Stairs, escalators, travelators",
+    "viSpace": "Cầu thang, thang cuốn",
     "em": "100",
     "ugr": "≤25",
     "uo": "0.40",
@@ -84,7 +98,9 @@
   {
     "id": "circulation-lift",
     "group": "Circulation",
+    "viGroup": "Giao thông",
     "space": "Lift lobbies",
+    "viSpace": "Sảnh thang máy",
     "em": "200",
     "ugr": "≤25",
     "uo": "0.40",
@@ -95,7 +111,9 @@
   {
     "id": "amenity-canteen",
     "group": "Amenity",
+    "viGroup": "Phụ trợ",
     "space": "Canteens and tea rooms",
+    "viSpace": "Căng tin, phòng trà",
     "em": "200",
     "ugr": "≤22",
     "uo": "0.40",
@@ -106,7 +124,9 @@
   {
     "id": "amenity-wc",
     "group": "Amenity",
+    "viGroup": "Phụ trợ",
     "space": "Toilets and washrooms",
+    "viSpace": "Nhà vệ sinh, phòng rửa",
     "em": "200",
     "ugr": "≤25",
     "uo": "0.40",
@@ -118,7 +138,9 @@
   {
     "id": "amenity-plant",
     "group": "Amenity",
+    "viGroup": "Phụ trợ",
     "space": "Plant rooms and switch rooms",
+    "viSpace": "Phòng kỹ thuật, phòng điện",
     "em": "200",
     "ugr": "≤25",
     "uo": "0.40",
@@ -129,7 +151,9 @@
   {
     "id": "edu-classroom",
     "group": "Education",
+    "viGroup": "Giáo dục",
     "space": "Classrooms, general teaching",
+    "viSpace": "Phòng học phổ thông",
     "em": "300",
     "ugr": "≤19",
     "uo": "0.60",
@@ -141,7 +165,9 @@
   {
     "id": "edu-board",
     "group": "Education",
+    "viGroup": "Giáo dục",
     "space": "Whiteboard / chalkboard",
+    "viSpace": "Bảng viết, bảng phấn",
     "em": "500",
     "ugr": "≤19",
     "uo": "0.70",
@@ -153,7 +179,9 @@
   {
     "id": "edu-lecture",
     "group": "Education",
+    "viGroup": "Giáo dục",
     "space": "Lecture halls",
+    "viSpace": "Giảng đường",
     "em": "500",
     "ugr": "≤19",
     "uo": "0.60",
@@ -164,7 +192,9 @@
   {
     "id": "edu-library",
     "group": "Education",
+    "viGroup": "Giáo dục",
     "space": "Library — reading areas",
+    "viSpace": "Thư viện — khu vực đọc",
     "em": "500",
     "ugr": "≤19",
     "uo": "0.60",
@@ -175,7 +205,9 @@
   {
     "id": "edu-stacks",
     "group": "Education",
+    "viGroup": "Giáo dục",
     "space": "Library — bookshelves",
+    "viSpace": "Thư viện — kệ sách",
     "em": "200",
     "ugr": "≤19",
     "uo": "0.60",
@@ -187,7 +219,9 @@
   {
     "id": "retail-sales",
     "group": "Retail",
+    "viGroup": "Bán lẻ",
     "space": "Sales area (general)",
+    "viSpace": "Khu bán hàng (chung)",
     "em": "300",
     "ugr": "≤22",
     "uo": "0.40",
@@ -199,7 +233,9 @@
   {
     "id": "retail-till",
     "group": "Retail",
+    "viGroup": "Bán lẻ",
     "space": "Till / checkout area",
+    "viSpace": "Quầy thu ngân",
     "em": "500",
     "ugr": "≤19",
     "uo": "0.60",
@@ -210,7 +246,9 @@
   {
     "id": "retail-fitting",
     "group": "Retail",
+    "viGroup": "Bán lẻ",
     "space": "Fitting rooms",
+    "viSpace": "Phòng thử đồ",
     "em": "500",
     "ugr": "≤19",
     "uo": "0.60",
@@ -222,7 +260,9 @@
   {
     "id": "hosp-reception",
     "group": "Hospitality",
+    "viGroup": "Khách sạn — nhà hàng",
     "space": "Hotel reception / concierge",
+    "viSpace": "Lễ tân khách sạn, quầy concierge",
     "em": "300",
     "ugr": "≤22",
     "uo": "0.60",
@@ -234,7 +274,9 @@
   {
     "id": "hosp-kitchen",
     "group": "Hospitality",
+    "viGroup": "Khách sạn — nhà hàng",
     "space": "Commercial kitchen",
+    "viSpace": "Bếp công nghiệp",
     "em": "500",
     "ugr": "≤22",
     "uo": "0.60",
@@ -246,7 +288,9 @@
   {
     "id": "hosp-restaurant",
     "group": "Hospitality",
+    "viGroup": "Khách sạn — nhà hàng",
     "space": "Restaurant dining",
+    "viSpace": "Khu vực bàn ăn nhà hàng",
     "em": "—",
     "ugr": "—",
     "uo": "—",
@@ -258,7 +302,9 @@
   {
     "id": "health-ward",
     "group": "Healthcare",
+    "viGroup": "Y tế",
     "space": "Ward — general lighting",
+    "viSpace": "Phòng bệnh — chiếu sáng chung",
     "em": "100",
     "ugr": "≤19",
     "uo": "0.40",
@@ -270,7 +316,9 @@
   {
     "id": "health-exam",
     "group": "Healthcare",
+    "viGroup": "Y tế",
     "space": "Examination and treatment",
+    "viSpace": "Khám và điều trị",
     "em": "1000",
     "ugr": "≤19",
     "uo": "0.60",
@@ -282,7 +330,9 @@
   {
     "id": "health-corridor-night",
     "group": "Healthcare",
+    "viGroup": "Y tế",
     "space": "Ward corridor at night",
+    "viSpace": "Hành lang khoa phòng ban đêm",
     "em": "50",
     "ugr": "≤22",
     "uo": "0.40",
@@ -294,7 +344,9 @@
   {
     "id": "industry-general",
     "group": "Industrial",
+    "viGroup": "Công nghiệp",
     "space": "Assembly — medium fine work",
+    "viSpace": "Lắp ráp — công việc chính xác vừa",
     "em": "500",
     "ugr": "≤22",
     "uo": "0.60",
@@ -305,7 +357,9 @@
   {
     "id": "industry-inspection",
     "group": "Industrial",
+    "viGroup": "Công nghiệp",
     "space": "Inspection and colour checking",
+    "viSpace": "Kiểm tra và soi màu",
     "em": "1000",
     "ugr": "≤19",
     "uo": "0.70",
@@ -317,7 +371,9 @@
   {
     "id": "industry-store",
     "group": "Industrial",
+    "viGroup": "Công nghiệp",
     "space": "Warehouse aisles (occupied)",
+    "viSpace": "Lối đi kho hàng (khi có người)",
     "em": "150",
     "ugr": "≤25",
     "uo": "0.40",
@@ -329,7 +385,9 @@
   {
     "id": "parking-indoor",
     "group": "Parking",
+    "viGroup": "Bãi xe",
     "space": "Indoor car park — traffic routes",
+    "viSpace": "Bãi xe trong nhà — lối lưu thông",
     "em": "75",
     "ugr": "≤25",
     "uo": "0.40",
@@ -340,7 +398,9 @@
   {
     "id": "parking-ramp",
     "group": "Parking",
+    "viGroup": "Bãi xe",
     "space": "Entrance / exit ramp (daytime)",
+    "viSpace": "Dốc ra vào (ban ngày)",
     "em": "300",
     "ugr": "≤25",
     "uo": "0.40",
@@ -352,7 +412,9 @@
   {
     "id": "culture-gallery",
     "group": "Culture",
+    "viGroup": "Văn hoá",
     "space": "Gallery — light-sensitive exhibits",
+    "viSpace": "Phòng trưng bày — hiện vật nhạy sáng",
     "em": "50",
     "ugr": "≤19",
     "uo": "0.40",
@@ -364,7 +426,9 @@
   {
     "id": "culture-lobby",
     "group": "Culture",
+    "viGroup": "Văn hoá",
     "space": "Museum lobby / circulation",
+    "viSpace": "Sảnh bảo tàng, lối tham quan",
     "em": "200",
     "ugr": "≤22",
     "uo": "0.40",

@@ -7,6 +7,9 @@ import { url } from '../../site';
 
 const rows = await getCollection('criteria');
 const groups = [...new Set(rows.map((r) => r.data.group))];
+const viGroup = new Map(
+  rows.filter((r) => r.data.viGroup).map((r) => [r.data.group, r.data.viGroup!])
+);
 ---
 
 <Base
@@ -53,13 +56,14 @@ const groups = [...new Set(rows.map((r) => r.data.group))];
       groups.map((g) => (
         <button class="chip grp-btn cursor-pointer" data-group={g} type="button" aria-pressed="false">
           {g}
+          {viGroup.get(g) && <span class="vi-block-inline" style="color: var(--vi-text)"> · {viGroup.get(g)}</span>}
         </button>
       ))
     }
     <input
       id="crit-filter"
       type="search"
-      placeholder="Filter spaces…"
+      placeholder="Lọc không gian — vd: office, văn phòng, phòng họp…"
       class="field !py-1 !text-[0.85rem] w-full sm:!w-auto sm:ml-auto sm:min-w-[10rem]"
       aria-label="Filter spaces"
     />
@@ -87,12 +91,19 @@ const groups = [...new Set(rows.map((r) => r.data.group))];
             <tr
               class="crit-row"
               data-group={r.data.group}
-              data-text={`${r.data.group} ${r.data.space}`.toLowerCase()}
+              data-text={[r.data.group, r.data.space, r.data.viGroup, r.data.viSpace]
+                .filter(Boolean)
+                .join(' ')
+                .toLowerCase()}
             >
               <td>
                 <p class="font-medium">{r.data.space}</p>
+                {r.data.viSpace && (
+                  <p class="vi-block vi-term text-[0.8rem] mt-0.5">{r.data.viSpace}</p>
+                )}
                 <p class="text-[0.75rem] mt-0.5" style="color: var(--text-faint)">
                   {r.data.group}
+                  {r.data.viGroup && <span class="vi-block-inline"> · {r.data.viGroup}</span>}
                 </p>
                 {r.data.note && (
                   <p class="text-[0.78rem] mt-1.5 leading-relaxed" style="color: var(--text-muted)">
@@ -139,11 +150,23 @@ const groups = [...new Set(rows.map((r) => r.data.group))];
   const input = document.getElementById('crit-filter') as HTMLInputElement | null;
   let group = 'all';
 
+  /** Same diacritic folding as the glossary: "van phong" must find "văn phòng". */
+  const fold = (s: string) =>
+    s
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/đ/g, 'd')
+      .replace(/Đ/g, 'D')
+      .toLowerCase();
+
+  const folded = new WeakMap<HTMLElement, string>();
+  for (const r of rows) folded.set(r, fold(r.dataset.text ?? ''));
+
   function apply() {
-    const q = (input?.value ?? '').trim().toLowerCase();
+    const q = fold((input?.value ?? '').trim());
     for (const r of rows) {
       const okGroup = group === 'all' || r.dataset.group === group;
-      const okText = !q || (r.dataset.text ?? '').includes(q);
+      const okText = !q || (folded.get(r) ?? '').includes(q);
       r.classList.toggle('hidden', !(okGroup && okText));
     }
   }

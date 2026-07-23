@@ -113,7 +113,11 @@ const criteria = defineCollection({
   schema: z.object({
     id: z.string(),
     group: z.string(),
+    /** Vietnamese names sit beside the English so the table can be scanned in
+     *  either language — this is a lookup used mid-meeting, not a document. */
+    viGroup: z.string().optional(),
     space: z.string(),
+    viSpace: z.string().optional(),
     em: z.string(),
     ugr: z.string(),
     uo: z.string(),
