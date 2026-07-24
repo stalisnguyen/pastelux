@@ -11,13 +11,14 @@ import { url } from '../../site';
   <PageHeader
     eyebrow="Tools · Beta"
     title="Segment a render for lighting"
-    lede="For the lighting pass in post-production. Upload a render and the tool separates it into solid flat-colour regions — each object, and each wall plane — so you can select and light each one individually in Photoshop, the way you would light them in the scene. Then you download the mask. It runs entirely in your browser; the image is never uploaded."
+    lede="For the lighting pass in post-production. Upload a render and the tool separates it into solid flat-colour regions — each object, and each wall plane — so you can select and light each one individually in Photoshop, the way you would light them in the scene. Then you download the mask. Two ways to run it: free in-browser (the image never leaves your machine), or cloud AI (Gemini / GPT) with your own API key for cleaner separation — that one sends the image to the provider."
   >
     <p class="vi-block vi-def mt-2 text-[0.95rem] max-w-2xl leading-relaxed">
       Dành cho khâu chỉnh sáng hậu kỳ. Tải lên một ảnh render, công cụ tách thành các vùng màu phẳng
       đặc — từng vật thể, và từng mảng tường theo hướng — để bạn chọn và chiếu sáng riêng từng vùng
-      trong Photoshop, đúng như cách bạn xử lý ánh sáng trong scene. Rồi tải mặt nạ về. Mọi thứ chạy
-      ngay trong trình duyệt, ảnh không gửi đi đâu.
+      trong Photoshop, đúng như cách bạn xử lý ánh sáng trong scene. Rồi tải mặt nạ về. Có hai cách
+      chạy: trong trình duyệt (miễn phí, ảnh không rời khỏi máy), hoặc AI đám mây (Gemini / GPT) bằng
+      API key của bạn cho kết quả tách sạch hơn — cách này ảnh sẽ được gửi lên nhà cung cấp.
     </p>
   </PageHeader>
 
@@ -30,16 +31,20 @@ import { url } from '../../site';
       It turns the render into masks for a lighting pass: each object separated, and each wall plane
       split by orientation, so you can grade the light on every surface independently — a wall
       grazed here, an accent lifted there. The regions are lighting-independent: a shadow or a bright
-      hotspot does not break an object into pieces. It is a geometric approximation, not a V-Ray
-      object pass — very thin elements such as a slim light strip may still be missed, because they
-      leave no depth step for the tool to find.
+      hotspot does not break an object into pieces. The in-browser engine is a geometric
+      approximation, not a V-Ray object pass — very thin elements such as a slim light strip may
+      still be missed. The cloud AI engines (Gemini / GPT) separate objects much more cleanly, but
+      they redraw the matte rather than measure it, so always check edge alignment against the
+      original before trusting a mask.
     </span>
     <p class="vi-block vi-def mt-2">
       Công cụ biến ảnh render thành mặt nạ cho khâu chỉnh sáng: tách riêng từng vật, và chia mỗi mảng
       tường theo hướng, để bạn chỉnh ánh sáng riêng cho từng bề mặt — chỗ này rửa tường, chỗ kia nhấn
       sáng. Các vùng không phụ thuộc ánh sáng: một vệt bóng hay điểm sáng chói không làm vỡ một vật
-      thành nhiều mảnh. Đây là xấp xỉ hình học, không phải VRay object pass — vật rất mảnh (ống đèn)
-      vẫn có thể bị bỏ sót, vì chúng không tạo bậc độ sâu nào để công cụ bám vào.
+      thành nhiều mảnh. Engine trong trình duyệt là xấp xỉ hình học, không phải VRay object pass —
+      vật rất mảnh (ống đèn) vẫn có thể bị bỏ sót. Engine AI đám mây (Gemini / GPT) tách vật sạch hơn
+      hẳn, nhưng nó vẽ lại matte chứ không đo đạc, nên luôn kiểm tra mép có khớp ảnh gốc không trước
+      khi tin vào mặt nạ.
     </p>
   </div>
 
