@@ -107,19 +107,15 @@ import { url } from '../../site';
 
     <!-- options -->
     <div class="flex flex-wrap items-center gap-x-6 gap-y-3 mb-4 text-[0.9rem]">
-      <label class="flex items-center gap-2">
-        <span>Detail</span>
-        <span class="vi-block-inline" style="color: var(--vi-text)">· Độ chi tiết</span>
-        <select id="quality" class="field !py-1 !w-auto !text-[0.85rem]">
-          <option value="fast">Fast (~15 MB)</option>
-          <option value="detailed">Detailed (~340 MB, better on small objects)</option>
-        </select>
-      </label>
       <label class="flex items-center gap-2 cursor-pointer">
         <input id="splitPlanes" type="checkbox" class="accent-[var(--accent)]" checked />
         <span>Split wall planes</span>
         <span class="vi-block-inline" style="color: var(--vi-text)">· Tách mảng tường</span>
       </label>
+      <span class="text-[0.8rem]" style="color: var(--text-faint)">
+        Runs at maximum detail: the full frame plus four overlapping close-up tiles.
+        <span class="vi-block-inline">· Chạy ở độ chi tiết tối đa: toàn khung hình cộng 4 ô phóng cận chồng mép.</span>
+      </span>
     </div>
 
     <p id="status" class="text-[0.9rem] mb-3" style="color: var(--text-muted)"></p>
@@ -179,8 +175,7 @@ import { url } from '../../site';
 
 <script>
   const TRANSFORMERS = 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.8.1';
-  const SEG_FAST = 'Xenova/segformer-b0-finetuned-ade-512-512';
-  const SEG_DETAILED = 'Xenova/segformer-b5-finetuned-ade-640-640';
+  const SEG = 'Xenova/segformer-b5-finetuned-ade-640-640';
   const DEPTH = 'onnx-community/depth-anything-v2-small';
   const WORK_MAX = 1100; // post-processing works at this longest side, then upscales
 
@@ -213,7 +208,7 @@ import { url } from '../../site';
 
   let sourceImage: HTMLImageElement | null = null;
   let labelCanvas: HTMLCanvasElement | null = null; // solid label map, full res
-  let segFast: any = null, segDetailed: any = null, depther: any = null;
+  let segmenter: any = null, depther: any = null;
 
   const setStatus = (m: string, tone = 'var(--text-muted)') => {
     if (statusEl) { statusEl.textContent = m; statusEl.style.color = tone; }
@@ -437,15 +432,13 @@ import { url } from '../../site';
   $('opacity')?.addEventListener('input', drawPreview);
 
   // ------------------------------------------------------------- models
-  async function getSegmenter(quality: string, onProgress: any) {
+  async function getSegmenter(onProgress: any) {
+    if (segmenter) return segmenter;
     const { pipeline } = await import(/* @vite-ignore */ TRANSFORMERS);
     const device = (navigator as any).gpu ? 'webgpu' : 'wasm';
-    const load = async (model: string) => {
-      try { return await pipeline('image-segmentation', model, { device, progress_callback: onProgress }); }
-      catch { return await pipeline('image-segmentation', model, { device: 'wasm', progress_callback: onProgress }); }
-    };
-    if (quality === 'detailed') { if (!segDetailed) segDetailed = await load(SEG_DETAILED); return segDetailed; }
-    if (!segFast) segFast = await load(SEG_FAST); return segFast;
+    try { segmenter = await pipeline('image-segmentation', SEG, { device, progress_callback: onProgress }); }
+    catch { segmenter = await pipeline('image-segmentation', SEG, { device: 'wasm', progress_callback: onProgress }); }
+    return segmenter;
   }
   async function getDepther(onProgress: any) {
     if (depther) return depther;
@@ -461,7 +454,6 @@ import { url } from '../../site';
     if (!sourceImage) return;
     runBtn.disabled = true;
     const t0 = performance.now();
-    const quality = ($<HTMLSelectElement>('quality'))?.value ?? 'fast';
     const wantPlanes = ($<HTMLInputElement>('splitPlanes'))?.checked ?? true;
 
     const onProgress = (p: any) => {
@@ -473,20 +465,71 @@ import { url } from '../../site';
 
     try {
       setStatus('Loading models… · Đang tải mô hình…');
-      const seg = await getSegmenter(quality, onProgress);
+      const seg = await getSegmenter(onProgress);
       const dep = wantPlanes ? await getDepther(onProgress) : null;
 
-      setStatus('Analysing… · Đang phân tích…');
-      const src = canvasOfImage(sourceImage);
-      const dataUrl = src.toDataURL('image/png');
+      // work-grid dimensions (shared by inference merge and post-processing)
+      const origW = sourceImage.naturalWidth, origH = sourceImage.naturalHeight;
+      const scale = Math.min(1, WORK_MAX / Math.max(origW, origH));
+      const W = Math.max(16, Math.round(origW * scale));
+      const H = Math.max(16, Math.round(origH * scale));
 
-      const [segOut, depOut] = await Promise.all([seg(dataUrl), dep ? dep(dataUrl) : Promise.resolve(null)]);
-      if (!Array.isArray(segOut) || !segOut.length) {
+      /**
+       * Tiled inference. The model only ever sees ~640px, so a small or
+       * distant object is a handful of pixels to it. One pass over the whole
+       * frame anchors the big surfaces; four overlapping tiles each give the
+       * model a close-up where small objects are ~2x larger. Masks merge by
+       * label with a per-pixel max.
+       */
+      const src = canvasOfImage(sourceImage);
+      const tiles: Array<{ sx: number; sy: number; sw: number; sh: number }> = [
+        { sx: 0, sy: 0, sw: origW, sh: origH },
+      ];
+      const tw = Math.ceil(origW * 0.6), th = Math.ceil(origH * 0.6);
+      for (const [tx, ty] of [[0, 0], [origW - tw, 0], [0, origH - th], [origW - tw, origH - th]] as const)
+        tiles.push({ sx: tx, sy: ty, sw: tw, sh: th });
+
+      const grids = new Map<string, Uint8Array>();
+      let depOut: any = null;
+      for (let i = 0; i < tiles.length; i++) {
+        const t = tiles[i];
+        setStatus(`Analysing ${i + 1}/${tiles.length}… · Đang phân tích ${i + 1}/${tiles.length}…`);
+        const tc = document.createElement('canvas');
+        tc.width = t.sw; tc.height = t.sh;
+        tc.getContext('2d')!.drawImage(src, t.sx, t.sy, t.sw, t.sh, 0, 0, t.sw, t.sh);
+        const url = tc.toDataURL('image/png');
+
+        const jobs: Promise<any>[] = [seg(url)];
+        if (i === 0 && dep) jobs.push(dep(url)); // depth only needs the full frame
+        const [segOut, maybeDep] = await Promise.all(jobs);
+        if (maybeDep) depOut = maybeDep;
+        if (!Array.isArray(segOut)) continue;
+
+        // tile rect in work-grid coordinates
+        const gx = Math.round((t.sx / origW) * W), gy = Math.round((t.sy / origH) * H);
+        const gw = Math.max(1, Math.round((t.sw / origW) * W)), gh = Math.max(1, Math.round((t.sh / origH) * H));
+        for (const s of segOut) {
+          const m = channelToGrid(s.mask, gw, gh, false);
+          let g = grids.get(s.label);
+          if (!g) { g = new Uint8Array(W * H); grids.set(s.label, g); }
+          for (let y = 0; y < gh; y++) {
+            const ry = gy + y; if (ry >= H) break;
+            for (let x = 0; x < gw; x++) {
+              const rx = gx + x; if (rx >= W) break;
+              const v = m[y * gw + x], q = ry * W + rx;
+              if (v > g[q]) g[q] = v;
+            }
+          }
+        }
+      }
+
+      if (!grids.size) {
         setStatus('No objects detected. · Không nhận diện được vật thể.', 'var(--warning)');
         runBtn.disabled = false; return;
       }
 
-      buildLabelMap(segOut, depOut, wantPlanes);
+      const segGrids = [...grids.entries()].map(([label, grid]) => ({ label, grid }));
+      buildLabelMap(segGrids, depOut, wantPlanes, W, H);
       drawPreview();
       $('controls')?.classList.remove('hidden');
       $('legend')?.classList.remove('hidden');
@@ -619,14 +662,13 @@ import { url } from '../../site';
 
   // -------------------------------------- the core: build the label map
   function buildLabelMap(
-    segOut: Array<{ label: string; mask: any }>,
+    segGrids: Array<{ label: string; grid: Uint8Array }>,
     depOut: any,
-    wantPlanes: boolean
+    wantPlanes: boolean,
+    W: number,
+    H: number
   ) {
     const origW = sourceImage!.naturalWidth, origH = sourceImage!.naturalHeight;
-    const scale = Math.min(1, WORK_MAX / Math.max(origW, origH));
-    const W = Math.max(16, Math.round(origW * scale));
-    const H = Math.max(16, Math.round(origH * scale));
     const N = W * H;
     const srcW = srcRGB(W, H);
 
@@ -634,10 +676,10 @@ import { url } from '../../site';
     let classIdx = new Int32Array(N).fill(-1);
     const bestVal = new Uint8Array(N);
     const classNames: string[] = [];
-    for (const seg of segOut) {
+    for (const seg of segGrids) {
       const k = classNames.length;
       classNames.push(seg.label);
-      const m = channelToGrid(seg.mask, W, H, false);
+      const m = seg.grid; // already merged at work resolution
       for (let i = 0; i < N; i++) if (m[i] > bestVal[i]) { bestVal[i] = m[i]; classIdx[i] = k; }
     }
 
