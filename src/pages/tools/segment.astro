@@ -202,6 +202,51 @@ import { url } from '../../site';
 
   const WALL_LIKE = new Set(['wall']);
   const FLOOR_CEIL = new Set(['floor', 'flooring', 'ceiling']);
+
+  /**
+   * ADE20K's 150 classes collapse into the groups a compositor actually needs
+   * (per the Object-ID matte spec): soft furniture, tables, casegoods, decor,
+   * lighting fixtures, plants, and the architectural planes. Each group has a
+   * FIXED high-contrast colour, identical on every run, so select-by-colour
+   * habits in Photoshop transfer between projects.
+   */
+  const GROUP: Record<string, string> = {
+    sofa: 'soft', couch: 'soft', armchair: 'soft', chair: 'soft', 'swivel chair': 'soft',
+    seat: 'soft', cushion: 'soft', pillow: 'soft', ottoman: 'soft', pouf: 'soft',
+    bed: 'soft', bench: 'soft',
+    table: 'tables', 'coffee table': 'tables', desk: 'tables', stool: 'tables',
+    cabinet: 'hard', wardrobe: 'hard', 'chest of drawers': 'hard', sideboard: 'hard',
+    shelf: 'hard', bookcase: 'hard', 'kitchen island': 'hard', countertop: 'hard',
+    'object at wall': 'hard',
+    painting: 'decor', picture: 'decor', poster: 'decor', mirror: 'decor', vase: 'decor',
+    bottle: 'decor', book: 'decor', tray: 'decor', box: 'decor', basket: 'decor',
+    clock: 'decor', sculpture: 'decor', curtain: 'decor', blind: 'decor',
+    television: 'decor', screen: 'decor', monitor: 'decor', fireplace: 'decor',
+    plant: 'plant', tree: 'plant', flower: 'plant', grass: 'floor',
+    lamp: 'lighting', chandelier: 'lighting', light: 'lighting', sconce: 'lighting',
+    floor: 'floor', flooring: 'floor', earth: 'floor', ceiling: 'ceiling',
+    rug: 'rug', carpet: 'rug',
+    door: 'door', 'double door': 'door', windowpane: 'window', window: 'window',
+    stairs: 'arch', stairway: 'arch', column: 'arch', railing: 'arch',
+  };
+
+  const GROUP_COLOR: Record<string, [number, number, number]> = {
+    'wall|0': [0, 128, 153],   // left wall — deep teal
+    'wall|1': [128, 0, 128],   // centre wall — purple
+    'wall|2': [192, 0, 128],   // right wall — magenta
+    ceiling: [128, 0, 0],      // dark red
+    floor: [0, 0, 128],        // navy
+    rug: [176, 48, 96],        // maroon-pink, per the carpet-is-separate rule
+    soft: [0, 128, 64],        // emerald
+    tables: [64, 224, 208],    // turquoise
+    hard: [255, 215, 0],       // gold — consoles, cabinets, shelves
+    decor: [106, 90, 205],     // slate blue — artwork & decor
+    lighting: [255, 255, 255], // pure white — track lights, strips, lamps
+    plant: [50, 205, 50],      // lime
+    door: [255, 128, 0],       // orange
+    window: [0, 191, 255],     // sky blue
+    arch: [192, 192, 192],     // silver — stairs, columns, railings
+  };
   const isArch = (n?: string) => !!n && (WALL_LIKE.has(first(n)) || FLOOR_CEIL.has(first(n)));
   const first = (label: string) => label.toLowerCase().split(';')[0].trim();
 
@@ -878,9 +923,12 @@ import { url } from '../../site';
     }
 
     // 4. merge speckle into the neighbour with the longest shared border.
-    // 0.4% of the frame: aggressive enough that a clean render yields a
-    // handful of solid regions, not confetti.
-    const minSize = Math.max(48, Math.round(N * 0.004));
+    // Two thresholds: architectural fragments fold aggressively (0.4% of the
+    // frame), but small OBJECTS survive down to 0.02% — folding a bottle or a
+    // spotlight into the wall behind it is how small decor used to vanish.
+    const minArch = Math.max(48, Math.round(N * 0.004));
+    const minObj = Math.max(16, Math.round(N * 0.0002));
+    const isArchName = (nm?: string) => !!nm && (WALL_LIKE.has(first(nm)) || FLOOR_CEIL.has(first(nm)));
     const remap = new Int32Array(nComp);
     for (let i = 0; i < nComp; i++) remap[i] = i;
     const find = (a: number) => { while (remap[a] !== a) a = remap[a] = remap[remap[a]]; return a; };
@@ -894,7 +942,8 @@ import { url } from '../../site';
     }
     const order = [...Array(nComp).keys()].sort((a, b) => compSize[a] - compSize[b]);
     for (const cId of order) {
-      if (compSize[find(cId)] >= minSize) continue;
+      const lim = isArchName(classNames[compClass[cId]]) ? minArch : minObj;
+      if (compSize[find(cId)] >= lim) continue;
       const nbrs = edges.get(cId); if (!nbrs || !nbrs.size) continue;
       let best = -1, bestLen = -1;
       for (const [nb, len] of nbrs) { const r = find(nb); if (r === find(cId)) continue; if (len > bestLen) { bestLen = len; best = r; } }
@@ -915,22 +964,31 @@ import { url } from '../../site';
     const regionOf = new Int32Array(N);
     for (let p = 0; p < N; p++) { const a = comp[p]; regionOf[p] = a >= 0 ? rootIndex.get(find(a))! : -1; }
 
-    // 5. colour like a material pass: one colour per KIND of thing, the way
-    // V-Ray does it — both armchairs share a colour, all pieces of floor share
-    // a colour. Walls are the exception: each orientation plane gets its own,
-    // because lighting them separately is the whole point.
+    // 5. colour like a material pass, with the FIXED schema palette: the same
+    // group is the same colour on every run, on every image — left wall teal,
+    // ceiling dark red, lighting fixtures pure white. Tiny non-architectural
+    // fragments (<0.1% of frame) collapse into the generic decor colour
+    // instead of pretending to be a confident detection.
+    const tinyDecor = Math.round(N * 0.001);
     const keyOfRegion = (r: number): string => {
       const nm = first(classNames[rootClass[r]] ?? 'unknown');
-      return WALL_LIKE.has(nm) ? `wall|${rootBucket[r]}` : nm;
+      if (WALL_LIKE.has(nm)) return `wall|${rootBucket[r]}`;
+      const g = GROUP[nm];
+      if (g && !['floor', 'ceiling', 'rug', 'door', 'window', 'arch'].includes(g) && rootSize[r] < tinyDecor)
+        return 'decor';
+      return g ?? `x:${nm}`;
     };
-    const keyArea = new Map<string, number>();
-    for (let r = 0; r < nReg; r++) keyOfRegion(r) && keyArea.set(keyOfRegion(r), (keyArea.get(keyOfRegion(r)) ?? 0) + rootSize[r]);
-    const keysByArea = [...keyArea.entries()].sort((a, b) => b[1] - a[1]).map(([k]) => k);
-    const palette = buildPalette(Math.max(keysByArea.length, 8));
-    const keyColor = new Map<string, [number, number, number]>();
-    keysByArea.forEach((k, rank) => keyColor.set(k, palette[rank % palette.length]));
+    // stable fallback for unmapped classes: hue from the class name hash
+    const fallbackColor = (key: string): [number, number, number] => {
+      let h = 0;
+      for (let i = 0; i < key.length; i++) h = (h * 31 + key.charCodeAt(i)) >>> 0;
+      return hsv(h % 360, 0.7, 0.85);
+    };
     const regColor: [number, number, number][] = new Array(nReg);
-    for (let r = 0; r < nReg; r++) regColor[r] = keyColor.get(keyOfRegion(r))!;
+    for (let r = 0; r < nReg; r++) {
+      const k = keyOfRegion(r);
+      regColor[r] = GROUP_COLOR[k] ?? fallbackColor(k);
+    }
 
     // 6. upscale the region map to full resolution (nearest), then snap the
     //    boundaries to the full-res render edges so lines come out crisp.
@@ -1037,7 +1095,18 @@ import { url } from '../../site';
     'wall|0': ['wall — left', 'tường trái'],
     'wall|1': ['wall — centre', 'tường giữa'],
     'wall|2': ['wall — right', 'tường phải'],
-    'object at wall': ['object at wall', 'vật trước tường'],
+    ceiling: ['ceiling', 'trần'],
+    floor: ['floor', 'sàn'],
+    rug: ['rug / carpet', 'thảm'],
+    soft: ['soft furniture', 'sofa & ghế đệm'],
+    tables: ['tables', 'bàn'],
+    hard: ['cabinets & consoles', 'tủ & kệ'],
+    decor: ['artwork & decor', 'tranh & đồ trang trí'],
+    lighting: ['lighting fixtures', 'thiết bị đèn'],
+    plant: ['plants', 'cây xanh'],
+    door: ['door', 'cửa'],
+    window: ['window', 'cửa sổ'],
+    arch: ['stairs / columns', 'cầu thang / cột'],
   };
 
   function renderLegend(perKey: Map<string, { color: number[]; regions: number; area: number }>) {
@@ -1046,8 +1115,8 @@ import { url } from '../../site';
     const items = [...perKey.entries()].sort((a, b) => b[1].area - a[1].area);
     for (const [key, info] of items) {
       const special = KEY_LABELS[key];
-      const name = special ? special[0] : key;
-      const vi = special ? special[1] : VI[key];
+      const name = special ? special[0] : key.replace(/^x:/, '');
+      const vi = special ? special[1] : VI[key.replace(/^x:/, '')];
       const chip = document.createElement('span');
       chip.className = 'chip';
       chip.innerHTML =
