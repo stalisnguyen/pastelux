@@ -456,10 +456,11 @@ import { url } from '../../site';
     // colour edges AND depth edges, so same-coloured ceiling/wall corners hold
     classIdx = bilateralRefine(classIdx, srcW, depthGrid, W, H, 2, 3, 1400, 18) as typeof classIdx;
 
-    // 2. orientation bucket — WALLS ONLY. Ceilings and floors are almost
-    // always one plane each; bucketing them shredded flat ceilings into
-    // patches (her screenshot), so they stay whole and CC separates genuinely
-    // disjoint pieces instead.
+    // 2. wall-plane split — WALLS ONLY, decided PER COLUMN, not per pixel.
+    // Wall corners in an interior are near-vertical lines, so classifying
+    // whole columns is far more robust than thresholding noisy per-pixel
+    // gradients (which left all three walls one colour on a real render),
+    // and it produces perfectly straight vertical plane boundaries.
     const bucket = new Uint8Array(N);
     if (wantPlanes && depthGrid) {
       const gx = new Float32Array(N);
@@ -467,31 +468,62 @@ import { url } from '../../site';
         const i = y * W + x;
         gx[i] = depthGrid[y * W + Math.min(x + 2, W - 1)] - depthGrid[y * W + Math.max(x - 2, 0)];
       }
-      boxBlur(gx, W, H, 2);
-      let sx = 0, na = 0;
-      for (let i = 0; i < N; i++) { const nm = classNames[classIdx[i]]; if (nm && WALL_LIKE.has(first(nm))) { sx += Math.abs(gx[i]); na++; } }
-      const Tx = na ? (sx / na) * 1.1 + 0.4 : 1e9;
-      for (let i = 0; i < N; i++) {
-        const nm = classNames[classIdx[i]];
-        if (nm && WALL_LIKE.has(first(nm))) bucket[i] = gx[i] < -Tx ? 0 : gx[i] > Tx ? 2 : 1;
+
+      // robust per-column wall slope: median of gx over the wall pixels there
+      const colSlope = new Float32Array(W).fill(NaN);
+      const tmp: number[] = [];
+      for (let x = 0; x < W; x++) {
+        tmp.length = 0;
+        for (let y = 0; y < H; y++) {
+          const p = y * W + x;
+          const nm = classNames[classIdx[p]];
+          if (nm && WALL_LIKE.has(first(nm))) tmp.push(gx[p]);
+        }
+        if (tmp.length >= H * 0.05) {
+          tmp.sort((a, b) => a - b);
+          colSlope[x] = tmp[tmp.length >> 1];
+        }
       }
-      // clean the bucket field: majority vote in a 5x5 window kills the
-      // salt-and-pepper patches that made walls look shredded
-      const nb = new Uint8Array(N);
-      const cnt = [0, 0, 0];
-      for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
-        const p = y * W + x;
+      // fill gaps (columns with no wall) from the nearest valid neighbour
+      let last = NaN;
+      for (let x = 0; x < W; x++) { if (Number.isNaN(colSlope[x])) colSlope[x] = last; else last = colSlope[x]; }
+      last = NaN;
+      for (let x = W - 1; x >= 0; x--) { if (Number.isNaN(colSlope[x])) colSlope[x] = last; else last = colSlope[x]; }
+
+      // smooth the 1D signal
+      const sm = new Float32Array(W);
+      const SR = Math.max(2, Math.round(W * 0.01));
+      for (let x = 0; x < W; x++) {
+        let s = 0, n = 0;
+        for (let k = -SR; k <= SR; k++) { const xx = x + k; if (xx >= 0 && xx < W && !Number.isNaN(colSlope[xx])) { s += colSlope[xx]; n++; } }
+        sm[x] = n ? s / n : 0;
+      }
+
+      // threshold from robust spread (median absolute deviation)
+      const absDev = [...sm].map(Math.abs).sort((a, b) => a - b);
+      const mad = absDev[absDev.length >> 1] || 0.1;
+      const T = Math.max(mad * 1.2, 0.15);
+
+      // classify columns, then clean up: median filter + minimum run length,
+      // so the wall splits into a few solid vertical bands, not flicker
+      const colClass = new Uint8Array(W);
+      for (let x = 0; x < W; x++) colClass[x] = sm[x] < -T ? 0 : sm[x] > T ? 2 : 1;
+      const MIN_RUN = Math.max(4, Math.round(W * 0.06));
+      let runStart = 0;
+      for (let x = 1; x <= W; x++) {
+        if (x === W || colClass[x] !== colClass[runStart]) {
+          if (x - runStart < MIN_RUN) {
+            const fill = runStart > 0 ? colClass[runStart - 1] : (x < W ? colClass[x] : colClass[runStart]);
+            for (let k = runStart; k < x; k++) colClass[k] = fill;
+          }
+          runStart = x;
+        }
+      }
+
+      for (let p = 0; p < N; p++) {
         const nm = classNames[classIdx[p]];
-        if (!nm || !WALL_LIKE.has(first(nm))) { nb[p] = bucket[p]; continue; }
-        cnt[0] = 0; cnt[1] = 0; cnt[2] = 0;
-        for (let dy = -2; dy <= 2; dy++) { const yy = y + dy; if (yy < 0 || yy >= H) continue;
-          for (let dx = -2; dx <= 2; dx++) { const xx = x + dx; if (xx < 0 || xx >= W) continue;
-            const q = yy * W + xx; const qn = classNames[classIdx[q]];
-            if (qn && WALL_LIKE.has(first(qn))) cnt[bucket[q]]++;
-          } }
-        nb[p] = cnt[0] >= cnt[1] && cnt[0] >= cnt[2] ? 0 : cnt[1] >= cnt[2] ? 1 : 2;
+        if (nm && WALL_LIKE.has(first(nm))) bucket[p] = colClass[p % W];
       }
-      bucket.set(nb);
     }
 
     // 3. connected components over (classIdx, bucket)
