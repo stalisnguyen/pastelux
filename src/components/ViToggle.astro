@@ -25,12 +25,22 @@
     const btn = document.getElementById('vi-toggle');
     if (!btn) return;
 
+    // inputs whose placeholder has two voices: the markup carries the
+    // Vietnamese default plus data-ph-en with the English wording
+    const syncPlaceholders = (on) => {
+      document.querySelectorAll('[data-ph-en]').forEach((el) => {
+        if (!el.dataset.phVi) el.dataset.phVi = el.placeholder;
+        el.placeholder = on ? el.dataset.phVi : el.dataset.phEn;
+      });
+    };
+
     const paint = (on) => {
       document.documentElement.classList.toggle('vi-off', !on);
       btn.setAttribute('aria-pressed', String(on));
       btn.style.color = on ? 'var(--accent-ink)' : 'var(--text-muted)';
       btn.style.background = on ? 'var(--accent)' : 'var(--surface)';
       btn.style.borderColor = on ? 'var(--accent)' : 'var(--border-strong)';
+      syncPlaceholders(on);
     };
 
     let on = true;
@@ -38,6 +48,9 @@
       on = localStorage.getItem(KEY) !== '0';
     } catch {}
     paint(on);
+    // this script sits in the header, before the page's inputs exist —
+    // sync again once the rest of the document has parsed
+    document.addEventListener('DOMContentLoaded', () => syncPlaceholders(on));
 
     btn.addEventListener('click', () => {
       on = !on;
