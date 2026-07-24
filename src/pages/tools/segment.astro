@@ -124,20 +124,32 @@ import { url } from '../../site';
       <label class="rounded-lg border p-3 cursor-pointer flex gap-2.5" style="border-color: var(--border-strong)">
         <input type="radio" name="engine" value="cloud" class="accent-[var(--accent)] mt-1" />
         <span class="text-[0.88rem]">
-          <b>Gemini AI matte</b> — much better object separation, needs your own Google AI
-          API key (~$0.04/image). <b>The image is sent to Google.</b>
-          <span class="vi-block vi-def mt-1 text-[0.84rem]">Gemini vẽ matte — tách vật tốt hơn hẳn, cần API key Google của bạn (~1.000đ/ảnh). <b>Ảnh sẽ được gửi lên Google.</b></span>
+          <b>Cloud AI matte (Gemini / GPT)</b> — much better object separation, needs your own
+          API key. <b>The image is sent to the provider.</b>
+          <span class="vi-block vi-def mt-1 text-[0.84rem]">AI đám mây vẽ matte (Gemini hoặc GPT) — tách vật tốt hơn hẳn, cần API key của bạn. <b>Ảnh sẽ được gửi lên nhà cung cấp.</b></span>
         </span>
       </label>
     </div>
 
     <div id="cloudOpts" class="hidden mb-4 rounded-lg p-3" style="background: var(--bg-elevated); border: 1px solid var(--border)">
-      <label class="label" for="geminiKey">Google AI API key</label>
-      <input id="geminiKey" type="password" class="field" placeholder="AIza…" autocomplete="off" />
+      <div class="grid sm:grid-cols-[auto_1fr] gap-3 items-end">
+        <label class="block">
+          <span class="label">Provider</span>
+          <select id="provider" class="field !w-auto">
+            <option value="gemini">Gemini (~$0.04/image)</option>
+            <option value="openai">GPT (~$0.17/image)</option>
+          </select>
+        </label>
+        <label class="block">
+          <span class="label" id="keyLabel">Google AI API key</span>
+          <input id="cloudKey" type="password" class="field" placeholder="AIza…" autocomplete="off" />
+        </label>
+      </div>
       <p class="text-[0.78rem] mt-1.5" style="color: var(--text-faint)">
-        Stored only in this browser (localStorage), never in the site. Get one free at
-        aistudio.google.com → Get API key. Do not use a key that guards anything important.
-        <span class="vi-block-inline">· Chỉ lưu trong trình duyệt này, không nằm trên site. Lấy miễn phí tại aistudio.google.com → Get API key.</span>
+        <span id="keyHelp">Get one free at aistudio.google.com → Get API key.</span>
+        Stored only in this browser (localStorage), never in the site. Do not use a key that
+        guards anything important.
+        <span class="vi-block-inline">· Key chỉ lưu trong trình duyệt này, không nằm trên site.</span>
       </p>
     </div>
 
@@ -578,8 +590,28 @@ Distinct objects of the same category may share the category colour.`;
 
   const engineRadios = [...document.querySelectorAll<HTMLInputElement>('input[name="engine"]')];
   const currentEngine = () => engineRadios.find((r) => r.checked)?.value ?? 'local';
-  const keyInput = $<HTMLInputElement>('geminiKey');
-  try { if (keyInput) keyInput.value = localStorage.getItem(KEY_STORE) ?? ''; } catch {}
+  const keyInput = $<HTMLInputElement>('cloudKey');
+  const providerSel = $<HTMLSelectElement>('provider');
+  const currentProvider = () => providerSel?.value ?? 'gemini';
+  const keyStoreFor = (prov: string) => (prov === 'openai' ? 'pastelux-openai-key' : KEY_STORE);
+
+  const PROVIDER_UI: Record<string, { label: string; placeholder: string; help: string }> = {
+    gemini: { label: 'Google AI API key', placeholder: 'AIza…', help: 'Get one free at aistudio.google.com → Get API key.' },
+    openai: { label: 'OpenAI API key', placeholder: 'sk-…', help: 'Create one at platform.openai.com → API keys. gpt-image-1 may require a verified organisation.' },
+  };
+  function syncProviderUI() {
+    const ui = PROVIDER_UI[currentProvider()];
+    const lb = $('keyLabel'), hp = $('keyHelp');
+    if (lb) lb.textContent = ui.label;
+    if (hp) hp.textContent = ui.help + ' ';
+    if (keyInput) {
+      keyInput.placeholder = ui.placeholder;
+      try { keyInput.value = localStorage.getItem(keyStoreFor(currentProvider())) ?? ''; } catch {}
+    }
+  }
+  providerSel?.addEventListener('change', syncProviderUI);
+  syncProviderUI();
+
   engineRadios.forEach((r) =>
     r.addEventListener('change', () => {
       const cloud = currentEngine() === 'cloud';
@@ -588,22 +620,78 @@ Distinct objects of the same category may share the category colour.`;
     })
   );
 
+  /** Decode a base64 matte, upscale nearest to native res, show the schema legend. */
+  async function applyMatte(data: string, mime: string) {
+    const origW = sourceImage!.naturalWidth, origH = sourceImage!.naturalHeight;
+    await new Promise<void>((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        labelCanvas = document.createElement('canvas');
+        labelCanvas.width = origW; labelCanvas.height = origH;
+        const lctx = labelCanvas.getContext('2d')!;
+        lctx.imageSmoothingEnabled = false;
+        lctx.drawImage(img, 0, 0, origW, origH);
+        resolve();
+      };
+      img.onerror = () => reject(new Error('Could not decode the returned image'));
+      img.src = `data:${mime};base64,${data}`;
+    });
+    const legendMap = new Map<string, { color: [number, number, number]; regions: number; area: number }>();
+    let order = 0;
+    for (const k of ['wall|0', 'wall|1', 'wall|2', 'ceiling', 'floor', 'rug', 'soft', 'tables', 'hard', 'decor', 'lighting', 'plant', 'door', 'window']) {
+      legendMap.set(k, { color: GROUP_COLOR[k], regions: 1, area: 1000 - order++ });
+    }
+    renderLegend(legendMap);
+  }
+
   async function runCloud(): Promise<boolean> {
+    const prov = currentProvider();
     const key = keyInput?.value.trim();
     if (!key) {
-      setStatus('Paste your Google AI API key first (aistudio.google.com → Get API key). · Hãy dán API key Google trước.', 'var(--warning)');
+      setStatus(
+        prov === 'openai'
+          ? 'Paste your OpenAI API key first (platform.openai.com → API keys). · Hãy dán API key OpenAI trước.'
+          : 'Paste your Google AI API key first (aistudio.google.com → Get API key). · Hãy dán API key Google trước.',
+        'var(--warning)'
+      );
       return false;
     }
-    try { localStorage.setItem(KEY_STORE, key); } catch {}
+    try { localStorage.setItem(keyStoreFor(prov), key); } catch {}
 
     const origW = sourceImage!.naturalWidth, origH = sourceImage!.naturalHeight;
-    // cap the upload; the model works around 1k anyway
+    // cap the upload; the models work around 1k anyway
     const inScale = Math.min(1, 1536 / Math.max(origW, origH));
     const c = document.createElement('canvas');
     c.width = Math.round(origW * inScale); c.height = Math.round(origH * inScale);
     c.getContext('2d')!.drawImage(sourceImage!, 0, 0, c.width, c.height);
-    const b64 = c.toDataURL('image/jpeg', 0.92).split(',')[1];
 
+    if (prov === 'openai') {
+      setStatus('Sending to GPT — often 30–90s… · Đang gửi lên GPT — thường mất 30–90 giây…');
+      const blob: Blob = await new Promise((r) => c.toBlob((b) => r(b!), 'image/png'));
+      const form = new FormData();
+      form.append('model', 'gpt-image-1');
+      form.append('image', blob, 'render.png');
+      form.append('prompt', MATTE_PROMPT);
+      form.append('size', 'auto');
+      form.append('n', '1');
+      const res = await fetch('https://api.openai.com/v1/images/edits', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${key}` },
+        body: form,
+      });
+      if (!res.ok) {
+        const body = await res.text().catch(() => '');
+        const msg = (() => { try { return JSON.parse(body)?.error?.message ?? body; } catch { return body; } })();
+        throw new Error(`GPT ${res.status}: ${String(msg).slice(0, 140)}`);
+      }
+      const json = await res.json();
+      const b64out = json?.data?.[0]?.b64_json;
+      if (!b64out) throw new Error('GPT returned no image');
+      await applyMatte(b64out, 'image/png');
+      return true;
+    }
+
+    const b64 = c.toDataURL('image/jpeg', 0.92).split(',')[1];
     setStatus('Sending to Gemini — usually 10–30s… · Đang gửi lên Gemini — thường mất 10–30 giây…');
     const res = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${encodeURIComponent(key)}`,
@@ -633,29 +721,7 @@ Distinct objects of the same category may share the category colour.`;
     }
     const data = imgPart.inlineData?.data ?? imgPart.inline_data?.data;
     const mime = imgPart.inlineData?.mimeType ?? imgPart.inline_data?.mime_type ?? 'image/png';
-
-    await new Promise<void>((resolve, reject) => {
-      const img = new Image();
-      img.onload = () => {
-        // scale the matte back to the render's native size; nearest keeps edges hard
-        labelCanvas = document.createElement('canvas');
-        labelCanvas.width = origW; labelCanvas.height = origH;
-        const lctx = labelCanvas.getContext('2d')!;
-        lctx.imageSmoothingEnabled = false;
-        lctx.drawImage(img, 0, 0, origW, origH);
-        resolve();
-      };
-      img.onerror = () => reject(new Error('Could not decode the returned image'));
-      img.src = `data:${mime};base64,${data}`;
-    });
-
-    // static schema legend — the prompt pins the model to these colours
-    const legendMap = new Map<string, { color: [number, number, number]; regions: number; area: number }>();
-    let order = 0;
-    for (const k of ['wall|0', 'wall|1', 'wall|2', 'ceiling', 'floor', 'rug', 'soft', 'tables', 'hard', 'decor', 'lighting', 'plant', 'door', 'window']) {
-      legendMap.set(k, { color: GROUP_COLOR[k], regions: 1, area: 1000 - order++ });
-    }
-    renderLegend(legendMap);
+    await applyMatte(data, mime);
     return true;
   }
 
