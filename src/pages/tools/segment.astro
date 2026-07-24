@@ -459,6 +459,13 @@ import { url } from '../../site';
     catch { segmenter = await pipeline('image-segmentation', SEG, { device: 'wasm', progress_callback: onProgress }); }
     return segmenter;
   }
+  /** GPU inference can die mid-run (device lost, out of GPU memory on a big
+   *  image) even after loading fine — rebuild the pipeline on the CPU path. */
+  async function rebuildSegmenterOnWasm(onProgress: any) {
+    const { pipeline } = await import(/* @vite-ignore */ TRANSFORMERS);
+    segmenter = await pipeline('image-segmentation', SEG, { device: 'wasm', progress_callback: onProgress });
+    return segmenter;
+  }
   async function getDepther(onProgress: any) {
     if (depther) return depther;
     const { pipeline } = await import(/* @vite-ignore */ TRANSFORMERS);
@@ -484,7 +491,7 @@ import { url } from '../../site';
 
     try {
       setStatus('Loading models… · Đang tải mô hình…');
-      const seg = await getSegmenter(onProgress);
+      let seg = await getSegmenter(onProgress);
       const dep = wantPlanes ? await getDepther(onProgress) : null;
 
       // work-grid dimensions (shared by inference merge and post-processing)
@@ -513,14 +520,34 @@ import { url } from '../../site';
       for (let i = 0; i < tiles.length; i++) {
         const t = tiles[i];
         setStatus(`Analysing ${i + 1}/${tiles.length}… · Đang phân tích ${i + 1}/${tiles.length}…`);
+        // The model resizes everything to ~640px internally, so feeding it a
+        // 4000px tile is pure memory cost with zero quality gain. Cap the
+        // input and use JPEG — the encode is far cheaper than PNG.
+        const inScale = Math.min(1, 1280 / Math.max(t.sw, t.sh));
         const tc = document.createElement('canvas');
-        tc.width = t.sw; tc.height = t.sh;
-        tc.getContext('2d')!.drawImage(src, t.sx, t.sy, t.sw, t.sh, 0, 0, t.sw, t.sh);
-        const url = tc.toDataURL('image/png');
+        tc.width = Math.max(1, Math.round(t.sw * inScale));
+        tc.height = Math.max(1, Math.round(t.sh * inScale));
+        tc.getContext('2d')!.drawImage(src, t.sx, t.sy, t.sw, t.sh, 0, 0, tc.width, tc.height);
+        const url = tc.toDataURL('image/jpeg', 0.92);
 
-        const jobs: Promise<any>[] = [seg(url)];
-        if (i === 0 && dep) jobs.push(dep(url)); // depth only needs the full frame
-        const [segOut, maybeDep] = await Promise.all(jobs);
+        let segOut: any = null, maybeDep: any = null;
+        try {
+          const jobs: Promise<any>[] = [seg(url)];
+          if (i === 0 && dep) jobs.push(dep(url)); // depth only needs the full frame
+          [segOut, maybeDep] = await Promise.all(jobs);
+        } catch (tileErr: any) {
+          console.error(`pass ${i + 1} failed`, tileErr);
+          if (i === 0) {
+            // The anchor pass must succeed — retry it on the CPU path.
+            setStatus('GPU failed, retrying on CPU (slower)… · GPU lỗi, thử lại bằng CPU (chậm hơn)…', 'var(--warning)');
+            seg = await rebuildSegmenterOnWasm(onProgress);
+            segOut = await seg(url);
+            if (dep) { try { maybeDep = await dep(url); } catch { maybeDep = null; } }
+          } else {
+            // A close-up tile is an enhancement; losing one must not kill the run.
+            continue;
+          }
+        }
         if (maybeDep) depOut = maybeDep;
         if (!Array.isArray(segOut)) continue;
 
@@ -557,7 +584,13 @@ import { url } from '../../site';
       setStatus(`Done in ${secs}s. · Xong sau ${secs}s.`, 'var(--success)');
     } catch (err: any) {
       console.error(err);
-      setStatus('Could not run the model — needs a modern browser and internet on first use. · Không chạy được mô hình.', 'var(--danger)');
+      // Show the real cause — a generic line hides everything and makes the
+      // failure unreportable.
+      const detail = String(err?.message ?? err).slice(0, 160);
+      setStatus(
+        `Failed: ${detail} — try again; if it repeats, reload the page. · Lỗi: ${detail} — thử lại; nếu lặp lại, tải lại trang.`,
+        'var(--danger)'
+      );
     } finally {
       runBtn.disabled = false;
     }
