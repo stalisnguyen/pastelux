@@ -31,15 +31,15 @@ import { url } from '../../site';
       split by orientation, so you can grade the light on every surface independently — a wall
       grazed here, an accent lifted there. The regions are lighting-independent: a shadow or a bright
       hotspot does not break an object into pieces. It is a geometric approximation, not a V-Ray
-      object pass — very thin elements such as a slim light strip, and small distant objects, may
-      still be missed; switch the model to <em>Detailed</em> for those.
+      object pass — very thin elements such as a slim light strip may still be missed, because they
+      leave no depth step for the tool to find.
     </span>
     <p class="vi-block vi-def mt-2">
       Công cụ biến ảnh render thành mặt nạ cho khâu chỉnh sáng: tách riêng từng vật, và chia mỗi mảng
       tường theo hướng, để bạn chỉnh ánh sáng riêng cho từng bề mặt — chỗ này rửa tường, chỗ kia nhấn
       sáng. Các vùng không phụ thuộc ánh sáng: một vệt bóng hay điểm sáng chói không làm vỡ một vật
       thành nhiều mảnh. Đây là xấp xỉ hình học, không phải VRay object pass — vật rất mảnh (ống đèn)
-      hoặc vật nhỏ ở xa vẫn có thể bị bỏ sót; chuyển sang model <em>Detailed</em> để bắt tốt hơn.
+      vẫn có thể bị bỏ sót, vì chúng không tạo bậc độ sâu nào để công cụ bám vào.
     </p>
   </div>
 
@@ -68,32 +68,38 @@ import { url } from '../../site';
   </section>
 
   <!-- ======================================= step 1b: clean logos (optional) -->
-  <section id="cleanWrap" class="card p-6 mb-4 hidden" aria-labelledby="s1b">
-    <div class="flex items-baseline gap-2 mb-3 flex-wrap">
-      <span class="chip">1b</span>
-      <h2 id="s1b" class="text-lg font-semibold">Remove text or logos <span class="text-[0.8rem] font-normal" style="color: var(--text-faint)">(optional)</span></h2>
-      <span class="vi-block-inline text-[0.9rem]" style="color: var(--vi-text)">Xoá chữ / logo (không bắt buộc)</span>
-    </div>
-    <p class="text-[0.88rem] mb-1" style="color: var(--text-muted)">
-      Brush over any watermark or text, then Apply — the area is filled from its surroundings.
-      Works well on flat areas (walls, grass, sky); on busy texture the fill will look soft.
-    </p>
-    <p class="vi-block vi-def text-[0.85rem] mb-3">
-      Quét chổi lên phần chữ hoặc logo rồi bấm Apply — vùng đó được lấp lại từ xung quanh. Hiệu quả
-      tốt trên nền phẳng (tường, cỏ, trời); trên vân phức tạp chỗ lấp sẽ hơi mềm.
-    </p>
-    <div class="flex flex-wrap items-center gap-x-5 gap-y-2 mb-3 text-[0.9rem]">
-      <label class="flex items-center gap-2">
-        <span>Brush</span><span class="vi-block-inline" style="color: var(--vi-text)">· Cỡ chổi</span>
-        <input id="brushSize" type="range" min="6" max="80" value="24" class="accent-[var(--accent)]" />
-      </label>
-      <button id="applyClean" class="btn btn-primary !py-1.5" type="button">Apply</button>
-      <button id="resetClean" class="btn !py-1.5" type="button">Reset</button>
-      <button id="dlClean" class="btn !py-1.5 hidden" type="button">Download cleaned image</button>
-    </div>
-    <div class="rounded-lg overflow-hidden" style="background: var(--bg)">
-      <canvas id="cleanCanvas" class="block w-full h-auto" style="cursor: crosshair; touch-action: none"></canvas>
-    </div>
+  <section id="cleanWrap" class="card mb-4 hidden">
+    <details id="cleanDetails">
+      <summary class="p-6 cursor-pointer list-none flex items-baseline gap-2 flex-wrap select-none">
+        <span class="chip">1b</span>
+        <span class="text-lg font-semibold">Remove a watermark <span class="text-[0.8rem] font-normal" style="color: var(--text-faint)">(optional — open only if the image has text or a logo on it)</span></span>
+        <span class="vi-block-inline text-[0.9rem]" style="color: var(--vi-text)">Xoá chữ / logo — chỉ mở nếu ảnh có watermark</span>
+        <span class="ml-auto text-[0.85rem]" style="color: var(--accent-cool)">▾</span>
+      </summary>
+      <div class="px-6 pb-6">
+        <ol class="text-[0.9rem] mb-3 grid gap-1" style="color: var(--text-muted); list-style: decimal inside">
+          <li>Drag the mouse over the text — a red stroke appears.
+            <span class="vi-block-inline" style="color: var(--vi-text)">Kéo chuột quét lên phần chữ — vệt đỏ hiện ra.</span></li>
+          <li>Press <b>Apply</b> — the red area is filled in from its surroundings.
+            <span class="vi-block-inline" style="color: var(--vi-text)">Bấm <b>Apply</b> — vùng đỏ được lấp lại từ nền xung quanh.</span></li>
+          <li>Then continue to Segment below.
+            <span class="vi-block-inline" style="color: var(--vi-text)">Rồi bấm Segment ở dưới như bình thường.</span></li>
+        </ol>
+        <div class="flex flex-wrap items-center gap-x-5 gap-y-2 mb-2 text-[0.9rem]">
+          <label class="flex items-center gap-2">
+            <span>Brush size</span><span class="vi-block-inline" style="color: var(--vi-text)">· Cỡ chổi</span>
+            <input id="brushSize" type="range" min="6" max="80" value="30" class="accent-[var(--accent)]" />
+          </label>
+          <button id="applyClean" class="btn btn-primary !py-1.5" type="button">Apply</button>
+          <button id="resetClean" class="btn !py-1.5" type="button">Reset</button>
+          <button id="dlClean" class="btn !py-1.5 hidden" type="button">Download cleaned image</button>
+        </div>
+        <p id="cleanMsg" class="text-[0.85rem] mb-3 min-h-[1.2em]" style="color: var(--text-faint)"></p>
+        <div class="rounded-lg overflow-hidden" style="background: var(--bg)">
+          <canvas id="cleanCanvas" class="block w-full h-auto" style="cursor: crosshair; touch-action: none"></canvas>
+        </div>
+      </div>
+    </details>
   </section>
 
   <!-- ======================================= step 2 -->
@@ -177,7 +183,7 @@ import { url } from '../../site';
   const TRANSFORMERS = 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.8.1';
   const SEG = 'Xenova/segformer-b5-finetuned-ade-640-640';
   const DEPTH = 'onnx-community/depth-anything-v2-small';
-  const WORK_MAX = 1100; // post-processing works at this longest side, then upscales
+  const WORK_MAX = 1440; // post-processing works at this longest side, then upscales
 
   const VI: Record<string, string> = {
     wall: 'tường', floor: 'sàn', flooring: 'sàn', ceiling: 'trần', windowpane: 'cửa sổ',
@@ -276,7 +282,11 @@ import { url } from '../../site';
     }
     drawClean();
   }
-  cleanCanvas?.addEventListener('pointerdown', (e) => { painting = true; cleanCanvas.setPointerCapture(e.pointerId); stamp(e); });
+  cleanCanvas?.addEventListener('pointerdown', (e) => {
+    painting = true;
+    try { cleanCanvas.setPointerCapture(e.pointerId); } catch {}
+    stamp(e);
+  });
   cleanCanvas?.addEventListener('pointermove', (e) => { if (painting) stamp(e); });
   cleanCanvas?.addEventListener('pointerup', () => { painting = false; });
 
@@ -360,11 +370,19 @@ import { url } from '../../site';
     return full;
   }
 
+  const setCleanMsg = (m: string, tone = 'var(--text-faint)') => {
+    const el = $('cleanMsg'); if (el) { el.textContent = m; el.style.color = tone; }
+  };
+
   $('applyClean')?.addEventListener('click', () => {
     if (!originalImage || !cleanMask) return;
     let any = false; for (let i = 0; i < cleanMask.length; i++) if (cleanMask[i]) { any = true; break; }
-    if (!any) return;
-    setStatus('Filling… · Đang lấp vùng đã quét…');
+    if (!any) {
+      // The button must never look dead — the earlier silent return read as broken.
+      setCleanMsg('Brush over the text first — drag the mouse on the image below. · Hãy quét chổi lên phần chữ trước — kéo chuột trên ảnh bên dưới.', 'var(--warning)');
+      return;
+    }
+    setCleanMsg('Filling… · Đang lấp vùng đã quét…');
     setTimeout(() => {
       const cleaned = inpaint(sourceImage!, cleanMask!);
       const img = new Image();
@@ -374,7 +392,7 @@ import { url } from '../../site';
         labelCanvas = null;
         $('dlClean')?.classList.remove('hidden');
         drawClean(); drawPreview();
-        setStatus('Cleaned. Brush more, or press Segment. · Đã lấp xong — quét tiếp hoặc bấm Segment.', 'var(--success)');
+        setCleanMsg('Done — brush more, or scroll down and press Segment. · Đã lấp xong — quét tiếp, hoặc kéo xuống bấm Segment.', 'var(--success)');
       };
       img.src = cleaned.toDataURL('image/png');
     }, 30);
@@ -387,6 +405,7 @@ import { url } from '../../site';
     labelCanvas = null;
     $('dlClean')?.classList.add('hidden');
     drawClean(); drawPreview();
+    setCleanMsg('Back to the original image. · Đã trả về ảnh gốc.');
   });
 
   $('dlClean')?.addEventListener('click', () => {
@@ -693,7 +712,7 @@ import { url } from '../../site';
 
     // 1b. snap the coarse class boundaries onto the render's real edges —
     // colour edges AND depth edges, so same-coloured ceiling/wall corners hold
-    classIdx = bilateralRefine(classIdx, srcW, depthGrid, W, H, 2, 3, 1400, 18) as typeof classIdx;
+    classIdx = bilateralRefine(classIdx, srcW, depthGrid, W, H, 3, 3, 1400, 18) as typeof classIdx;
 
     // 1c. furniture standing flush against a wall (her lower cabinet under the
     // artwork) often gets classed as "wall". It sits NEARER the camera than
@@ -891,7 +910,10 @@ import { url } from '../../site';
       }
     }
     const srcF = srcRGB(origW, origH);
-    fullReg = boundaryRefineRegions(fullReg, srcF, origW, origH, 2, 2, 1200) as typeof fullReg;
+    fullReg = boundaryRefineRegions(fullReg, srcF, origW, origH, 3, 3, 1200) as typeof fullReg;
+    // majority filter: shaves the staircase jaggies left after refinement so
+    // long boundaries read as clean lines
+    fullReg = modeFilter(fullReg, origW, origH, 2) as typeof fullReg;
 
     // 7. paint the final solid label map
     labelCanvas = document.createElement('canvas');
@@ -914,6 +936,30 @@ import { url } from '../../site';
       if (!perKey.has(key)) perKey.set(key, e);
     }
     renderLegend(perKey);
+  }
+
+  /** 3x3 majority vote on region ids, boundary pixels only — cheap edge polish. */
+  function modeFilter(reg: Int32Array, W: number, H: number, iters: number) {
+    let cur = reg;
+    const ids = new Int32Array(9), cnt = new Int32Array(9);
+    for (let it = 0; it < iters; it++) {
+      const next = Int32Array.from(cur);
+      for (let y = 1; y < H - 1; y++) for (let x = 1; x < W - 1; x++) {
+        const p = y * W + x, r = cur[p];
+        if (cur[p - 1] === r && cur[p + 1] === r && cur[p - W] === r && cur[p + W] === r) continue;
+        let n = 0;
+        for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) {
+          const v = cur[(y + dy) * W + (x + dx)];
+          let k = 0; for (; k < n; k++) if (ids[k] === v) { cnt[k]++; break; }
+          if (k === n) { ids[n] = v; cnt[n] = 1; n++; }
+        }
+        let best = r, bv = 0;
+        for (let k = 0; k < n; k++) if (cnt[k] > bv) { bv = cnt[k]; best = ids[k]; }
+        next[p] = best;
+      }
+      cur = next;
+    }
+    return cur;
   }
 
   /** Same bilateral idea, at full resolution, on region ids, boundary pixels only. */
