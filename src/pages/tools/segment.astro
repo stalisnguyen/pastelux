@@ -156,6 +156,26 @@ import { url } from '../../site';
         guards anything important.
         <span class="vi-block-inline">· Key chỉ lưu trong trình duyệt này, không nằm trên site.</span>
       </p>
+
+      <details class="mt-3 rounded-lg" style="border: 1px solid var(--border)">
+        <summary class="cursor-pointer select-none px-3 py-2 text-[0.84rem] font-medium">
+          No API key? Copy the prompt and paste it into ChatGPT or Gemini yourself
+          <span class="vi-block-inline font-normal" style="color: var(--vi-text)">· Không có API key? Copy prompt này, dán vào ChatGPT hoặc Gemini kèm ảnh render</span>
+        </summary>
+        <div class="px-3 pb-3">
+          <p class="text-[0.8rem] mb-2" style="color: var(--text-muted)">
+            Open ChatGPT or the Gemini app, attach your render, paste this prompt, send. It is the
+            same prompt this tool uses — the fixed colour schema is inside, so every matte comes
+            back with the same colours.
+            <span class="vi-block-inline">· Mở ChatGPT hoặc Gemini, đính kèm ảnh render, dán prompt này rồi gửi. Đây chính là prompt tool đang dùng — bảng màu cố định nằm sẵn trong đó, matte nào trả về cũng cùng một bộ màu.</span>
+          </p>
+          <textarea id="promptText" readonly rows="8" class="field font-mono text-[0.74rem] leading-snug" spellcheck="false"></textarea>
+          <div class="flex items-center gap-2 mt-2">
+            <button id="copyPrompt" type="button" class="btn !py-1.5 text-[0.84rem]">Copy prompt</button>
+            <span id="copyMsg" class="text-[0.8rem]" style="color: var(--success, #4ade80)"></span>
+          </div>
+        </div>
+      </details>
     </div>
 
     <!-- options (local engine) -->
@@ -193,6 +213,42 @@ import { url } from '../../site';
     <div id="legend" class="hidden mt-4">
       <p class="label !mb-2">Detected <span class="vi-block-inline" style="color: var(--vi-text)">· Nhận diện được</span></p>
       <div id="legendItems" class="flex flex-wrap gap-2"></div>
+    </div>
+  </section>
+
+  <!-- ======================================= step 2b · SAM click-fix -->
+  <section id="samwrap" class="card p-6 mb-4 hidden" aria-labelledby="samh">
+    <div class="flex items-baseline gap-2 mb-3 flex-wrap">
+      <span class="chip chip-accent">2b</span>
+      <h2 id="samh" class="text-lg font-semibold">Fix a region by clicking</h2>
+      <span class="chip">Beta</span>
+      <span class="vi-block-inline text-[0.9rem]" style="color: var(--vi-text)">Sửa vùng bằng cách click</span>
+    </div>
+    <p class="text-[0.86rem] mb-1" style="color: var(--text-muted)">
+      When the matte gets an object wrong, click that object on the preview above and a second AI
+      (SAM — Segment Anything) traces exactly that object. Click again on missed parts to grow the
+      selection; <b>Shift-click</b> marks background to exclude. Then pick the correct colour and
+      apply. Tip: tick “Check against original” first so you can see what you are clicking.
+    </p>
+    <p class="vi-block vi-def text-[0.85rem] mb-3">
+      Khi matte nhận sai một vật, click vào vật đó trên ảnh xem trước phía trên — AI thứ hai (SAM —
+      Segment Anything) sẽ khoanh đúng vật đó. Click thêm vào phần bị sót để mở rộng vùng chọn;
+      <b>Shift-click</b> để loại trừ nền. Rồi chọn đúng màu và áp vào. Mẹo: bật “Đối chiếu ảnh gốc”
+      trước để thấy mình đang click vào gì.
+    </p>
+    <div class="flex flex-wrap items-center gap-3">
+      <button id="samEnable" class="btn !py-1.5" type="button">Enable click-fix</button>
+      <span id="samStatus" class="text-[0.85rem]" style="color: var(--text-muted)"></span>
+    </div>
+    <div id="samTools" class="hidden flex-wrap items-center gap-3 mt-3">
+      <label class="flex items-center gap-2 text-[0.88rem]">
+        <span>Colour as</span>
+        <span class="vi-block-inline" style="color: var(--vi-text)">· Tô màu là</span>
+        <select id="samCat" class="field !w-auto !py-1.5"></select>
+      </label>
+      <button id="samApply" class="btn btn-primary !py-1.5" type="button" disabled>Apply</button>
+      <button id="samClear" class="btn !py-1.5" type="button">Clear points</button>
+      <button id="samUndo" class="btn !py-1.5 hidden" type="button">Undo</button>
     </div>
   </section>
 
@@ -324,10 +380,12 @@ import { url } from '../../site';
       sourceImage = img;
       cleanMask = new Uint8Array(img.naturalWidth * img.naturalHeight);
       labelCanvas = null;
+      resetSam(true);
       $('cleanWrap')?.classList.remove('hidden');
       $('dlClean')?.classList.add('hidden');
       $('s2wrap')?.classList.remove('hidden');
       $('s3wrap')?.classList.add('hidden');
+      $('samwrap')?.classList.add('hidden');
       $('controls')?.classList.add('hidden');
       $('legend')?.classList.add('hidden');
       drawClean();
@@ -482,6 +540,7 @@ import { url } from '../../site';
         sourceImage = img;
         cleanMask = new Uint8Array(img.naturalWidth * img.naturalHeight);
         labelCanvas = null;
+        resetSam(true);
         $('dlClean')?.classList.remove('hidden');
         drawClean(); drawPreview();
         setCleanMsg('Done — brush more, or scroll down and press Segment. · Đã lấp xong — quét tiếp, hoặc kéo xuống bấm Segment.', 'var(--success)');
@@ -495,6 +554,7 @@ import { url } from '../../site';
     sourceImage = originalImage;
     cleanMask = new Uint8Array(originalImage.naturalWidth * originalImage.naturalHeight);
     labelCanvas = null;
+    resetSam(true);
     $('dlClean')?.classList.add('hidden');
     drawClean(); drawPreview();
     setCleanMsg('Back to the original image. · Đã trả về ảnh gốc.');
@@ -534,6 +594,24 @@ import { url } from '../../site';
     } else {
       ctx.drawImage(labelCanvas, 0, 0); // solid labels by default
     }
+    // SAM click-fix overlay: the traced object + the points she placed
+    if (samActive && samMaskCanvas) {
+      ctx.globalAlpha = 0.45;
+      ctx.drawImage(samMaskCanvas, 0, 0, W, H);
+      ctx.globalAlpha = 1;
+    }
+    if (samActive && samPoints.length) {
+      const r = Math.max(4, W / 220);
+      for (const p of samPoints) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
+        ctx.fillStyle = p.label ? '#22c55e' : '#ef4444';
+        ctx.fill();
+        ctx.lineWidth = Math.max(1.5, r / 3);
+        ctx.strokeStyle = '#fff';
+        ctx.stroke();
+      }
+    }
   }
   $('showOriginal')?.addEventListener('change', () => {
     $('opWrap')?.classList.toggle('hidden', !($<HTMLInputElement>('showOriginal'))?.checked);
@@ -566,6 +644,198 @@ import { url } from '../../site';
     catch { depther = await pipeline('depth-estimation', DEPTH, { device: 'wasm', progress_callback: onProgress }); }
     return depther;
   }
+
+  // --------------------------------------------- SAM click-fix (step 2b)
+  // A second, promptable model: she clicks the object the matte got wrong,
+  // SlimSAM traces exactly that object, and the mask is painted into the
+  // matte with the schema colour she picks. The image is encoded once
+  // (get_image_embeddings); each click only runs the tiny mask decoder.
+  const SAM = 'Xenova/slimsam-77-uniform';
+  let samKit: { model: any; processor: any; Tensor: any; RawImage: any } | null = null;
+  let samEmb: any = null, samEmbInputs: any = null;
+  let samActive = false, samBusy = false;
+  let samPoints: Array<{ x: number; y: number; label: number }> = [];
+  let samMask: Uint8Array | null = null;
+  let samMaskCanvas: HTMLCanvasElement | null = null;
+  const samUndo: ImageData[] = [];
+
+  function setSamStatus(t: string, color = 'var(--text-muted)') {
+    const el = $('samStatus');
+    if (el) { el.textContent = t; el.style.color = color; }
+  }
+  function resetSam(dropEmbeddings: boolean) {
+    samPoints = []; samMask = null; samMaskCanvas = null;
+    const ap = $<HTMLButtonElement>('samApply'); if (ap) ap.disabled = true;
+    if (dropEmbeddings) {
+      samEmb = null; samEmbInputs = null;
+      samUndo.length = 0; $('samUndo')?.classList.add('hidden');
+    }
+    if (samActive) drawPreview();
+  }
+
+  async function getSamKit() {
+    if (samKit) return samKit;
+    const T: any = await import(/* @vite-ignore */ TRANSFORMERS);
+    const prog = (p: any) => {
+      if (p.status === 'progress' && p.file?.endsWith?.('.onnx'))
+        setSamStatus(`Loading SAM model… ${Math.round(p.progress ?? 0)}% · Đang tải mô hình SAM…`);
+    };
+    const processor = await T.AutoProcessor.from_pretrained(SAM, {});
+    let model;
+    try {
+      model = await T.SamModel.from_pretrained(SAM, {
+        device: (navigator as any).gpu ? 'webgpu' : 'wasm',
+        dtype: (navigator as any).gpu ? 'fp16' : 'q8',
+        progress_callback: prog,
+      });
+    } catch {
+      model = await T.SamModel.from_pretrained(SAM, { device: 'wasm', dtype: 'q8', progress_callback: prog });
+    }
+    samKit = { model, processor, Tensor: T.Tensor, RawImage: T.RawImage };
+    return samKit;
+  }
+
+  async function ensureSamEmbeddings() {
+    if (samEmb || !sourceImage) return;
+    const kit = await getSamKit();
+    setSamStatus('Reading the image once — a few seconds… · Đang đọc ảnh một lần — vài giây…');
+    const W = sourceImage.naturalWidth, H = sourceImage.naturalHeight;
+    const c = document.createElement('canvas');
+    c.width = W; c.height = H;
+    const cctx = c.getContext('2d')!;
+    cctx.drawImage(sourceImage, 0, 0);
+    const raw = new kit.RawImage(cctx.getImageData(0, 0, W, H).data, W, H, 4);
+    samEmbInputs = await kit.processor(raw);
+    samEmb = await kit.model.get_image_embeddings(samEmbInputs);
+  }
+
+  async function updateSamMask() {
+    if (!samPoints.length || !sourceImage) return;
+    const kit = await getSamKit();
+    await ensureSamEmbeddings();
+    const origW = sourceImage.naturalWidth, origH = sourceImage.naturalHeight;
+    const reshaped = samEmbInputs.reshaped_input_sizes[0]; // [h, w]
+    const n = samPoints.length;
+    const pts = new Float32Array(n * 2);
+    const lbl = new BigInt64Array(n);
+    samPoints.forEach((p, i) => {
+      pts[i * 2] = (p.x / origW) * reshaped[1];
+      pts[i * 2 + 1] = (p.y / origH) * reshaped[0];
+      lbl[i] = BigInt(p.label);
+    });
+    const input_points = new kit.Tensor('float32', pts, [1, 1, n, 2]);
+    const input_labels = new kit.Tensor('int64', lbl, [1, 1, n]);
+    const out = await kit.model({ ...samEmb, input_points, input_labels });
+    const masks = await kit.processor.post_process_masks(out.pred_masks, samEmbInputs.original_sizes, samEmbInputs.reshaped_input_sizes);
+    const scores = out.iou_scores.data as Float32Array | number[];
+    let best = 0;
+    for (let i = 1; i < scores.length; i++) if (scores[i] > scores[best]) best = i;
+    const m = masks[0]; // [1, 3, H, W]
+    const dims = m.dims, mh = dims[dims.length - 2], mw = dims[dims.length - 1];
+    const data = m.data;
+    const off = best * mh * mw;
+    samMask = new Uint8Array(mh * mw);
+    for (let i = 0; i < mh * mw; i++) samMask[i] = data[off + i] ? 1 : 0;
+    // highlight canvas the preview blends on top
+    samMaskCanvas = document.createElement('canvas');
+    samMaskCanvas.width = mw; samMaskCanvas.height = mh;
+    const hctx = samMaskCanvas.getContext('2d')!;
+    const hd = hctx.createImageData(mw, mh);
+    for (let i = 0; i < mh * mw; i++) if (samMask[i]) {
+      hd.data[i * 4] = 255; hd.data[i * 4 + 1] = 255; hd.data[i * 4 + 2] = 255; hd.data[i * 4 + 3] = 255;
+    }
+    hctx.putImageData(hd, 0, 0);
+    const ap = $<HTMLButtonElement>('samApply'); if (ap) ap.disabled = false;
+  }
+
+  $('samEnable')?.addEventListener('click', async () => {
+    const btn = $<HTMLButtonElement>('samEnable')!;
+    if (samActive) {
+      samActive = false;
+      btn.textContent = 'Enable click-fix';
+      $('samTools')?.classList.add('hidden'); $('samTools')?.classList.remove('flex');
+      if (preview) preview.style.cursor = '';
+      setSamStatus('');
+      resetSam(false);
+      drawPreview();
+      return;
+    }
+    samActive = true;
+    btn.textContent = 'Disable click-fix';
+    // schema colours she can paint with
+    const sel = $<HTMLSelectElement>('samCat');
+    if (sel && !sel.options.length) {
+      for (const [key, [en, vi]] of Object.entries(KEY_LABELS)) {
+        const o = document.createElement('option');
+        o.value = key; o.textContent = `${en} · ${vi}`;
+        sel.appendChild(o);
+      }
+    }
+    $('samTools')?.classList.remove('hidden'); $('samTools')?.classList.add('flex');
+    if (preview) preview.style.cursor = 'crosshair';
+    try {
+      await getSamKit();
+      await ensureSamEmbeddings();
+      setSamStatus('Ready — click an object on the preview. · Sẵn sàng — click vào một vật trên ảnh xem trước.', 'var(--success)');
+    } catch (e: any) {
+      samActive = false;
+      btn.textContent = 'Enable click-fix';
+      if (preview) preview.style.cursor = '';
+      setSamStatus(`Could not load SAM: ${String(e?.message ?? e).slice(0, 90)} · Không tải được SAM — thử lại hoặc tải lại trang.`, 'var(--warning)');
+    }
+  });
+
+  preview?.addEventListener('click', async (e) => {
+    if (!samActive || samBusy || !labelCanvas || !sourceImage) return;
+    const rect = preview.getBoundingClientRect();
+    if (!rect.width || !rect.height) return;
+    const x = ((e.clientX - rect.left) / rect.width) * sourceImage.naturalWidth;
+    const y = ((e.clientY - rect.top) / rect.height) * sourceImage.naturalHeight;
+    samPoints.push({ x, y, label: (e as MouseEvent).shiftKey ? 0 : 1 });
+    samBusy = true;
+    setSamStatus('Tracing… · Đang khoanh vùng…');
+    try {
+      await updateSamMask();
+      setSamStatus('Good? Pick a colour and Apply — or keep clicking to refine. · Ổn chưa? Chọn màu rồi Apply — hoặc click tiếp để chỉnh.', 'var(--success)');
+    } catch (err: any) {
+      samPoints.pop();
+      setSamStatus(`SAM failed: ${String(err?.message ?? err).slice(0, 90)}`, 'var(--warning)');
+    }
+    samBusy = false;
+    drawPreview();
+  });
+
+  $('samClear')?.addEventListener('click', () => { resetSam(false); setSamStatus('Points cleared. · Đã xoá điểm.'); });
+
+  $('samApply')?.addEventListener('click', () => {
+    if (!samMask || !labelCanvas) return;
+    const key = ($<HTMLSelectElement>('samCat'))?.value ?? 'decor';
+    const col = GROUP_COLOR[key] ?? [106, 90, 205];
+    const W = labelCanvas.width, H = labelCanvas.height;
+    const lctx = labelCanvas.getContext('2d')!;
+    // snapshot for undo (cap the stack — full-res frames are heavy)
+    samUndo.push(lctx.getImageData(0, 0, W, H));
+    if (samUndo.length > 3) samUndo.shift();
+    $('samUndo')?.classList.remove('hidden');
+    const img = lctx.getImageData(0, 0, W, H);
+    for (let i = 0; i < W * H; i++) if (samMask[i]) {
+      img.data[i * 4] = col[0]; img.data[i * 4 + 1] = col[1]; img.data[i * 4 + 2] = col[2];
+    }
+    lctx.putImageData(img, 0, 0);
+    resetSam(false);
+    setSamStatus('Applied. Click the next object, or download below. · Đã áp màu. Click vật tiếp theo, hoặc tải về ở dưới.', 'var(--success)');
+    drawPreview();
+  });
+
+  $('samUndo')?.addEventListener('click', () => {
+    const snap = samUndo.pop();
+    if (!snap || !labelCanvas) return;
+    labelCanvas.getContext('2d')!.putImageData(snap, 0, 0);
+    if (!samUndo.length) $('samUndo')?.classList.add('hidden');
+    resetSam(false);
+    setSamStatus('Undone. · Đã hoàn tác.');
+    drawPreview();
+  });
 
   // ---------------------------------------------- cloud engine (Gemini)
   const GEMINI_MODEL = 'gemini-2.5-flash-image';
@@ -616,6 +886,23 @@ Distinct objects of the same category may share the category colour.`;
   }
   providerSel?.addEventListener('change', syncProviderUI);
   syncProviderUI();
+
+  // copy-paste path for using ChatGPT / Gemini apps directly, no API key
+  const promptText = $<HTMLTextAreaElement>('promptText');
+  if (promptText) promptText.value = MATTE_PROMPT;
+  $('copyPrompt')?.addEventListener('click', async () => {
+    const msg = $('copyMsg');
+    try {
+      await navigator.clipboard.writeText(MATTE_PROMPT);
+    } catch {
+      promptText?.select();
+      document.execCommand('copy');
+    }
+    if (msg) {
+      msg.textContent = 'Copied ✓ · Đã copy';
+      setTimeout(() => { msg.textContent = ''; }, 2500);
+    }
+  });
 
   engineRadios.forEach((r) =>
     r.addEventListener('change', () => {
@@ -752,6 +1039,7 @@ Distinct objects of the same category may share the category colour.`;
         $('controls')?.classList.remove('hidden');
         $('legend')?.classList.remove('hidden');
         $('s3wrap')?.classList.remove('hidden');
+        $('samwrap')?.classList.remove('hidden');
         const csecs = ((performance.now() - t0) / 1000).toFixed(1);
         setStatus(`Done in ${csecs}s — check alignment with the overlay before trusting edges. · Xong sau ${csecs}s — bật "Đối chiếu ảnh gốc" kiểm tra độ khớp trước khi dùng.`, 'var(--success)');
         runBtn.disabled = false;
@@ -847,6 +1135,7 @@ Distinct objects of the same category may share the category colour.`;
       $('controls')?.classList.remove('hidden');
       $('legend')?.classList.remove('hidden');
       $('s3wrap')?.classList.remove('hidden');
+        $('samwrap')?.classList.remove('hidden');
       const secs = ((performance.now() - t0) / 1000).toFixed(1);
       setStatus(`Done in ${secs}s. · Xong sau ${secs}s.`, 'var(--success)');
     } catch (err: any) {
