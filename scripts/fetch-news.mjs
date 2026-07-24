@@ -22,6 +22,7 @@ const OUT_DIR = join(ROOT, 'src/content/daily');
 
 const MODEL = process.env.PASTELUX_MODEL ?? 'claude-sonnet-5';
 const MAX_ITEMS = Number(process.env.PASTELUX_MAX_ITEMS ?? 12);
+const MIN_ITEMS = Number(process.env.PASTELUX_MIN_ITEMS ?? 4);
 // The lighting trade press publishes a few times a week, not daily — a 72-hour
 // window empties the digest most mornings. A wide window is safe because step 4
 // drops anything already published in the last fortnight of digests, so each day
@@ -240,7 +241,11 @@ function rotate(list, dateStr) {
 // ---------------------------------------------------------------- main
 
 async function main() {
-  const date = opt('date') ?? new Date().toISOString().slice(0, 10);
+  // The digest is dated in Asia/Ho_Chi_Minh (UTC+7), not UTC: the job runs at
+  // local midnight, and the reader's "today" is the local date. Labelling in
+  // UTC made the site look a day stale every morning.
+  const localNow = new Date(Date.now() + 7 * 3600_000);
+  const date = opt('date') ?? localNow.toISOString().slice(0, 10);
   const config = JSON.parse(await readFile(join(ROOT, 'src/data/feeds.json'), 'utf8'));
 
   log(`building digest for ${date} (ai: ${USE_AI ? MODEL : 'off'})`);
@@ -287,28 +292,43 @@ async function main() {
   }
   items = [...byTitle.values()];
 
-  // 4. Drop anything already published in the last 14 digests.
-  const seen = new Set();
+  // 4+5. Score, then dedupe against past digests — but never publish a
+  // near-empty page. The trade press is slow and a rebuild after a manual
+  // trigger can leave a single fresh item, so if the strict window yields
+  // fewer than MIN_ITEMS the dedup window relaxes step by step (14 digests,
+  // then 7, 3, 1, none) until the page has enough. A repeated good story
+  // beats an empty digest.
+  const scored = items
+    .map((i) => ({ ...i, score: relevance(i, config.keywords) }))
+    .filter((i) => i.score > 0)
+    .sort((a, b) => b.score - a.score || Date.parse(b.published) - Date.parse(a.published));
+
+  // per-digest seen sets, oldest -> newest, excluding today's own file
+  const seenSets = [];
   if (existsSync(OUT_DIR)) {
     const recent = (await readdir(OUT_DIR)).filter((f) => f.endsWith('.json')).sort().slice(-14);
     for (const f of recent) {
       try {
         const day = JSON.parse(await readFile(join(OUT_DIR, f), 'utf8'));
         if (day.date === date) continue; // rebuilding today is fine
-        for (const it of day.items ?? []) seen.add(canonical(it.url));
+        seenSets.push(new Set((day.items ?? []).map((it) => canonical(it.url))));
       } catch {}
     }
   }
-  items = items.filter((i) => !seen.has(i.url));
 
-  // 5. Relevance score, then take the best.
-  items = items
-    .map((i) => ({ ...i, score: relevance(i, config.keywords) }))
-    .filter((i) => i.score > 0)
-    .sort((a, b) => b.score - a.score || Date.parse(b.published) - Date.parse(a.published))
-    .slice(0, MAX_ITEMS);
+  let usedWindow = seenSets.length;
+  for (const win of [seenSets.length, 7, 3, 1, 0]) {
+    const seen = new Set();
+    for (const s of seenSets.slice(seenSets.length - Math.min(win, seenSets.length))) {
+      for (const u of s) seen.add(u);
+    }
+    const picked = scored.filter((i) => !seen.has(i.url)).slice(0, MAX_ITEMS);
+    items = picked;
+    usedWindow = win;
+    if (picked.length >= MIN_ITEMS) break;
+  }
 
-  log(`${items.length} items after filtering`);
+  log(`${items.length} items after filtering (dedup window: ${usedWindow} digests)`);
 
   // 6. Summarise, degrading gracefully.
   let degraded = !USE_AI;

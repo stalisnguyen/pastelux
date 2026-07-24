@@ -2,8 +2,10 @@ name: Daily digest
 
 on:
   schedule:
-    # 23:00 UTC = 06:00 Asia/Ho_Chi_Minh, so it is ready before the working day.
-    - cron: '0 23 * * *'
+    # 17:00 UTC = 00:00 Asia/Ho_Chi_Minh — the digest carries the new local
+    # date the moment the day starts. GitHub's cron can lag by up to an hour
+    # at busy times, so expect it live by roughly 01:00 local.
+    - cron: '0 17 * * *'
   workflow_dispatch:
     inputs:
       date:
