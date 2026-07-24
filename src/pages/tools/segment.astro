@@ -67,6 +67,35 @@ import { url } from '../../site';
     </label>
   </section>
 
+  <!-- ======================================= step 1b: clean logos (optional) -->
+  <section id="cleanWrap" class="card p-6 mb-4 hidden" aria-labelledby="s1b">
+    <div class="flex items-baseline gap-2 mb-3 flex-wrap">
+      <span class="chip">1b</span>
+      <h2 id="s1b" class="text-lg font-semibold">Remove text or logos <span class="text-[0.8rem] font-normal" style="color: var(--text-faint)">(optional)</span></h2>
+      <span class="vi-block-inline text-[0.9rem]" style="color: var(--vi-text)">Xoá chữ / logo (không bắt buộc)</span>
+    </div>
+    <p class="text-[0.88rem] mb-1" style="color: var(--text-muted)">
+      Brush over any watermark or text, then Apply — the area is filled from its surroundings.
+      Works well on flat areas (walls, grass, sky); on busy texture the fill will look soft.
+    </p>
+    <p class="vi-block vi-def text-[0.85rem] mb-3">
+      Quét chổi lên phần chữ hoặc logo rồi bấm Apply — vùng đó được lấp lại từ xung quanh. Hiệu quả
+      tốt trên nền phẳng (tường, cỏ, trời); trên vân phức tạp chỗ lấp sẽ hơi mềm.
+    </p>
+    <div class="flex flex-wrap items-center gap-x-5 gap-y-2 mb-3 text-[0.9rem]">
+      <label class="flex items-center gap-2">
+        <span>Brush</span><span class="vi-block-inline" style="color: var(--vi-text)">· Cỡ chổi</span>
+        <input id="brushSize" type="range" min="6" max="80" value="24" class="accent-[var(--accent)]" />
+      </label>
+      <button id="applyClean" class="btn btn-primary !py-1.5" type="button">Apply</button>
+      <button id="resetClean" class="btn !py-1.5" type="button">Reset</button>
+      <button id="dlClean" class="btn !py-1.5 hidden" type="button">Download cleaned image</button>
+    </div>
+    <div class="rounded-lg overflow-hidden" style="background: var(--bg)">
+      <canvas id="cleanCanvas" class="block w-full h-auto" style="cursor: crosshair; touch-action: none"></canvas>
+    </div>
+  </section>
+
   <!-- ======================================= step 2 -->
   <section id="s2wrap" class="card p-6 mb-4 hidden" aria-labelledby="s2">
     <div class="flex items-baseline gap-2 mb-3 flex-wrap">
@@ -191,22 +220,190 @@ import { url } from '../../site';
   };
 
   // ------------------------------------------------------------- upload
+  let originalImage: HTMLImageElement | null = null; // pristine upload, for Reset
+  let cleanMask: Uint8Array | null = null; // 1 = brushed for removal
+
   function handleFile(file: File) {
     if (!file || !file.type.startsWith('image/')) return;
     const img = new Image();
     img.onload = () => {
+      originalImage = img;
       sourceImage = img;
+      cleanMask = new Uint8Array(img.naturalWidth * img.naturalHeight);
       labelCanvas = null;
+      $('cleanWrap')?.classList.remove('hidden');
+      $('dlClean')?.classList.add('hidden');
       $('s2wrap')?.classList.remove('hidden');
       $('s3wrap')?.classList.add('hidden');
       $('controls')?.classList.add('hidden');
       $('legend')?.classList.add('hidden');
+      drawClean();
       drawPreview();
       setStatus('Ready — press Segment. · Sẵn sàng — bấm Segment.');
-      $('s2wrap')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      $('cleanWrap')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     };
     img.src = URL.createObjectURL(file);
   }
+
+  // ---------------------------------------------- clean text/logo (step 1b)
+  const cleanCanvas = $<HTMLCanvasElement>('cleanCanvas');
+
+  function drawClean() {
+    if (!cleanCanvas || !sourceImage) return;
+    const W = sourceImage.naturalWidth, H = sourceImage.naturalHeight;
+    cleanCanvas.width = W; cleanCanvas.height = H;
+    const ctx = cleanCanvas.getContext('2d')!;
+    ctx.drawImage(sourceImage, 0, 0);
+    if (!cleanMask) return;
+    // show the brushed area as a red tint
+    const id = ctx.getImageData(0, 0, W, H);
+    for (let i = 0; i < W * H; i++) if (cleanMask[i]) {
+      id.data[i * 4] = Math.min(255, id.data[i * 4] * 0.4 + 200);
+      id.data[i * 4 + 1] *= 0.35; id.data[i * 4 + 2] *= 0.35;
+    }
+    ctx.putImageData(id, 0, 0);
+  }
+
+  let painting = false;
+  function stamp(ev: PointerEvent) {
+    if (!cleanCanvas || !cleanMask || !sourceImage) return;
+    const rect = cleanCanvas.getBoundingClientRect();
+    const W = sourceImage.naturalWidth, H = sourceImage.naturalHeight;
+    const x = ((ev.clientX - rect.left) / rect.width) * W;
+    const y = ((ev.clientY - rect.top) / rect.height) * H;
+    const r = Number(($<HTMLInputElement>('brushSize'))?.value ?? 24) * (W / rect.width) * 0.5;
+    const r2 = r * r;
+    const x0 = Math.max(0, Math.floor(x - r)), x1 = Math.min(W - 1, Math.ceil(x + r));
+    const y0 = Math.max(0, Math.floor(y - r)), y1 = Math.min(H - 1, Math.ceil(y + r));
+    for (let yy = y0; yy <= y1; yy++) for (let xx = x0; xx <= x1; xx++) {
+      const dx = xx - x, dy = yy - y;
+      if (dx * dx + dy * dy <= r2) cleanMask[yy * W + xx] = 1;
+    }
+    drawClean();
+  }
+  cleanCanvas?.addEventListener('pointerdown', (e) => { painting = true; cleanCanvas.setPointerCapture(e.pointerId); stamp(e); });
+  cleanCanvas?.addEventListener('pointermove', (e) => { if (painting) stamp(e); });
+  cleanCanvas?.addEventListener('pointerup', () => { painting = false; });
+
+  /**
+   * Diffusion inpaint: solve the hole at quarter resolution (Jacobi iterations
+   * over masked pixels), paste back bilinearly, then a few full-res passes to
+   * blend the seam. Harmonic fill — smooth and natural on flat surfaces, which
+   * is where watermarks live.
+   */
+  function inpaint(img: HTMLImageElement, mask: Uint8Array): HTMLCanvasElement {
+    const W = img.naturalWidth, H = img.naturalHeight;
+    const full = document.createElement('canvas');
+    full.width = W; full.height = H;
+    const fctx = full.getContext('2d')!;
+    fctx.drawImage(img, 0, 0);
+    const fid = fctx.getImageData(0, 0, W, H);
+
+    // quarter-res working copy
+    const s = 4, w = Math.max(2, Math.ceil(W / s)), h = Math.max(2, Math.ceil(H / s));
+    const rgb = new Float32Array(w * h * 3);
+    const hole = new Uint8Array(w * h);
+    const cntArr = new Int32Array(w * h);
+    for (let Y = 0; Y < H; Y++) for (let X = 0; X < W; X++) {
+      const q = ((Y / s) | 0) * w + ((X / s) | 0), p = (Y * W + X) * 4;
+      if (mask[Y * W + X]) { hole[q] = 1; continue; } // masked px must NOT seed the average
+      rgb[q * 3] += fid.data[p]; rgb[q * 3 + 1] += fid.data[p + 1]; rgb[q * 3 + 2] += fid.data[p + 2];
+      cntArr[q]++;
+    }
+    for (let q = 0; q < w * h; q++) { const n = cntArr[q]; if (n) { rgb[q * 3] /= n; rgb[q * 3 + 1] /= n; rgb[q * 3 + 2] /= n; } }
+    // cells with no clean pixels: flood-fill initial values from known neighbours
+    let pending = true;
+    while (pending) {
+      pending = false;
+      for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+        const q = y * w + x; if (cntArr[q]) continue;
+        let r = 0, g = 0, b = 0, n = 0;
+        const add = (j: number) => { if (cntArr[j]) { r += rgb[j * 3]; g += rgb[j * 3 + 1]; b += rgb[j * 3 + 2]; n++; } };
+        if (x > 0) add(q - 1); if (x < w - 1) add(q + 1); if (y > 0) add(q - w); if (y < h - 1) add(q + w);
+        if (n) { rgb[q * 3] = r / n; rgb[q * 3 + 1] = g / n; rgb[q * 3 + 2] = b / n; cntArr[q] = -1; }
+        else pending = true;
+      }
+      // -1 markers become known for the next sweep
+      for (let q = 0; q < w * h; q++) if (cntArr[q] === -1) cntArr[q] = 1;
+    }
+
+    // Jacobi diffusion on hole pixels
+    for (let it = 0; it < 300; it++) {
+      for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+        const q = y * w + x; if (!hole[q]) continue;
+        let r = 0, g = 0, b = 0, n = 0;
+        const add = (j: number) => { r += rgb[j * 3]; g += rgb[j * 3 + 1]; b += rgb[j * 3 + 2]; n++; };
+        if (x > 0) add(q - 1); if (x < w - 1) add(q + 1);
+        if (y > 0) add(q - w); if (y < h - 1) add(q + w);
+        if (n) { rgb[q * 3] = r / n; rgb[q * 3 + 1] = g / n; rgb[q * 3 + 2] = b / n; }
+      }
+    }
+
+    // paste back into hole pixels, bilinear from the quarter grid
+    for (let Y = 0; Y < H; Y++) for (let X = 0; X < W; X++) {
+      if (!mask[Y * W + X]) continue;
+      const fx = Math.min(w - 1.001, X / s), fy = Math.min(h - 1.001, Y / s);
+      const x0 = fx | 0, y0 = fy | 0, tx = fx - x0, ty = fy - y0;
+      const p = (Y * W + X) * 4;
+      for (let ch = 0; ch < 3; ch++) {
+        const a = rgb[(y0 * w + x0) * 3 + ch], b2 = rgb[(y0 * w + x0 + 1) * 3 + ch];
+        const c2 = rgb[((y0 + 1) * w + x0) * 3 + ch], d2 = rgb[((y0 + 1) * w + x0 + 1) * 3 + ch];
+        fid.data[p + ch] = a * (1 - tx) * (1 - ty) + b2 * tx * (1 - ty) + c2 * (1 - tx) * ty + d2 * tx * ty;
+      }
+    }
+    // blend seams: a few full-res passes over masked px
+    const D = fid.data;
+    for (let it = 0; it < 6; it++) {
+      for (let Y = 1; Y < H - 1; Y++) for (let X = 1; X < W - 1; X++) {
+        const i = Y * W + X; if (!mask[i]) continue;
+        const p = i * 4;
+        for (let ch = 0; ch < 3; ch++)
+          D[p + ch] = (D[p - 4 + ch] + D[p + 4 + ch] + D[p - W * 4 + ch] + D[p + W * 4 + ch]) / 4;
+      }
+    }
+    fctx.putImageData(fid, 0, 0);
+    return full;
+  }
+
+  $('applyClean')?.addEventListener('click', () => {
+    if (!originalImage || !cleanMask) return;
+    let any = false; for (let i = 0; i < cleanMask.length; i++) if (cleanMask[i]) { any = true; break; }
+    if (!any) return;
+    setStatus('Filling… · Đang lấp vùng đã quét…');
+    setTimeout(() => {
+      const cleaned = inpaint(sourceImage!, cleanMask!);
+      const img = new Image();
+      img.onload = () => {
+        sourceImage = img;
+        cleanMask = new Uint8Array(img.naturalWidth * img.naturalHeight);
+        labelCanvas = null;
+        $('dlClean')?.classList.remove('hidden');
+        drawClean(); drawPreview();
+        setStatus('Cleaned. Brush more, or press Segment. · Đã lấp xong — quét tiếp hoặc bấm Segment.', 'var(--success)');
+      };
+      img.src = cleaned.toDataURL('image/png');
+    }, 30);
+  });
+
+  $('resetClean')?.addEventListener('click', () => {
+    if (!originalImage) return;
+    sourceImage = originalImage;
+    cleanMask = new Uint8Array(originalImage.naturalWidth * originalImage.naturalHeight);
+    labelCanvas = null;
+    $('dlClean')?.classList.add('hidden');
+    drawClean(); drawPreview();
+  });
+
+  $('dlClean')?.addEventListener('click', () => {
+    if (!sourceImage) return;
+    const c = canvasOfImage(sourceImage);
+    c.toBlob((b) => {
+      if (!b) return;
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(b); a.download = 'cleaned.png'; a.click();
+      URL.revokeObjectURL(a.href);
+    }, 'image/png');
+  });
   fileInput?.addEventListener('change', () => { if (fileInput.files?.[0]) handleFile(fileInput.files[0]); });
   ['dragover', 'dragenter'].forEach((ev) => drop?.addEventListener(ev, (e) => { e.preventDefault(); (drop as HTMLElement).style.borderColor = 'var(--accent)'; }));
   ['dragleave', 'drop'].forEach((ev) => drop?.addEventListener(ev, (e) => { e.preventDefault(); (drop as HTMLElement).style.borderColor = 'var(--border-strong)'; }));
@@ -456,6 +653,43 @@ import { url } from '../../site';
     // colour edges AND depth edges, so same-coloured ceiling/wall corners hold
     classIdx = bilateralRefine(classIdx, srcW, depthGrid, W, H, 2, 3, 1400, 18) as typeof classIdx;
 
+    // 1c. furniture standing flush against a wall (her lower cabinet under the
+    // artwork) often gets classed as "wall". It sits NEARER the camera than
+    // the wall plane behind it, so carve out wall pixels that are markedly
+    // nearer than the robust wall depth of their column.
+    const raisedK = classNames.length;
+    classNames.push('object at wall');
+    if (depthGrid) {
+      const colMed = new Float32Array(W).fill(NaN);
+      const tmpD: number[] = [];
+      for (let x = 0; x < W; x++) {
+        tmpD.length = 0;
+        for (let y = 0; y < H; y++) {
+          const p = y * W + x;
+          const nm = classNames[classIdx[p]];
+          if (nm && WALL_LIKE.has(first(nm))) tmpD.push(depthGrid[p]);
+        }
+        if (tmpD.length >= H * 0.08) { tmpD.sort((a, b) => a - b); colMed[x] = tmpD[tmpD.length >> 1]; }
+      }
+      // spread of residuals → robust threshold
+      const res: number[] = [];
+      for (let p = 0; p < N; p++) {
+        const nm = classNames[classIdx[p]];
+        if (!nm || !WALL_LIKE.has(first(nm))) continue;
+        const m = colMed[p % W]; if (Number.isNaN(m)) continue;
+        res.push(Math.abs(depthGrid[p] - m));
+      }
+      res.sort((a, b) => a - b);
+      const mad = res.length ? res[res.length >> 1] : 3;
+      const Tp = Math.max(mad * 4, 10); // depth units are 0..255 inverse depth
+      for (let p = 0; p < N; p++) {
+        const nm = classNames[classIdx[p]];
+        if (!nm || !WALL_LIKE.has(first(nm))) continue;
+        const m = colMed[p % W]; if (Number.isNaN(m)) continue;
+        if (depthGrid[p] - m > Tp) classIdx[p] = raisedK; // nearer = brighter
+      }
+    }
+
     // 2. wall-plane split — WALLS ONLY, decided PER COLUMN, not per pixel.
     // Wall corners in an interior are near-vertical lines, so classifying
     // whole columns is far more robust than thresholding noisy per-pixel
@@ -529,13 +763,14 @@ import { url } from '../../site';
     // 3. connected components over (classIdx, bucket)
     const comp = new Int32Array(N).fill(-1);
     const compClass: number[] = [];
+    const compBucket: number[] = [];
     const compSize: number[] = [];
     const stack = new Int32Array(N);
     let nComp = 0;
     for (let s = 0; s < N; s++) {
       if (comp[s] !== -1 || classIdx[s] < 0) continue;
       const ck = classIdx[s], bk = bucket[s], id = nComp++;
-      compClass.push(ck); let size = 0, sp = 0;
+      compClass.push(ck); compBucket.push(bk); let size = 0, sp = 0;
       stack[sp++] = s; comp[s] = id;
       while (sp > 0) {
         const p = stack[--sp]; size++;
@@ -575,25 +810,33 @@ import { url } from '../../site';
     // 4b. compact regions to a dense root index
     const rootIndex = new Map<number, number>();
     const rootClass: number[] = [];
+    const rootBucket: number[] = [];
     const rootSize: number[] = [];
     for (let i = 0; i < nComp; i++) {
       if (find(i) !== i) continue;
       rootIndex.set(i, rootIndex.size);
-      rootClass.push(compClass[i]); rootSize.push(compSize[i]);
+      rootClass.push(compClass[i]); rootBucket.push(compBucket[i]); rootSize.push(compSize[i]);
     }
     const nReg = rootIndex.size;
     const regionOf = new Int32Array(N);
     for (let p = 0; p < N; p++) { const a = comp[p]; regionOf[p] = a >= 0 ? rootIndex.get(find(a))! : -1; }
 
-    // 5. every region gets its OWN colour, largest regions first so the big
-    // surfaces take the most-separated hues. This is what makes select-by-
-    // colour reliable in Photoshop: one colour can only ever mean one region.
-    // (The previous graph colouring only kept *touching* regions apart, so the
-    // ceiling and the floor — which never touch — both came out red.)
-    const palette = buildPalette(Math.max(nReg, 8));
+    // 5. colour like a material pass: one colour per KIND of thing, the way
+    // V-Ray does it — both armchairs share a colour, all pieces of floor share
+    // a colour. Walls are the exception: each orientation plane gets its own,
+    // because lighting them separately is the whole point.
+    const keyOfRegion = (r: number): string => {
+      const nm = first(classNames[rootClass[r]] ?? 'unknown');
+      return WALL_LIKE.has(nm) ? `wall|${rootBucket[r]}` : nm;
+    };
+    const keyArea = new Map<string, number>();
+    for (let r = 0; r < nReg; r++) keyOfRegion(r) && keyArea.set(keyOfRegion(r), (keyArea.get(keyOfRegion(r)) ?? 0) + rootSize[r]);
+    const keysByArea = [...keyArea.entries()].sort((a, b) => b[1] - a[1]).map(([k]) => k);
+    const palette = buildPalette(Math.max(keysByArea.length, 8));
+    const keyColor = new Map<string, [number, number, number]>();
+    keysByArea.forEach((k, rank) => keyColor.set(k, palette[rank % palette.length]));
     const regColor: [number, number, number][] = new Array(nReg);
-    const byArea = [...Array(nReg).keys()].sort((a, b) => rootSize[b] - rootSize[a]);
-    byArea.forEach((r, rank) => { regColor[r] = palette[rank % palette.length]; });
+    for (let r = 0; r < nReg; r++) regColor[r] = keyColor.get(keyOfRegion(r))!;
 
     // 6. upscale the region map to full resolution (nearest), then snap the
     //    boundaries to the full-res render edges so lines come out crisp.
@@ -620,15 +863,15 @@ import { url } from '../../site';
     }
     lctx.putImageData(out, 0, 0);
 
-    // 8. legend, aggregated by class
-    const perClass = new Map<string, { color: [number, number, number]; regions: number; area: number }>();
+    // 8. legend, one entry per colour key
+    const perKey = new Map<string, { color: [number, number, number]; regions: number; area: number }>();
     for (let r = 0; r < nReg; r++) {
-      const key = first(classNames[rootClass[r]] ?? 'unknown');
-      const e = perClass.get(key) ?? { color: regColor[r], regions: 0, area: 0 };
+      const key = keyOfRegion(r);
+      const e = perKey.get(key) ?? { color: regColor[r], regions: 0, area: 0 };
       e.regions++; e.area += rootSize[r];
-      if (!perClass.has(key)) perClass.set(key, e);
+      if (!perKey.has(key)) perKey.set(key, e);
     }
-    renderLegend(perClass);
+    renderLegend(perKey);
   }
 
   /** Same bilateral idea, at full resolution, on region ids, boundary pixels only. */
@@ -669,12 +912,21 @@ import { url } from '../../site';
     return cur;
   }
 
-  function renderLegend(perClass: Map<string, { color: number[]; regions: number; area: number }>) {
+  const KEY_LABELS: Record<string, [string, string]> = {
+    'wall|0': ['wall — left', 'tường trái'],
+    'wall|1': ['wall — centre', 'tường giữa'],
+    'wall|2': ['wall — right', 'tường phải'],
+    'object at wall': ['object at wall', 'vật trước tường'],
+  };
+
+  function renderLegend(perKey: Map<string, { color: number[]; regions: number; area: number }>) {
     const box = $('legendItems'); if (!box) return;
     box.innerHTML = '';
-    const items = [...perClass.entries()].sort((a, b) => b[1].area - a[1].area);
-    for (const [name, info] of items) {
-      const vi = VI[name];
+    const items = [...perKey.entries()].sort((a, b) => b[1].area - a[1].area);
+    for (const [key, info] of items) {
+      const special = KEY_LABELS[key];
+      const name = special ? special[0] : key;
+      const vi = special ? special[1] : VI[key];
       const chip = document.createElement('span');
       chip.className = 'chip';
       chip.innerHTML =
