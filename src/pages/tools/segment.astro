@@ -111,8 +111,38 @@ import { url } from '../../site';
       <button id="run" class="btn btn-primary ml-auto" type="button">Segment</button>
     </div>
 
-    <!-- options -->
-    <div class="flex flex-wrap items-center gap-x-6 gap-y-3 mb-4 text-[0.9rem]">
+    <!-- engine choice -->
+    <div class="grid sm:grid-cols-2 gap-3 mb-4">
+      <label class="rounded-lg border p-3 cursor-pointer flex gap-2.5" style="border-color: var(--border-strong)">
+        <input type="radio" name="engine" value="local" class="accent-[var(--accent)] mt-1" checked />
+        <span class="text-[0.88rem]">
+          <b>In-browser</b> — free, and the image never leaves your machine. Geometric
+          approximation; edges may need cleanup.
+          <span class="vi-block vi-def mt-1 text-[0.84rem]">Chạy trong máy — miễn phí, ảnh không gửi đi đâu. Tách theo hình học, mép có thể cần dặm lại.</span>
+        </span>
+      </label>
+      <label class="rounded-lg border p-3 cursor-pointer flex gap-2.5" style="border-color: var(--border-strong)">
+        <input type="radio" name="engine" value="cloud" class="accent-[var(--accent)] mt-1" />
+        <span class="text-[0.88rem]">
+          <b>Gemini AI matte</b> — much better object separation, needs your own Google AI
+          API key (~$0.04/image). <b>The image is sent to Google.</b>
+          <span class="vi-block vi-def mt-1 text-[0.84rem]">Gemini vẽ matte — tách vật tốt hơn hẳn, cần API key Google của bạn (~1.000đ/ảnh). <b>Ảnh sẽ được gửi lên Google.</b></span>
+        </span>
+      </label>
+    </div>
+
+    <div id="cloudOpts" class="hidden mb-4 rounded-lg p-3" style="background: var(--bg-elevated); border: 1px solid var(--border)">
+      <label class="label" for="geminiKey">Google AI API key</label>
+      <input id="geminiKey" type="password" class="field" placeholder="AIza…" autocomplete="off" />
+      <p class="text-[0.78rem] mt-1.5" style="color: var(--text-faint)">
+        Stored only in this browser (localStorage), never in the site. Get one free at
+        aistudio.google.com → Get API key. Do not use a key that guards anything important.
+        <span class="vi-block-inline">· Chỉ lưu trong trình duyệt này, không nằm trên site. Lấy miễn phí tại aistudio.google.com → Get API key.</span>
+      </p>
+    </div>
+
+    <!-- options (local engine) -->
+    <div id="localOpts" class="flex flex-wrap items-center gap-x-6 gap-y-3 mb-4 text-[0.9rem]">
       <label class="flex items-center gap-2 cursor-pointer">
         <input id="splitPlanes" type="checkbox" class="accent-[var(--accent)]" checked />
         <span>Split wall planes</span>
@@ -520,6 +550,115 @@ import { url } from '../../site';
     return depther;
   }
 
+  // ---------------------------------------------- cloud engine (Gemini)
+  const GEMINI_MODEL = 'gemini-2.5-flash-image';
+  const KEY_STORE = 'pastelux-gemini-key';
+
+  // The prompt is her Object-ID matte spec, pinned to OUR fixed colour schema
+  // so both engines produce the same legend.
+  const MATTE_PROMPT = `Convert this architectural render into an Object ID matte pass (segmentation map), like a V-Ray WireColor render element.
+
+STRICT RULES:
+1. Output ONLY the matte image. Same aspect ratio and framing as the input. No legend, no text, no border.
+2. 100% solid flat colours. No gradients, no shading, no shadows, no anti-aliasing bleed. Razor-sharp boundaries that follow the exact geometry of the input.
+3. Colour purely by object identity, never by lighting. One continuous object = one uniform colour across its whole surface.
+4. Separate wall planes by orientation. Detect every small and distant object: track lights, recessed spotlights, LED strips, consoles under artwork, tabletop decor.
+5. Remove any watermark, logo or text; fill that area as its background surface.
+
+FIXED COLOUR SCHEMA (use these exact colours):
+- Left wall plane #008099, centre/back wall plane #800080, right wall plane #C00080
+- Ceiling #800000, floor #000080, rug/carpet #B03060
+- Sofas, armchairs, cushions, beds #008040
+- Coffee/side/dining tables, desks #40E0D0
+- Cabinets, consoles, shelves, counters #FFD700
+- Artwork, mirrors, decor objects #6A5ACD
+- ALL lighting fixtures (track lights, spots, pendants, lamps, LED strips) #FFFFFF
+- Plants #32CD32, doors #FF8000, windows #00BFFF, stairs/columns #C0C0C0
+Distinct objects of the same category may share the category colour.`;
+
+  const engineRadios = [...document.querySelectorAll<HTMLInputElement>('input[name="engine"]')];
+  const currentEngine = () => engineRadios.find((r) => r.checked)?.value ?? 'local';
+  const keyInput = $<HTMLInputElement>('geminiKey');
+  try { if (keyInput) keyInput.value = localStorage.getItem(KEY_STORE) ?? ''; } catch {}
+  engineRadios.forEach((r) =>
+    r.addEventListener('change', () => {
+      const cloud = currentEngine() === 'cloud';
+      $('cloudOpts')?.classList.toggle('hidden', !cloud);
+      $('localOpts')?.classList.toggle('hidden', cloud);
+    })
+  );
+
+  async function runCloud(): Promise<boolean> {
+    const key = keyInput?.value.trim();
+    if (!key) {
+      setStatus('Paste your Google AI API key first (aistudio.google.com → Get API key). · Hãy dán API key Google trước.', 'var(--warning)');
+      return false;
+    }
+    try { localStorage.setItem(KEY_STORE, key); } catch {}
+
+    const origW = sourceImage!.naturalWidth, origH = sourceImage!.naturalHeight;
+    // cap the upload; the model works around 1k anyway
+    const inScale = Math.min(1, 1536 / Math.max(origW, origH));
+    const c = document.createElement('canvas');
+    c.width = Math.round(origW * inScale); c.height = Math.round(origH * inScale);
+    c.getContext('2d')!.drawImage(sourceImage!, 0, 0, c.width, c.height);
+    const b64 = c.toDataURL('image/jpeg', 0.92).split(',')[1];
+
+    setStatus('Sending to Gemini — usually 10–30s… · Đang gửi lên Gemini — thường mất 10–30 giây…');
+    const res = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${encodeURIComponent(key)}`,
+      {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ role: 'user', parts: [
+            { inline_data: { mime_type: 'image/jpeg', data: b64 } },
+            { text: MATTE_PROMPT },
+          ] }],
+          generationConfig: { responseModalities: ['TEXT', 'IMAGE'] },
+        }),
+      }
+    );
+    if (!res.ok) {
+      const body = await res.text().catch(() => '');
+      const msg = (() => { try { return JSON.parse(body)?.error?.message ?? body; } catch { return body; } })();
+      throw new Error(`Gemini ${res.status}: ${String(msg).slice(0, 140)}`);
+    }
+    const json = await res.json();
+    const parts = json?.candidates?.[0]?.content?.parts ?? [];
+    const imgPart = parts.find((p: any) => p.inlineData?.data || p.inline_data?.data);
+    if (!imgPart) {
+      const textPart = parts.find((p: any) => p.text)?.text?.slice(0, 120);
+      throw new Error(textPart ? `Model returned text instead of an image: ${textPart}` : 'Model returned no image');
+    }
+    const data = imgPart.inlineData?.data ?? imgPart.inline_data?.data;
+    const mime = imgPart.inlineData?.mimeType ?? imgPart.inline_data?.mime_type ?? 'image/png';
+
+    await new Promise<void>((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        // scale the matte back to the render's native size; nearest keeps edges hard
+        labelCanvas = document.createElement('canvas');
+        labelCanvas.width = origW; labelCanvas.height = origH;
+        const lctx = labelCanvas.getContext('2d')!;
+        lctx.imageSmoothingEnabled = false;
+        lctx.drawImage(img, 0, 0, origW, origH);
+        resolve();
+      };
+      img.onerror = () => reject(new Error('Could not decode the returned image'));
+      img.src = `data:${mime};base64,${data}`;
+    });
+
+    // static schema legend — the prompt pins the model to these colours
+    const legendMap = new Map<string, { color: [number, number, number]; regions: number; area: number }>();
+    let order = 0;
+    for (const k of ['wall|0', 'wall|1', 'wall|2', 'ceiling', 'floor', 'rug', 'soft', 'tables', 'hard', 'decor', 'lighting', 'plant', 'door', 'window']) {
+      legendMap.set(k, { color: GROUP_COLOR[k], regions: 1, area: 1000 - order++ });
+    }
+    renderLegend(legendMap);
+    return true;
+  }
+
   // ------------------------------------------------------------- run
   runBtn?.addEventListener('click', async () => {
     if (!sourceImage) return;
@@ -535,6 +674,18 @@ import { url } from '../../site';
     };
 
     try {
+      if (currentEngine() === 'cloud') {
+        const ok = await runCloud();
+        if (!ok) { runBtn.disabled = false; return; } // status already explains why
+        drawPreview();
+        $('controls')?.classList.remove('hidden');
+        $('legend')?.classList.remove('hidden');
+        $('s3wrap')?.classList.remove('hidden');
+        const csecs = ((performance.now() - t0) / 1000).toFixed(1);
+        setStatus(`Done in ${csecs}s — check alignment with the overlay before trusting edges. · Xong sau ${csecs}s — bật "Đối chiếu ảnh gốc" kiểm tra độ khớp trước khi dùng.`, 'var(--success)');
+        runBtn.disabled = false;
+        return;
+      }
       setStatus('Loading models… · Đang tải mô hình…');
       let seg = await getSegmenter(onProgress);
       const dep = wantPlanes ? await getDepther(onProgress) : null;
