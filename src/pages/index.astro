@@ -9,6 +9,13 @@ import { site, url } from '../site';
 const digests = (await getCollection('daily')).sort((a, b) => b.data.date.localeCompare(a.data.date));
 const today = digests[0];
 
+// The bot ranks items by relevance for SELECTION, but a news list should read
+// chronologically — newest first. Sort at render time so old digest files
+// display correctly too.
+const todayItems = (today?.data.items ?? [])
+  .slice()
+  .sort((a, b) => (Date.parse(b.published) || 0) - (Date.parse(a.published) || 0));
+
 const glossary = await getCollection('glossary');
 const learn = (await getCollection('learn')).filter((a) => !a.data.draft);
 const events = await getCollection('events');
@@ -72,9 +79,9 @@ const daysTo = (d: string) =>
       }
 
       {
-        today && today.data.items.length > 0 ? (
+        today && todayItems.length > 0 ? (
           <div class="grid gap-3">
-            {today.data.items.map((item) => (
+            {todayItems.map((item) => (
               <NewsCard item={item} />
             ))}
           </div>

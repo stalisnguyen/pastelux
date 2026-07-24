@@ -367,6 +367,10 @@ async function main() {
         .sort()
     : [];
 
+  // Relevance ranked the selection; the published file reads chronologically,
+  // newest first, like any news page.
+  items.sort((a, b) => (Date.parse(b.published) || 0) - (Date.parse(a.published) || 0));
+
   const day = {
     date,
     generatedAt: new Date().toISOString(),

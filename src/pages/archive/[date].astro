@@ -36,7 +36,12 @@ const stamp = new Date(`${entry.data.date}T00:00:00Z`).toLocaleDateString('en-GB
   </PageHeader>
 
   <div class="grid gap-3 max-w-3xl pb-6">
-    {entry.data.items.map((item) => <NewsCard item={item} />)}
+    {
+      entry.data.items
+        .slice()
+        .sort((a, b) => (Date.parse(b.published) || 0) - (Date.parse(a.published) || 0))
+        .map((item) => <NewsCard item={item} />)
+    }
     {
       entry.data.items.length === 0 && (
         <p class="card p-6" style="color: var(--text-muted)">
