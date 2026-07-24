@@ -147,7 +147,17 @@ import { url } from '../../site';
         </label>
         <label class="block">
           <span class="label" id="keyLabel">Google AI API key</span>
-          <input id="cloudKey" type="password" class="field" placeholder="AIza…" autocomplete="off" />
+          <span class="relative block">
+            <input id="cloudKey" type="password" class="field !pr-10" placeholder="AIza…" autocomplete="off" />
+            <button
+              id="keyReveal" type="button" aria-label="Show or hide the key"
+              class="absolute right-2.5 top-1/2 -translate-y-1/2 p-0.5"
+              style="color: var(--text-faint); background: none; border: none; cursor: pointer"
+            >
+              <svg id="eyeOn" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/></svg>
+              <svg id="eyeOff" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden"><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><path d="M6.61 6.61A13.526 13.526 0 0 0 1 12s4 8 11 8a9.74 9.74 0 0 0 5.39-1.61"/><path d="M2 2l20 20"/><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/></svg>
+            </button>
+          </span>
         </label>
       </div>
       <p class="text-[0.78rem] mt-1.5" style="color: var(--text-faint)">
@@ -936,6 +946,15 @@ SEGMENTATION RULES:
   providerSel?.addEventListener('change', syncProviderUI);
   syncProviderUI();
 
+  // masked by default; the eye reveals it only while she chooses to look
+  $('keyReveal')?.addEventListener('click', () => {
+    if (!keyInput) return;
+    const show = keyInput.type === 'password';
+    keyInput.type = show ? 'text' : 'password';
+    $('eyeOn')?.classList.toggle('hidden', show);
+    $('eyeOff')?.classList.toggle('hidden', !show);
+  });
+
   // copy-paste path for using ChatGPT / Gemini apps directly, no API key
   const promptText = $<HTMLTextAreaElement>('promptText');
   if (promptText) promptText.value = CHAT_PROMPT;
@@ -1023,7 +1042,8 @@ SEGMENTATION RULES:
       if (!res.ok) {
         const body = await res.text().catch(() => '');
         const msg = (() => { try { return JSON.parse(body)?.error?.message ?? body; } catch { return body; } })();
-        throw new Error(`GPT ${res.status}: ${String(msg).slice(0, 140)}`);
+        // provider errors can echo (part of) the key — never show it
+        throw new Error(`GPT ${res.status}: ${String(msg).split(key).join('•••').slice(0, 140)}`);
       }
       const json = await res.json();
       const b64out = json?.data?.[0]?.b64_json;
@@ -1051,7 +1071,8 @@ SEGMENTATION RULES:
     if (!res.ok) {
       const body = await res.text().catch(() => '');
       const msg = (() => { try { return JSON.parse(body)?.error?.message ?? body; } catch { return body; } })();
-      throw new Error(`Gemini ${res.status}: ${String(msg).slice(0, 140)}`);
+      // provider errors can echo (part of) the key — never show it
+      throw new Error(`Gemini ${res.status}: ${String(msg).split(key).join('•••').slice(0, 140)}`);
     }
     const json = await res.json();
     const parts = json?.candidates?.[0]?.content?.parts ?? [];
