@@ -164,10 +164,11 @@ import { url } from '../../site';
         </summary>
         <div class="px-3 pb-3">
           <p class="text-[0.8rem] mb-2" style="color: var(--text-muted)">
-            Open ChatGPT or the Gemini app, attach your render, paste this prompt, send. It is the
-            same prompt this tool uses — the fixed colour schema is inside, so every matte comes
-            back with the same colours.
-            <span class="vi-block-inline">· Mở ChatGPT hoặc Gemini, đính kèm ảnh render, dán prompt này rồi gửi. Đây chính là prompt tool đang dùng — bảng màu cố định nằm sẵn trong đó, matte nào trả về cũng cùng một bộ màu.</span>
+            Open ChatGPT or the Gemini app, attach your render, paste this prompt, send. You get
+            the matte aligned 1:1 with your render, each editable object on its own ID
+            (Coffee Table 01/02, Floor Lamp Left/Right…), plus a colour legend strip below the
+            frame.
+            <span class="vi-block-inline">· Mở ChatGPT hoặc Gemini, đính kèm ảnh render, dán prompt này rồi gửi. Kết quả là matte khớp 1:1 với ảnh gốc, mỗi vật cần chỉnh riêng có một ID riêng (Coffee Table 01/02, Floor Lamp trái/phải…), kèm dải chú giải màu phía dưới khung hình.</span>
           </p>
           <textarea id="promptText" readonly rows="8" class="field font-mono text-[0.74rem] leading-snug" spellcheck="false"></textarea>
           <div class="flex items-center gap-2 mt-2">
@@ -846,7 +847,7 @@ import { url } from '../../site';
   const MATTE_PROMPT = `Convert this architectural render into an Object ID matte pass (segmentation map), like a V-Ray WireColor render element.
 
 STRICT RULES:
-1. Output ONLY the matte image. Same aspect ratio and framing as the input. No legend, no text, no border.
+1. Output ONLY the matte image, aligned EXACTLY 1:1 with the input: same aspect ratio, same framing, same camera — no cropping, no zooming, no shifting. Every object boundary must sit at the same position as in the input. No legend, no text, no border.
 2. 100% solid flat colours. No gradients, no shading, no shadows, no anti-aliasing bleed. Razor-sharp boundaries that follow the exact geometry of the input.
 3. Colour purely by object identity, never by lighting. One continuous object = one uniform colour across its whole surface.
 4. Separate wall planes by orientation. Detect every small and distant object: track lights, recessed spotlights, LED strips, consoles under artwork, tabletop decor.
@@ -862,6 +863,24 @@ FIXED COLOUR SCHEMA (use these exact colours):
 - ALL lighting fixtures (track lights, spots, pendants, lamps, LED strips) #FFFFFF
 - Plants #32CD32, doors #FF8000, windows #00BFFF, stairs/columns #C0C0C0
 Distinct objects of the same category may share the category colour.`;
+
+  // The copy-paste variant for using the ChatGPT / Gemini apps directly.
+  // Unlike the API prompt it asks for per-instance IDs and a legend strip,
+  // because there the human reads the legend instead of this tool.
+  const CHAT_PROMPT = `Convert this architectural render into an Object ID matte pass (Render Element / V-Ray WireColor style segmentation map).
+
+CANVAS & ALIGNMENT — most important:
+1. The matte must match the input image EXACTLY 1:1: same aspect ratio, same framing, same camera. No cropping, no zooming, no shifting, no redrawing of geometry. Every object boundary sits at exactly the same position as in the input.
+2. Below the matte, append a black legend strip titled "RENDER ELEMENT / OBJECT ID": one colour swatch and name for every ID used. The legend is ADDED under the frame — it must never overlap, crop or squeeze the matte itself.
+
+SEGMENTATION RULES:
+3. 100% solid flat colours. No gradients, no shading, no shadows, no anti-aliasing bleed. Razor-sharp boundaries following the exact geometry of the input.
+4. Colour purely by object identity, never by lighting. One continuous object = one uniform colour across its whole surface, through shadows and highlights.
+5. Architecture gets separate IDs: ceiling, floor, carpet/rug, left wall, right wall, back/centre wall, wall panels & trim, baseboard, door, window.
+6. Objects that need independent editing get their own ID with a numbered or positional name: "Coffee Table 01" / "Coffee Table 02", "Floor Lamp Left" / "Floor Lamp Right", "Artwork Left" / "Artwork Centre". Identical repeated fixtures (e.g. all track lights) may share one ID.
+7. Detect every small and distant object: track lights, recessed spots, pendants, LED strips, books, bottles, trays, cups, appliances, tabletop decor.
+8. Remove any watermark, logo or text from the render; fill that area as its background surface.
+9. Use high-contrast, clearly distinct colours; adjacent objects must never share a colour.`;
 
   const engineRadios = [...document.querySelectorAll<HTMLInputElement>('input[name="engine"]')];
   const currentEngine = () => engineRadios.find((r) => r.checked)?.value ?? 'local';
@@ -889,11 +908,11 @@ Distinct objects of the same category may share the category colour.`;
 
   // copy-paste path for using ChatGPT / Gemini apps directly, no API key
   const promptText = $<HTMLTextAreaElement>('promptText');
-  if (promptText) promptText.value = MATTE_PROMPT;
+  if (promptText) promptText.value = CHAT_PROMPT;
   $('copyPrompt')?.addEventListener('click', async () => {
     const msg = $('copyMsg');
     try {
-      await navigator.clipboard.writeText(MATTE_PROMPT);
+      await navigator.clipboard.writeText(CHAT_PROMPT);
     } catch {
       promptText?.select();
       document.execCommand('copy');
