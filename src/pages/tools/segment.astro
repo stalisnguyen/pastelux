@@ -225,18 +225,28 @@ import { url } from '../../site';
       <span class="chip">Beta</span>
       <span class="vi-block-inline text-[0.9rem]" style="color: var(--vi-text)">Sửa vùng bằng cách click</span>
     </div>
-    <p class="text-[0.86rem] mb-1" style="color: var(--text-muted)">
-      When the matte gets an object wrong, click that object on the preview above and a second AI
-      (SAM — Segment Anything) traces exactly that object. Click again on missed parts to grow the
-      selection; <b>Shift-click</b> marks background to exclude. Then pick the correct colour and
-      apply. Tip: tick “Check against original” first so you can see what you are clicking.
+    <p class="text-[0.86rem] mb-2" style="color: var(--text-muted)">
+      For when the matte colours an object wrongly — a second AI traces the object you click, and
+      you repaint just that object.
+      <span class="vi-block-inline">· Dành cho lúc matte tô sai một vật — AI thứ hai khoanh đúng vật bạn click, và bạn tô lại riêng vật đó.</span>
     </p>
-    <p class="vi-block vi-def text-[0.85rem] mb-3">
-      Khi matte nhận sai một vật, click vào vật đó trên ảnh xem trước phía trên — AI thứ hai (SAM —
-      Segment Anything) sẽ khoanh đúng vật đó. Click thêm vào phần bị sót để mở rộng vùng chọn;
-      <b>Shift-click</b> để loại trừ nền. Rồi chọn đúng màu và áp vào. Mẹo: bật “Đối chiếu ảnh gốc”
-      trước để thấy mình đang click vào gì.
-    </p>
+    <ol class="text-[0.86rem] mb-3 ml-5 list-decimal space-y-1" style="color: var(--text-muted)">
+      <li>
+        Press <b>Enable click-fix</b> below — the preview above switches to your render so you can
+        see the objects.
+        <span class="vi-block-inline">· Bấm <b>Enable click-fix</b> — ảnh xem trước sẽ chuyển sang ảnh render để bạn nhìn rõ các vật.</span>
+      </li>
+      <li>
+        Click the wrong object on the preview — it lights up white. Not all of it selected? Click
+        the missed part. Grabbed too much? <b>Shift-click</b> the excess.
+        <span class="vi-block-inline">· Click vào vật bị sai trên ảnh — nó sẽ sáng trắng lên. Chưa trọn vật? Click thêm phần bị sót. Lem ra ngoài? <b>Shift-click</b> vào phần thừa.</span>
+      </li>
+      <li>
+        Pick the correct colour and press <b>Apply</b>. Repeat for the next object, then download
+        in step 3.
+        <span class="vi-block-inline">· Chọn đúng màu rồi bấm <b>Apply</b>. Lặp lại cho vật tiếp theo, xong tải về ở bước 3.</span>
+      </li>
+    </ol>
     <div class="flex flex-wrap items-center gap-3">
       <button id="samEnable" class="btn !py-1.5" type="button">Enable click-fix</button>
       <span id="samStatus" class="text-[0.85rem]" style="color: var(--text-muted)"></span>
@@ -365,8 +375,15 @@ import { url } from '../../site';
   let labelCanvas: HTMLCanvasElement | null = null; // solid label map, full res
   let segmenter: any = null, depther: any = null;
 
+  const esc = (t: string) => t.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
+  /** "English · Tiếng Việt" → HTML where the VI half obeys the site VI toggle. */
+  const biHTML = (m: string) => {
+    const i = m.indexOf(' · ');
+    if (i < 0) return esc(m);
+    return `${esc(m.slice(0, i))}<span class="vi-block-inline" style="color: var(--vi-text)"> · ${esc(m.slice(i + 3))}</span>`;
+  };
   const setStatus = (m: string, tone = 'var(--text-muted)') => {
-    if (statusEl) { statusEl.textContent = m; statusEl.style.color = tone; }
+    if (statusEl) { statusEl.innerHTML = biHTML(m); statusEl.style.color = tone; }
   };
 
   // ------------------------------------------------------------- upload
@@ -522,7 +539,7 @@ import { url } from '../../site';
   }
 
   const setCleanMsg = (m: string, tone = 'var(--text-faint)') => {
-    const el = $('cleanMsg'); if (el) { el.textContent = m; el.style.color = tone; }
+    const el = $('cleanMsg'); if (el) { el.innerHTML = biHTML(m); el.style.color = tone; }
   };
 
   $('applyClean')?.addEventListener('click', () => {
@@ -662,7 +679,7 @@ import { url } from '../../site';
 
   function setSamStatus(t: string, color = 'var(--text-muted)') {
     const el = $('samStatus');
-    if (el) { el.textContent = t; el.style.color = color; }
+    if (el) { el.innerHTML = biHTML(t); el.style.color = color; }
   }
   function resetSam(dropEmbeddings: boolean) {
     samPoints = []; samMask = null; samMaskCanvas = null;
@@ -768,12 +785,25 @@ import { url } from '../../site';
     if (sel && !sel.options.length) {
       for (const [key, [en, vi]] of Object.entries(KEY_LABELS)) {
         const o = document.createElement('option');
-        o.value = key; o.textContent = `${en} · ${vi}`;
+        o.value = key; o.dataset.en = en; o.dataset.vi = vi;
         sel.appendChild(o);
       }
+      const relabel = () => {
+        const viOn = !document.documentElement.classList.contains('vi-off');
+        for (const o of sel.options) o.textContent = viOn ? `${o.dataset.en} · ${o.dataset.vi}` : o.dataset.en!;
+      };
+      relabel();
+      new MutationObserver(relabel).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
     }
     $('samTools')?.classList.remove('hidden'); $('samTools')?.classList.add('flex');
     if (preview) preview.style.cursor = 'crosshair';
+    // show the render through the matte so she can see what she is clicking
+    const so = $<HTMLInputElement>('showOriginal');
+    if (so && !so.checked) { so.checked = true; so.dispatchEvent(new Event('change')); }
+    const op = $<HTMLInputElement>('opacity');
+    if (op) { op.value = '45'; }
+    drawPreview();
+    preview?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     try {
       await getSamKit();
       await ensureSamEmbeddings();
@@ -1837,7 +1867,7 @@ SEGMENTATION RULES:
       chip.innerHTML =
         `<span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:rgb(${info.color[0]},${info.color[1]},${info.color[2]})"></span>` +
         `${name}${info.regions > 1 ? ` <span style="opacity:.7">×${info.regions}</span>` : ''}` +
-        `${vi ? ` · <span style="color:var(--vi-text)">${vi}</span>` : ''}`;
+        `${vi ? `<span class="vi-block-inline" style="color:var(--vi-text)"> · ${vi}</span>` : ''}`;
       box.appendChild(chip);
     }
   }
