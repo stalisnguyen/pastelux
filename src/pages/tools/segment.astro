@@ -1186,6 +1186,24 @@ Distinct objects of the same category may share the category colour.`;
     const regionOf = new Int32Array(N);
     for (let p = 0; p < N; p++) { const a = comp[p]; regionOf[p] = a >= 0 ? rootIndex.get(find(a))! : -1; }
 
+    // 4c. architecture meets along straight lines, but the segmenter returns
+    // wavy blobs — the ceiling–wall and floor–wall borders come out rippled.
+    // Measure the border per column, fit a piecewise-straight polyline through
+    // it, and re-partition the two classes across the fitted line. Only pixels
+    // of those two classes are ever reassigned, so furniture and fixtures that
+    // occlude the border are left untouched.
+    {
+      const regCat = new Int8Array(nReg); // 0 other · 1 ceiling · 2 wall · 3 floor
+      for (let r = 0; r < nReg; r++) {
+        const nm = first(classNames[rootClass[r]] ?? '');
+        if (WALL_LIKE.has(nm)) regCat[r] = 2;
+        else if (GROUP[nm] === 'ceiling') regCat[r] = 1;
+        else if (GROUP[nm] === 'floor') regCat[r] = 3;
+      }
+      straightenArchBoundary(regionOf, W, H, regCat, 1, 2, 'top');    // ceiling over wall
+      straightenArchBoundary(regionOf, W, H, regCat, 2, 3, 'bottom'); // wall over floor
+    }
+
     // 5. colour like a material pass, with the FIXED schema palette: the same
     // group is the same colour on every run, on every image — left wall teal,
     // ceiling dark red, lighting fixtures pure white. Tiny non-architectural
@@ -1273,6 +1291,173 @@ Distinct objects of the same category may share the category colour.`;
       cur = next;
     }
     return cur;
+  }
+
+  /** Fit a piecewise-straight polyline through noisy samples: recursive
+   *  least-squares split-and-merge. A segment splits only where the SMOOTHED
+   *  residual is systematic — a real corner — never on pointwise noise, and
+   *  interior knots sit at the intersection of the two neighbouring lines,
+   *  which is what a wall corner actually is. */
+  function fitPolyline(px: number[], py: number[], tol: number, minSeg: number) {
+    const lsq = (a: number, b: number) => {
+      let sx = 0, sy = 0, sxx = 0, sxy = 0, n = 0;
+      for (let i = a; i <= b; i++) { sx += px[i]; sy += py[i]; sxx += px[i] * px[i]; sxy += px[i] * py[i]; n++; }
+      const den = n * sxx - sx * sx;
+      const m = den ? (n * sxy - sx * sy) / den : 0;
+      return { m, c: (sy - m * sx) / n };
+    };
+    // prefix sums make the SSE of any straight-line fit O(1), so the best
+    // split point of a segment is an O(n) scan
+    const n0 = px.length;
+    const Px = new Float64Array(n0 + 1), Py = new Float64Array(n0 + 1), Pxx = new Float64Array(n0 + 1),
+          Pxy = new Float64Array(n0 + 1), Pyy = new Float64Array(n0 + 1);
+    for (let i = 0; i < n0; i++) {
+      Px[i + 1] = Px[i] + px[i]; Py[i + 1] = Py[i] + py[i];
+      Pxx[i + 1] = Pxx[i] + px[i] * px[i]; Pxy[i + 1] = Pxy[i] + px[i] * py[i]; Pyy[i + 1] = Pyy[i] + py[i] * py[i];
+    }
+    const sse = (a: number, b: number) => {
+      const n = b - a + 1;
+      const sx = Px[b + 1] - Px[a], sy = Py[b + 1] - Py[a], sxx = Pxx[b + 1] - Pxx[a],
+            sxy = Pxy[b + 1] - Pxy[a], syy = Pyy[b + 1] - Pyy[a];
+      const den = n * sxx - sx * sx;
+      const m = den ? (n * sxy - sx * sy) / den : 0;
+      const c = (sy - m * sx) / n;
+      return Math.max(0, syy + m * m * sxx + n * c * c - 2 * m * sxy - 2 * c * sy + 2 * m * c * sx);
+    };
+    const segs: Array<{ a: number; b: number; m: number; c: number }> = [];
+    const stack: Array<[number, number]> = [[0, n0 - 1]];
+    while (stack.length && segs.length + stack.length < 9) {
+      const [a, b] = stack.pop()!;
+      const whole = sse(a, b);
+      let split = -1;
+      if (b - a + 1 >= minSeg * 2) {
+        let best = Infinity;
+        for (let i = a + minSeg; i <= b - minSeg; i++) {
+          const s = sse(a, i) + sse(i, b);
+          if (s < best) { best = s; split = i; }
+        }
+        // a real corner slashes the error; ripples and noise do not
+        if (!(best < whole * 0.5 && whole - best > tol * tol * (b - a + 1) * 0.05)) split = -1;
+      }
+      if (split > 0) stack.push([a, split], [split, b]);
+      else segs.push({ a, b, ...lsq(a, b) });
+    }
+    while (stack.length) { const [a, b] = stack.pop()!; segs.push({ a, b, ...lsq(a, b) }); }
+    segs.sort((s, t) => s.a - t.a);
+    const kx: number[] = [px[segs[0].a]];
+    const ky: number[] = [segs[0].m * kx[0] + segs[0].c];
+    for (let s = 1; s < segs.length; s++) {
+      const L = segs[s - 1], R = segs[s];
+      const bx = px[R.a];
+      let ix = (R.c - L.c) / (L.m - R.m);
+      // near-parallel or far-away intersection → just butt-join at the split
+      if (!Number.isFinite(ix) || Math.abs(ix - bx) > (px[L.b] - px[L.a] + px[R.b] - px[R.a]) / 4) {
+        kx.push(bx); ky.push((L.m * bx + L.c + R.m * bx + R.c) / 2);
+      } else { kx.push(ix); ky.push(L.m * ix + L.c); }
+    }
+    const last = segs[segs.length - 1];
+    kx.push(px[last.b]); ky.push(last.m * px[last.b] + last.c);
+    return { kx, ky };
+  }
+
+  /** Straighten the border between two architectural categories (catAbove at
+   *  smaller y). `anchor` names the frame edge the reference class hangs from:
+   *  the ceiling is measured walking down from the top, the floor walking up
+   *  from the bottom. Columns where an object hides the border are bridged by
+   *  the fitted polyline; only pixels of the two categories are reassigned. */
+  function straightenArchBoundary(
+    reg: Int32Array, W: number, H: number, regCat: Int8Array,
+    catAbove: number, catBelow: number, anchor: 'top' | 'bottom'
+  ) {
+    const cat = (p: number) => { const r = reg[p]; return r >= 0 ? regCat[r] : 0; };
+    const GAP = Math.max(2, Math.round(H * 0.03)); // thin trim between the two is fine
+    const yBnd = new Float32Array(W).fill(NaN);
+    const aboveReg = new Int32Array(W).fill(-1);
+    const belowReg = new Int32Array(W).fill(-1);
+    const dir = anchor === 'top' ? 1 : -1;
+    const anchoredCat = anchor === 'top' ? catAbove : catBelow;
+    const partnerCat = anchor === 'top' ? catBelow : catAbove;
+
+    for (let x = 0; x < W; x++) {
+      // the anchored class must start at its frame edge (small slack for crops)
+      let y = anchor === 'top' ? 0 : H - 1, slack = GAP;
+      while (slack-- > 0 && y >= 0 && y < H && cat(y * W + x) !== anchoredCat) y += dir;
+      if (y < 0 || y >= H || cat(y * W + x) !== anchoredCat) continue;
+      while (y + dir >= 0 && y + dir < H && cat((y + dir) * W + x) === anchoredCat) y += dir;
+      const yEnd = y;
+      let yPartner = -1;
+      for (let k = 1; k <= GAP; k++) {
+        const yy = yEnd + dir * k; if (yy < 0 || yy >= H) break;
+        const c = cat(yy * W + x);
+        if (c === partnerCat) { yPartner = yy; break; }
+        if (c === anchoredCat) break;
+      }
+      if (yPartner < 0) continue; // border occluded here — the polyline bridges it
+      yBnd[x] = (yEnd + yPartner) / 2;
+      if (anchor === 'top') { aboveReg[x] = reg[yEnd * W + x]; belowReg[x] = reg[yPartner * W + x]; }
+      else { belowReg[x] = reg[yEnd * W + x]; aboveReg[x] = reg[yPartner * W + x]; }
+    }
+
+    // median-smooth the measured border: single-column spikes are seg noise
+    const yMed = new Float32Array(W).fill(NaN);
+    const win: number[] = [];
+    for (let x = 0; x < W; x++) {
+      if (Number.isNaN(yBnd[x])) continue;
+      win.length = 0;
+      for (let k = -3; k <= 3; k++) { const xx = x + k; if (xx >= 0 && xx < W && !Number.isNaN(yBnd[xx])) win.push(yBnd[xx]); }
+      win.sort((a, b) => a - b);
+      yMed[x] = win[win.length >> 1];
+    }
+
+    const valid: number[] = [];
+    for (let x = 0; x < W; x++) if (!Number.isNaN(yMed[x])) valid.push(x);
+    if (valid.length < 2) return;
+
+    // spans of measurable border; a very wide occluder splits the border in two
+    const maxGap = Math.round(W * 0.25), minSpan = Math.round(W * 0.1);
+    const spans: Array<[number, number]> = [];
+    let s0 = 0;
+    for (let i = 1; i <= valid.length; i++) {
+      if (i === valid.length || valid[i] - valid[i - 1] > maxGap) {
+        if (valid[i - 1] - valid[s0] >= minSpan) spans.push([s0, i - 1]);
+        s0 = i;
+      }
+    }
+
+    const eps = Math.max(2, H * 0.012);
+    for (const [i0, i1] of spans) {
+      const px: number[] = [], py: number[] = [];
+      for (let i = i0; i <= i1; i++) { px.push(valid[i]); py.push(yMed[valid[i]]); }
+      const { kx, ky } = fitPolyline(px, py, eps, Math.max(6, Math.round(W * 0.05)));
+      const x0 = px[0], x1 = px[px.length - 1];
+      const f = new Float32Array(x1 - x0 + 1);
+      let seg = 0;
+      for (let x = x0; x <= x1; x++) {
+        while (seg < kx.length - 2 && x > kx[seg + 1]) seg++;
+        const xa = kx[seg], ya = ky[seg], xb = kx[seg + 1], yb = ky[seg + 1];
+        f[x - x0] = xb === xa ? ya : ya + (yb - ya) * (x - xa) / (xb - xa);
+      }
+      let maxDev = 0;
+      for (let i = i0; i <= i1; i++) maxDev = Math.max(maxDev, Math.abs(yMed[valid[i]] - f[valid[i] - x0]));
+      if (maxDev > H * 0.12) continue; // genuinely irregular — do not force it
+
+      // re-partition inside a band around the fitted line
+      const Wr = Math.min(H * 0.15, maxDev + GAP + 2);
+      for (let x = x0; x <= x1; x++) {
+        const fb = f[x - x0];
+        const yLo = Math.max(0, Math.floor(fb - Wr)), yHi = Math.min(H - 1, Math.ceil(fb + Wr));
+        // targets: the nearest pixel of each class just off the line in THIS
+        // column keeps wall-plane buckets intact; fall back to the measured one
+        let ar = aboveReg[x], br = belowReg[x];
+        for (let y = Math.min(yHi, Math.floor(fb)); y >= yLo; y--) { const p = y * W + x; if (cat(p) === catAbove) { ar = reg[p]; break; } }
+        for (let y = Math.max(yLo, Math.ceil(fb)); y <= yHi; y++) { const p = y * W + x; if (cat(p) === catBelow) { br = reg[p]; break; } }
+        for (let y = yLo; y <= yHi; y++) {
+          const p = y * W + x, c = cat(p);
+          if (y < fb) { if (c === catBelow && ar >= 0) reg[p] = ar; }
+          else if (c === catAbove && br >= 0) reg[p] = br;
+        }
+      }
+    }
   }
 
   /** Same bilateral idea, at full resolution, on region ids, boundary pixels only. */
