@@ -1,6 +1,6 @@
 export const site = {
   name: 'Pastelux',
-  tagline: 'Architectural lighting, kept current.',
+  tagline: 'Architectural lighting, stay current.',
   description:
     'A working knowledge base for architectural lighting designers: photometrics, standards, controls and human-centric lighting — plus a digest of the industry, refreshed every morning.',
   author: 'Pastelux',
