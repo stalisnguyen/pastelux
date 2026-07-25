@@ -46,7 +46,7 @@ jobs:
               'Fix `src/content/events.json` (or `src/data/feeds.json`), then re-run the workflow.',
               '',
               '```',
-              log.replace(/\[[0-9;]*m/g, '').slice(-4000),
+              log.replace(/\x1b\[[0-9;]*m/g, '').slice(-4000),
               '```',
             ].join('\n');
 
