@@ -1,0 +1,30 @@
+{
+  "date": "2026-07-29",
+  "generatedAt": "2026-07-28T18:19:15.946Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "FCC Approves Controversial Satellite Mirror Project",
+      "url": "https://www.lightnowblog.com/2026/07/fcc-approves-controversial-satellite-mirror-project",
+      "source": "LightNOW",
+      "published": "Tue, 28 Jul 2026 05:45:14 +0000",
+      "summary": "The FCC approved a test launch for Reflect Orbital's mirror satellite, a space-based light-delivery concept that raises regulatory questions about light pollution, glare, and public safety relevant to outdoor lighting standards.",
+      "topics": [
+        "standards",
+        "research"
+      ]
+    },
+    {
+      "title": "Trump Administration Declines To Renew USMCA Trade Deal",
+      "url": "https://www.lightnowblog.com/2026/07/trump-administration-declines-to-renew-usmca-trade-deal",
+      "source": "LightNOW",
+      "published": "Tue, 21 Jul 2026 05:35:11 +0000",
+      "summary": "The US will not renew USMCA in its current form, beginning a lengthy review process that could eventually affect sourcing, pricing, and supply chains for lighting manufacturers and specifiers across North America.",
+      "topics": [
+        "practice"
+      ]
+    }
+  ],
+  "termOfDay": "louvre",
+  "projectOfDay": "design-stages"
+}
