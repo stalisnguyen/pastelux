@@ -1,0 +1,66 @@
+{
+  "date": "2026-07-30",
+  "generatedAt": "2026-07-29T18:10:37.833Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "Lucent Lighting elevates rooftop escape AZOTEA Leeds with layered architectural lighting",
+      "url": "https://www.a1lightingmagazine.com/led-lighting/lucent-lighting-elevates-rooftop-escape-azotea-leeds",
+      "source": "A1 Lighting",
+      "published": "Wed, 29 Jul 2026 10:32:48 +0000",
+      "summary": "A rooftop bar and restaurant in Leeds received a layered luminaire scheme, with Lucent Lighting supplying fixtures for a design by Mistry Lighting.",
+      "topics": [
+        "practice",
+        "product"
+      ]
+    },
+    {
+      "title": "Will Mineral Paints Gain Traction In The Lighting Industry?",
+      "url": "https://www.lightnowblog.com/2026/07/will-mineral-paints-gain-traction-in-the-lighting-industry",
+      "source": "LightNOW",
+      "published": "Mon, 27 Jul 2026 05:36:41 +0000",
+      "summary": "Mineral-based paints, valued for breathability and low environmental impact, are gaining specification traction in construction and could offer manufacturers an alternative to standard powder-coated luminaire finishes.",
+      "topics": [
+        "product",
+        "sustainability"
+      ]
+    },
+    {
+      "title": "Collingwood lights up Northampton Saints hospitality and net zero drive",
+      "url": "https://www.a1lightingmagazine.com/projects/collingwood-lights-up-northampton-saints-hospitality",
+      "source": "A1 Lighting",
+      "published": "Thu, 23 Jul 2026 11:58:55 +0000",
+      "summary": "Collingwood Lighting completed an LED retrofit of Northampton Saints' Barwell stand as part of a phased stadium lighting and net-zero programme.",
+      "topics": [
+        "product",
+        "sustainability",
+        "practice"
+      ]
+    },
+    {
+      "title": "DLC Finalizes Networked Lighting Controls (NLC) V5.2",
+      "url": "https://www.lightnowblog.com/2026/07/dlc-finalizes-networked-lighting-controls-nlc-v5-2",
+      "source": "LightNOW",
+      "published": "Wed, 22 Jul 2026 05:40:16 +0000",
+      "summary": "DLC has published Networked Lighting Controls V5.2, effective August 2026, tightening interoperability and reporting requirements and extending NLC scope into HVAC and other building-system integration.",
+      "topics": [
+        "standards",
+        "controls"
+      ]
+    },
+    {
+      "title": "Modern lighting control brings new life to historic basilica",
+      "url": "https://www.a1lightingmagazine.com/latest-news/modern-lighting-control-brings-new-life-to-historic-basilica",
+      "source": "A1 Lighting",
+      "published": "Mon, 20 Jul 2026 12:38:28 +0000",
+      "summary": "Pharos Architectural Controls supplied a new control system for the floodlit exterior of Sint-Petrusbasiliek in Oirschot, aimed at improving energy efficiency and long-term maintainability of the historic facade lighting.",
+      "topics": [
+        "controls",
+        "facade",
+        "sustainability"
+      ]
+    }
+  ],
+  "termOfDay": "luminaire-efficacy",
+  "projectOfDay": "glare-and-ugr"
+}
