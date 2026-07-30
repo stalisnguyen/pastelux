@@ -1,0 +1,42 @@
+{
+  "date": "2026-07-31",
+  "generatedAt": "2026-07-30T18:20:42.338Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "FCC Approves Controversial Satellite Mirror Project",
+      "url": "https://www.lightnowblog.com/2026/07/fcc-approves-controversial-satellite-mirror-project",
+      "source": "LightNOW",
+      "published": "Tue, 28 Jul 2026 05:45:14 +0000",
+      "summary": "The FCC approved a test launch for Reflect Orbital's space-based mirror satellite intended to deliver reflected sunlight to ground locations, raising light pollution, glare, and regulatory questions relevant to outdoor lighting and dark-sky practice.",
+      "topics": [
+        "sustainability",
+        "research"
+      ]
+    },
+    {
+      "title": "House Passes Bill To Create Permanent Daylight Savings Time",
+      "url": "https://www.lightnowblog.com/2026/07/house-passes-bill-to-create-permanent-daylight-savings-time",
+      "source": "LightNOW",
+      "published": "Thu, 23 Jul 2026 05:46:49 +0000",
+      "summary": "The US House passed a bill for permanent daylight saving time, still requiring Senate and presidential approval. If enacted, year-round DST would affect daylighting schedules, circadian lighting design assumptions, and control system programming tied to sunrise/sunset times.",
+      "topics": [
+        "circadian",
+        "controls"
+      ]
+    },
+    {
+      "title": "Trump Administration Declines To Renew USMCA Trade Deal",
+      "url": "https://www.lightnowblog.com/2026/07/trump-administration-declines-to-renew-usmca-trade-deal",
+      "source": "LightNOW",
+      "published": "Tue, 21 Jul 2026 05:35:11 +0000",
+      "summary": "The US administration will not renew USMCA in its current form, triggering a lengthy review process rather than an immediate trade disruption, with potential longer-term implications for lighting manufacturers' sourcing, pricing, and product specification availability.",
+      "topics": [
+        "practice",
+        "product"
+      ]
+    }
+  ],
+  "termOfDay": "luminance",
+  "projectOfDay": "inverse-square-and-beams"
+}
