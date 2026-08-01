@@ -1,0 +1,32 @@
+{
+  "date": "2026-08-02",
+  "generatedAt": "2026-08-01T18:03:12.127Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "FCC Approves Controversial Satellite Mirror Project",
+      "url": "https://www.lightnowblog.com/2026/07/fcc-approves-controversial-satellite-mirror-project",
+      "source": "LightNOW",
+      "published": "Tue, 28 Jul 2026 05:45:14 +0000",
+      "summary": "The FCC approved a test launch for Reflect Orbital's satellite mirror, which aims to redirect sunlight to ground targets, raising regulatory questions about light pollution, safety and how such technology intersects with existing outdoor lighting standards.",
+      "topics": [
+        "sustainability",
+        "standards",
+        "research"
+      ]
+    },
+    {
+      "title": "House Passes Bill To Create Permanent Daylight Savings Time",
+      "url": "https://www.lightnowblog.com/2026/07/house-passes-bill-to-create-permanent-daylight-savings-time",
+      "source": "LightNOW",
+      "published": "Thu, 23 Jul 2026 05:46:49 +0000",
+      "summary": "The US House passed a bill to make daylight saving time permanent, pending Senate and presidential approval; if enacted, it would eliminate seasonal clock shifts, affecting how lighting controls and schedules are set relative to sunrise/sunset.",
+      "topics": [
+        "circadian",
+        "controls"
+      ]
+    }
+  ],
+  "termOfDay": "luminous-intensity",
+  "projectOfDay": "luminaire-types"
+}
