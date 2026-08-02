@@ -1,0 +1,77 @@
+{
+  "date": "2026-08-03",
+  "generatedAt": "2026-08-02T18:03:30.779Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "Smart Home Trends For Multifamily Properties",
+      "url": "https://www.lightnowblog.com/2026/07/smart-home-trends-for-multifamily-properties",
+      "source": "LightNOW",
+      "published": "Fri, 31 Jul 2026 05:25:14 +0000",
+      "summary": "A Parks Associates whitepaper argues multifamily buildings are shifting from standalone smart-home features to unified building-intelligence platforms, positioning lighting controls as one component of integrated connectivity, access and energy management systems.",
+      "topics": [
+        "controls",
+        "practice"
+      ]
+    },
+    {
+      "title": "Lucent Lighting elevates rooftop escape AZOTEA Leeds with layered architectural lighting",
+      "url": "https://www.a1lightingmagazine.com/led-lighting/lucent-lighting-elevates-rooftop-escape-azotea-leeds",
+      "source": "A1 Lighting",
+      "published": "Wed, 29 Jul 2026 10:32:48 +0000",
+      "summary": "A rooftop bar and restaurant in Leeds received a layered luminaire scheme, combining supplied fixtures with a design by a separate lighting design practice for an elevated hospitality environment.",
+      "topics": [
+        "practice",
+        "product"
+      ]
+    },
+    {
+      "title": "Will Mineral Paints Gain Traction In The Lighting Industry?",
+      "url": "https://www.lightnowblog.com/2026/07/will-mineral-paints-gain-traction-in-the-lighting-industry",
+      "source": "LightNOW",
+      "published": "Mon, 27 Jul 2026 05:36:41 +0000",
+      "summary": "Mineral-based coatings, valued for breathability and durability in heritage and eco-building specification, are emerging as a potential premium alternative to standard powder-coat finishes for luminaire housings.",
+      "topics": [
+        "product",
+        "sustainability"
+      ]
+    },
+    {
+      "title": "Collingwood lights up Northampton Saints hospitality and net zero drive",
+      "url": "https://www.a1lightingmagazine.com/projects/collingwood-lights-up-northampton-saints-hospitality",
+      "source": "A1 Lighting",
+      "published": "Thu, 23 Jul 2026 11:58:55 +0000",
+      "summary": "Collingwood Lighting completed phase one of an LED refurbishment for Northampton Saints' Barwell stand, replacing existing fittings across seating and hospitality areas to cut energy use as part of the club's net-zero programme.",
+      "topics": [
+        "product",
+        "sustainability",
+        "practice"
+      ]
+    },
+    {
+      "title": "DLC Finalizes Networked Lighting Controls (NLC) V5.2",
+      "url": "https://www.lightnowblog.com/2026/07/dlc-finalizes-networked-lighting-controls-nlc-v5-2",
+      "source": "LightNOW",
+      "published": "Wed, 22 Jul 2026 05:40:16 +0000",
+      "summary": "DLC has finalised Networked Lighting Controls V5.2, effective August 2026, tightening interoperability and reporting requirements and extending controls integration into HVAC and other building systems, a change specifiers should track for compliance.",
+      "topics": [
+        "standards",
+        "controls"
+      ]
+    },
+    {
+      "title": "Modern lighting control brings new life to historic basilica",
+      "url": "https://www.a1lightingmagazine.com/latest-news/modern-lighting-control-brings-new-life-to-historic-basilica",
+      "source": "A1 Lighting",
+      "published": "Mon, 20 Jul 2026 12:38:28 +0000",
+      "summary": "Pharos Architectural Controls supplied a new control system for the floodlit exterior of a historic basilica in Oirschot, replacing an older setup to improve energy efficiency and long-term maintainability of the facade lighting.",
+      "topics": [
+        "controls",
+        "facade",
+        "practice"
+      ]
+    }
+  ],
+  "termOfDay": "lux-meter",
+  "projectOfDay": "photometric-quantities"
+}
