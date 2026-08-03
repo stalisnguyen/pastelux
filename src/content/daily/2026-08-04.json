@@ -1,0 +1,47 @@
+{
+  "date": "2026-08-04",
+  "generatedAt": "2026-08-03T18:52:58.108Z",
+  "degraded": true,
+  "items": [
+    {
+      "title": "The Art of Ice Cream Shop Design",
+      "url": "https://www.archdaily.com/1164587/the-art-of-ice-cream-shop-design",
+      "source": "ArchDaily",
+      "published": "Mon, 03 Aug 2026 07:30:00 +0000",
+      "summary": "",
+      "topics": [
+        "controls"
+      ]
+    },
+    {
+      "title": "IEA Article Describes New Era Of LED Lighting",
+      "url": "https://www.lightnowblog.com/2026/08/iea-article-describes-new-era-of-led-lighting",
+      "source": "LightNOW",
+      "published": "Mon, 03 Aug 2026 05:04:33 +0000",
+      "summary": "",
+      "topics": [
+        "sustainability"
+      ]
+    },
+    {
+      "title": "LEDVANCE becomes Official Lighting Partner of FC Bayern Munich roots, global reach: partnership through 2029",
+      "url": "https://www.a1lightingmagazine.com/company-news/ledvance-becomes-official-lighting-partner-of-fc-bayern-munich",
+      "source": "A1 Lighting",
+      "published": "Wed, 22 Jul 2026 12:51:39 +0000",
+      "summary": "",
+      "topics": [
+        "practice"
+      ]
+    },
+    {
+      "title": "Trump Administration Declines To Renew USMCA Trade Deal",
+      "url": "https://www.lightnowblog.com/2026/07/trump-administration-declines-to-renew-usmca-trade-deal",
+      "source": "LightNOW",
+      "published": "Tue, 21 Jul 2026 05:35:11 +0000",
+      "summary": "",
+      "topics": []
+    }
+  ],
+  "termOfDay": "macadam-ellipse",
+  "projectOfDay": "by-typology"
+}
