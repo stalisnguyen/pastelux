@@ -1,0 +1,107 @@
+{
+  "date": "2026-08-05",
+  "generatedAt": "2026-08-04T18:42:04.238Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "Future Designs carbon careful™ initiative preserves existing luminaires across Crawley schools",
+      "url": "https://www.a1lightingmagazine.com/projects/future-designs-carbon-careful-initiative",
+      "source": "A1 Lighting",
+      "published": "Tue, 04 Aug 2026 11:44:15 +0000",
+      "summary": "Future Designs' carbon careful initiative replaced fluorescent classroom luminaires with LED across three Crawley secondary schools, retaining existing fixture housings to cut embodied carbon in the retrofit.",
+      "topics": [
+        "sustainability",
+        "practice"
+      ]
+    },
+    {
+      "title": "Modeling When Light Matters Most for Circadian Health",
+      "url": "https://www.lightnowblog.com/2026/08/modeling-when-light-matters-most-for-circadian-health",
+      "source": "LightNOW",
+      "published": "Tue, 04 Aug 2026 05:09:39 +0000",
+      "summary": "New modeling research indicates circadian and sleep effects depend on cumulative 24-hour light exposure rather than simple morning/evening rules, showing that adequate daytime brightness can buffer against disruptive evening light.",
+      "topics": [
+        "circadian",
+        "research"
+      ]
+    },
+    {
+      "title": "Smart Home Trends For Multifamily Properties",
+      "url": "https://www.lightnowblog.com/2026/07/smart-home-trends-for-multifamily-properties",
+      "source": "LightNOW",
+      "published": "Fri, 31 Jul 2026 05:25:14 +0000",
+      "summary": "A Parks Associates whitepaper argues multifamily properties are shifting from standalone smart-home features to unified building-intelligence platforms, positioning lighting controls as one component within integrated connectivity, access and energy management systems.",
+      "topics": [
+        "controls",
+        "practice"
+      ]
+    },
+    {
+      "title": "Lucent Lighting elevates rooftop escape AZOTEA Leeds with layered architectural lighting",
+      "url": "https://www.a1lightingmagazine.com/led-lighting/lucent-lighting-elevates-rooftop-escape-azotea-leeds",
+      "source": "A1 Lighting",
+      "published": "Wed, 29 Jul 2026 10:32:48 +0000",
+      "summary": "A layered lighting scheme by Mistry Lighting, using luminaires supplied by Lucent Lighting, was installed at AZOTEA, a rooftop restaurant and bar in Leeds.",
+      "topics": [
+        "practice",
+        "product"
+      ]
+    },
+    {
+      "title": "FCC Approves Controversial Satellite Mirror Project",
+      "url": "https://www.lightnowblog.com/2026/07/fcc-approves-controversial-satellite-mirror-project",
+      "source": "LightNOW",
+      "published": "Tue, 28 Jul 2026 05:45:14 +0000",
+      "summary": "The FCC approved a test launch for Reflect Orbital's mirror satellite, a space-based light-delivery concept raising regulatory concerns over light pollution and public safety relevant to outdoor lighting practice.",
+      "topics": [
+        "standards",
+        "research"
+      ]
+    },
+    {
+      "title": "Will Mineral Paints Gain Traction In The Lighting Industry?",
+      "url": "https://www.lightnowblog.com/2026/07/will-mineral-paints-gain-traction-in-the-lighting-industry",
+      "source": "LightNOW",
+      "published": "Mon, 27 Jul 2026 05:36:41 +0000",
+      "summary": "Mineral-based coatings, valued for breathability and durability in heritage and eco-building work, are being floated as an alternative finish for luminaire housings versus conventional paint or powder coat, though adoption in fixture manufacturing remains speculative.",
+      "topics": [
+        "product",
+        "sustainability"
+      ]
+    },
+    {
+      "title": "Collingwood lights up Northampton Saints hospitality and net zero drive",
+      "url": "https://www.a1lightingmagazine.com/projects/collingwood-lights-up-northampton-saints-hospitality",
+      "source": "A1 Lighting",
+      "published": "Thu, 23 Jul 2026 11:58:55 +0000",
+      "summary": "Collingwood Lighting supplied and designed an LED fitting refurbishment for Northampton Saints' Barwell stand as phase one of a project aimed at improving hospitality lighting and reducing the club's carbon footprint.",
+      "topics": [
+        "sustainability",
+        "product"
+      ]
+    },
+    {
+      "title": "House Passes Bill To Create Permanent Daylight Savings Time",
+      "url": "https://www.lightnowblog.com/2026/07/house-passes-bill-to-create-permanent-daylight-savings-time",
+      "source": "LightNOW",
+      "published": "Thu, 23 Jul 2026 05:46:49 +0000",
+      "summary": "The US House passed a bill to make daylight saving time permanent, pending Senate and presidential approval; the lighting industry implication concerns how such scheduling shifts affect lighting demand and design, not the clock change itself.",
+      "topics": [
+        "research"
+      ]
+    },
+    {
+      "title": "DLC Finalizes Networked Lighting Controls (NLC) V5.2",
+      "url": "https://www.lightnowblog.com/2026/07/dlc-finalizes-networked-lighting-controls-nlc-v5-2",
+      "source": "LightNOW",
+      "published": "Wed, 22 Jul 2026 05:40:16 +0000",
+      "summary": "The DesignLights Consortium finalized NLC V5.2, taking effect August 2026, tightening interoperability and reporting requirements and extending networked lighting controls' role into integrated building systems such as HVAC.",
+      "topics": [
+        "controls",
+        "standards"
+      ]
+    }
+  ],
+  "termOfDay": "maintained-illuminance",
+  "projectOfDay": "circadian-design"
+}
