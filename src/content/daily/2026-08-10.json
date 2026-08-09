@@ -1,0 +1,30 @@
+{
+  "date": "2026-08-10",
+  "generatedAt": "2026-08-09T17:35:58.560Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "Beyond Illumination: What Museum Lighting Can Teach Urban Lighting Master Plans",
+      "url": "https://www.arc-magazine.com/beyond-illumination-what-museum-lighting-can-teach-urban-lighting-master-plans",
+      "source": "arc",
+      "published": "Fri, 07 Aug 2026 08:24:38 +0000",
+      "summary": "The article discusses transferring museum lighting techniques, such as precise contrast control and narrative sequencing, to the scale of urban lighting masterplans.",
+      "topics": [
+        "practice",
+        "research"
+      ]
+    },
+    {
+      "title": "LEDucation 2027: Call For Speakers &#038; Designer Day Added",
+      "url": "https://www.lightnowblog.com/2026/08/leducation-2027-call-for-speakers-designer-day-added",
+      "source": "LightNOW",
+      "published": "Fri, 07 Aug 2026 05:25:51 +0000",
+      "summary": "LEDucation 2027 has opened a call for speakers and added a third conference day dedicated specifically to lighting designers and specifiers.",
+      "topics": [
+        "practice"
+      ]
+    }
+  ],
+  "termOfDay": "mock-up",
+  "projectOfDay": "glare-and-ugr"
+}
