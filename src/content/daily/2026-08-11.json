@@ -1,0 +1,44 @@
+{
+  "date": "2026-08-11",
+  "generatedAt": "2026-08-10T17:54:04.412Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "TRT Lighting modernises Frenchgate Tunnel with LED retrofit",
+      "url": "https://www.a1lightingmagazine.com/company-news/trt-lighting-modernises-frenchgate-tunnel-with-led-retrofit",
+      "source": "A1 Lighting",
+      "published": "Mon, 10 Aug 2026 11:53:38 +0000",
+      "summary": "A road tunnel in Doncaster has been retrofitted from high-pressure sodium and fluorescent lighting to LED, addressing rising maintenance costs of the original 1990s-era installation.",
+      "topics": [
+        "product",
+        "sustainability",
+        "practice"
+      ]
+    },
+    {
+      "title": "Why Lighting Needs a Universal Luminaire Cutsheet",
+      "url": "https://www.arc-magazine.com/why-lighting-needs-a-universal-luminaire-cutsheet",
+      "source": "arc",
+      "published": "Mon, 10 Aug 2026 10:08:15 +0000",
+      "summary": "A practising lighting designer has developed an AI-driven tool intended to standardise luminaire cutsheets, aiming to streamline how specification data is formatted and compared across manufacturers.",
+      "topics": [
+        "standards",
+        "product",
+        "practice"
+      ]
+    },
+    {
+      "title": "The Past of the Future, Quebec, Canada",
+      "url": "https://www.arc-magazine.com/the-past-of-the-future-quebec-canada",
+      "source": "arc",
+      "published": "Mon, 10 Aug 2026 08:30:56 +0000",
+      "summary": "A flexible LED tube product has been integrated into a public sculpture installation in Quebec, illuminating the artwork as part of its design.",
+      "topics": [
+        "product",
+        "practice"
+      ]
+    }
+  ],
+  "termOfDay": "modelling",
+  "projectOfDay": "inverse-square-and-beams"
+}
