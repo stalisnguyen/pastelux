@@ -1,0 +1,20 @@
+{
+  "date": "2026-08-14",
+  "generatedAt": "2026-08-13T17:59:41.498Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "Lighting for Neuroinclusive Learning",
+      "url": "https://www.lightnowblog.com/2026/08/lighting-for-neuroinclusive-learning",
+      "source": "LightNOW",
+      "published": "Thu, 13 Aug 2026 05:04:52 +0000",
+      "summary": "The article argues that circadian- and cognition-informed lighting can lower cognitive load, aid wayfinding and give students more control, extending neuroinclusive design beyond accessibility compliance in campus buildings.",
+      "topics": [
+        "research",
+        "practice"
+      ]
+    }
+  ],
+  "termOfDay": "occupancy-sensor",
+  "projectOfDay": "photometric-quantities"
+}
