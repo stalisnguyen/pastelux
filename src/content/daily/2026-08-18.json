@@ -1,0 +1,31 @@
+{
+  "date": "2026-08-18",
+  "generatedAt": "2026-08-17T17:31:21.638Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "Dali-2 controls support £18.8m Innovation Centre in Suffolk",
+      "url": "https://www.a1lightingmagazine.com/latest-news/dali-2-controls-support-18-8m-innovation-centre-in-suffolk",
+      "source": "A1 Lighting",
+      "published": "Mon, 17 Aug 2026 12:23:14 +0000",
+      "summary": "A DALI-2 control system has been installed at a new £18.8m Suffolk skills centre, intended to support energy management and simplify maintenance across the three-storey building as part of its sustainability strategy.",
+      "topics": [
+        "controls",
+        "sustainability"
+      ]
+    },
+    {
+      "title": "Product Monday: iGuzzini’s Laser Evo Modular Downlights",
+      "url": "https://www.lightnowblog.com/2026/08/product-monday-iguzzinis-laser-evo-modular-downlights",
+      "source": "LightNOW",
+      "published": "Mon, 17 Aug 2026 05:40:31 +0000",
+      "summary": "iGuzzini has launched Laser Evo, a modular recessed downlight platform offering over a million configuration options with a focus on optical control and visual comfort, plus connected-control compatibility for retail, hospitality and residential use.",
+      "topics": [
+        "product",
+        "optics"
+      ]
+    }
+  ],
+  "termOfDay": "pixel-pitch",
+  "projectOfDay": "control-protocols"
+}
