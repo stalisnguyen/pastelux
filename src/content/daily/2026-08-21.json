@@ -1,0 +1,21 @@
+{
+  "date": "2026-08-21",
+  "generatedAt": "2026-08-20T17:34:40.686Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "Massachusetts Dark Sky Bill For Outdoor Public Lighting",
+      "url": "https://www.lightnowblog.com/2026/08/massachusetts-dark-sky-bill-for-outdoor-public-lighting",
+      "source": "LightNOW",
+      "published": "Thu, 20 Aug 2026 05:10:06 +0000",
+      "summary": "Massachusetts bills H.3494/S.3145 would condition state and municipal funding for new permanent outdoor lighting on compliance with limits on spectral content, uplight, illuminance and system design, affecting roadway and parking lighting specification.",
+      "topics": [
+        "standards",
+        "sustainability",
+        "controls"
+      ]
+    }
+  ],
+  "termOfDay": "wall-washer-fitting",
+  "projectOfDay": "glare-and-ugr"
+}
