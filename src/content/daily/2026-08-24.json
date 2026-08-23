@@ -1,0 +1,67 @@
+{
+  "date": "2026-08-24",
+  "generatedAt": "2026-08-23T17:25:18.202Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "Lighting for Neuroinclusive Learning",
+      "url": "https://www.lightnowblog.com/2026/08/lighting-for-neuroinclusive-learning",
+      "source": "LightNOW",
+      "published": "Thu, 13 Aug 2026 05:04:52 +0000",
+      "summary": "Discusses neuroscience-informed lighting design as a tool to reduce cognitive load, improve wayfinding and support student wellbeing, extending accessibility-focused design thinking in higher-education campus environments.",
+      "topics": [
+        "circadian",
+        "research",
+        "practice"
+      ]
+    },
+    {
+      "title": "Typology Catenary Ring Light",
+      "url": "https://www.arc-magazine.com/typology-catenary-ring-light",
+      "source": "arc",
+      "published": "Tue, 11 Aug 2026 10:10:04 +0000",
+      "summary": "Typology's Catenary Ring Light is an outdoor luminaire using a suspended circular form intended to pair sculptural architectural presence with functional area illumination.",
+      "topics": [
+        "product",
+        "facade",
+        "optics"
+      ]
+    },
+    {
+      "title": "A layered lighting design for Madinat Jumeirah",
+      "url": "https://www.a1lightingmagazine.com/company-news/a-layered-lighting-design-for-madinat-jumeirah",
+      "source": "A1 Lighting",
+      "published": "Tue, 11 Aug 2026 10:00:06 +0000",
+      "summary": "Covers the layered lighting scheme applied across Madinat Jumeirah's Dubai resort complex, coordinating architectural, landscape and hospitality lighting across its hotels, souk, spa and event spaces.",
+      "topics": [
+        "practice",
+        "product"
+      ]
+    },
+    {
+      "title": "Making the beautiful game unforgettable – Signify Comment",
+      "url": "https://www.arc-magazine.com/making-the-beautiful-game-unforgettable-signify-comment",
+      "source": "arc",
+      "published": "Tue, 11 Aug 2026 09:26:08 +0000",
+      "summary": "An opinion piece from Signify's UK professional lighting division on the role of stadium and sports lighting in shaping atmosphere and broadcast quality at major football events.",
+      "topics": [
+        "practice",
+        "product"
+      ]
+    },
+    {
+      "title": "TRT Lighting modernises Frenchgate Tunnel with LED retrofit",
+      "url": "https://www.a1lightingmagazine.com/company-news/trt-lighting-modernises-frenchgate-tunnel-with-led-retrofit",
+      "source": "A1 Lighting",
+      "published": "Mon, 10 Aug 2026 11:53:38 +0000",
+      "summary": "TRT Lighting replaced ageing high-pressure sodium and fluorescent fittings in Doncaster's Frenchgate Tunnel with an LED retrofit, addressing rising maintenance costs on this transport interchange corridor.",
+      "topics": [
+        "sustainability",
+        "product",
+        "practice"
+      ]
+    }
+  ],
+  "termOfDay": "rgbw",
+  "projectOfDay": "luminaire-types"
+}
