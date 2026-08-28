@@ -1,0 +1,41 @@
+{
+  "date": "2026-08-28",
+  "generatedAt": "2026-08-28T01:23:43.784Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "Lucent Lighting supports the hospitality-led transformation of 48 Dover Street",
+      "url": "https://www.a1lightingmagazine.com/company-news/lucent-lighting-supports-the-hospitality-led-transformation-of-48-dover-street",
+      "source": "A1 Lighting",
+      "published": "Thu, 27 Aug 2026 12:53:28 +0000",
+      "summary": "Lucent Lighting supplied architectural luminaires for the reception refurbishment of 48 Dover Street in Mayfair, part of a hospitality-driven redesign of the arrival space.",
+      "topics": [
+        "product",
+        "practice"
+      ]
+    },
+    {
+      "title": "New Scientist Magazine Cover Story On “Red Light Starvation”",
+      "url": "https://www.lightnowblog.com/2026/08/new-scientist-magazine-cover-story-on-red-light-starvation",
+      "source": "LightNOW",
+      "published": "Thu, 27 Aug 2026 05:54:13 +0000",
+      "summary": "A New Scientist feature reports emerging research suggesting LED lighting and IR-filtering glazing have reduced human exposure to long-wavelength red and infrared light, raising questions about biological effects of modern light sources and glass specification.",
+      "topics": [
+        "circadian",
+        "research"
+      ]
+    },
+    {
+      "title": "The IES Has Re-Affirmed 10 Standards",
+      "url": "https://www.lightnowblog.com/2026/08/the-ies-has-re-affirmed-10-standards",
+      "source": "LightNOW",
+      "published": "Wed, 26 Aug 2026 05:47:54 +0000",
+      "summary": "IES has reaffirmed ten LM testing method standards covering photometric and electrical measurement procedures for AC-LED packages, floodlighting, and HID/incandescent luminaires, keeping current specification and testing references valid without revision.",
+      "topics": [
+        "standards"
+      ]
+    }
+  ],
+  "termOfDay": "sparkle",
+  "projectOfDay": "colour-quality"
+}
