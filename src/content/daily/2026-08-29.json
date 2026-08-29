@@ -1,0 +1,41 @@
+{
+  "date": "2026-08-29",
+  "generatedAt": "2026-08-29T00:54:40.420Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "SLL and ILP to co-host sustainability roadshow",
+      "url": "https://www.arc-magazine.com/sll-and-ilp-to-co-host-sustainability-roadshow",
+      "source": "arc",
+      "published": "Fri, 28 Aug 2026 08:31:53 +0000",
+      "summary": "The SLL and the Lighting Industry Association are jointly running a roadshow addressing sustainability in lighting specification and practice across the UK.",
+      "topics": [
+        "sustainability",
+        "practice"
+      ]
+    },
+    {
+      "title": "FRA’s $5.3 Billion Program Creates Lighting Opportunities",
+      "url": "https://www.lightnowblog.com/2026/08/fras-5-3-billion-program-creates-lighting-opportunities",
+      "source": "LightNOW",
+      "published": "Fri, 28 Aug 2026 05:01:46 +0000",
+      "summary": "The US Federal Railroad Administration's $5.3 billion funding package includes lighting upgrades across 41 rail projects, covering fleet, station and grade-crossing installations, opening specification opportunities.",
+      "topics": [
+        "practice",
+        "product"
+      ]
+    },
+    {
+      "title": "New CEO of Zumtobel Group announced",
+      "url": "https://www.arc-magazine.com/new-ceo-of-zumtobel-group-announced",
+      "source": "arc",
+      "published": "Mon, 24 Aug 2026 08:48:50 +0000",
+      "summary": "Zumtobel Group has appointed Dr.-Ing Heiner Lang as CEO effective 1 October, a leadership change at one of the sector's major luminaire manufacturers.",
+      "topics": [
+        "practice"
+      ]
+    }
+  ],
+  "termOfDay": "step-light",
+  "projectOfDay": "control-protocols"
+}
