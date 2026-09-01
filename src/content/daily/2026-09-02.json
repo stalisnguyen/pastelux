@@ -1,0 +1,20 @@
+{
+  "date": "2026-09-02",
+  "generatedAt": "2026-09-01T19:48:24.952Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "A New Software Platform For Lighting Manufacturers",
+      "url": "https://www.lightnowblog.com/2026/08/a-new-software-platform-for-lighting-manufacturers",
+      "source": "LightNOW",
+      "published": "Mon, 31 Aug 2026 05:03:53 +0000",
+      "summary": "Electrify Connect is a new software platform for lighting manufacturers that combines product configurators, CRM, PIM, spec-sheet generation and specifier portals into one system, replacing previously siloed tools.",
+      "topics": [
+        "product",
+        "practice"
+      ]
+    }
+  ],
+  "termOfDay": "throw-distance",
+  "projectOfDay": "inverse-square-and-beams"
+}
