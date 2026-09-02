@@ -1,0 +1,31 @@
+{
+  "date": "2026-09-03",
+  "generatedAt": "2026-09-02T19:40:03.008Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "Thorn and Zumtobel light the future of learning at Coláiste na Mí",
+      "url": "https://www.a1lightingmagazine.com/latest-news/thorn-and-zumtobel-light-the-future-of-learning-at-colaiste-na-mi",
+      "source": "A1 Lighting",
+      "published": "Wed, 02 Sep 2026 11:05:09 +0000",
+      "summary": "Thorn and Zumtobel supplied a phased lighting scheme for a new Irish secondary school, covering classrooms, social spaces and specialist facilities with an emphasis on flexibility and efficiency across the multi-building campus.",
+      "topics": [
+        "product",
+        "practice"
+      ]
+    },
+    {
+      "title": "Glamox wins contract to light Formosa 4 wind farm in Taiwan",
+      "url": "https://www.a1lightingmagazine.com/company-news/glamox-wins-contract-to-light-formosa-4-wind-farm-in-taiwan",
+      "source": "A1 Lighting",
+      "published": "Tue, 25 Aug 2026 11:40:26 +0000",
+      "summary": "Glamox will supply over 900 marine luminaires for up to 35 turbine foundations at Taiwan's Formosa 4 offshore wind farm, a large-scale application of corrosion-resistant lighting for renewable energy infrastructure.",
+      "topics": [
+        "product",
+        "sustainability"
+      ]
+    }
+  ],
+  "termOfDay": "tm-30",
+  "projectOfDay": "led-sources"
+}
