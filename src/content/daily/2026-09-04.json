@@ -1,0 +1,20 @@
+{
+  "date": "2026-09-04",
+  "generatedAt": "2026-09-03T19:42:03.860Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "Illinois Passes Its Dark Sky Bill Into Law",
+      "url": "https://www.lightnowblog.com/2026/09/illinois-passes-its-dark-sky-bill-into-law",
+      "source": "LightNOW",
+      "published": "Thu, 03 Sep 2026 05:38:27 +0000",
+      "summary": "Illinois signed the Dark Sky Act (SB 3037) into law, expanding statewide light-pollution controls effective January 1, 2027, adding new outdoor lighting compliance requirements for specifiers working in the state.",
+      "topics": [
+        "standards",
+        "sustainability"
+      ]
+    }
+  ],
+  "termOfDay": "track-light",
+  "projectOfDay": "luminaire-types"
+}
