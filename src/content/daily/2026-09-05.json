@@ -1,0 +1,32 @@
+{
+  "date": "2026-09-05",
+  "generatedAt": "2026-09-04T19:21:42.802Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "Light Forms transforms Baltic Works with a striking new welcome",
+      "url": "https://www.a1lightingmagazine.com/latest-news/light-forms-transforms-baltic-works",
+      "source": "A1 Lighting",
+      "published": "Fri, 04 Sep 2026 12:39:14 +0000",
+      "summary": "Light Forms supplied and developed the lighting scheme for the refurbished Baltic Works in Gateshead, working under Park Lighting Design for Robertson Engineering Services to create a more welcoming entrance experience.",
+      "topics": [
+        "product",
+        "practice"
+      ]
+    },
+    {
+      "title": "Lighting As Industrial Machine Vision Infrastructure",
+      "url": "https://www.lightnowblog.com/2026/09/lighting-as-industrial-machine-vision-infrastructure",
+      "source": "LightNOW",
+      "published": "Fri, 04 Sep 2026 05:48:41 +0000",
+      "summary": "Illumination quality, uniformity and controllability are framed as core determinants of machine-vision accuracy in industrial robotics, underscoring lighting's role as functional infrastructure rather than aesthetic add-on.",
+      "topics": [
+        "optics",
+        "controls",
+        "research"
+      ]
+    }
+  ],
+  "termOfDay": "trimless",
+  "projectOfDay": "photometric-quantities"
+}
