@@ -1,0 +1,83 @@
+{
+  "date": "2026-09-06",
+  "generatedAt": "2026-09-05T18:55:37.701Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "SLL and ILP to co-host sustainability roadshow",
+      "url": "https://www.arc-magazine.com/sll-and-ilp-to-co-host-sustainability-roadshow",
+      "source": "arc",
+      "published": "Fri, 28 Aug 2026 08:31:53 +0000",
+      "summary": "SLL and the Lighting Industry Association are jointly running a UK roadshow on lighting sustainability, likely covering embodied carbon, energy performance and circular economy considerations relevant to specification.",
+      "topics": [
+        "sustainability",
+        "practice"
+      ]
+    },
+    {
+      "title": "FRA’s $5.3 Billion Program Creates Lighting Opportunities",
+      "url": "https://www.lightnowblog.com/2026/08/fras-5-3-billion-program-creates-lighting-opportunities",
+      "source": "LightNOW",
+      "published": "Fri, 28 Aug 2026 05:01:46 +0000",
+      "summary": "The US Federal Railroad Administration's $5.3 billion National Railroad Partnership Program funds 41 projects across 23 states, including on-board fleet lighting modernization, station overhauls and grade-crossing lighting for safety, opening specification opportunities.",
+      "topics": [
+        "practice",
+        "sustainability"
+      ]
+    },
+    {
+      "title": "Lucent Lighting supports the hospitality-led transformation of 48 Dover Street",
+      "url": "https://www.a1lightingmagazine.com/company-news/lucent-lighting-supports-the-hospitality-led-transformation-of-48-dover-street",
+      "source": "A1 Lighting",
+      "published": "Thu, 27 Aug 2026 12:53:28 +0000",
+      "summary": "Lucent Lighting supplied architectural luminaires for a hospitality-style reception redesign at 48 Dover Street, Mayfair, illustrating warmer, more residential-feeling lighting treatment for commercial arrival spaces.",
+      "topics": [
+        "product",
+        "practice"
+      ]
+    },
+    {
+      "title": "New Scientist Magazine Cover Story On “Red Light Starvation”",
+      "url": "https://www.lightnowblog.com/2026/08/new-scientist-magazine-cover-story-on-red-light-starvation",
+      "source": "LightNOW",
+      "published": "Thu, 27 Aug 2026 05:54:13 +0000",
+      "summary": "New Scientist reports on emerging research suggesting that LED adoption and IR-filtering glazing have reduced indoor exposure to red and infrared wavelengths, raising questions about unintended biological effects relevant to circadian-focused specification.",
+      "topics": [
+        "circadian",
+        "research"
+      ]
+    },
+    {
+      "title": "The IES Has Re-Affirmed 10 Standards",
+      "url": "https://www.lightnowblog.com/2026/08/the-ies-has-re-affirmed-10-standards",
+      "source": "LightNOW",
+      "published": "Wed, 26 Aug 2026 05:47:54 +0000",
+      "summary": "IES has reaffirmed ten existing photometric testing standards, including methods for AC-LED packages, HID/incandescent floodlighting and indoor luminaire testing, confirming their continued validity without technical revision.",
+      "topics": [
+        "standards"
+      ]
+    },
+    {
+      "title": "Updates On Four Lighting Industry Events",
+      "url": "https://www.lightnowblog.com/2026/08/updates-on-four-lighting-industry-events",
+      "source": "LightNOW",
+      "published": "Tue, 25 Aug 2026 05:06:42 +0000",
+      "summary": "Roundup of scheduling and speaker announcements for four upcoming lighting trade shows and conferences, including ArchLIGHT Summit 2026 in Dallas with keynotes from Leni Schwendinger and IALD's Andrea Hartranft.",
+      "topics": [
+        "practice"
+      ]
+    },
+    {
+      "title": "New CEO of Zumtobel Group announced",
+      "url": "https://www.arc-magazine.com/new-ceo-of-zumtobel-group-announced",
+      "source": "arc",
+      "published": "Mon, 24 Aug 2026 08:48:50 +0000",
+      "summary": "Zumtobel Group's Supervisory Board has named Dr.-Ing Heiner Lang as incoming CEO, effective 1 October, a leadership change at a major luminaire manufacturer.",
+      "topics": [
+        "practice"
+      ]
+    }
+  ],
+  "termOfDay": "tunable-white",
+  "projectOfDay": "by-typology"
+}
