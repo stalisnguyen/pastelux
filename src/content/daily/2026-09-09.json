@@ -1,0 +1,41 @@
+{
+  "date": "2026-09-09",
+  "generatedAt": "2026-09-08T19:47:23.394Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "PLASA Awards for Innovation 2026 winners announced",
+      "url": "https://www.a1lightingmagazine.com/awards/plasa-awards-for-innovation-2026-winners-announced",
+      "source": "A1 Lighting",
+      "published": "Tue, 08 Sep 2026 12:02:50 +0000",
+      "summary": "PLASA has announced the winners of its 2026 Awards for Innovation, recognising new entertainment and stage lighting technologies for safety, efficiency and performance improvements.",
+      "topics": [
+        "awards",
+        "product"
+      ]
+    },
+    {
+      "title": "Showlight comes to Spain in 2029",
+      "url": "https://www.a1lightingmagazine.com/show-news/showlight-comes-to-spain-in-2029",
+      "source": "A1 Lighting",
+      "published": "Mon, 07 Sep 2026 12:50:51 +0000",
+      "summary": "Showlight, the quadrennial lighting design conference, will hold its 2029 edition in Granada, Spain, sponsored by manufacturers Ayrton and SGM.",
+      "topics": [
+        "practice"
+      ]
+    },
+    {
+      "title": "Measuring Good Design",
+      "url": "https://www.arc-magazine.com/measuring-good-design-can-we-put-a-value-on-illuminating-architecture",
+      "source": "arc",
+      "published": "Mon, 07 Sep 2026 09:36:33 +0000",
+      "summary": "An industry perspective piece asks how illuminated architecture's value and quality can be assessed, raising the question of metrics for evaluating good lighting design beyond subjective judgement.",
+      "topics": [
+        "practice",
+        "standards"
+      ]
+    }
+  ],
+  "termOfDay": "uplight-ratio",
+  "projectOfDay": "control-protocols"
+}
