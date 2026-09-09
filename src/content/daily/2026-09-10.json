@@ -1,0 +1,63 @@
+{
+  "date": "2026-09-10",
+  "generatedAt": "2026-09-09T19:38:54.944Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "Light Forms transforms Baltic Works with a striking new welcome",
+      "url": "https://www.a1lightingmagazine.com/latest-news/light-forms-transforms-baltic-works",
+      "source": "A1 Lighting",
+      "published": "Fri, 04 Sep 2026 12:39:14 +0000",
+      "summary": "Light Forms supplied a lighting scheme for the refurbishment of Baltic Works in Gateshead, working under lighting designer Park Lighting Design as part of the building's redevelopment.",
+      "topics": [
+        "product",
+        "practice"
+      ]
+    },
+    {
+      "title": "Lighting As Industrial Machine Vision Infrastructure",
+      "url": "https://www.lightnowblog.com/2026/09/lighting-as-industrial-machine-vision-infrastructure",
+      "source": "LightNOW",
+      "published": "Fri, 04 Sep 2026 05:48:41 +0000",
+      "summary": "Illumination quality, uniformity and controllability are described as critical infrastructure for robotic machine vision, directly affecting inspection accuracy and production uptime in industrial settings—relevant to specifiers working on optics for vision systems.",
+      "topics": [
+        "optics",
+        "research"
+      ]
+    },
+    {
+      "title": "SLL and ILP to co-host sustainability roadshow",
+      "url": "https://www.arc-magazine.com/sll-and-ilp-to-co-host-sustainability-roadshow",
+      "source": "arc",
+      "published": "Fri, 28 Aug 2026 08:31:53 +0000",
+      "summary": "SLL and the Lighting Industry Association are jointly running a roadshow on sustainability, likely covering embodied carbon, energy standards and specification practice for lighting professionals.",
+      "topics": [
+        "sustainability",
+        "standards"
+      ]
+    },
+    {
+      "title": "FRA’s $5.3 Billion Program Creates Lighting Opportunities",
+      "url": "https://www.lightnowblog.com/2026/08/fras-5-3-billion-program-creates-lighting-opportunities",
+      "source": "LightNOW",
+      "published": "Fri, 28 Aug 2026 05:01:46 +0000",
+      "summary": "The Federal Railroad Administration's $5.3 billion NRPP funding package includes lighting upgrades across 41 passenger rail projects in 23 states, covering fleet modernization, station overhauls and grade-crossing safety lighting.",
+      "topics": [
+        "practice"
+      ]
+    },
+    {
+      "title": "New Scientist Magazine Cover Story On “Red Light Starvation”",
+      "url": "https://www.lightnowblog.com/2026/08/new-scientist-magazine-cover-story-on-red-light-starvation",
+      "source": "LightNOW",
+      "published": "Thu, 27 Aug 2026 05:54:13 +0000",
+      "summary": "New Scientist reports that LED lighting and IR-filtering glazing have reduced ambient exposure to red and infrared wavelengths, raising questions about biological effects of spectral shifts driven by energy-efficient specification choices.",
+      "topics": [
+        "circadian",
+        "research"
+      ]
+    }
+  ],
+  "termOfDay": "value-engineering",
+  "projectOfDay": "dark-sky-facade"
+}
