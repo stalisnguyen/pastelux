@@ -1,0 +1,30 @@
+{
+  "date": "2026-09-13",
+  "generatedAt": "2026-09-12T19:05:34.709Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "PLASA Awards for Innovation 2026 winners announced",
+      "url": "https://www.a1lightingmagazine.com/awards/plasa-awards-for-innovation-2026-winners-announced",
+      "source": "A1 Lighting",
+      "published": "Tue, 08 Sep 2026 12:02:50 +0000",
+      "summary": "PLASA has announced the winners of its 2026 Awards for Innovation at PLASA Show London, recognising new lighting and stage technology for safety, efficiency and performance gains.",
+      "topics": [
+        "awards",
+        "product"
+      ]
+    },
+    {
+      "title": "Measuring Good Design",
+      "url": "https://www.arc-magazine.com/measuring-good-design-can-we-put-a-value-on-illuminating-architecture",
+      "source": "arc",
+      "published": "Mon, 07 Sep 2026 09:36:33 +0000",
+      "summary": "An industry essay questions how illuminated architecture's value and quality should be assessed, raising the ongoing debate over metrics for evaluating good lighting design beyond energy or compliance figures.",
+      "topics": [
+        "practice"
+      ]
+    }
+  ],
+  "termOfDay": "well-l03",
+  "projectOfDay": "inverse-square-and-beams"
+}
