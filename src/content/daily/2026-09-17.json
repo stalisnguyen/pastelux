@@ -1,0 +1,53 @@
+{
+  "date": "2026-09-17",
+  "generatedAt": "2026-09-16T19:55:45.955Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "Silhouette Awards celebrate five years of mentorship as Season 6 prepares to launch",
+      "url": "https://www.a1lightingmagazine.com/awards/silhouette-awards-celebrate-five-years-of-mentorship",
+      "source": "A1 Lighting",
+      "published": "Fri, 11 Sep 2026 10:38:33 +0000",
+      "summary": "The Silhouette Awards mentorship programme for emerging lighting designers is launching its sixth season, with details to be unveiled at a virtual event in September.",
+      "topics": [
+        "awards",
+        "practice"
+      ]
+    },
+    {
+      "title": "PLASA Awards for Innovation 2026 winners announced",
+      "url": "https://www.a1lightingmagazine.com/awards/plasa-awards-for-innovation-2026-winners-announced",
+      "source": "A1 Lighting",
+      "published": "Tue, 08 Sep 2026 12:02:50 +0000",
+      "summary": "PLASA has announced the winners of its 2026 Awards for Innovation at PLASA Show London, recognising new technology across the entertainment and event technology sector.",
+      "topics": [
+        "awards",
+        "product"
+      ]
+    },
+    {
+      "title": "Measuring Good Design",
+      "url": "https://www.arc-magazine.com/measuring-good-design-can-we-put-a-value-on-illuminating-architecture",
+      "source": "arc",
+      "published": "Mon, 07 Sep 2026 09:36:33 +0000",
+      "summary": "A Signify executive discusses how to assess and quantify the value of illuminated architecture, though the piece offers no concrete metrics or methodology in this excerpt.",
+      "topics": [
+        "practice"
+      ]
+    },
+    {
+      "title": "Illinois Passes Its Dark Sky Bill Into Law",
+      "url": "https://www.lightnowblog.com/2026/09/illinois-passes-its-dark-sky-bill-into-law",
+      "source": "LightNOW",
+      "published": "Thu, 03 Sep 2026 05:38:27 +0000",
+      "summary": "Illinois's new Dark Sky Act (SB 3037), effective January 1, 2027, expands statewide restrictions on outdoor lighting to curb light pollution, adding another jurisdiction where exterior specifications must meet dark-sky compliance criteria.",
+      "topics": [
+        "standards",
+        "sustainability",
+        "practice"
+      ]
+    }
+  ],
+  "termOfDay": "adjustable-spot",
+  "projectOfDay": "by-typology"
+}
