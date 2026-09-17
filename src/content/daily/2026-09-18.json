@@ -1,0 +1,66 @@
+{
+  "date": "2026-09-18",
+  "generatedAt": "2026-09-17T20:06:28.466Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "DALI Alliance announces DALI 27 Inaugural Global Summit + Expo",
+      "url": "https://www.a1lightingmagazine.com/latest-news/dali-alliance-announces-dali-27",
+      "source": "A1 Lighting",
+      "published": "Thu, 17 Sep 2026 09:10:08 +0000",
+      "summary": "The DALI Alliance will hold its first global summit and expo, DALI 27, in Utrecht in February 2027, gathering lighting and smart-building professionals around digital lighting control standards.",
+      "topics": [
+        "standards",
+        "controls",
+        "practice"
+      ]
+    },
+    {
+      "title": "Product Monday: Venetian Blinds Upcycled Into Luminaires",
+      "url": "https://www.lightnowblog.com/2026/09/product-monday-venetian-blinds-upcycled-into-luminaires",
+      "source": "LightNOW",
+      "published": "Mon, 14 Sep 2026 05:14:07 +0000",
+      "summary": "A designer repurposes discarded aluminium Venetian blind slats into a modular luminaire family, using components originally meant to block daylight to instead direct and diffuse artificial light, an example of circular-design thinking in fixture manufacture.",
+      "topics": [
+        "product",
+        "sustainability"
+      ]
+    },
+    {
+      "title": "London Aquatics Centre upgrades to next-generation LED lighting with Signify",
+      "url": "https://www.a1lightingmagazine.com/latest-news/london-aquatics-centre-upgrades-to-next-generation-led-lighting",
+      "source": "A1 Lighting",
+      "published": "Thu, 10 Sep 2026 11:58:10 +0000",
+      "summary": "Signify has replaced the LED system at London's Aquatics Centre, citing up to 60% energy savings at full output and compliance with World Aquatics broadcast lighting requirements, with an AR-based aiming tool used for precise fixture alignment in the complex venue.",
+      "topics": [
+        "standards",
+        "product",
+        "sustainability"
+      ]
+    },
+    {
+      "title": "Showlight comes to Spain in 2029",
+      "url": "https://www.a1lightingmagazine.com/show-news/showlight-comes-to-spain-in-2029",
+      "source": "A1 Lighting",
+      "published": "Mon, 07 Sep 2026 12:50:51 +0000",
+      "summary": "The Showlight entertainment-lighting conference will relocate to Granada, Spain for its 2029 edition, sponsored by manufacturers Ayrton and SGM.",
+      "topics": [
+        "practice"
+      ]
+    },
+    {
+      "title": "Lighting As Industrial Machine Vision Infrastructure",
+      "url": "https://www.lightnowblog.com/2026/09/lighting-as-industrial-machine-vision-infrastructure",
+      "source": "LightNOW",
+      "published": "Fri, 04 Sep 2026 05:48:41 +0000",
+      "summary": "Piece argues that illumination uniformity, quality and controllability are foundational to machine-vision accuracy in industrial robotics, positioning lighting design as core infrastructure for inspection reliability and production uptime rather than a secondary concern.",
+      "topics": [
+        "optics",
+        "research",
+        "practice"
+      ]
+    }
+  ],
+  "termOfDay": "aiming-angle",
+  "projectOfDay": "circadian-design"
+}
