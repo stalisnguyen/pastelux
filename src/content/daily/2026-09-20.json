@@ -1,0 +1,45 @@
+{
+  "date": "2026-09-20",
+  "generatedAt": "2026-09-19T19:14:49.765Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "DALI Alliance announces DALI 27 Inaugural Global Summit + Expo",
+      "url": "https://www.a1lightingmagazine.com/latest-news/dali-alliance-announces-dali-27",
+      "source": "A1 Lighting",
+      "published": "Thu, 17 Sep 2026 09:10:08 +0000",
+      "summary": "DALI Alliance will hold its first Global Summit and Expo, DALI 27, in Utrecht in February 2027, gathering lighting, smart-building and smart-city stakeholders around the DALI control protocol.",
+      "topics": [
+        "controls",
+        "standards",
+        "practice"
+      ]
+    },
+    {
+      "title": "Product Monday: Venetian Blinds Upcycled Into Luminaires",
+      "url": "https://www.lightnowblog.com/2026/09/product-monday-venetian-blinds-upcycled-into-luminaires",
+      "source": "LightNOW",
+      "published": "Mon, 14 Sep 2026 05:14:07 +0000",
+      "summary": "A designer has repurposed reclaimed aluminium venetian blind slats into a modular luminaire family, using the slats' inherent shading geometry to direct and diffuse light output rather than block daylight.",
+      "topics": [
+        "product",
+        "sustainability",
+        "optics"
+      ]
+    },
+    {
+      "title": "London Aquatics Centre upgrades to next-generation LED lighting with Signify",
+      "url": "https://www.a1lightingmagazine.com/latest-news/london-aquatics-centre-upgrades-to-next-generation-led-lighting",
+      "source": "A1 Lighting",
+      "published": "Thu, 10 Sep 2026 11:58:10 +0000",
+      "summary": "Signify has upgraded London Aquatics Centre's LED lighting to meet World Aquatics broadcast standards, citing up to 60% energy savings at full output and using AR-assisted aiming to handle the venue's complex geometry.",
+      "topics": [
+        "standards",
+        "sustainability",
+        "product"
+      ]
+    }
+  ],
+  "termOfDay": "as-built",
+  "projectOfDay": "control-protocols"
+}
