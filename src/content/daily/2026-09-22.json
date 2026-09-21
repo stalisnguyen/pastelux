@@ -1,0 +1,57 @@
+{
+  "date": "2026-09-22",
+  "generatedAt": "2026-09-21T20:55:27.241Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "Product Monday: Korrus Ecosense Circadian Lighting Line",
+      "url": "https://www.lightnowblog.com/2026/09/product-monday-korrus-ecosense-circadian-lighting-line",
+      "source": "LightNOW",
+      "published": "Mon, 21 Sep 2026 05:46:56 +0000",
+      "summary": "Korrus launches an integrated circadian lighting range spanning multiple fixture types, aiming to deliver coordinated tunable output across a whole space rather than isolated fixtures, addressing circadian lighting's all-or-nothing requirement.",
+      "topics": [
+        "circadian",
+        "product",
+        "controls"
+      ]
+    },
+    {
+      "title": "DALI Alliance announces DALI 27 Inaugural Global Summit + Expo",
+      "url": "https://www.a1lightingmagazine.com/latest-news/dali-alliance-announces-dali-27",
+      "source": "A1 Lighting",
+      "published": "Thu, 17 Sep 2026 09:10:08 +0000",
+      "summary": "DALI Alliance will hold its first Global Summit and Expo in Utrecht in February 2027, gathering lighting and smart-building professionals to discuss developments in digital lighting control protocols.",
+      "topics": [
+        "standards",
+        "controls",
+        "practice"
+      ]
+    },
+    {
+      "title": "Product Monday: Venetian Blinds Upcycled Into Luminaires",
+      "url": "https://www.lightnowblog.com/2026/09/product-monday-venetian-blinds-upcycled-into-luminaires",
+      "source": "LightNOW",
+      "published": "Mon, 14 Sep 2026 05:14:07 +0000",
+      "summary": "A designer repurposes discarded aluminum Venetian blind slats as diffusing and reflecting elements in a modular luminaire family, turning shading hardware into light-control geometry as a circular-design exercise.",
+      "topics": [
+        "product",
+        "sustainability",
+        "optics"
+      ]
+    },
+    {
+      "title": "London Aquatics Centre upgrades to next-generation LED lighting with Signify",
+      "url": "https://www.a1lightingmagazine.com/latest-news/london-aquatics-centre-upgrades-to-next-generation-led-lighting",
+      "source": "A1 Lighting",
+      "published": "Thu, 10 Sep 2026 11:58:10 +0000",
+      "summary": "Signify's LED retrofit at London Aquatics Centre meets World Aquatics broadcast lighting requirements, cuts energy use up to 60% at full output, and used AR-assisted aiming for installation within complex architectural geometry.",
+      "topics": [
+        "standards",
+        "sustainability",
+        "product"
+      ]
+    }
+  ],
+  "termOfDay": "beam-angle",
+  "projectOfDay": "design-stages"
+}
