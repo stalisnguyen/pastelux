@@ -1,0 +1,32 @@
+{
+  "date": "2026-09-24",
+  "generatedAt": "2026-09-23T20:04:34.941Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "Federico Stefanovich revamps studio in 1920s Mexico City building to showcase his lighting",
+      "url": "https://www.dezeen.com/2026/09/23/nama-studio-federico-stefanovich-studio-1920s-mexico-building",
+      "source": "Dezeen",
+      "published": "Wed, 23 Sep 2026 14:00:24 +0000",
+      "summary": "Lighting designer Federico Stefanovich has renovated his studio in a 1920s Mexico City building to display his own expressive metal luminaires.",
+      "topics": [
+        "product",
+        "practice"
+      ]
+    },
+    {
+      "title": "Pharos powers heritage facade lighting at Parliament of Victoria",
+      "url": "https://www.a1lightingmagazine.com/latest-news/pharos-powers-heritage-facade-lighting-at-parliament-of-victoria",
+      "source": "A1 Lighting",
+      "published": "Wed, 23 Sep 2026 11:23:22 +0000",
+      "summary": "A Pharos control platform replaces an ageing sodium vapour floodlighting scheme on the heritage facade of Victoria's Parliament building, enabling finer control and a more considered reveal of the historic architecture.",
+      "topics": [
+        "facade",
+        "controls",
+        "product"
+      ]
+    }
+  ],
+  "termOfDay": "bollard",
+  "projectOfDay": "inverse-square-and-beams"
+}
