@@ -1,0 +1,54 @@
+{
+  "date": "2026-09-27",
+  "generatedAt": "2026-09-26T19:38:10.657Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "ENERGY STAR Transitioning From EPA to DOE",
+      "url": "https://www.lightnowblog.com/2026/09/energy-star-transitioning-from-epa-to-doe",
+      "source": "LightNOW",
+      "published": "Tue, 22 Sep 2026 05:23:54 +0000",
+      "summary": "Primary oversight of the ENERGY STAR program is moving from the EPA to the DOE; downlight and ceiling fan certification programs remain active, which may affect efficiency labeling and specification criteria.",
+      "topics": [
+        "standards",
+        "sustainability"
+      ]
+    },
+    {
+      "title": "Product Monday: Korrus Ecosense Circadian Lighting Line",
+      "url": "https://www.lightnowblog.com/2026/09/product-monday-korrus-ecosense-circadian-lighting-line",
+      "source": "LightNOW",
+      "published": "Mon, 21 Sep 2026 05:46:56 +0000",
+      "summary": "Korrus launched an integrated Ecosense circadian lighting line spanning multiple fixture types, aiming to provide full-space tunable, biologically-informed lighting rather than isolated bulbs or single fixtures.",
+      "topics": [
+        "circadian",
+        "product"
+      ]
+    },
+    {
+      "title": "DALI Alliance announces DALI 27 Inaugural Global Summit + Expo",
+      "url": "https://www.a1lightingmagazine.com/latest-news/dali-alliance-announces-dali-27",
+      "source": "A1 Lighting",
+      "published": "Thu, 17 Sep 2026 09:10:08 +0000",
+      "summary": "The DALI Alliance will hold its first Global Summit and Expo, DALI 27, in February 2027 in Utrecht, gathering lighting and smart-building stakeholders to advance digital lighting control standards.",
+      "topics": [
+        "standards",
+        "controls"
+      ]
+    },
+    {
+      "title": "Product Monday: Venetian Blinds Upcycled Into Luminaires",
+      "url": "https://www.lightnowblog.com/2026/09/product-monday-venetian-blinds-upcycled-into-luminaires",
+      "source": "LightNOW",
+      "published": "Mon, 14 Sep 2026 05:14:07 +0000",
+      "summary": "A designer repurposed reclaimed aluminium venetian blind slats, components normally used for daylight control, into a modular luminaire family that directs and diffuses artificial light, demonstrating a circular-economy approach to fixture manufacturing.",
+      "topics": [
+        "product",
+        "sustainability",
+        "optics"
+      ]
+    }
+  ],
+  "termOfDay": "cri",
+  "projectOfDay": "photometric-quantities"
+}
