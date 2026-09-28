@@ -1,0 +1,32 @@
+{
+  "date": "2026-09-29",
+  "generatedAt": "2026-09-28T22:27:59.974Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "High Bay Performance In Recessed Flat Panels",
+      "url": "https://www.lightnowblog.com/2026/09/high-bay-performance-in-recessed-flat-panels",
+      "source": "LightNOW",
+      "published": "Mon, 28 Sep 2026 05:18:04 +0000",
+      "summary": "A niche trend covers high-lumen recessed flat-panel luminaires delivering high-bay output within a standard ceiling grid, offering industrial-level illumination for select applications rather than replacing suspended high bays.",
+      "topics": [
+        "product",
+        "practice",
+        "optics"
+      ]
+    },
+    {
+      "title": "Creating A Digital Twin For Lighting Manufacturers",
+      "url": "https://www.lightnowblog.com/2026/09/creating-a-digital-twin-for-lighting-manufacturers",
+      "source": "LightNOW",
+      "published": "Thu, 24 Sep 2026 05:49:33 +0000",
+      "summary": "Piece argues lighting manufacturers are gaining productivity by building digital twins of production and supply operations, an AI-driven trend relevant to how fixtures reach spec but with no design-side detail given.",
+      "topics": [
+        "product",
+        "practice"
+      ]
+    }
+  ],
+  "termOfDay": "contrast-ratio",
+  "projectOfDay": "circadian-design"
+}
