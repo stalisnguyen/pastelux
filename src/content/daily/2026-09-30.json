@@ -1,0 +1,30 @@
+{
+  "date": "2026-09-30",
+  "generatedAt": "2026-09-29T21:19:08.804Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "Ideaworks partners with Element7 in USA",
+      "url": "https://www.arc-magazine.com/ideaworks-partners-with-element7-in-usa",
+      "source": "arc",
+      "published": "Tue, 29 Sep 2026 10:56:05 +0000",
+      "summary": "UK lighting design studio Ideaworks has formed a US partnership with flooring company Element7 to expand its North American presence; no technical or specification detail is given.",
+      "topics": [
+        "practice"
+      ]
+    },
+    {
+      "title": "DALI Alliance announces inaugural Global Sumit + Expo",
+      "url": "https://www.arc-magazine.com/dali-alliance-announces-inaugural-global-sumit-expo",
+      "source": "arc",
+      "published": "Tue, 29 Sep 2026 10:09:40 +0000",
+      "summary": "DALI Alliance will hold its first Global DALI Summit and Expo in Utrecht, gathering manufacturers and specifiers around the DALI-2 lighting control protocol and interoperability testing.",
+      "topics": [
+        "standards",
+        "controls"
+      ]
+    }
+  ],
+  "termOfDay": "cct",
+  "projectOfDay": "colour-quality"
+}
