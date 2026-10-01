@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-02",
+  "generatedAt": "2026-10-01T21:42:30.308Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "Three Newly Published IES Standards",
+      "url": "https://www.lightnowblog.com/2026/10/three-newly-published-ies-standards",
+      "source": "LightNOW",
+      "published": "Thu, 01 Oct 2026 05:45:03 +0000",
+      "summary": "IES has published RP-27-26 on photobiological safety for lighting systems, revising the 500-lux distance calculation, UV risk-group duration rules, lumen-to-radiant-power conversion and the spectral weighting function table, affecting compliance checks for fixture specification.",
+      "topics": [
+        "standards"
+      ]
+    }
+  ],
+  "termOfDay": "cut-off-angle",
+  "projectOfDay": "dark-sky-facade"
+}
