@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-04",
+  "generatedAt": "2026-10-03T19:43:40.773Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "How LED Engineering Enables Photobiomodulation Devices",
+      "url": "https://www.lightnowblog.com/2026/10/how-led-engineering-enables-photobiomodulation-devices",
+      "source": "LightNOW",
+      "published": "Fri, 02 Oct 2026 05:51:39 +0000",
+      "summary": "Discusses how LED engineering parameters, such as wavelength control and driver design, are being applied to photobiomodulation devices for skin therapy, relevant to designers tracking LED applications beyond illumination.",
+      "topics": [
+        "research",
+        "product"
+      ]
+    }
+  ],
+  "termOfDay": "dali-plus",
+  "projectOfDay": "glare-and-ugr"
+}
