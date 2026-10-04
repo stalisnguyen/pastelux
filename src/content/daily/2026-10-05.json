@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-05",
+  "generatedAt": "2026-10-04T20:00:03.664Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "DALI Lighting Awards 2027 open for entries",
+      "url": "https://www.a1lightingmagazine.com/awards/dali-lighting-awards-2027-open-for-entries",
+      "source": "A1 Lighting",
+      "published": "Fri, 25 Sep 2026 11:49:53 +0000",
+      "summary": "Entries are open for the 2027 DALI Lighting Awards, recognising projects that demonstrate effective use of DALI-based lighting control systems, with submissions due 8 January 2027.",
+      "topics": [
+        "awards",
+        "controls"
+      ]
+    },
+    {
+      "title": "ENERGY STAR Transitioning From EPA to DOE",
+      "url": "https://www.lightnowblog.com/2026/09/energy-star-transitioning-from-epa-to-doe",
+      "source": "LightNOW",
+      "published": "Tue, 22 Sep 2026 05:23:54 +0000",
+      "summary": "Federal oversight of the ENERGY STAR programme is shifting from the EPA to the DOE; fixture and lamp certification categories have already been dropped, leaving only downlight and ceiling fan programmes active, affecting spec compliance references.",
+      "topics": [
+        "standards",
+        "sustainability"
+      ]
+    },
+    {
+      "title": "Product Monday: Korrus Ecosense Circadian Lighting Line",
+      "url": "https://www.lightnowblog.com/2026/09/product-monday-korrus-ecosense-circadian-lighting-line",
+      "source": "LightNOW",
+      "published": "Mon, 21 Sep 2026 05:46:56 +0000",
+      "summary": "Korrus has launched a full-range circadian lighting system spanning multiple fixture types, aiming to let specifiers implement consistent tunable lighting across a whole space rather than single isolated products.",
+      "topics": [
+        "circadian",
+        "product"
+      ]
+    }
+  ],
+  "termOfDay": "dark-sky",
+  "projectOfDay": "inverse-square-and-beams"
+}
