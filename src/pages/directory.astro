@@ -8,7 +8,7 @@ const all = (await getCollection('directory')).map((e) => e.data);
 const KINDS = [
   { key: 'manufacturer', label: 'Manufacturers', vi: 'Nhà sản xuất đèn' },
   { key: 'source', label: 'LED sources', vi: 'Nhà sản xuất chip LED' },
-  { key: 'controls', label: 'Controls', vi: 'Hệ điều khiển' },
+  { key: 'controls', label: 'Controls', vi: 'Hãng điều khiển' },
   { key: 'studio', label: 'Design practices', vi: 'Văn phòng thiết kế chiếu sáng' },
   { key: 'body', label: 'Standards bodies', vi: 'Tổ chức tiêu chuẩn' },
 ] as const;
@@ -34,9 +34,9 @@ const vnCount = all.filter((e) => e.country === 'Vietnam').length;
     lede="Who makes the fittings, who makes the chips inside them, who makes the control gear, whose work is worth studying, and who writes the standards. Every link is checked automatically each week."
   >
     <p class="vi-block vi-def mt-2 text-[0.95rem] max-w-2xl leading-relaxed">
-      Ai làm ra bộ đèn, ai làm chip LED bên trong, ai làm hệ điều khiển, văn phòng nào đáng học
-      hỏi, và ai viết ra tiêu chuẩn. Mọi liên kết đều được kiểm tra tự động hằng tuần.
-      Có {vnCount} đơn vị Việt Nam trong danh sách.
+      Hãng nào làm bộ đèn, hãng nào làm chip LED bên trong, ai làm thiết bị điều khiển, văn phòng
+      nào đáng học hỏi, và ai soạn tiêu chuẩn. Liên kết được kiểm tra tự động mỗi tuần.
+      Danh sách có {vnCount} đơn vị Việt Nam.
     </p>
   </PageHeader>
 
@@ -135,15 +135,15 @@ const vnCount = all.filter((e) => e.country === 'Vietnam').length;
 
   <div id="dir-empty" class="hidden py-10 text-center">
     <p style="color: var(--text-faint)">Nothing matches that filter.</p>
-    <p class="vi-block vi-def mt-1 text-[0.88rem]">Không có kết quả. Thử từ khoá ngắn hơn.</p>
+    <p class="vi-block vi-def mt-1 text-[0.88rem]">Không có kết quả phù hợp. Thử từ khoá ngắn hơn.</p>
   </div>
 
   <p class="text-[0.8rem] pb-6" style="color: var(--text-faint)">
     Inclusion is not endorsement — this is a starting point for research, not a recommended-vendor
     list. Nothing here is sponsored.
     <span class="vi-block-inline">
-      Có tên trong danh sách không đồng nghĩa với được khuyến nghị — đây là điểm khởi đầu để tra
-      cứu, không phải danh sách nhà cung cấp được đề xuất. Không có mục nào là quảng cáo trả tiền.
+      Có tên ở đây không có nghĩa là được giới thiệu. Đây là chỗ bắt đầu tìm hiểu, không phải danh
+      sách nhà cung cấp đề xuất. Không mục nào là quảng cáo.
     </span>
   </p>
 </Base>

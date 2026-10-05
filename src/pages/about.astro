@@ -17,7 +17,7 @@ const paused = feedConfig.feeds.filter((f: any) => f.disabled);
     lede="A reference site for architectural lighting design, with a digest of the industry refreshed every morning."
   >
     <p class="vi-block vi-def mt-2 text-[0.95rem] max-w-2xl leading-relaxed">
-      Trang tra cứu cho thiết kế chiếu sáng kiến trúc, kèm bản tin ngành được làm mới mỗi sáng.
+      Tra cứu nhanh cho người làm thiết kế chiếu sáng, cùng bản tin ngành cập nhật mỗi sáng.
     </p>
   </PageHeader>
 
@@ -32,15 +32,15 @@ const paused = feedConfig.feeds.filter((f: any) => f.disabled);
       scheduled job.
     </p>
     <p class="vi-block vi-def">
-      Trang tách phần thay đổi hằng ngày khỏi phần ổn định. <strong>Learn</strong>,
+      Nội dung chia làm hai phần: phần thay đổi mỗi ngày và phần ổn định. <strong>Learn</strong>,
       <strong>Standards</strong>, <strong>Tools</strong> và <strong>Glossary</strong> là lớp cố
-      định — viết tay và chỉ sửa khi chuyên môn có thay đổi. <strong>Today</strong>,
-      <strong>Archive</strong> và <strong>Events</strong> là lớp động, do một tác vụ chạy theo lịch
-      tổng hợp.
+      định, viết tay và chỉ sửa khi chuyên môn có gì mới. <strong>Today</strong>,
+      <strong>Archive</strong> và <strong>Events</strong> là lớp động, do một tác vụ tự động tổng
+      hợp theo lịch.
     </p>
 
     <h2>How the daily digest works</h2>
-    <p class="vi-block vi-heading">Bản tin hằng ngày được làm thế nào</p>
+    <p class="vi-block vi-heading">Bản tin mỗi ngày được làm ra sao</p>
     <p>
       A GitHub Action runs each morning. It reads the RSS feeds listed below, drops anything already
       published in the previous fortnight, filters for professional relevance, writes a short
@@ -48,9 +48,9 @@ const paused = feedConfig.feeds.filter((f: any) => f.disabled);
       site then rebuilds and deploys.
     </p>
     <p class="vi-block vi-def">
-      Mỗi sáng một GitHub Action chạy: đọc các nguồn RSS bên dưới, bỏ những tin đã đăng trong hai
-      tuần trước, lọc theo mức liên quan đến nghề, viết một đoạn tóm tắt riêng cho từng tin còn lại,
-      gắn chủ đề, rồi commit kết quả thành một file JSON. Sau đó trang tự build lại và triển khai.
+      Mỗi sáng, một GitHub Action đọc các nguồn RSS liệt kê bên dưới, bỏ những tin đã đăng trong
+      hai tuần qua, giữ lại tin sát với nghề, tự viết tóm tắt ngắn cho từng tin, gắn chủ đề rồi
+      commit tất cả thành một file JSON. Sau đó trang tự build lại và triển khai.
     </p>
     <p>
       Only the <strong>headline, publisher, link and a summary written here</strong> are stored.
@@ -59,10 +59,9 @@ const paused = feedConfig.feeds.filter((f: any) => f.disabled);
       rather than failing.
     </p>
     <p class="vi-block vi-def">
-      Chỉ lưu <strong>tiêu đề, tên nơi đăng, liên kết và đoạn tóm tắt viết tại đây</strong>. Nội
-      dung bài gốc không bao giờ được chép vào kho mã này, và mọi tin đều dẫn về nơi đăng gốc. Nếu
-      bộ tóm tắt không hoạt động, tác vụ vẫn đăng bản tin, đánh dấu là chỉ có tiêu đề, chứ không
-      dừng lại.
+      Trang chỉ lưu <strong>tiêu đề, tên trang đăng, liên kết và đoạn tóm tắt tự viết</strong>.
+      Nội dung bài gốc không bao giờ bị chép vào kho mã, và tin nào cũng dẫn về trang gốc. Khi phần
+      tóm tắt gặp trục trặc, bản tin vẫn được đăng với nhãn chỉ có tiêu đề, không bị bỏ dở.
     </p>
 
     <h2>Sources</h2>
@@ -85,7 +84,7 @@ const paused = feedConfig.feeds.filter((f: any) => f.disabled);
       paused.length > 0 && (
         <>
           <h3>Currently unavailable</h3>
-          <p class="vi-block vi-heading">Tạm thời không dùng được</p>
+          <p class="vi-block vi-heading">Tạm ngưng</p>
           <ul>
             {paused.map((f: any) => (
               <li>
@@ -111,10 +110,10 @@ const paused = feedConfig.feeds.filter((f: any) => f.disabled);
       against the purchased standard before anything leaves your office.
     </p>
     <p class="vi-block vi-def">
-      Mọi con số trên trang chỉ để tham khảo khi làm việc, không phải để chứng nhận. Tiêu chuẩn là
-      tài liệu có bản quyền, phải mua, mỗi phiên bản mỗi khác, và phiên bản hợp đồng của bạn yêu cầu
-      thường không phải bản mới nhất. Dùng <a href={url('/standards/compare')}>bảng tiêu chí</a> để
-      định hướng nhanh, rồi đối chiếu với bản tiêu chuẩn đã mua trước khi hồ sơ rời văn phòng.
+      Con số trên trang dùng để tham khảo trong công việc, không có giá trị chứng nhận. Tiêu chuẩn là
+      tài liệu có bản quyền, phải mua, mỗi phiên bản một khác, và hợp đồng của bạn thường không viện
+      dẫn bản mới nhất. Hãy dùng <a href={url('/standards/compare')}>bảng tiêu chí</a> để nắm nhanh,
+      rồi đối chiếu với bản tiêu chuẩn đã mua trước khi phát hành hồ sơ.
     </p>
 
     <h2>Adding to it</h2>
@@ -128,18 +127,18 @@ const paused = feedConfig.feeds.filter((f: any) => f.disabled);
     </ul>
     <ul class="vi-block vi-def">
       <li><strong>Một bài viết</strong> — thêm file <code>.mdx</code> vào <code>src/content/learn/</code></li>
-      <li><strong>Một thuật ngữ</strong> — thêm một object vào <code>src/content/glossary.json</code></li>
-      <li><strong>Một dòng tiêu chí</strong> — thêm một object vào <code>src/content/criteria.json</code></li>
-      <li><strong>Một sự kiện</strong> — thêm một object vào <code>src/content/events.json</code></li>
-      <li><strong>Một nguồn tin</strong> — thêm một feed vào <code>src/data/feeds.json</code></li>
+      <li><strong>Một thuật ngữ</strong> — thêm object vào <code>src/content/glossary.json</code></li>
+      <li><strong>Một dòng tiêu chí</strong> — thêm object vào <code>src/content/criteria.json</code></li>
+      <li><strong>Một sự kiện</strong> — thêm object vào <code>src/content/events.json</code></li>
+      <li><strong>Một nguồn tin</strong> — thêm feed vào <code>src/data/feeds.json</code></li>
     </ul>
     <p>
       Commit to <code>main</code> and the site rebuilds itself. All of these files can be edited
       directly in GitHub's web editor — no local setup needed.
     </p>
     <p class="vi-block vi-def">
-      Commit lên <code>main</code> là trang tự build lại. Tất cả các file này đều sửa được trực tiếp
-      trong trình soạn thảo web của GitHub — không cần cài đặt gì trên máy.
+      Commit lên <code>main</code> là trang tự build lại. Các file này đều sửa được ngay trên trình
+      soạn thảo web của GitHub, không cần cài gì trên máy.
     </p>
 
     <h2>Built with</h2>
@@ -150,9 +149,9 @@ const paused = feedConfig.feeds.filter((f: any) => f.disabled);
       transmitted anywhere.
     </p>
     <p class="vi-block vi-def">
-      Astro, Tailwind CSS và Pagefind, triển khai dạng trang tĩnh trên GitHub Pages. Không cơ sở dữ
-      liệu, không server, không analytics, không cookie. Mục đã lưu nằm trong bộ nhớ cục bộ (local
-      storage) của trình duyệt và không bao giờ được gửi đi đâu.
+      Astro, Tailwind CSS và Pagefind; trang tĩnh, chạy trên GitHub Pages. Không cơ sở dữ liệu,
+      không server, không analytics, không cookie. Mục đã lưu nằm trong local storage của trình
+      duyệt và không bao giờ rời khỏi máy bạn.
     </p>
   </div>
 </Base>

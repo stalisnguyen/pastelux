@@ -16,9 +16,9 @@ import { url } from '../site';
     lede="Everything runs in your browser by default — your inputs and images stay on your machine, unless you opt into a cloud AI engine with your own key. For sketching and sanity checks, not for certification."
   >
     <p class="vi-block vi-def mt-2 text-[0.95rem] max-w-2xl leading-relaxed">
-      Mọi thứ mặc định chạy ngay trong trình duyệt — số liệu và ảnh của bạn ở lại trong máy, trừ khi
-      bạn chủ động chọn engine AI đám mây bằng key riêng. Dùng để phác nhanh và kiểm tra lại, không
-      thay thế phần mềm tính toán chính thức.
+      Mặc định mọi thứ chạy ngay trong trình duyệt, số liệu và ảnh của bạn không rời khỏi máy, trừ
+      khi bạn tự chọn engine AI đám mây bằng key riêng. Dùng để tính phác và kiểm tra nhanh, không
+      thay cho phần mềm tính toán chính thức.
     </p>
   </PageHeader>
 
@@ -40,9 +40,9 @@ import { url } from '../site';
         (Gemini / GPT) with your own key for cleaner masks.
       </p>
       <p class="vi-block vi-def text-[0.86rem] mt-1.5">
-        Biến ảnh render thành mặt nạ theo từng vật và từng mảng tường cho khâu chỉnh sáng, để bạn
-        xử lý ánh sáng riêng từng bề mặt trong hậu kỳ. Engine miễn phí trong trình duyệt, hoặc AI
-        đám mây (Gemini / GPT) bằng key riêng cho mặt nạ sạch hơn.
+        Tách ảnh render thành mask cho từng vật thể và từng mảng tường, để khi hậu kỳ bạn chỉnh sáng
+        riêng cho từng bề mặt. Dùng engine miễn phí ngay trong trình duyệt, hoặc AI đám mây
+        (Gemini / GPT) bằng key riêng để mask sạch hơn.
       </p>
     </a>
 
@@ -53,13 +53,13 @@ import { url } from '../site';
         Total flux needed for a target maintained illuminance, and the number of luminaires that
         implies. Room index is computed from the geometry.
       </p>
-      <p class="vi-block vi-def text-[0.86rem] mt-1 mb-5">Tính tổng quang thông cần thiết để đạt độ rọi duy trì mong muốn, và suy ra số bộ đèn. Chỉ số phòng được tính tự động từ kích thước.</p>
+      <p class="vi-block vi-def text-[0.86rem] mt-1 mb-5">Tính tổng quang thông cần để đạt độ rọi duy trì mong muốn, từ đó ra số bộ đèn. Chỉ số phòng tự tính theo kích thước phòng.</p>
 
       <div class="grid sm:grid-cols-3 gap-4">
         <div><label class="label" for="lm-L">Room length (m)<span class="vi-block-inline"> · Chiều dài phòng (m)</span></label><input class="field" id="lm-L" type="number" value="10" step="0.1" min="0.1" /></div>
         <div><label class="label" for="lm-W">Room width (m)<span class="vi-block-inline"> · Chiều rộng phòng (m)</span></label><input class="field" id="lm-W" type="number" value="8" step="0.1" min="0.1" /></div>
-        <div><label class="label" for="lm-H">Mounting ht above plane (m)<span class="vi-block-inline"> · Độ cao lắp trên mặt phẳng làm việc (m)</span></label><input class="field" id="lm-H" type="number" value="2.0" step="0.1" min="0.1" /></div>
-        <div><label class="label" for="lm-E">Target Ēm (lx)<span class="vi-block-inline"> · Độ rọi duy trì Ēm (lx)</span></label><input class="field" id="lm-E" type="number" value="500" step="10" min="1" /></div>
+        <div><label class="label" for="lm-H">Mounting ht above plane (m)<span class="vi-block-inline"> · Độ cao đèn so với mặt làm việc (m)</span></label><input class="field" id="lm-H" type="number" value="2.0" step="0.1" min="0.1" /></div>
+        <div><label class="label" for="lm-E">Target Ēm (lx)<span class="vi-block-inline"> · Độ rọi duy trì cần đạt Ēm (lx)</span></label><input class="field" id="lm-E" type="number" value="500" step="10" min="1" /></div>
         <div><label class="label" for="lm-UF">Utilisation factor<span class="vi-block-inline"> · Hệ số sử dụng (UF)</span></label><input class="field" id="lm-UF" type="number" value="0.60" step="0.01" min="0.05" max="1" /></div>
         <div><label class="label" for="lm-MF">Maintenance factor<span class="vi-block-inline"> · Hệ số duy trì (MF)</span></label><input class="field" id="lm-MF" type="number" value="0.80" step="0.01" min="0.05" max="1" /></div>
         <div class="sm:col-span-3"><label class="label" for="lm-lum">Flux per luminaire (lm)<span class="vi-block-inline"> · Quang thông mỗi bộ đèn (lm)</span></label><input class="field" id="lm-lum" type="number" value="3000" step="100" min="1" /></div>
@@ -72,7 +72,7 @@ import { url } from '../site';
         bright room with wide ones. This method gives an average only — it says nothing about
         uniformity or glare.
       </p>
-      <p class="vi-block vi-def text-[0.78rem] mt-1.5">Hệ số sử dụng lấy từ bảng UF của nhà sản xuất theo chỉ số phòng và hệ số phản xạ bề mặt. 0.4 là ước lượng hợp lý cho phòng tối với quang học hẹp, 0.7 cho phòng sáng với quang học rộng. Phương pháp này chỉ cho giá trị trung bình — không nói gì về độ đồng đều hay chói loá.</p>
+      <p class="vi-block vi-def text-[0.78rem] mt-1.5">Hệ số sử dụng tra trong bảng UF của nhà sản xuất, theo chỉ số phòng và hệ số phản xạ các bề mặt. Phòng tối dùng đèn chùm hẹp thì lấy khoảng 0.4, phòng sáng dùng đèn chùm rộng khoảng 0.7. Phương pháp này chỉ cho độ rọi trung bình, không cho biết gì về độ đồng đều hay chói loá.</p>
     </section>
 
     <!-- ------------------------------------------------- beam to spot -->
@@ -82,7 +82,7 @@ import { url } from '../site';
         Pool diameter at a given throw, and the peak intensity needed to hit a target illuminance
         on axis.
       </p>
-      <p class="vi-block vi-def text-[0.86rem] mt-1 mb-5">Đường kính vệt sáng ở một khoảng cách chiếu, và cường độ sáng tâm chùm cần có để đạt độ rọi mong muốn trên trục.</p>
+      <p class="vi-block vi-def text-[0.86rem] mt-1 mb-5">Đường kính vệt sáng ở khoảng cách chiếu cho trước, và cường độ sáng tâm chùm cần có để đạt độ rọi mong muốn trên trục.</p>
 
       <div class="grid sm:grid-cols-3 gap-4">
         <div><label class="label" for="bs-d">Throw distance (m)<span class="vi-block-inline"> · Khoảng cách chiếu (m)</span></label><input class="field" id="bs-d" type="number" value="3.25" step="0.05" min="0.1" /></div>
@@ -135,7 +135,7 @@ import { url } from '../site';
         E = I · cos θ / d². Also converts illuminance to luminance for a matte surface, which is
         what the eye actually sees.
       </p>
-      <p class="vi-block vi-def text-[0.86rem] mt-1 mb-5">E = I · cos θ / d². Đồng thời đổi độ rọi sang độ chói cho bề mặt mờ — đây mới là thứ mắt thực sự nhìn thấy.</p>
+      <p class="vi-block vi-def text-[0.86rem] mt-1 mb-5">E = I · cos θ / d². Công cụ cũng đổi độ rọi ra độ chói của bề mặt mờ, vì độ chói mới là cái mắt thật sự nhìn thấy.</p>
 
       <div class="grid sm:grid-cols-4 gap-4">
         <div><label class="label" for="isl-I">Intensity (cd)<span class="vi-block-inline"> · Cường độ sáng (cd)</span></label><input class="field" id="isl-I" type="number" value="5000" step="100" min="0" /></div>
@@ -149,7 +149,7 @@ import { url } from '../site';
         Valid only when the distance is at least about five times the largest luminaire dimension.
         Do not use it close to a long linear fitting.
       </p>
-      <p class="vi-block vi-def text-[0.78rem] mt-1.5">Chỉ đúng khi khoảng cách ít nhất khoảng năm lần kích thước lớn nhất của bộ đèn. Đừng dùng khi đứng gần một dải đèn tuyến tính dài.</p>
+      <p class="vi-block vi-def text-[0.78rem] mt-1.5">Chỉ đúng khi khoảng cách lớn hơn khoảng năm lần kích thước lớn nhất của bộ đèn. Không áp dụng khi đứng sát một dải đèn tuyến tính dài.</p>
     </section>
 
     <!-- -------------------------------------------------- melanopic -->
@@ -159,7 +159,7 @@ import { url } from '../site';
         Vertical photopic lux at the eye × M-DER. Checked against the widely cited consensus
         targets.
       </p>
-      <p class="vi-block vi-def text-[0.86rem] mt-1 mb-5">Độ rọi đứng tại mắt × M-DER. Kết quả được đối chiếu với ngưỡng khuyến nghị quốc tế: ban ngày ≥250, buổi tối ≤10.</p>
+      <p class="vi-block vi-def text-[0.86rem] mt-1 mb-5">Độ rọi đứng tại mắt × M-DER, rồi so với ngưỡng khuyến nghị được dùng rộng rãi: ban ngày ≥250, buổi tối ≤10.</p>
 
       <div class="grid sm:grid-cols-3 gap-4">
         <div>
@@ -192,7 +192,7 @@ import { url } from '../site';
         at the same CCT can differ by 15% or more.
         <a href={url('/learn/circadian-design')} class="no-underline hover:underline">Read the article →<span class="vi-block-inline"> · Đọc bài viết</span></a>
       </p>
-      <p class="vi-block vi-def text-[0.78rem] mt-1.5">Giá trị M-DER ở đây là điển hình cho LED trắng phủ phosphor. Với hồ sơ thật, lấy M-DER từ dữ liệu phổ của nhà sản xuất qua bộ công cụ CIE S 026 — hai sản phẩm cùng CCT có thể lệch nhau 15% trở lên.</p>
+      <p class="vi-block vi-def text-[0.78rem] mt-1.5">Giá trị M-DER ở đây là mức điển hình của LED trắng phủ phosphor. Khi làm spec thật, hãy lấy M-DER từ dữ liệu phổ của nhà sản xuất qua bộ công cụ CIE S 026, vì hai sản phẩm cùng CCT có thể lệch nhau từ 15% trở lên.</p>
     </section>
 
     <!-- ---------------------------------------------------- converter -->
@@ -201,7 +201,7 @@ import { url } from '../site';
       <p class="text-[0.9rem] mt-1.5" style="color: var(--text-muted)">
         The conversions that come up when a drawing set arrives in the other convention.
       </p>
-      <p class="vi-block vi-def text-[0.86rem] mt-1 mb-5">Các phép đổi hay gặp khi nhận hồ sơ theo hệ đơn vị Bắc Mỹ (footcandle, foot-lambert).</p>
+      <p class="vi-block vi-def text-[0.86rem] mt-1 mb-5">Những phép đổi hay cần khi nhận bộ hồ sơ dùng hệ đơn vị Bắc Mỹ (footcandle, foot-lambert).</p>
       <div class="grid sm:grid-cols-2 gap-4">
         <div><label class="label" for="cv-fc">Footcandles</label><input class="field" id="cv-fc" type="number" value="50" step="1" /></div>
         <div><label class="label" for="cv-lx">Lux</label><input class="field" id="cv-lx" type="number" value="538" step="1" /></div>
@@ -264,18 +264,18 @@ import { url } from '../site';
       out.innerHTML =
         tile(bi('Floor area', 'Diện tích sàn'), `${fmt(area, 1)} m²`) +
         tile(bi('Room index K', 'Chỉ số phòng K'), fmt(K, 2), K < 0.75 ? bi('narrow room', 'phòng hẹp') : K > 3 ? bi('wide room', 'phòng rộng') : bi('typical', 'điển hình')) +
-        tile(bi('Total flux required', 'Tổng quang thông cần'), `${fmt(totalFlux)} lm`) +
+        tile(bi('Total flux required', 'Tổng quang thông cần có'), `${fmt(totalFlux)} lm`) +
         tile(bi('Luminaires', 'Số bộ đèn'), `${fmt(nUp)}`, bi(`${fmt(achieved)} lx achieved`, `đạt ${fmt(achieved)} lx`));
   });
 
   // ------------------------------------------------------------ beam to spot
   const BEAMS = [
-    [10, bi('Object accent, single sculpture', 'Nhấn vật thể, một tác phẩm điêu khắc')],
-    [15, bi('Artwork, table centre', 'Tranh, giữa bàn')],
-    [24, bi('General accent, seating group', 'Nhấn chung, cụm ghế ngồi')],
-    [36, bi('Wide accent, circulation', 'Nhấn rộng, lối đi')],
+    [10, bi('Object accent, single sculpture', 'Nhấn một vật thể, tượng đơn')],
+    [15, bi('Artwork, table centre', 'Tranh, tâm bàn ăn')],
+    [24, bi('General accent, seating group', 'Nhấn sáng chung, cụm sofa')],
+    [36, bi('Wide accent, circulation', 'Nhấn sáng rộng, lối đi')],
     [60, bi('General downlight', 'Downlight chiếu chung')],
-    [90, bi('Wall wash, broad ambient', 'Wash tường, chiếu nền rộng')],
+    [90, bi('Wall wash, broad ambient', 'Wash tường, sáng nền diện rộng')],
   ] as const;
 
   bind(['bs-d', 'bs-a', 'bs-E'], () => {
@@ -287,7 +287,7 @@ import { url } from '../site';
     if (out)
       out.innerHTML =
         tile(bi('Spot diameter', 'Đường kính vệt sáng'), `${fmt(dia, 2)} m`, bi(`at ${fmt(d, 2)} m throw`, `ở khoảng chiếu ${fmt(d, 2)} m`)) +
-        tile(bi('Lit area', 'Diện tích được chiếu'), `${fmt(Math.PI * (dia / 2) ** 2, 2)} m²`) +
+        tile(bi('Lit area', 'Diện tích vệt sáng'), `${fmt(Math.PI * (dia / 2) ** 2, 2)} m²`) +
         tile(bi('Peak intensity needed', 'Cường độ đỉnh cần có'), `${fmt(I)} cd`, bi(`for ${fmt(E)} lx on axis`, `để đạt ${fmt(E)} lx trên trục`));
 
     const tbl = $('bs-table');
@@ -381,7 +381,7 @@ import { url } from '../site';
       out.innerHTML =
         tile(bi('Illuminance', 'Độ rọi'), `${fmt(E, 1)} lx`, t > 0 ? bi(`with cos ${t}° = ${fmt(Math.cos((t * Math.PI) / 180), 3)}`, `với cos ${t}° = ${fmt(Math.cos((t * Math.PI) / 180), 3)}`) : bi('normal incidence', 'chiếu vuông góc')) +
         tile(bi('Luminance', 'Độ chói'), `${fmt(Lum, 1)} cd/m²`, bi(`matte surface, ρ = ${r}`, `bề mặt mờ, ρ = ${r}`)) +
-        tile(bi('At double distance', 'Ở khoảng cách gấp đôi'), `${fmt(E / 4, 1)} lx`, bi('25% of the value', 'còn 25% giá trị'));
+        tile(bi('At double distance', 'Ở khoảng cách gấp đôi'), `${fmt(E / 4, 1)} lx`, bi('25% of the value', 'chỉ còn 25%'));
   });
 
   // ---------------------------------------------------------------- melanopic
@@ -408,7 +408,7 @@ import { url } from '../site';
       verdict = bi('Within the ≤10 lx evening target', 'Trong ngưỡng buổi tối ≤10 lx');
       tone = 'var(--success)';
     } else {
-      verdict = bi('Well below daytime target; too bright for evening', 'Thấp xa ngưỡng ban ngày; quá sáng cho buổi tối');
+      verdict = bi('Well below daytime target; too bright for evening', 'Thấp hơn nhiều so với ngưỡng ban ngày, nhưng quá sáng cho buổi tối');
       tone = 'var(--danger)';
     }
 

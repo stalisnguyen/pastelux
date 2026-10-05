@@ -19,13 +19,13 @@ const viNav: Record<string, { label: string; hint?: string }> = {
   '/tools': { label: 'Công cụ' },
   '/standards': { label: 'Tiêu chuẩn' },
   '/projects': { label: 'Dự án', hint: 'Phân tích dự án thực tế' },
-  '/glossary': { label: 'Thuật ngữ', hint: 'Định nghĩa thuật ngữ' },
+  '/glossary': { label: 'Thuật ngữ', hint: 'Giải nghĩa thuật ngữ' },
   // the English hint for Directory is already Vietnamese
   '/directory': { label: 'Danh bạ' },
-  '/events': { label: 'Sự kiện', hint: 'Hội chợ và hạn chót' },
-  '/saved': { label: 'Đã lưu', hint: 'Mục bạn đã đánh dấu' },
-  '/archive': { label: 'Lưu trữ', hint: 'Các bản tin trước' },
-  '/about': { label: 'Giới thiệu', hint: 'Nguồn tin và thông tin trang' },
+  '/events': { label: 'Sự kiện', hint: 'Hội chợ, triển lãm, hạn nộp' },
+  '/saved': { label: 'Đã lưu', hint: 'Những mục bạn đã lưu' },
+  '/archive': { label: 'Lưu trữ', hint: 'Bản tin những ngày trước' },
+  '/about': { label: 'Giới thiệu', hint: 'Nguồn tin và thông tin về trang' },
 };
 const viLine = (href: string) => {
   const v = viNav[href];

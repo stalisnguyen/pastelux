@@ -21,7 +21,7 @@ const viKind: Record<string, string> = {
   conference: 'Hội thảo',
   fair: 'Hội chợ triển lãm',
   award: 'Giải thưởng',
-  deadline: 'Hạn chót',
+  deadline: 'Hạn nộp',
 };
 
 const range = (e: { start: string; end?: string }) => {
@@ -47,9 +47,9 @@ const daysTo = (d: string) => Math.ceil((Date.parse(d) - now) / 86_400_000);
     lede="Conferences, fairs and award deadlines. Every entry records the date its details were last checked and the source they came from, and an automated job re-tests each link weekly. Still confirm with the organiser before booking anything."
   >
     <p class="vi-block vi-def mt-2 text-[0.95rem] max-w-2xl leading-relaxed">
-      Hội thảo, hội chợ và hạn nộp giải thưởng. Mỗi mục ghi rõ ngày kiểm tra thông tin lần cuối và
-      nguồn lấy từ đâu; có job tự động kiểm tra lại link mỗi tuần. Dù vậy vẫn nên xác nhận với ban
-      tổ chức trước khi đặt vé.
+      Hội thảo, hội chợ và hạn nộp giải thưởng. Mục nào cũng ghi ngày kiểm tra gần nhất và nguồn
+      thông tin; link được tự động kiểm tra lại mỗi tuần. Dù vậy, hãy xác nhận với ban tổ chức
+      trước khi đặt vé hay đăng ký.
     </p>
   </PageHeader>
 
@@ -60,7 +60,7 @@ const daysTo = (d: string) => Math.ceil((Date.parse(d) - now) / 86_400_000);
         <p class="card p-6" style="color: var(--text-muted)">
           Nothing scheduled. Add entries to <code class="font-mono text-[0.85em]">src/content/events.json</code>.
           <span class="vi-block mt-1.5 text-[0.92rem]" style="color: var(--vi-text)">
-            Chưa có sự kiện nào. Thêm mục vào <code class="font-mono text-[0.85em]">src/content/events.json</code>.
+            Chưa có sự kiện nào. Thêm sự kiện vào <code class="font-mono text-[0.85em]">src/content/events.json</code>.
           </span>
         </p>
       ) : (
@@ -101,7 +101,7 @@ const daysTo = (d: string) => Math.ceil((Date.parse(d) - now) / 86_400_000);
                 )}
                 <p class="text-[0.72rem] mt-2.5" style="color: var(--text-faint)">
                   Dates and link checked {e.data.verified} · {e.data.source}
-                  <span class="vi-block mt-0.5" style="color: var(--vi-text)">Ngày và link được kiểm tra lần cuối: {e.data.verified}</span>
+                  <span class="vi-block mt-0.5" style="color: var(--vi-text)">Ngày và link kiểm tra lần cuối: {e.data.verified}</span>
                 </p>
               </div>
             </article>

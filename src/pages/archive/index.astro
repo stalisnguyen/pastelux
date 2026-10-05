@@ -39,19 +39,19 @@ const viMonthLabel = (key: string) =>
     lede="Every morning's digest, kept."
   >
     <p class="vi-block vi-def mt-2 text-[0.95rem] max-w-2xl leading-relaxed">
-      Mọi bản tin buổi sáng đều được giữ lại ở đây.
+      Tất cả bản tin buổi sáng, lưu lại đầy đủ.
     </p>
   </PageHeader>
 
   {
     digests.length === 0 ? (
       <div class="card p-6">
-        <p class="font-medium">Nothing archived yet.<span class="vi-block-inline font-normal" style="color: var(--vi-text)"> · Chưa có bản tin nào được lưu.</span></p>
+        <p class="font-medium">Nothing archived yet.<span class="vi-block-inline font-normal" style="color: var(--vi-text)"> · Chưa có bản tin nào.</span></p>
         <p class="text-[0.92rem] mt-1.5" style="color: var(--text-muted)">
           Digests appear here once the scheduled job has run at least once.
         </p>
         <p class="vi-block vi-def text-[0.88rem] mt-1.5">
-          Bản tin sẽ xuất hiện ở đây sau khi tác vụ theo lịch chạy ít nhất một lần.
+          Bản tin sẽ hiện ở đây sau lần chạy tự động đầu tiên.
         </p>
       </div>
     ) : (

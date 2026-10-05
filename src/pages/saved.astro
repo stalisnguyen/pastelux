@@ -12,8 +12,8 @@ import PageHeader from '../components/PageHeader.astro';
     lede="Stored in this browser only — no account, no server, nothing tracked. Clearing site data clears the list."
   >
     <p class="vi-block vi-def mt-2 text-[0.95rem] max-w-2xl leading-relaxed">
-      Chỉ lưu trong trình duyệt này — không cần tài khoản, không server, không theo dõi. Xoá dữ liệu
-      trang web là danh sách cũng mất.
+      Danh sách chỉ nằm trong trình duyệt này: không cần tài khoản, không lưu lên server, không theo
+      dõi. Xoá dữ liệu trang web thì danh sách cũng mất theo.
     </p>
   </PageHeader>
 
@@ -22,7 +22,7 @@ import PageHeader from '../components/PageHeader.astro';
   <p id="saved-empty" class="card p-6 max-w-3xl" style="color: var(--text-muted)">
     Nothing saved yet. Tap the heart on any headline or article.
     <span class="vi-block mt-1.5 text-[0.92rem]" style="color: var(--vi-text)">
-      Chưa lưu mục nào. Chạm vào biểu tượng trái tim ở bất kỳ tin hay bài viết nào.
+      Bạn chưa lưu mục nào. Chạm vào hình trái tim trên tin hoặc bài viết để lưu lại.
     </span>
   </p>
 
@@ -85,7 +85,7 @@ import PageHeader from '../components/PageHeader.astro';
 
   document.getElementById('saved-clear')?.addEventListener('click', () => {
     const vi = document.documentElement.classList.contains('lang-vi');
-    if (!confirm(vi ? 'Xoá toàn bộ mục đã lưu? Không thể hoàn tác.' : 'Remove all saved items? This cannot be undone.')) return;
+    if (!confirm(vi ? 'Xoá tất cả mục đã lưu? Thao tác này không hoàn tác được.' : 'Remove all saved items? This cannot be undone.')) return;
     for (const i of readSaved()) removeSaved(i.id);
     render();
   });

@@ -16,11 +16,11 @@ import { url } from '../../site';
     lede="For the lighting pass in post-production. Upload a render and the tool separates it into solid flat-colour regions — each object, and each wall plane — so you can select and light each one individually in Photoshop, the way you would light them in the scene. Then you download the mask. Two ways to run it: free in-browser (the image never leaves your machine), or cloud AI (Gemini / GPT) with your own API key for cleaner separation — that one sends the image to the provider."
   >
     <p class="vi-block vi-def mt-2 text-[0.95rem] max-w-2xl leading-relaxed">
-      Dành cho khâu chỉnh sáng hậu kỳ. Tải lên một ảnh render, công cụ tách thành các vùng màu phẳng
-      đặc — từng vật thể, và từng mảng tường theo hướng — để bạn chọn và chiếu sáng riêng từng vùng
-      trong Photoshop, đúng như cách bạn xử lý ánh sáng trong scene. Rồi tải mặt nạ về. Có hai cách
-      chạy: trong trình duyệt (miễn phí, ảnh không rời khỏi máy), hoặc AI đám mây (Gemini / GPT) bằng
-      API key của bạn cho kết quả tách sạch hơn — cách này ảnh sẽ được gửi lên nhà cung cấp.
+      Dành cho khâu chỉnh sáng hậu kỳ. Tải ảnh render lên, công cụ tách ảnh thành các vùng màu đặc:
+      mỗi vật thể một vùng, mỗi mảng tường theo hướng một vùng. Nhờ vậy bạn chọn và đánh sáng riêng
+      từng vùng trong Photoshop, như khi đặt đèn trong scene, rồi tải mask về. Có hai cách chạy:
+      ngay trong trình duyệt (miễn phí, ảnh không rời khỏi máy), hoặc AI đám mây (Gemini / GPT) bằng
+      API key của bạn để tách sạch hơn, nhưng ảnh sẽ được gửi lên nhà cung cấp.
     </p>
   </PageHeader>
 
@@ -28,7 +28,7 @@ import { url } from '../../site';
     class="card p-4 mb-6 text-[0.88rem] leading-relaxed max-w-3xl"
     style="border-color: color-mix(in srgb, var(--warning) 40%, transparent)"
   >
-    <strong style="color: var(--warning)">What it gives you, and where it stops.</strong><strong class="vi-block-inline" style="color: var(--warning)">Công cụ làm được gì, và giới hạn ở đâu.</strong>
+    <strong style="color: var(--warning)">What it gives you, and where it stops.</strong><strong class="vi-block-inline" style="color: var(--warning)">Làm được gì, và không làm được gì.</strong>
     <span style="color: var(--text-muted)">
       It turns the render into masks for a lighting pass: each object separated, and each wall plane
       split by orientation, so you can grade the light on every surface independently — a wall
@@ -40,13 +40,13 @@ import { url } from '../../site';
       original before trusting a mask.
     </span>
     <p class="vi-block vi-def mt-2">
-      Công cụ biến ảnh render thành mặt nạ cho khâu chỉnh sáng: tách riêng từng vật, và chia mỗi mảng
-      tường theo hướng, để bạn chỉnh ánh sáng riêng cho từng bề mặt — chỗ này wash tường, chỗ kia nhấn
-      sáng. Các vùng không phụ thuộc ánh sáng: một vệt bóng hay điểm sáng chói không làm vỡ một vật
-      thành nhiều mảnh. Engine trong trình duyệt là xấp xỉ hình học, không phải VRay object pass —
-      vật rất mảnh (ống đèn) vẫn có thể bị bỏ sót. Engine AI đám mây (Gemini / GPT) tách vật sạch hơn
-      hẳn, nhưng nó vẽ lại matte chứ không đo đạc, nên luôn kiểm tra mép có khớp ảnh gốc không trước
-      khi tin vào mặt nạ.
+      Công cụ tách ảnh render thành mask cho khâu chỉnh sáng: mỗi vật thể riêng một vùng, mỗi mảng
+      tường chia theo hướng, để bạn chỉnh sáng từng bề mặt độc lập, chỗ này wash tường, chỗ kia nhấn
+      sáng. Vùng tách không phụ thuộc ánh sáng trong ảnh, nên vệt bóng hay điểm chói không làm một
+      vật bị vỡ thành nhiều mảnh. Engine trong trình duyệt chỉ ước lượng theo hình học, không phải
+      V-Ray object pass, nên chi tiết rất mảnh như dải LED vẫn có thể bị sót. Engine AI đám mây
+      (Gemini / GPT) tách vật sạch hơn hẳn, nhưng AI vẽ lại matte chứ không đo, nên luôn kiểm tra
+      mép có khớp ảnh gốc không trước khi dùng mask.
     </p>
   </div>
 
@@ -80,17 +80,17 @@ import { url } from '../../site';
       <summary class="p-6 cursor-pointer list-none flex items-baseline gap-2 flex-wrap select-none">
         <span class="chip">1b</span>
         <span class="text-lg font-semibold">Remove a watermark <span class="text-[0.8rem] font-normal" style="color: var(--text-faint)">(optional — open only if the image has text or a logo on it)</span></span>
-        <span class="vi-block-inline text-[0.9rem]" style="color: var(--vi-text)">Xoá chữ / logo — chỉ mở nếu ảnh có watermark</span>
+        <span class="vi-block-inline text-[0.9rem]" style="color: var(--vi-text)">Xoá chữ / logo (không bắt buộc, chỉ cần khi ảnh có watermark)</span>
         <span class="ml-auto text-[0.85rem]" style="color: var(--accent-cool)">▾</span>
       </summary>
       <div class="px-6 pb-6">
         <ol class="text-[0.9rem] mb-3 grid gap-1" style="color: var(--text-muted); list-style: decimal inside">
           <li>Drag the mouse over the text — a red stroke appears.
-            <span class="vi-block-inline" style="color: var(--vi-text)">Kéo chuột quét lên phần chữ — vệt đỏ hiện ra.</span></li>
+            <span class="vi-block-inline" style="color: var(--vi-text)">Kéo chuột tô lên phần chữ, vệt đỏ sẽ hiện ra.</span></li>
           <li>Press <b>Apply</b> — the red area is filled in from its surroundings.
-            <span class="vi-block-inline" style="color: var(--vi-text)">Bấm <b>Apply</b> — vùng đỏ được lấp lại từ nền xung quanh.</span></li>
+            <span class="vi-block-inline" style="color: var(--vi-text)">Bấm <b>Apply</b>, vùng tô đỏ sẽ được lấp bằng nền xung quanh.</span></li>
           <li>Then continue to Segment below.
-            <span class="vi-block-inline" style="color: var(--vi-text)">Rồi bấm Segment ở dưới như bình thường.</span></li>
+            <span class="vi-block-inline" style="color: var(--vi-text)">Sau đó tiếp tục bước Segment bên dưới.</span></li>
         </ol>
         <div class="flex flex-wrap items-center gap-x-5 gap-y-2 mb-2 text-[0.9rem]">
           <label class="flex items-center gap-2">
@@ -125,7 +125,7 @@ import { url } from '../../site';
         <span class="text-[0.88rem]">
           <b>In-browser</b> — free, and the image never leaves your machine. Geometric
           approximation; edges may need cleanup.
-          <span class="vi-block vi-def mt-1 text-[0.84rem]">Chạy trong máy — miễn phí, ảnh không gửi đi đâu. Tách theo hình học, mép có thể cần dặm lại.</span>
+          <span class="vi-block vi-def mt-1 text-[0.84rem]">Chạy ngay trên máy, miễn phí, ảnh không gửi đi đâu. Tách theo hình học nên mép có thể phải sửa lại.</span>
         </span>
       </label>
       <label class="rounded-lg border p-3 cursor-pointer flex gap-2.5" style="border-color: var(--border-strong)">
@@ -133,7 +133,7 @@ import { url } from '../../site';
         <span class="text-[0.88rem]">
           <b>Cloud AI matte (Gemini / GPT)</b> — much better object separation, needs your own
           API key. <b>The image is sent to the provider.</b>
-          <span class="vi-block vi-def mt-1 text-[0.84rem]">AI đám mây vẽ matte (Gemini hoặc GPT) — tách vật tốt hơn hẳn, cần API key của bạn. <b>Ảnh sẽ được gửi lên nhà cung cấp.</b></span>
+          <span class="vi-block vi-def mt-1 text-[0.84rem]">AI đám mây vẽ matte (Gemini hoặc GPT): tách vật tốt hơn hẳn, cần API key riêng. <b>Ảnh sẽ được gửi lên nhà cung cấp.</b></span>
         </span>
       </label>
     </div>
@@ -166,13 +166,13 @@ import { url } from '../../site';
         <span id="keyHelp">Get one free at aistudio.google.com → Get API key.</span>
         Stored only in this browser (localStorage), never in the site. Do not use a key that
         guards anything important.
-        <span class="vi-block-inline">· Key chỉ lưu trong trình duyệt này, không nằm trên site.</span>
+        <span class="vi-block-inline">· Key chỉ lưu trong trình duyệt này, không lưu trên site. Đừng dùng key đang bảo vệ thứ gì quan trọng.</span>
       </p>
 
       <details class="mt-3 rounded-lg" style="border: 1px solid var(--border)">
         <summary class="cursor-pointer select-none px-3 py-2 text-[0.84rem] font-medium">
           No API key? Copy the prompt and paste it into ChatGPT or Gemini yourself
-          <span class="vi-block-inline font-normal" style="color: var(--vi-text)">· Không có API key? Copy prompt này, dán vào ChatGPT hoặc Gemini kèm ảnh render</span>
+          <span class="vi-block-inline font-normal" style="color: var(--vi-text)">· Không có API key? Copy prompt, rồi tự dán vào ChatGPT hoặc Gemini kèm ảnh render</span>
         </summary>
         <div class="px-3 pb-3">
           <p class="text-[0.8rem] mb-2" style="color: var(--text-muted)">
@@ -180,7 +180,7 @@ import { url } from '../../site';
             the matte aligned 1:1 with your render, each editable object on its own ID
             (Coffee Table 01/02, Floor Lamp Left/Right…), plus a colour legend strip below the
             frame.
-            <span class="vi-block-inline">· Mở ChatGPT hoặc Gemini, đính kèm ảnh render, dán prompt này rồi gửi. Kết quả là matte khớp 1:1 với ảnh gốc, mỗi vật cần chỉnh riêng có một ID riêng (Coffee Table 01/02, Floor Lamp trái/phải…), kèm dải chú giải màu phía dưới khung hình.</span>
+            <span class="vi-block-inline">· Mở ChatGPT hoặc Gemini, đính kèm ảnh render, dán prompt này rồi gửi. Bạn sẽ nhận được matte khớp 1:1 với ảnh gốc, mỗi vật cần chỉnh có ID riêng (Coffee Table 01/02, Floor Lamp trái/phải…), kèm dải chú giải màu bên dưới khung hình.</span>
           </p>
           <textarea id="promptText" readonly rows="8" class="field font-mono text-[0.74rem] leading-snug" spellcheck="false"></textarea>
           <div class="flex items-center gap-2 mt-2">
@@ -200,7 +200,7 @@ import { url } from '../../site';
       </label>
       <span class="text-[0.8rem]" style="color: var(--text-faint)">
         Runs at maximum detail: the full frame plus four overlapping close-up tiles.
-        <span class="vi-block-inline">· Chạy ở độ chi tiết tối đa: toàn khung hình cộng 4 ô phóng cận chồng mép.</span>
+        <span class="vi-block-inline">· Chạy ở độ chi tiết cao nhất: phân tích toàn khung hình và thêm 4 ô cận cảnh gối mép lên nhau.</span>
       </span>
     </div>
 
@@ -218,7 +218,7 @@ import { url } from '../../site';
       </label>
       <label id="opWrap" class="hidden items-center gap-2 text-[0.9rem]">
         <span>Opacity</span>
-        <span class="vi-block-inline" style="color: var(--vi-text)">· Độ mờ</span>
+        <span class="vi-block-inline" style="color: var(--vi-text)">· Độ đậm</span>
         <input id="opacity" type="range" min="20" max="100" value="80" class="accent-[var(--accent)]" />
       </label>
     </div>
@@ -235,28 +235,28 @@ import { url } from '../../site';
       <span class="chip chip-accent">2b</span>
       <h2 id="samh" class="text-lg font-semibold">Fix a region by clicking</h2>
       <span class="chip">Beta</span>
-      <span class="vi-block-inline text-[0.9rem]" style="color: var(--vi-text)">Sửa vùng bằng cách click</span>
+      <span class="vi-block-inline text-[0.9rem]" style="color: var(--vi-text)">Click để sửa vùng</span>
     </div>
     <p class="text-[0.86rem] mb-2" style="color: var(--text-muted)">
       For when the matte colours an object wrongly — a second AI traces the object you click, and
       you repaint just that object.
-      <span class="vi-block-inline">· Dành cho lúc matte tô sai một vật — AI thứ hai khoanh đúng vật bạn click, và bạn tô lại riêng vật đó.</span>
+      <span class="vi-block-inline">· Dùng khi matte tô sai màu một vật: một AI khác sẽ khoanh đúng vật bạn click, rồi bạn tô lại riêng vật đó.</span>
     </p>
     <ol class="text-[0.86rem] mb-3 ml-5 list-decimal space-y-1" style="color: var(--text-muted)">
       <li>
         Press <b>Enable click-fix</b> below — the preview above switches to your render so you can
         see the objects.
-        <span class="vi-block-inline">· Bấm <b>Enable click-fix</b> — ảnh xem trước sẽ chuyển sang ảnh render để bạn nhìn rõ các vật.</span>
+        <span class="vi-block-inline">· Bấm <b>Enable click-fix</b> bên dưới, khung xem trước phía trên sẽ chuyển sang ảnh render để bạn nhìn rõ các vật.</span>
       </li>
       <li>
         Click the wrong object on the preview — it lights up white. Not all of it selected? Click
         the missed part. Grabbed too much? <b>Shift-click</b> the excess.
-        <span class="vi-block-inline">· Click vào vật bị sai trên ảnh — nó sẽ sáng trắng lên. Chưa trọn vật? Click thêm phần bị sót. Lem ra ngoài? <b>Shift-click</b> vào phần thừa.</span>
+        <span class="vi-block-inline">· Click vào vật bị tô sai trên ảnh, vật sẽ sáng trắng lên. Chưa chọn hết? Click thêm vào phần còn sót. Lấn ra ngoài? <b>Shift-click</b> vào phần thừa.</span>
       </li>
       <li>
         Pick the correct colour and press <b>Apply</b>. Repeat for the next object, then download
         in step 3.
-        <span class="vi-block-inline">· Chọn đúng màu rồi bấm <b>Apply</b>. Lặp lại cho vật tiếp theo, xong tải về ở bước 3.</span>
+        <span class="vi-block-inline">· Chọn màu đúng rồi bấm <b>Apply</b>. Làm tiếp với vật khác, xong thì tải về ở bước 3.</span>
       </li>
     </ol>
     <div class="flex flex-wrap items-center gap-3">
@@ -266,7 +266,7 @@ import { url } from '../../site';
     <div id="samTools" class="hidden flex-wrap items-center gap-3 mt-3">
       <label class="flex items-center gap-2 text-[0.88rem]">
         <span>Colour as</span>
-        <span class="vi-block-inline" style="color: var(--vi-text)">· Tô màu là</span>
+        <span class="vi-block-inline" style="color: var(--vi-text)">· Tô thành</span>
         <select id="samCat" class="field !w-auto !py-1.5"></select>
       </label>
       <button id="samApply" class="btn btn-primary !py-1.5" type="button" disabled>Apply</button>
@@ -287,8 +287,8 @@ import { url } from '../../site';
       Photoshop and select by colour.
     </p>
     <p class="vi-block vi-def text-[0.85rem] mb-4">
-      File tải về là bản đồ màu phẳng đặc ở đúng độ phân giải gốc — đưa vào Photoshop rồi chọn theo
-      màu. Nên dùng PNG để giữ mép sắc nét.
+      File tải về là bản đồ màu đặc, đúng độ phân giải gốc. Mở trong Photoshop rồi chọn vùng theo
+      màu. Nên tải PNG để giữ mép sắc.
     </p>
     <div class="flex flex-wrap gap-3">
       <button id="dlPng" class="btn btn-primary" type="button">Download PNG</button>
@@ -300,7 +300,8 @@ import { url } from '../../site';
     <span>First use downloads the AI model once, then it is cached. Uses your GPU if the browser supports
     WebGPU. Back to <a href={url('/tools')} class="no-underline hover:underline">all tools</a>.</span>
     <span class="vi-block-inline">
-      Lần đầu dùng sẽ tải mô hình AI một lần rồi lưu cache. Dùng GPU nếu trình duyệt hỗ trợ WebGPU.
+      Lần đầu dùng, trình duyệt tải mô hình AI về một lần rồi lưu cache. Nếu trình duyệt hỗ trợ
+      WebGPU, công cụ sẽ chạy bằng GPU.
       Quay lại <a href={url('/tools')} class="no-underline hover:underline">tất cả công cụ</a>.
     </span>
   </p>
@@ -421,7 +422,7 @@ import { url } from '../../site';
       $('legend')?.classList.add('hidden');
       drawClean();
       drawPreview();
-      setStatus('Ready — press Segment. · Sẵn sàng — bấm Segment.');
+      setStatus('Ready — press Segment. · Đã sẵn sàng, bấm Segment.');
       $('cleanWrap')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     };
     img.src = URL.createObjectURL(file);
@@ -560,10 +561,10 @@ import { url } from '../../site';
     let any = false; for (let i = 0; i < cleanMask.length; i++) if (cleanMask[i]) { any = true; break; }
     if (!any) {
       // The button must never look dead — the earlier silent return read as broken.
-      setCleanMsg('Brush over the text first — drag the mouse on the image below. · Hãy quét chổi lên phần chữ trước — kéo chuột trên ảnh bên dưới.', 'var(--warning)');
+      setCleanMsg('Brush over the text first — drag the mouse on the image below. · Tô lên phần chữ trước đã: kéo chuột trên ảnh bên dưới.', 'var(--warning)');
       return;
     }
-    setCleanMsg('Filling… · Đang lấp vùng đã quét…');
+    setCleanMsg('Filling… · Đang lấp vùng đã tô…');
     setTimeout(() => {
       const cleaned = inpaint(sourceImage!, cleanMask!);
       const img = new Image();
@@ -574,7 +575,7 @@ import { url } from '../../site';
         resetSam(true);
         $('dlClean')?.classList.remove('hidden');
         drawClean(); drawPreview();
-        setCleanMsg('Done — brush more, or scroll down and press Segment. · Đã lấp xong — quét tiếp, hoặc kéo xuống bấm Segment.', 'var(--success)');
+        setCleanMsg('Done — brush more, or scroll down and press Segment. · Đã lấp xong. Tô tiếp, hoặc kéo xuống bấm Segment.', 'var(--success)');
       };
       img.src = cleaned.toDataURL('image/png');
     }, 30);
@@ -588,7 +589,7 @@ import { url } from '../../site';
     resetSam(true);
     $('dlClean')?.classList.add('hidden');
     drawClean(); drawPreview();
-    setCleanMsg('Back to the original image. · Đã trả về ảnh gốc.');
+    setCleanMsg('Back to the original image. · Đã quay về ảnh gốc.');
   });
 
   $('dlClean')?.addEventListener('click', () => {
@@ -729,7 +730,7 @@ import { url } from '../../site';
   async function ensureSamEmbeddings() {
     if (samEmb || !sourceImage) return;
     const kit = await getSamKit();
-    setSamStatus('Reading the image once — a few seconds… · Đang đọc ảnh một lần — vài giây…');
+    setSamStatus('Reading the image once — a few seconds… · Đang đọc ảnh, mất vài giây…');
     const W = sourceImage.naturalWidth, H = sourceImage.naturalHeight;
     const c = document.createElement('canvas');
     c.width = W; c.height = H;
@@ -820,12 +821,12 @@ import { url } from '../../site';
     try {
       await getSamKit();
       await ensureSamEmbeddings();
-      setSamStatus('Ready — click an object on the preview. · Sẵn sàng — click vào một vật trên ảnh xem trước.', 'var(--success)');
+      setSamStatus('Ready — click an object on the preview. · Đã sẵn sàng, click vào một vật trên ảnh xem trước.', 'var(--success)');
     } catch (e: any) {
       samActive = false;
       btn.textContent = 'Enable click-fix';
       if (preview) preview.style.cursor = '';
-      setSamStatus(`Could not load SAM: ${String(e?.message ?? e).slice(0, 90)} · Không tải được SAM — thử lại hoặc tải lại trang.`, 'var(--warning)');
+      setSamStatus(`Could not load SAM: ${String(e?.message ?? e).slice(0, 90)} · Không tải được SAM. Thử lại hoặc tải lại trang.`, 'var(--warning)');
     }
   });
 
@@ -840,7 +841,7 @@ import { url } from '../../site';
     setSamStatus('Tracing… · Đang khoanh vùng…');
     try {
       await updateSamMask();
-      setSamStatus('Good? Pick a colour and Apply — or keep clicking to refine. · Ổn chưa? Chọn màu rồi Apply — hoặc click tiếp để chỉnh.', 'var(--success)');
+      setSamStatus('Good? Pick a colour and Apply — or keep clicking to refine. · Ổn chưa? Chọn màu rồi bấm Apply, hoặc click tiếp để chỉnh.', 'var(--success)');
     } catch (err: any) {
       samPoints.pop();
       setSamStatus(`SAM failed: ${String(err?.message ?? err).slice(0, 90)}`, 'var(--warning)');
@@ -867,7 +868,7 @@ import { url } from '../../site';
     }
     lctx.putImageData(img, 0, 0);
     resetSam(false);
-    setSamStatus('Applied. Click the next object, or download below. · Đã áp màu. Click vật tiếp theo, hoặc tải về ở dưới.', 'var(--success)');
+    setSamStatus('Applied. Click the next object, or download below. · Đã tô màu. Click sang vật tiếp theo, hoặc tải về ở bên dưới.', 'var(--success)');
     drawPreview();
   });
 
@@ -1013,8 +1014,8 @@ SEGMENTATION RULES:
     if (!key) {
       setStatus(
         prov === 'openai'
-          ? 'Paste your OpenAI API key first (platform.openai.com → API keys). · Hãy dán API key OpenAI trước.'
-          : 'Paste your Google AI API key first (aistudio.google.com → Get API key). · Hãy dán API key Google trước.',
+          ? 'Paste your OpenAI API key first (platform.openai.com → API keys). · Dán API key OpenAI vào trước đã.'
+          : 'Paste your Google AI API key first (aistudio.google.com → Get API key). · Dán API key Google vào trước đã.',
         'var(--warning)'
       );
       return false;
@@ -1029,7 +1030,7 @@ SEGMENTATION RULES:
     c.getContext('2d')!.drawImage(sourceImage!, 0, 0, c.width, c.height);
 
     if (prov === 'openai') {
-      setStatus('Sending to GPT — often 30–90s… · Đang gửi lên GPT — thường mất 30–90 giây…');
+      setStatus('Sending to GPT — often 30–90s… · Đang gửi lên GPT, thường mất 30–90 giây…');
       const blob: Blob = await new Promise((r) => c.toBlob((b) => r(b!), 'image/png'));
       const form = new FormData();
       form.append('model', 'gpt-image-1');
@@ -1056,7 +1057,7 @@ SEGMENTATION RULES:
     }
 
     const b64 = c.toDataURL('image/jpeg', 0.92).split(',')[1];
-    setStatus('Sending to Gemini — usually 10–30s… · Đang gửi lên Gemini — thường mất 10–30 giây…');
+    setStatus('Sending to Gemini — usually 10–30s… · Đang gửi lên Gemini, thường mất 10–30 giây…');
     const res = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${encodeURIComponent(key)}`,
       {
@@ -1114,7 +1115,7 @@ SEGMENTATION RULES:
         $('s3wrap')?.classList.remove('hidden');
         $('samwrap')?.classList.remove('hidden');
         const csecs = ((performance.now() - t0) / 1000).toFixed(1);
-        setStatus(`Done in ${csecs}s — check alignment with the overlay before trusting edges. · Xong sau ${csecs}s — bật "Đối chiếu ảnh gốc" kiểm tra độ khớp trước khi dùng.`, 'var(--success)');
+        setStatus(`Done in ${csecs}s — check alignment with the overlay before trusting edges. · Xong trong ${csecs}s. Bật "Đối chiếu ảnh gốc" để kiểm tra mép có khớp không trước khi dùng.`, 'var(--success)');
         runBtn.disabled = false;
         return;
       }
@@ -1167,7 +1168,7 @@ SEGMENTATION RULES:
           console.error(`pass ${i + 1} failed`, tileErr);
           if (i === 0) {
             // The anchor pass must succeed — retry it on the CPU path.
-            setStatus('GPU failed, retrying on CPU (slower)… · GPU lỗi, thử lại bằng CPU (chậm hơn)…', 'var(--warning)');
+            setStatus('GPU failed, retrying on CPU (slower)… · GPU gặp lỗi, đang chạy lại bằng CPU (chậm hơn)…', 'var(--warning)');
             seg = await rebuildSegmenterOnWasm(onProgress);
             segOut = await seg(url);
             if (dep) { try { maybeDep = await dep(url); } catch { maybeDep = null; } }
@@ -1198,7 +1199,7 @@ SEGMENTATION RULES:
       }
 
       if (!grids.size) {
-        setStatus('No objects detected. · Không nhận diện được vật thể.', 'var(--warning)');
+        setStatus('No objects detected. · Không nhận ra vật thể nào.', 'var(--warning)');
         runBtn.disabled = false; return;
       }
 
@@ -1217,7 +1218,7 @@ SEGMENTATION RULES:
       // failure unreportable.
       const detail = String(err?.message ?? err).slice(0, 160);
       setStatus(
-        `Failed: ${detail} — try again; if it repeats, reload the page. · Lỗi: ${detail} — thử lại; nếu lặp lại, tải lại trang.`,
+        `Failed: ${detail} — try again; if it repeats, reload the page. · Lỗi: ${detail}. Thử lại; nếu vẫn lỗi, hãy tải lại trang.`,
         'var(--danger)'
       );
     } finally {
@@ -1871,7 +1872,7 @@ SEGMENTATION RULES:
     tables: ['tables', 'bàn'],
     hard: ['cabinets & consoles', 'tủ & kệ'],
     decor: ['artwork & decor', 'tranh & đồ trang trí'],
-    lighting: ['lighting fixtures', 'thiết bị đèn'],
+    lighting: ['lighting fixtures', 'bộ đèn'],
     plant: ['plants', 'cây xanh'],
     door: ['door', 'cửa'],
     window: ['window', 'cửa sổ'],

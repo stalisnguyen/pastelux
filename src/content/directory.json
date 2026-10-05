@@ -8,7 +8,7 @@
     "url": "https://cie.co.at/",
     "expectText": "International Commission on Illumination",
     "what": "The standards body behind S 026, CIE 150 and the colorimetry everything else rests on.",
-    "viWhat": "Tổ chức tiêu chuẩn đứng sau CIE S 026, CIE 150 và toàn bộ nền tảng đo màu.",
+    "viWhat": "Tổ chức ban hành CIE S 026, CIE 150 và hệ đo màu mà mọi tiêu chuẩn khác đều dựa vào.",
     "source": "Official site, title verified"
   },
   {
@@ -20,7 +20,7 @@
     "url": "https://www.dali-alliance.org/",
     "expectText": "Digital Illumination Interface",
     "what": "Owns the DALI-2, D4i and DALI+ specifications, and the certified-product register.",
-    "viWhat": "Sở hữu các đặc tả DALI-2, D4i và DALI+, cùng danh bạ sản phẩm đã chứng nhận.",
+    "viWhat": "Quản lý bộ đặc tả DALI-2, D4i, DALI+ và danh sách sản phẩm đạt chứng nhận.",
     "source": "Official site, title verified"
   },
   {
@@ -32,7 +32,7 @@
     "url": "https://darksky.org/",
     "expectText": "DarkSky",
     "what": "Light-pollution advocacy and the fixture seal-of-approval programme.",
-    "viWhat": "Vận động chống ô nhiễm ánh sáng và chương trình chứng nhận đèn đạt chuẩn.",
+    "viWhat": "Vận động chống ô nhiễm ánh sáng và cấp chứng nhận cho những bộ đèn đạt chuẩn của họ.",
     "source": "Official site",
     "unverifiableUrl": "Sits behind Cloudflare or an equivalent bot filter and returns 403 to automated checks. Confirmed by hand."
   },
@@ -45,7 +45,7 @@
     "url": "https://www.ies.org/",
     "expectText": "Illuminating Engineering",
     "what": "Publishes TM-30, LM-80, the LP series and the Lighting Handbook.",
-    "viWhat": "Ban hành TM-30, LM-80, bộ LP và Lighting Handbook.",
+    "viWhat": "Đơn vị ban hành TM-30, LM-80, loạt tài liệu LP và cuốn Lighting Handbook.",
     "source": "Official site",
     "unverifiableUrl": "Sits behind Cloudflare or an equivalent bot filter and returns 403 to automated checks. Confirmed by hand."
   },
@@ -58,7 +58,7 @@
     "url": "https://www.luciassociation.org/",
     "expectText": "LUCI",
     "what": "Network of cities using light in urban strategy.",
-    "viWhat": "Mạng lưới các thành phố dùng ánh sáng trong chiến lược đô thị.",
+    "viWhat": "Mạng lưới các thành phố lấy ánh sáng làm một phần trong chiến lược phát triển đô thị.",
     "source": "Official site",
     "unverifiableUrl": "Sits behind Cloudflare or an equivalent bot filter and returns 403 to automated checks. Confirmed by hand."
   },
@@ -71,7 +71,7 @@
     "url": "https://www.zhagastandard.org/",
     "expectText": "Zhaga",
     "what": "Interface specifications that make LED modules and sensors interchangeable between makers.",
-    "viWhat": "Đặc tả giao diện giúp module LED và cảm biến của các hãng thay thế lẫn nhau được.",
+    "viWhat": "Bộ đặc tả giao diện chung, để module LED và cảm biến của hãng này lắp lẫn được với hãng khác.",
     "source": "Official site"
   },
   {
@@ -83,7 +83,7 @@
     "url": "https://casambi.com/",
     "expectText": "Casambi",
     "what": "Bluetooth mesh control, very widely embedded by luminaire makers.",
-    "viWhat": "Điều khiển qua Bluetooth mesh, được rất nhiều hãng đèn tích hợp sẵn.",
+    "viWhat": "Hệ điều khiển Bluetooth mesh, rất nhiều hãng đèn tích hợp sẵn vào sản phẩm.",
     "source": "Manufacturer site, title verified"
   },
   {
@@ -95,7 +95,7 @@
     "url": "https://www.etcconnect.com/",
     "expectText": "ETC",
     "what": "Theatrical and architectural control, DMX and beyond.",
-    "viWhat": "Điều khiển sân khấu và kiến trúc, DMX và hơn thế.",
+    "viWhat": "Hệ điều khiển cho sân khấu và kiến trúc, không chỉ dừng ở DMX.",
     "source": "Manufacturer site"
   },
   {
@@ -107,7 +107,7 @@
     "url": "https://helvar.com/",
     "expectText": "lighting control",
     "what": "DALI drivers and building-scale control systems.",
-    "viWhat": "Driver DALI và hệ điều khiển quy mô toà nhà.",
+    "viWhat": "Driver DALI và hệ điều khiển cho cả toà nhà.",
     "source": "Manufacturer site, title verified"
   },
   {
@@ -119,7 +119,7 @@
     "url": "https://www.lutron.com/",
     "expectText": "Lutron",
     "what": "Dimming and shading, strong in high-end residential and hospitality.",
-    "viWhat": "Dimming và rèm tự động, mạnh ở nhà ở cao cấp và khách sạn.",
+    "viWhat": "Dimming và rèm tự động; rất mạnh ở mảng nhà ở cao cấp và khách sạn.",
     "source": "Manufacturer site",
     "unverifiableUrl": "Sits behind Cloudflare or an equivalent bot filter and returns 403 to automated checks. Confirmed by hand."
   },
@@ -132,7 +132,7 @@
     "url": "https://www.pharoscontrols.com/",
     "expectText": "Pharos",
     "what": "Show and architainment controllers for façade and dynamic schemes.",
-    "viWhat": "Bộ điều khiển kịch bản cho mặt đứng và phương án động.",
+    "viWhat": "Bộ điều khiển show và architainment, chuyên cho mặt dựng và các kịch bản ánh sáng động.",
     "source": "Manufacturer site",
     "unverifiableUrl": "Sits behind Cloudflare or an equivalent bot filter and returns 403 to automated checks. Confirmed by hand."
   },
@@ -145,7 +145,7 @@
     "url": "https://www.anolislighting.com/",
     "expectText": "Anolis",
     "what": "Exterior colour-changing and façade, from the Robe stable.",
-    "viWhat": "Đèn đổi màu ngoài trời và mặt đứng, thuộc tập đoàn Robe.",
+    "viWhat": "Đèn đổi màu ngoài trời và đèn mặt dựng, thuộc tập đoàn Robe.",
     "source": "Manufacturer site. anolis.eu intermittently redirects here; anolislighting.com is the stable destination."
   },
   {
@@ -157,7 +157,7 @@
     "url": "https://www.artemide.com/",
     "expectText": "Artemide",
     "what": "Decorative and architectural; the decorative pieces are design objects in their own right.",
-    "viWhat": "Trang trí và kiến trúc; các mẫu trang trí bản thân đã là tác phẩm thiết kế.",
+    "viWhat": "Làm cả đèn trang trí lẫn đèn kiến trúc; các mẫu trang trí tự thân đã là tác phẩm thiết kế.",
     "source": "Manufacturer site, title verified"
   },
   {
@@ -169,7 +169,7 @@
     "url": "https://www.bega.com/",
     "expectText": "BEGA",
     "what": "Exterior and landscape luminaires built to outlast the building.",
-    "viWhat": "Đèn ngoài trời và cảnh quan, làm bền tới mức sống lâu hơn cả công trình.",
+    "viWhat": "Đèn ngoài trời và cảnh quan, làm chắc đến mức dùng bền hơn cả công trình.",
     "source": "Manufacturer site, title verified"
   },
   {
@@ -181,7 +181,7 @@
     "url": "https://www.deltalight.com/",
     "expectText": "DELTALIGHT",
     "what": "Design-led interior fittings, strong trimless and minimal apertures.",
-    "viWhat": "Đèn nội thất thiên thiết kế, mạnh về loại không viền và miệng đèn tối giản.",
+    "viWhat": "Đèn nội thất đặt nặng thiết kế; mạnh nhất ở dòng âm trần không viền (trimless) và miệng đèn tối giản.",
     "source": "Manufacturer site, title verified"
   },
   {
@@ -193,7 +193,7 @@
     "url": "https://dienquang.com/",
     "expectText": "Điện Quang",
     "what": "Long-established domestic manufacturer, broad commercial and residential range.",
-    "viWhat": "Nhà sản xuất nội địa lâu năm, dải sản phẩm thương mại và dân dụng rộng.",
+    "viWhat": "Hãng đèn Việt lâu năm, sản phẩm phủ rộng cả mảng thương mại lẫn dân dụng.",
     "source": "Manufacturer site, title verified"
   },
   {
@@ -205,7 +205,7 @@
     "url": "https://www.erco.com/",
     "expectText": "ERCO",
     "what": "Track, recessed and exterior spotlights, and the best free technical library in the industry.",
-    "viWhat": "Đèn ray, âm trần và đèn rọi ngoài trời. Thư viện kỹ thuật miễn phí tốt nhất ngành — nên đọc kể cả khi không dùng sản phẩm của họ.",
+    "viWhat": "Đèn ray, đèn âm trần và đèn rọi ngoài trời. Có thư viện kỹ thuật miễn phí hay nhất ngành — đáng đọc kể cả khi không dùng đèn của họ.",
     "source": "Manufacturer site, title verified"
   },
   {
@@ -217,7 +217,7 @@
     "url": "https://www.fagerhult.com/",
     "expectText": "Fagerhult",
     "what": "Workplace, education and healthcare, with a serious human-centric programme.",
-    "viWhat": "Văn phòng, giáo dục và y tế; có chương trình human-centric bài bản.",
+    "viWhat": "Mạnh ở văn phòng, trường học và bệnh viện; đầu tư nghiêm túc vào chiếu sáng human-centric (lấy con người làm trung tâm).",
     "source": "Manufacturer site, title verified"
   },
   {
@@ -229,7 +229,7 @@
     "url": "https://flos.com/",
     "expectText": "Flos",
     "what": "Architectural division of the decorative house; strong on integrated and plaster-in detail.",
-    "viWhat": "Nhánh kiến trúc của hãng đèn trang trí; mạnh về chi tiết tích hợp và âm chìm.",
+    "viWhat": "Mảng đèn kiến trúc của Flos, vốn nổi tiếng với đèn trang trí; mạnh ở chi tiết tích hợp và đèn âm thạch cao (plaster-in).",
     "source": "Manufacturer site"
   },
   {
@@ -241,7 +241,7 @@
     "url": "https://www.iguzzini.com/",
     "expectText": "iGuzzini",
     "what": "Broad architectural range, strong on museum and urban lighting.",
-    "viWhat": "Dải sản phẩm kiến trúc rộng, mạnh về bảo tàng và chiếu sáng đô thị.",
+    "viWhat": "Danh mục đèn kiến trúc rất rộng, đặc biệt mạnh ở chiếu sáng bảo tàng và đô thị.",
     "source": "Manufacturer site, title verified"
   },
   {
@@ -253,7 +253,7 @@
     "url": "https://www.led-linear.com/",
     "expectText": "LED Linear",
     "what": "Linear and flexible systems for cove, grazing and integration.",
-    "viWhat": "Hệ tuyến tính và mềm dẻo cho hắt trần, chiếu sượt và tích hợp.",
+    "viWhat": "Đèn thanh và LED dây uốn dẻo, dùng cho hắt trần, chiếu sượt bề mặt và tích hợp vào kiến trúc.",
     "source": "Manufacturer site, title verified"
   },
   {
@@ -265,7 +265,7 @@
     "url": "https://www.lumenpulse.com/",
     "expectText": "specification-grade",
     "what": "Specification-grade interior and exterior, including façade and colour-changing.",
-    "viWhat": "Chuyên dòng spec-grade cho nội và ngoại thất, gồm cả mặt đứng và đổi màu.",
+    "viWhat": "Đèn spec-grade cho cả nội lẫn ngoại thất, có cả dòng mặt dựng và đổi màu.",
     "source": "Manufacturer site, title verified"
   },
   {
@@ -289,7 +289,7 @@
     "url": "https://nanoco.com.vn/",
     "expectText": "Nanoco",
     "what": "Domestic manufacturer and distributor; also the Panasonic channel in Vietnam.",
-    "viWhat": "Nhà sản xuất và phân phối nội địa; đồng thời là kênh phân phối Panasonic tại Việt Nam.",
+    "viWhat": "Doanh nghiệp Việt vừa sản xuất vừa phân phối; cũng là nhà phân phối của Panasonic tại Việt Nam.",
     "source": "Manufacturer site, title verified"
   },
   {
@@ -301,7 +301,7 @@
     "url": "https://occhio.com/",
     "expectText": "Occhio",
     "what": "High-end residential and hospitality, with tightly integrated control.",
-    "viWhat": "Nhà ở cao cấp và khách sạn, tích hợp điều khiển chặt chẽ.",
+    "viWhat": "Đèn cho nhà ở cao cấp và khách sạn, phần điều khiển tích hợp liền mạch vào từng sản phẩm.",
     "source": "Manufacturer site, title verified"
   },
   {
@@ -313,7 +313,7 @@
     "url": "https://rangdong.com.vn/",
     "expectText": "Rạng Đông",
     "what": "The largest domestic lighting manufacturer; broad range, increasingly with smart control.",
-    "viWhat": "Nhà sản xuất chiếu sáng nội địa lớn nhất; dải sản phẩm rộng, ngày càng có điều khiển thông minh.",
+    "viWhat": "Hãng đèn lớn nhất Việt Nam; sản phẩm đa dạng, ngày càng nhiều dòng điều khiển thông minh.",
     "source": "Manufacturer site, title verified"
   },
   {
@@ -325,7 +325,7 @@
     "url": "https://www.reggiani.net/",
     "expectText": "Reggiani",
     "what": "Retail and museum track and projectors.",
-    "viWhat": "Đèn ray và đèn chiếu cho bán lẻ và bảo tàng.",
+    "viWhat": "Đèn ray và đèn chiếu điểm cho cửa hàng và bảo tàng.",
     "source": "Manufacturer site, title verified"
   },
   {
@@ -337,7 +337,7 @@
     "url": "https://www.selux.com/",
     "expectText": "Selux",
     "what": "Urban and architectural exterior, including pole and bollard families.",
-    "viWhat": "Ngoài trời đô thị và kiến trúc, gồm các dòng đèn cột và trụ thấp.",
+    "viWhat": "Đèn ngoài trời cho đô thị và kiến trúc, có các dòng đèn cột và đèn trụ thấp (bollard).",
     "source": "Manufacturer site"
   },
   {
@@ -349,7 +349,7 @@
     "url": "https://www.signify.com/",
     "expectText": "Signify",
     "what": "The largest lighting group; Color Kinetics for façade, Dynalite for control. Has a Vietnam presence.",
-    "viWhat": "Tập đoàn chiếu sáng lớn nhất; Color Kinetics cho mặt đứng, Dynalite cho điều khiển. Có mặt tại Việt Nam.",
+    "viWhat": "Tập đoàn chiếu sáng lớn nhất; mặt dựng có Color Kinetics, điều khiển có Dynalite. Có mặt tại Việt Nam.",
     "source": "Manufacturer site, Vietnam page served"
   },
   {
@@ -373,7 +373,7 @@
     "url": "https://www.targetti.com/",
     "expectText": "Targetti",
     "what": "Architectural interior and exterior; long history in museum lighting.",
-    "viWhat": "Kiến trúc nội và ngoại thất; bề dày lâu năm trong chiếu sáng bảo tàng.",
+    "viWhat": "Đèn kiến trúc cho nội và ngoại thất; có bề dày trong chiếu sáng bảo tàng.",
     "source": "Manufacturer site, title verified"
   },
   {
@@ -385,7 +385,7 @@
     "url": "https://www.trilux.com/",
     "expectText": "TRILUX",
     "what": "Workplace, industrial and exterior; strong technical documentation.",
-    "viWhat": "Văn phòng, công nghiệp và ngoài trời; tài liệu kỹ thuật đầy đủ.",
+    "viWhat": "Đèn văn phòng, công nghiệp và ngoài trời; tài liệu kỹ thuật rất chỉn chu.",
     "source": "Manufacturer site, title verified"
   },
   {
@@ -397,7 +397,7 @@
     "url": "https://www.we-ef.com/",
     "expectText": "WE-EF",
     "what": "Exterior, urban and roadway; rigorous about cut-off and obtrusive light.",
-    "viWhat": "Ngoài trời, đô thị và đường phố; rất nghiêm về góc chắn sáng và ánh sáng phiền nhiễu.",
+    "viWhat": "Đèn ngoài trời, đô thị và đường phố; rất khắt khe về cut-off và hạn chế ánh sáng tràn gây phiền.",
     "source": "Manufacturer site, title verified"
   },
   {
@@ -409,7 +409,7 @@
     "url": "https://www.xal.com/",
     "expectText": "XAL",
     "what": "Linear and profile systems for interiors.",
-    "viWhat": "Hệ đèn tuyến tính và profile cho nội thất.",
+    "viWhat": "Hệ đèn thanh và đèn profile cho nội thất.",
     "source": "Manufacturer site",
     "unverifiableUrl": "Sits behind Cloudflare or an equivalent bot filter and returns 403 to automated checks. Confirmed by hand."
   },
@@ -422,7 +422,7 @@
     "url": "https://www.zumtobel.com/",
     "expectText": "Zumtobel",
     "what": "Interior architectural and workplace lighting; sister brand Thorn covers exterior.",
-    "viWhat": "Chiếu sáng kiến trúc nội thất và văn phòng; thương hiệu anh em Thorn phụ trách ngoài trời.",
+    "viWhat": "Đèn kiến trúc nội thất và văn phòng; mảng ngoài trời do thương hiệu cùng tập đoàn là Thorn đảm nhận.",
     "source": "Manufacturer site",
     "unverifiableUrl": "Sits behind Cloudflare or an equivalent bot filter and returns 403 to automated checks. Confirmed by hand."
   },
@@ -447,7 +447,7 @@
     "url": "https://www.bridgelux.com/",
     "expectText": "Bridgelux",
     "what": "COB arrays and modules.",
-    "viWhat": "Mảng COB và module LED.",
+    "viWhat": "LED COB và module LED.",
     "source": "Manufacturer site, title verified"
   },
   {
@@ -459,7 +459,7 @@
     "url": "https://www.cree-led.com/",
     "expectText": "Cree LED",
     "what": "High-power emitters. Note the domain is cree-led.com — creeled.com does not exist.",
-    "viWhat": "Chip LED công suất cao. Lưu ý tên miền là cree-led.com — creeled.com không tồn tại.",
+    "viWhat": "Chip LED công suất cao. Lưu ý: tên miền đúng là cree-led.com, còn creeled.com không tồn tại.",
     "source": "Manufacturer site, title verified; creeled.com returns NXDOMAIN"
   },
   {
@@ -471,7 +471,7 @@
     "url": "https://lumileds.com/",
     "expectText": "LUXEON",
     "what": "LUXEON families, widely used in spec-grade fittings.",
-    "viWhat": "Dòng LUXEON, dùng phổ biến trong đèn spec-grade.",
+    "viWhat": "Chủ dòng chip LUXEON, rất hay gặp trong đèn spec-grade.",
     "source": "Manufacturer site, title verified"
   },
   {
@@ -483,7 +483,7 @@
     "url": "https://www.nichia.co.jp/en/",
     "expectText": "NICHIA",
     "what": "Inventor of the white LED and still the reference for colour consistency.",
-    "viWhat": "Nơi phát minh ra LED trắng, đến nay vẫn là chuẩn tham chiếu về độ đồng nhất màu.",
+    "viWhat": "Hãng phát minh ra LED trắng, đến nay vẫn là thước đo về độ đồng nhất màu.",
     "source": "Manufacturer site, title verified"
   },
   {
@@ -495,7 +495,7 @@
     "url": "https://www.seoulsemicon.com/en/",
     "expectText": "Seoul Semiconductor",
     "what": "SunLike and other high-CRI emitters.",
-    "viWhat": "Dòng SunLike và các chip hoàn màu cao khác.",
+    "viWhat": "Có dòng SunLike và nhiều chip LED độ hoàn màu cao khác.",
     "source": "Manufacturer site, title verified"
   },
   {
@@ -507,7 +507,7 @@
     "url": "https://www.xicato.com/",
     "expectText": "Xicato",
     "what": "Remote-phosphor modules known for very tight, stable colour.",
-    "viWhat": "Module remote-phosphor, nổi tiếng vì màu rất chặt và ổn định lâu dài.",
+    "viWhat": "Module remote-phosphor, nổi tiếng vì sai lệch màu cực nhỏ và màu giữ ổn định lâu dài.",
     "source": "Manufacturer site, title verified"
   },
   {
@@ -519,7 +519,7 @@
     "url": "https://www.aglicht.de/",
     "expectText": "AG Licht",
     "what": "Museum and cultural specialists.",
-    "viWhat": "Chuyên bảo tàng và công trình văn hoá.",
+    "viWhat": "Chuyên chiếu sáng bảo tàng và công trình văn hoá.",
     "source": "Practice site, title verified"
   },
   {
@@ -531,7 +531,7 @@
     "url": "https://www.dpalighting.com/",
     "expectText": "dpa lighting",
     "what": "Hospitality and resorts, with a large body of work across Asia.",
-    "viWhat": "Khách sạn và khu nghỉ dưỡng, khối lượng công trình lớn khắp châu Á.",
+    "viWhat": "Chuyên khách sạn và resort, đã làm rất nhiều dự án khắp châu Á.",
     "source": "Practice site, title verified"
   },
   {
@@ -543,7 +543,7 @@
     "url": "https://www.focuslighting.com/",
     "expectText": "Focus Lighting",
     "what": "Restaurants, retail and entertainment; unusually expressive work.",
-    "viWhat": "Nhà hàng, bán lẻ và giải trí; phong cách biểu cảm khác thường.",
+    "viWhat": "Nhà hàng, bán lẻ và giải trí; thiết kế giàu biểu cảm hiếm thấy.",
     "source": "Practice site, title verified"
   },
   {
@@ -555,7 +555,7 @@
     "url": "https://www.isometrix.co.uk/",
     "expectText": "Isometrix",
     "what": "Hospitality and luxury retail.",
-    "viWhat": "Khách sạn và bán lẻ cao cấp.",
+    "viWhat": "Chuyên khách sạn và bán lẻ cao cấp.",
     "source": "Practice site",
     "unverifiableUrl": "Sits behind Cloudflare or an equivalent bot filter and returns 403 to automated checks. Confirmed by hand."
   },
@@ -568,7 +568,7 @@
     "url": "https://lobsintl.com/",
     "expectText": "Observatoire",
     "what": "Founded by Hervé Descottes, 1993. Cultural and civic work with Gehry, Nouvel and BIG.",
-    "viWhat": "Do Hervé Descottes sáng lập năm 1993. Làm công trình văn hoá và công cộng cùng Gehry, Nouvel và BIG.",
+    "viWhat": "Hervé Descottes sáng lập năm 1993. Làm nhiều công trình văn hoá, công cộng cùng Gehry, Nouvel và BIG.",
     "source": "Practice site. Note: lobsinternational.com is a parked domain serving a JS redirect to /lander — not the practice. Confirmed via Wikipedia and the firm's own team pages."
   },
   {
@@ -580,7 +580,7 @@
     "url": "https://www.lichtkunstlicht.com/",
     "expectText": "Licht Kunst Licht",
     "what": "Andreas Schulz. Rigorous, restrained work; extensive published project documentation.",
-    "viWhat": "Của Andreas Schulz. Cách làm chặt chẽ, tiết chế; hồ sơ dự án công bố rất đầy đủ.",
+    "viWhat": "Văn phòng của Andreas Schulz. Thiết kế chặt chẽ, tiết chế; công bố hồ sơ dự án rất chi tiết.",
     "source": "Practice site, title verified"
   },
   {
@@ -592,7 +592,7 @@
     "url": "https://lichtvision.com/",
     "expectText": "Lichtvision",
     "what": "Founded 1997 from TU Berlin; offices in London, Hong Kong, Barcelona and Shanghai.",
-    "viWhat": "Thành lập 1997 từ TU Berlin; có văn phòng ở London, Hong Kong, Barcelona và Thượng Hải.",
+    "viWhat": "Ra đời năm 1997 từ TU Berlin; có văn phòng ở London, Hong Kong, Barcelona và Thượng Hải.",
     "source": "Practice site, title verified"
   },
   {
@@ -604,7 +604,7 @@
     "url": "https://www.lightbureau.com/",
     "expectText": "Light Bureau",
     "what": "Part of AFRY; Nordic approach with a strong daylight and wellbeing focus.",
-    "viWhat": "Thuộc AFRY; cách tiếp cận Bắc Âu, chú trọng ánh sáng tự nhiên và sức khoẻ.",
+    "viWhat": "Thuộc AFRY; mang tinh thần Bắc Âu, đặt nặng ánh sáng tự nhiên và sức khoẻ con người.",
     "source": "Practice site, title verified"
   },
   {
@@ -616,7 +616,7 @@
     "url": "https://www.lighting.co.jp/",
     "expectText": "Lighting Planners",
     "what": "Kaoru Mende. Offices in Tokyo and Singapore — the closest major practice to Vietnam, and a very different sensibility from the European studios.",
-    "viWhat": "Của Kaoru Mende. Văn phòng ở Tokyo và Singapore — văn phòng lớn gần Việt Nam nhất, và có cảm quan rất khác các studio châu Âu.",
+    "viWhat": "Văn phòng của Kaoru Mende, đặt ở Tokyo và Singapore — studio lớn gần Việt Nam nhất, với cảm quan rất khác các studio châu Âu.",
     "source": "Practice site, title verified"
   },
   {
@@ -628,7 +628,7 @@
     "url": "https://www.michaelgrubbstudio.com/",
     "expectText": "Michael Grubb",
     "what": "Urban and masterplan lighting; vocal on dark sky and light pollution.",
-    "viWhat": "Chiếu sáng đô thị và quy hoạch; lên tiếng mạnh về bầu trời tối và ô nhiễm ánh sáng.",
+    "viWhat": "Chiếu sáng đô thị và quy hoạch tổng thể; thường xuyên lên tiếng về bảo vệ bầu trời đêm và ô nhiễm ánh sáng.",
     "source": "Practice site, title verified"
   },
   {
@@ -640,7 +640,7 @@
     "url": "https://www.nultylighting.co.uk/",
     "expectText": "Nulty",
     "what": "Commercial, hospitality and residential; publishes generously about process.",
-    "viWhat": "Thương mại, khách sạn và nhà ở; chia sẻ rất nhiều về quy trình làm việc.",
+    "viWhat": "Thương mại, khách sạn và nhà ở; chia sẻ công khai rất nhiều về cách họ làm việc.",
     "source": "Practice site, title verified"
   },
   {
@@ -652,7 +652,7 @@
     "url": "https://www.oviinc.com/",
     "expectText": "Visual Interaction",
     "what": "Architectural and urban; designed the New York street light.",
-    "viWhat": "Kiến trúc và đô thị; là bên thiết kế đèn đường New York.",
+    "viWhat": "Chiếu sáng kiến trúc và đô thị; chính họ thiết kế mẫu đèn đường của New York.",
     "source": "Practice site"
   },
   {
@@ -664,7 +664,7 @@
     "url": "https://www.speirsmajor.com/",
     "expectText": "Speirs",
     "what": "Founded 1993 by two architects. The reference practice for light as architecture.",
-    "viWhat": "Thành lập 1993 bởi hai kiến trúc sư. Văn phòng tham chiếu cho quan niệm ánh sáng là kiến trúc.",
+    "viWhat": "Hai kiến trúc sư lập ra năm 1993. Văn phòng hình mẫu cho quan niệm ánh sáng chính là kiến trúc.",
     "source": "Practice site; history corroborated by Wikipedia",
     "unverifiableUrl": "Resolves in DNS but the connection is refused from the checking environment. Confirmed by hand; may be geo-restricted."
   },
@@ -677,7 +677,7 @@
     "url": "https://www.tillotsondesign.com/",
     "expectText": "Tillotson",
     "what": "Cultural, civic and high-end residential.",
-    "viWhat": "Văn hoá, công cộng và nhà ở cao cấp.",
+    "viWhat": "Công trình văn hoá, công cộng và nhà ở cao cấp.",
     "source": "Practice site, title verified"
   }
 ]

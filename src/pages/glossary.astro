@@ -23,8 +23,8 @@ const topics = [...new Set(terms.flatMap((t) => t.data.topics))].sort();
     lede="Definitions written for use, not for exams — each one says what the term means and what it changes about a decision."
   >
     <p class="vi-block vi-def mt-2 text-[0.95rem] max-w-2xl leading-relaxed">
-      Gõ một thuật ngữ tiếng Anh vào ô dưới để xem giải thích và ví dụ cụ thể bằng tiếng Việt.
-      Tìm được cả bằng tiếng Việt — gõ “độ rọi” cũng ra.
+      Gõ thuật ngữ tiếng Anh vào ô bên dưới để xem giải thích và ví dụ bằng tiếng Việt. Gõ tiếng
+      Việt cũng tìm được, chẳng hạn “độ rọi”.
     </p>
   </PageHeader>
 
@@ -164,7 +164,7 @@ const topics = [...new Set(terms.flatMap((t) => t.data.topics))].sort();
   <div id="glossary-empty" class="hidden py-10 text-center">
     <p style="color: var(--text-faint)">No terms match that search.</p>
     <p class="vi-block vi-def mt-1 text-[0.88rem]">
-      Không tìm thấy thuật ngữ nào. Thử gõ ngắn hơn, hoặc bỏ dấu tiếng Việt.
+      Không có thuật ngữ nào khớp. Thử gõ ngắn hơn hoặc gõ không dấu.
     </p>
   </div>
 </Base>
