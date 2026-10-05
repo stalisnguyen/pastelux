@@ -1,5 +1,5 @@
 ---
-import { TOPIC_LABEL } from '../site';
+import { TOPIC_LABEL, VI_TOPIC_LABEL } from '../site';
 import SaveButton from './SaveButton.astro';
 
 interface Props {
@@ -27,7 +27,12 @@ const stamp = Number.isNaN(when.valueOf())
     <span class="font-medium" style="color: var(--accent)">{item.source}</span>
     {stamp && <span style="color: var(--text-faint)">· {stamp}</span>}
     <div class="ml-auto flex items-center gap-1.5">
-      {item.topics.slice(0, 2).map((t) => <span class="chip">{TOPIC_LABEL[t] ?? t}</span>)}
+      {item.topics.slice(0, 2).map((t) => (
+        <span class="chip">
+          <span>{TOPIC_LABEL[t] ?? t}</span>
+          {VI_TOPIC_LABEL[t] && <span class="vi-block-inline">{VI_TOPIC_LABEL[t]}</span>}
+        </span>
+      ))}
     </div>
   </div>
 
@@ -67,9 +72,8 @@ const stamp = Number.isNaN(when.valueOf())
       target="_blank"
       rel="noopener noreferrer"
       class="text-[0.82rem] no-underline hover:underline inline-flex items-center gap-1"
-      title={`Đọc bài gốc tại ${item.source}`}
     >
-      Read at {item.source}
+      <span>Read at {item.source}</span><span class="vi-block-inline">Đọc tại {item.source}</span>
       <svg
         width="12"
         height="12"

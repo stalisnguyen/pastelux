@@ -70,6 +70,19 @@ export const TOPIC_LABEL: Record<string, string> = {
   practice: 'Practice & business',
 };
 
+export const VI_TOPIC_LABEL: Record<string, string> = {
+  circadian: 'Nhịp sinh học & sức khoẻ',
+  standards: 'Tiêu chuẩn & quy chuẩn',
+  controls: 'Điều khiển & giao thức',
+  facade: 'Mặt dựng & ngoại thất',
+  sustainability: 'Bền vững',
+  optics: 'Quang học & nguồn sáng',
+  product: 'Sản phẩm',
+  awards: 'Giải thưởng & sự kiện',
+  research: 'Nghiên cứu',
+  practice: 'Hành nghề & kinh doanh',
+};
+
 /** Resolve a site-relative path against the configured base path. */
 export function url(path: string): string {
   const base = import.meta.env.BASE_URL.replace(/\/$/, '');

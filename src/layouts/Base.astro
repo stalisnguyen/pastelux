@@ -85,7 +85,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://example.com
     <div class="kbar h-[3px] w-full shrink-0"></div>
     <Header />
 
-    <main id="main" class="flex-1 pb-24 md:pb-16" data-pagefind-body={indexable ? '' : undefined}>
+    <main id="main" class="flex-1 pb-24 lg:pb-16" data-pagefind-body={indexable ? '' : undefined}>
       <div class={wide ? 'w-full' : 'container-page'}>
         <slot />
       </div>
