@@ -28,6 +28,10 @@ const MIN_ITEMS = Number(process.env.PASTELUX_MIN_ITEMS ?? 4);
 // drops anything already published in the last fortnight of digests, so each day
 // surfaces only what has not been seen yet.
 const LOOKBACK_HOURS = Number(process.env.PASTELUX_LOOKBACK_HOURS ?? 336);
+/** How far back topping-up may reach when the normal window cannot fill the page. */
+const EXTENDED_LOOKBACK_HOURS = Number(process.env.PASTELUX_EXTENDED_LOOKBACK_HOURS ?? 1440);
+/** Cap on summariser calls per run, so topping-up can never run away with cost. */
+const MAX_SUMMARY_CALLS = 6;
 const FETCH_TIMEOUT_MS = 20_000;
 
 const argv = process.argv.slice(2);
@@ -274,14 +278,7 @@ async function main() {
     process.exit(0);
   }
 
-  // 2. Recency window.
-  const cutoff = Date.now() - LOOKBACK_HOURS * 3600_000;
-  items = items.filter((i) => {
-    const t = Date.parse(i.published);
-    return Number.isNaN(t) ? true : t >= cutoff;
-  });
-
-  // 3. Dedupe by canonical URL, then by normalised title.
+  // 2. Dedupe by canonical URL, then by normalised title.
   const byUrl = new Map();
   for (const i of items) {
     i.url = canonical(i.url);
@@ -292,24 +289,24 @@ async function main() {
     const key = i.title.toLowerCase().replace(/[^a-z0-9]+/g, '');
     if (!byTitle.has(key)) byTitle.set(key, i);
   }
-  items = [...byTitle.values()];
 
-  // 4+5. Score, then dedupe against past digests — but never publish a
-  // near-empty page. The trade press is slow and a rebuild after a manual
-  // trigger can leave a single fresh item, so if the strict window yields
-  // fewer than MIN_ITEMS the dedup window relaxes step by step (14 digests,
-  // then 7, 3, 1, none) until the page has enough. A repeated good story
-  // beats an empty digest.
-  const scored = items
+  // 3. Score for relevance; split by age.
+  const scored = [...byTitle.values()]
     .map((i) => ({ ...i, score: relevance(i, config.keywords) }))
     .filter((i) => i.score > 0)
     .sort((a, b) => b.score - a.score || Date.parse(b.published) - Date.parse(a.published));
+  const ageOk = (hours) => (i) => {
+    const t = Date.parse(i.published);
+    return Number.isNaN(t) ? true : t >= Date.now() - hours * 3600_000;
+  };
+  const recent = scored.filter(ageOk(LOOKBACK_HOURS));
+  const older = scored.filter((i) => !ageOk(LOOKBACK_HOURS)(i) && ageOk(EXTENDED_LOOKBACK_HOURS)(i));
 
   // per-digest seen sets, oldest -> newest, excluding today's own file
   const seenSets = [];
   if (existsSync(OUT_DIR)) {
-    const recent = (await readdir(OUT_DIR)).filter((f) => f.endsWith('.json')).sort().slice(-14);
-    for (const f of recent) {
+    const recentFiles = (await readdir(OUT_DIR)).filter((f) => f.endsWith('.json')).sort().slice(-14);
+    for (const f of recentFiles) {
       try {
         const day = JSON.parse(await readFile(join(OUT_DIR, f), 'utf8'));
         if (day.date === date) continue; // rebuilding today is fine
@@ -317,28 +314,33 @@ async function main() {
       } catch {}
     }
   }
-
-  let usedWindow = seenSets.length;
-  for (const win of [seenSets.length, 7, 3, 1, 0]) {
+  const seenWithin = (win) => {
     const seen = new Set();
-    for (const s of seenSets.slice(seenSets.length - Math.min(win, seenSets.length))) {
-      for (const u of s) seen.add(u);
-    }
-    const picked = scored.filter((i) => !seen.has(i.url)).slice(0, MAX_ITEMS);
-    items = picked;
-    usedWindow = win;
-    if (picked.length >= MIN_ITEMS) break;
-  }
+    for (const set of seenSets.slice(seenSets.length - Math.min(win, seenSets.length))) for (const u of set) seen.add(u);
+    return seen;
+  };
 
-  log(`${items.length} items after filtering (dedup window: ${usedWindow} digests)`);
+  // 4. Candidate tiers, best first. Fresh stories (not in the last 14
+  // digests) fill the page up to MAX_ITEMS. The page must never drop below
+  // MIN_ITEMS, and the summariser drops whatever is not really about
+  // lighting — so the floor is enforced AFTER that filter, by topping up
+  // from progressively looser tiers: stories repeated from 7, 3, 1, 0 days
+  // back, then relevant stories older than the normal lookback. A repeated
+  // or slightly older good story beats a one-item page.
+  const tiers = [
+    { label: `fresh (dedup ${seenSets.length})`, items: recent.filter((i) => !seenWithin(seenSets.length).has(i.url)) },
+    ...[7, 3, 1, 0].map((win) => ({ label: `dedup ${win}`, items: recent.filter((i) => !seenWithin(win).has(i.url)) })),
+    { label: `older than ${LOOKBACK_HOURS / 24} days`, items: older.filter((i) => !seenWithin(seenSets.length).has(i.url)) },
+  ];
 
-  // 6. Summarise, degrading gracefully.
+  // 5+6. Pick and summarise in batches, degrading gracefully.
   let degraded = !USE_AI;
-  if (USE_AI && items.length) {
+  const keptOf = async (batch) => {
+    if (degraded) return batch;
     try {
-      const out = await summarise(items);
+      const out = await summarise(batch);
       const byId = new Map(out.map((o) => [Number(o.id), o]));
-      items = items
+      return batch
         .map((it, i) => {
           const s = byId.get(i);
           if (s && s.keep === false) return null;
@@ -351,12 +353,34 @@ async function main() {
           };
         })
         .filter(Boolean);
-      log(`summarised, ${items.length} kept`);
     } catch (err) {
       log(`summariser failed (${err.message}); falling back to headlines only`);
       degraded = true;
+      return batch;
     }
+  };
+
+  const picked = [];
+  const tried = new Set();
+  let calls = 0;
+  tierLoop: for (const [ti, tier] of tiers.entries()) {
+    const target = ti === 0 ? MAX_ITEMS : MIN_ITEMS;
+    const pool = tier.items.filter((i) => !tried.has(i.url));
+    while (picked.length < target && pool.length) {
+      if (calls >= MAX_SUMMARY_CALLS) break tierLoop;
+      const need = target - picked.length;
+      // ask for a few extra when topping up: some will be judged off-topic
+      const batch = pool.splice(0, ti === 0 ? need : Math.max(need * 2, 4));
+      batch.forEach((i) => tried.add(i.url));
+      calls++;
+      const kept = await keptOf(batch);
+      picked.push(...kept.slice(0, need));
+      log(`  ${tier.label}: ${batch.length} considered, ${kept.length} kept → ${picked.length} on the page`);
+    }
+    if (picked.length >= MIN_ITEMS && ti > 0) break;
   }
+  items = picked;
+  if (items.length < MIN_ITEMS) log(`only ${items.length} relevant items available — publishing what there is`);
 
   if (degraded) {
     items = items.map((it) => ({ ...it, summary: '', viTitle: '', viSummary: '', topics: ruleTopics(it, config.topicRules) }));
