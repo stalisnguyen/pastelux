@@ -1,0 +1,61 @@
+{
+  "date": "2026-10-06",
+  "generatedAt": "2026-10-05T23:06:41.341Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "ICEL 2026: Emergency lighting sector calls for greater collaboration, competence and accountability",
+      "url": "https://www.a1lightingmagazine.com/latest-news/icel-2026",
+      "source": "A1 Lighting",
+      "published": "Fri, 02 Oct 2026 10:04:50 +0000",
+      "summary": "Delegates at the ICEL Emergency Lighting Conference 2026 called for tighter collaboration, competence and accountability across the building lifecycle to safeguard life-safety compliance, with over 200 attendees discussing standards enforcement gaps in emergency lighting specification and maintenance.",
+      "viTitle": "ICEL 2026: Ngành chiếu sáng sự cố kêu gọi tăng cường hợp tác, năng lực và trách nhiệm",
+      "viSummary": "Tại hội nghị ICEL Emergency Lighting Conference 2026, hơn 200 đại biểu đề nghị siết chặt hợp tác, năng lực chuyên môn và trách nhiệm giải trình xuyên suốt vòng đời công trình để bảo đảm tuân thủ tiêu chuẩn an toàn sinh mạng trong chiếu sáng sự cố.",
+      "topics": [
+        "standards",
+        "practice"
+      ]
+    },
+    {
+      "title": "Three Newly Published IES Standards",
+      "url": "https://www.lightnowblog.com/2026/10/three-newly-published-ies-standards",
+      "source": "LightNOW",
+      "published": "Thu, 01 Oct 2026 05:45:03 +0000",
+      "summary": "IES has released ANSI/IES RP-27-26 on photobiological safety, updating the 500-lux distance calculation, UV risk-group duration, NEI settings, lumen-to-radiant-power conversion and the Table A-2 spectral weighting function, affecting compliance checks for luminaire safety classification.",
+      "viTitle": "Ba tiêu chuẩn IES mới được ban hành",
+      "viSummary": "IES vừa công bố ANSI/IES RP-27-26 về an toàn quang sinh học, cập nhật cách tính khoảng cách 500 lux, thời gian Risk Group với tia UV, thông số NEI, hệ số đổi lumen sang công suất bức xạ và bảng trọng số phổ A-2, ảnh hưởng tới việc kiểm tra an toàn khi phân loại bộ đèn.",
+      "topics": [
+        "standards"
+      ]
+    },
+    {
+      "title": "High Bay Performance In Recessed Flat Panels",
+      "url": "https://www.lightnowblog.com/2026/09/high-bay-performance-in-recessed-flat-panels",
+      "source": "LightNOW",
+      "published": "Mon, 28 Sep 2026 05:18:04 +0000",
+      "summary": "A niche trend of high-lumen recessed flat-panel luminaires sitting flush in ceiling grids now matches high-bay output levels, offering industrial-level illuminance without suspended fixtures, though it does not replace conventional linear or round high bays.",
+      "viTitle": "Hiệu năng high bay trong các panel âm trần phẳng",
+      "viSummary": "Xuất hiện xu hướng dùng panel âm trần phẳng, quang thông cao, lắp vừa khung trần, đạt mức chiếu sáng ngang high bay công nghiệp mà không cần treo bộ đèn, nhưng chưa thay thế hoàn toàn high bay linear hay tròn truyền thống.",
+      "topics": [
+        "product",
+        "practice"
+      ]
+    },
+    {
+      "title": "Pharos powers heritage facade lighting at Parliament of Victoria",
+      "url": "https://www.a1lightingmagazine.com/latest-news/pharos-powers-heritage-facade-lighting-at-parliament-of-victoria",
+      "source": "A1 Lighting",
+      "published": "Wed, 23 Sep 2026 11:23:22 +0000",
+      "summary": "Pharos control system now drives the facade lighting at Parliament of Victoria, replacing an old sodium vapour floodlighting scheme with a more refined, controllable scheme on a heritage building.",
+      "viTitle": "Pharos vận hành chiếu sáng mặt dựng tại Parliament of Victoria",
+      "viSummary": "Hệ thống điều khiển Pharos thay thế sơ đồ đèn pha sodium cũ tại mặt dựng Parliament of Victoria, mang lại giải pháp chiếu sáng tinh tế và linh hoạt hơn cho công trình di sản này.",
+      "topics": [
+        "facade",
+        "controls",
+        "product"
+      ]
+    }
+  ],
+  "termOfDay": "daylight-factor",
+  "projectOfDay": "led-sources"
+}
