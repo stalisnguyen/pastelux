@@ -17,6 +17,7 @@ const topics = [...new Set(terms.flatMap((t) => t.data.topics))].sort();
 >
   <PageHeader
     eyebrow={`${terms.length} terms`}
+    viEyebrow={`${terms.length} thuật ngữ`}
     title="Glossary"
     viTitle="Thuật ngữ"
     lede="Definitions written for use, not for exams — each one says what the term means and what it changes about a decision."
@@ -101,7 +102,7 @@ const topics = [...new Set(terms.flatMap((t) => t.data.topics))].sort();
           </div>
 
           {t.data.vi && (
-            <p class="vi-block vi-term text-[0.83rem] mt-0.5 font-medium">{t.data.vi}</p>
+            <p class="vi-block vi-term vi-solo text-[0.83rem] mt-0.5 font-medium">{t.data.vi}</p>
           )}
 
           <p class="text-[0.92rem] mt-2.5 leading-relaxed" style="color: var(--text-muted)">

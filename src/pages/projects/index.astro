@@ -18,6 +18,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 >
   <PageHeader
     eyebrow={`${projects.length} ${projects.length === 1 ? 'case study' : 'case studies'}`}
+    viEyebrow={`${projects.length} dự án`}
     title="Projects"
     viTitle="Dự án"
     lede="Built work, read the way a designer needs it — what the scheme was trying to do, the numbers behind it, and what it taught."
@@ -27,7 +28,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       đằng sau nó, và bài học rút ra.
     </p>
     <p class="mt-3 text-[0.92rem]">
-      Design work by
+      <span>Design work by</span><span class="vi-block-inline">Thiết kế bởi</span>
       <a
         href="https://www.linkedin.com/in/thypham28/"
         target="_blank"
@@ -35,8 +36,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         class="font-medium no-underline hover:underline"
         style="color: var(--accent-cool)"
       >Thy Pham ↗</a>
-      — interior architecture, landscape and lighting.
-      <span class="vi-block-inline" style="color: var(--vi-text)">· Thiết kế bởi Thy Pham — kiến trúc nội thất, cảnh quan và chiếu sáng.</span>
+      <span>— interior architecture, landscape and lighting.</span><span class="vi-block-inline">— kiến trúc nội thất, cảnh quan và chiếu sáng.</span>
     </p>
   </PageHeader>
 
@@ -87,8 +87,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             </div>
             <div class="p-4">
               <p class="text-[0.72rem] font-mono" style="color: var(--accent)">
-                {p.data.typology} · {p.data.year}
-                {VI_TYPOLOGY[p.data.typology] && <span class="vi-block-inline" style="color: var(--vi-text)"> · {VI_TYPOLOGY[p.data.typology]}</span>}
+                <span>{p.data.typology}</span>
+                {VI_TYPOLOGY[p.data.typology] && <span class="vi-block-inline" style="color: var(--vi-text)">{VI_TYPOLOGY[p.data.typology]}</span>}
+                {' · '}{p.data.year}
               </p>
               <h2 class="font-semibold mt-1.5 leading-snug">{p.data.title}</h2>
               <p class="text-[0.86rem] mt-1" style="color: var(--text-faint)">

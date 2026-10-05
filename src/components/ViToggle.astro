@@ -1,63 +1,86 @@
 ---
 /**
- * Site-wide switch for the Vietnamese annotations.
+ * Site language switch: EN shows English only, VI shows Vietnamese only.
  *
- * Vietnamese is additive everywhere: the English term is what appears on a
- * drawing, a datasheet and a standard, so it is never replaced. This only
- * shows or hides the second voice underneath it.
+ * The page carries both languages side by side (each Vietnamese element right
+ * after the English it translates); the pairing script in Base.astro decides
+ * which twin is visible. The choice is applied in <head> before first paint.
  */
 ---
 
-<button
-  id="vi-toggle"
-  class="btn !px-2 !py-1.5 !text-[0.78rem] font-semibold"
-  type="button"
-  aria-pressed="true"
-  title="Ẩn / hiện chú thích tiếng Việt"
-  aria-label="Toggle Vietnamese annotations"
->
-  VI
-</button>
+<div class="lang-switch" role="group" aria-label="Language / Ngôn ngữ">
+  <button type="button" data-lang="en" aria-pressed="false" title="English">EN</button>
+  <button type="button" data-lang="vi" aria-pressed="false" title="Tiếng Việt">VI</button>
+</div>
+
+<style>
+  .lang-switch {
+    display: inline-flex;
+    border: 1px solid var(--border-strong);
+    border-radius: 0.6rem;
+    padding: 2px;
+    background: var(--surface);
+    gap: 2px;
+  }
+  .lang-switch button {
+    font: inherit;
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding: 0.28rem 0.5rem;
+    border-radius: 0.45rem;
+    border: 0;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    line-height: 1.2;
+  }
+  .lang-switch button[aria-pressed='true'] {
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+  .lang-switch button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+  }
+</style>
 
 <script is:inline>
   (() => {
-    const KEY = 'pastelux-vi';
-    const btn = document.getElementById('vi-toggle');
-    if (!btn) return;
+    const KEY = 'pastelux-lang';
+    const root = document.documentElement;
+    const buttons = [...document.querySelectorAll('.lang-switch button')];
+    if (!buttons.length) return;
 
-    // inputs whose placeholder has two voices: the markup carries the
-    // Vietnamese default plus data-ph-en with the English wording
-    const syncPlaceholders = (on) => {
+    // inputs carry the Vietnamese placeholder plus data-ph-en with the English
+    const syncPlaceholders = (lang) => {
       document.querySelectorAll('[data-ph-en]').forEach((el) => {
         if (!el.dataset.phVi) el.dataset.phVi = el.placeholder;
-        el.placeholder = on ? el.dataset.phVi : el.dataset.phEn;
+        el.placeholder = lang === 'vi' ? el.dataset.phVi : el.dataset.phEn;
       });
     };
 
-    const paint = (on) => {
-      document.documentElement.classList.toggle('vi-off', !on);
-      btn.setAttribute('aria-pressed', String(on));
-      btn.style.color = on ? 'var(--accent-ink)' : 'var(--text-muted)';
-      btn.style.background = on ? 'var(--accent)' : 'var(--surface)';
-      btn.style.borderColor = on ? 'var(--accent)' : 'var(--border-strong)';
-      syncPlaceholders(on);
+    const apply = (lang) => {
+      root.classList.toggle('lang-vi', lang === 'vi');
+      root.classList.toggle('vi-off', lang !== 'vi');
+      root.lang = lang;
+      buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
+      syncPlaceholders(lang);
     };
 
-    let on = true;
-    try {
-      on = localStorage.getItem(KEY) !== '0';
-    } catch {}
-    paint(on);
-    // this script sits in the header, before the page's inputs exist —
-    // sync again once the rest of the document has parsed
-    document.addEventListener('DOMContentLoaded', () => syncPlaceholders(on));
+    let lang = root.classList.contains('lang-vi') ? 'vi' : 'en';
+    apply(lang);
+    // this script sits in the header, before the page's inputs exist
+    document.addEventListener('DOMContentLoaded', () => syncPlaceholders(lang));
 
-    btn.addEventListener('click', () => {
-      on = !on;
-      paint(on);
-      try {
-        localStorage.setItem(KEY, on ? '1' : '0');
-      } catch {}
-    });
+    buttons.forEach((b) =>
+      b.addEventListener('click', () => {
+        lang = b.dataset.lang;
+        apply(lang);
+        try {
+          localStorage.setItem(KEY, lang);
+        } catch {}
+      })
+    );
   })();
 </script>

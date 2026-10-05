@@ -6,6 +6,7 @@ import PageHeader from '../components/PageHeader.astro';
 <Base title="Saved" description="Your bookmarked articles and headlines." indexable={false}>
   <PageHeader
     eyebrow="Bookmarks"
+    viEyebrow="Dấu trang"
     title="Saved"
     viTitle="Đã lưu"
     lede="Stored in this browser only — no account, no server, nothing tracked. Clearing site data clears the list."
@@ -83,8 +84,8 @@ import PageHeader from '../components/PageHeader.astro';
   });
 
   document.getElementById('saved-clear')?.addEventListener('click', () => {
-    const viOn = !document.documentElement.classList.contains('vi-off');
-    if (!confirm('Remove all saved items? This cannot be undone.' + (viOn ? '\n\nXoá toàn bộ mục đã lưu? Không thể hoàn tác.' : ''))) return;
+    const vi = document.documentElement.classList.contains('lang-vi');
+    if (!confirm(vi ? 'Xoá toàn bộ mục đã lưu? Không thể hoàn tác.' : 'Remove all saved items? This cannot be undone.')) return;
     for (const i of readSaved()) removeSaved(i.id);
     render();
   });

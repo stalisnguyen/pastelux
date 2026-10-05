@@ -1,19 +1,21 @@
 ---
 interface Props {
   eyebrow?: string;
+  viEyebrow?: string;
   title: string;
   /** Vietnamese title, a quieter second line under the English one. */
   viTitle?: string;
   lede?: string;
 }
-const { eyebrow, title, viTitle, lede } = Astro.props;
+const { eyebrow, viEyebrow, title, viTitle, lede } = Astro.props;
 ---
 
 <div class="pt-10 pb-7">
   {
     eyebrow && (
       <p class="label !mb-2" style="color: var(--accent)">
-        {eyebrow}
+        <span>{eyebrow}</span>
+        {viEyebrow && <span class="vi-block-inline">{viEyebrow}</span>}
       </p>
     )
   }

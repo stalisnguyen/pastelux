@@ -55,11 +55,21 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://example.com
             window.matchMedia('(prefers-color-scheme: light)').matches;
           const theme = saved ?? (prefersLight ? 'light' : 'dark');
           document.documentElement.dataset.theme = theme;
-          // Same reason as the theme: decide before first paint so the
-          // Vietnamese annotations never flash in and then disappear.
-          if (localStorage.getItem('pastelux-vi') === '0') {
-            document.documentElement.classList.add('vi-off');
+          // Same reason as the theme: pick the language before first paint.
+          // 'pastelux-vi' is the old on/off switch: on (or unset) meant
+          // Vietnamese was showing, so it maps to VI.
+          let lang = localStorage.getItem('pastelux-lang');
+          if (lang !== 'en' && lang !== 'vi') {
+            const old = localStorage.getItem('pastelux-vi');
+            lang =
+              old === '0' ? 'en'
+              : old === '1' ? 'vi'
+              : (navigator.language || '').toLowerCase().startsWith('vi') ? 'vi'
+              : 'en';
           }
+          const root = document.documentElement;
+          root.classList.add(lang === 'vi' ? 'lang-vi' : 'vi-off');
+          root.lang = lang;
         } catch {}
       })();
     </script>
@@ -83,5 +93,105 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://example.com
 
     <Footer />
     <MobileNav />
+
+    {/*
+      EN / VI pairing. Every Vietnamese element (.vi-block / .vi-block-inline)
+      sits right after the English it translates. Find that English twin and
+      tag it, so VI mode can hide it and let the Vietnamese take its exact
+      typography; EN mode just hides the Vietnamese. Runs inline at the end of
+      the body (before first paint in practice) and again for anything
+      scripts add later.
+    */}
+    <script is:inline>
+      (() => {
+        const VI = '.vi-block, .vi-block-inline';
+        // Only text-bearing elements can be a twin — never a table, figure,
+        // drawing, image or layout box.
+        const TWIN_TAG = /^(P|H[1-6]|UL|OL|LI|BLOCKQUOTE|DT|DD|SPAN|LABEL|STRONG|EM|B|SMALL|FIGCAPTION)$/;
+        // links stop the run — a Vietnamese line carries no link of its own
+        const INLINE_TAG = /^(B|STRONG|EM|I|CODE|SMALL|SPAN|SUP|SUB|ABBR|BR)$/;
+        const isVi = (n) => n && n.nodeType === 1 && n.matches(VI);
+        const blank = (n) => (n.nodeType === 3 && !n.textContent.trim()) || n.nodeType === 8;
+
+        const COPY = [
+          ['font-size', '--tw-fs'], ['font-weight', '--tw-fw'], ['line-height', '--tw-lh'],
+          ['color', '--tw-c'], ['letter-spacing', '--tw-ls'], ['text-transform', '--tw-tt'],
+          ['font-family', '--tw-ff'], ['font-style', '--tw-fst'],
+          ['margin-top', '--tw-mt'], ['margin-bottom', '--tw-mb'],
+        ];
+        function adopt(twin, vi) {
+          twin.classList.add('en-twin');
+          vi.classList.add('vi-paired');
+          const cs = getComputedStyle(twin);
+          for (const [prop, v] of COPY) vi.style.setProperty(v, cs.getPropertyValue(prop));
+        }
+
+        function pair(vi) {
+          if (vi.dataset.viPaired) return;
+          vi.dataset.viPaired = '1';
+          // ' · ' only joins the two languages; alone it is noise
+          const first = vi.firstChild;
+          if (first && first.nodeType === 3) {
+            const m = first.textContent.match(/^\s*·\s*/);
+            if (m) {
+              first.textContent = first.textContent.slice(m[0].length);
+              const sep = document.createElement('span');
+              sep.className = 'vi-sep';
+              sep.textContent = m[0];
+              vi.insertBefore(sep, first);
+            }
+          }
+          if (vi.classList.contains('vi-solo')) return;
+          let p = vi.previousSibling;
+          while (p && blank(p)) p = p.previousSibling;
+          if (!p || isVi(p)) return;
+          if (p.nodeType === 1) {
+            if (TWIN_TAG.test(p.tagName) && !p.classList.contains('vi-sep')) adopt(p, vi);
+            return;
+          }
+          // English is loose text (plus inline marks) in the same parent:
+          // gather that run into a span so it can be hidden as one.
+          const run = [];
+          let q = p;
+          while (q && (q.nodeType === 3 || q.nodeType === 8 || (q.nodeType === 1 && !isVi(q) && INLINE_TAG.test(q.tagName)))) {
+            run.unshift(q);
+            q = q.previousSibling;
+          }
+          if (!run.some((n) => n.nodeType === 3 && n.textContent.trim())) return;
+          const wrap = document.createElement('span');
+          vi.parentNode.insertBefore(wrap, run[0]);
+          run.forEach((n) => wrap.appendChild(n));
+          adopt(wrap, vi);
+        }
+
+        // In-page tables of contents: give each link its heading's Vietnamese.
+        function tocTwins(scope) {
+          scope.querySelectorAll('a[data-toc]:not([data-toc-done])').forEach((a) => {
+            a.dataset.tocDone = '1';
+            const h = document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1)));
+            let n = h && h.nextElementSibling;
+            if (n && n.classList.contains('vi-heading')) {
+              const s = document.createElement('span');
+              s.className = 'vi-block-inline';
+              s.textContent = n.textContent;
+              a.appendChild(s);
+            }
+          });
+        }
+
+        function scan(scope) {
+          tocTwins(scope);
+          if (scope.matches && scope.matches(VI)) pair(scope);
+          scope.querySelectorAll(VI).forEach(pair);
+        }
+
+        scan(document.body);
+        document.documentElement.classList.add('vi-ready');
+        new MutationObserver((muts) => {
+          for (const m of muts)
+            for (const n of m.addedNodes) if (n.nodeType === 1) scan(n);
+        }).observe(document.body, { childList: true, subtree: true });
+      })();
+    </script>
   </body>
 </html>

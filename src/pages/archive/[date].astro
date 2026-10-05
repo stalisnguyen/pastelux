@@ -35,9 +35,9 @@ const viStamp = new Date(`${entry.data.date}T00:00:00Z`).toLocaleDateString('vi-
 ---
 
 <Base title={`Digest — ${entry.data.date}`} description={`Architectural lighting industry digest for ${stamp}.`}>
-  <PageHeader eyebrow="Digest" title={stamp}>
+  <PageHeader eyebrow="Digest" viEyebrow="Bản tin" title={stamp}>
     <p class="vi-block mt-1.5 text-[1.15rem] font-medium leading-snug" style="color: var(--vi-text)">
-      Bản tin · {viStamp}
+      {viStamp}
     </p>
     <nav class="mt-5 flex gap-3 items-center text-[0.85rem]" aria-label="Digest navigation">
       {older && <a href={url(`/archive/${older.data.date}`)} class="no-underline hover:underline">← {older.data.date}</a>}

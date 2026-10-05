@@ -8,8 +8,7 @@ const path = Astro.url.pathname.replace(import.meta.env.BASE_URL.replace(/\/$/, 
 const isActive = (href: string) =>
   href === '/' ? path === '/' : path === href || path.startsWith(href + '/');
 
-// Vietnamese name of each section. The bar is too tight for a second line,
-// so it rides along as a tooltip.
+// Vietnamese name of each section — shown instead of the English in VI mode.
 const viNav: Record<string, string> = {
   '/': 'Hôm nay',
   '/learn': 'Kiến thức',
@@ -48,16 +47,16 @@ const viNav: Record<string, string> = {
         nav.map((item) => (
           <a
             href={url(item.href)}
-            class="px-2.5 py-1.5 rounded-lg text-[0.9rem] font-medium no-underline transition-colors hover:no-underline"
+            class="px-2.5 py-1.5 rounded-lg text-[0.9rem] font-medium no-underline transition-colors hover:no-underline whitespace-nowrap"
             style={
               isActive(item.href)
                 ? 'color: var(--text); background: var(--surface)'
                 : 'color: var(--text-muted)'
             }
             aria-current={isActive(item.href) ? 'page' : undefined}
-            title={viNav[item.href]}
           >
-            {item.label}
+            <span>{item.label}</span>
+            {viNav[item.href] && <span class="vi-block-inline">{viNav[item.href]}</span>}
           </a>
         ))
       }

@@ -11,6 +11,7 @@ const paused = feedConfig.feeds.filter((f: any) => f.disabled);
 <Base title="About" description="How this site is built, where the daily digest comes from, and how to add to it.">
   <PageHeader
     eyebrow="Colophon"
+    viEyebrow="Giới thiệu"
     title={`About ${site.name}`}
     viTitle="Về Pastelux"
     lede="A reference site for architectural lighting design, with a digest of the industry refreshed every morning."
@@ -73,8 +74,8 @@ const paused = feedConfig.feeds.filter((f: any) => f.disabled);
             <a href={f.site} target="_blank" rel="noopener noreferrer">
               {f.name}
             </a>{' '}
-            — {f.about}
-            {f.viAbout && <span class="vi-block text-[0.9em]" style="color: var(--vi-text)">{f.viAbout}</span>}
+            <span>— {f.about}</span>
+            {f.viAbout && <span class="vi-block-inline" style="color: var(--vi-text)"> — {f.viAbout}</span>}
           </li>
         ))
       }
@@ -91,7 +92,8 @@ const paused = feedConfig.feeds.filter((f: any) => f.disabled);
                 <a href={f.site} target="_blank" rel="noopener noreferrer">
                   {f.name}
                 </a>{' '}
-                — {f.disabled}
+                <span>— {f.disabled}</span>
+                {f.viDisabled && <span class="vi-block-inline" style="color: var(--vi-text)"> — {f.viDisabled}</span>}
               </li>
             ))}
           </ul>

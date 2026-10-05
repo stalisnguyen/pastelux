@@ -13,7 +13,8 @@
       "site": "https://www.darcmagazine.com/",
       "about": "Decorative lighting and lighting-in-design, from the same publisher as arc.",
       "viAbout": "Đèn trang trí và chiếu sáng trong thiết kế, cùng nhà xuất bản với arc.",
-      "disabled": "Feed has not published since December 2025. Re-enable if it starts moving again — the magazine itself is still active."
+      "disabled": "Feed has not published since December 2025. Re-enable if it starts moving again — the magazine itself is still active.",
+      "viDisabled": "Feed không có bài mới từ tháng 12/2025. Bật lại nếu feed hoạt động trở lại — bản thân tạp chí vẫn đang ra số."
     },
     {
       "name": "LightNOW",
@@ -35,7 +36,8 @@
       "site": "https://www.lightingdesignalliance.com/",
       "about": "Practice-side writing from a working architectural lighting studio.",
       "viAbout": "Bài viết từ phía thực hành, của một studio chiếu sáng kiến trúc đang hoạt động.",
-      "disabled": "Feed has not published since July 2025. Kept here because the archive is worth reading, but it contributes nothing to a daily digest."
+      "disabled": "Feed has not published since July 2025. Kept here because the archive is worth reading, but it contributes nothing to a daily digest.",
+      "viDisabled": "Feed không có bài mới từ tháng 7/2025. Vẫn giữ ở đây vì kho bài cũ đáng đọc, nhưng không đóng góp gì cho bản tin hằng ngày."
     },
     {
       "name": "ArchDaily",
@@ -58,6 +60,7 @@
       "about": "LED sources, drivers, optics and standards. Strong on the technology and testing side.",
       "viAbout": "Nguồn LED, driver, quang học và tiêu chuẩn. Mạnh về công nghệ và kiểm định.",
       "disabled": "Returns HTTP 403 to automated clients. Worth retrying periodically — the content is excellent.",
+      "viDisabled": "Trả về HTTP 403 với trình thu thập tự động. Nên thử lại định kỳ — nội dung rất tốt.",
       "//": "Set disabled to false, or delete the key, to re-enable."
     },
     {
@@ -66,7 +69,8 @@
       "site": "https://www.led-professional.com/",
       "about": "Technical and R&D-oriented coverage of solid-state lighting.",
       "viAbout": "Tin chuyên sâu về kỹ thuật và R&D của chiếu sáng thể rắn (solid-state lighting).",
-      "disabled": "No working RSS endpoint found at the usual paths (404). Check the site for a current feed URL."
+      "disabled": "No working RSS endpoint found at the usual paths (404). Check the site for a current feed URL.",
+      "viDisabled": "Không tìm thấy RSS hoạt động ở các đường dẫn thường dùng (404). Kiểm tra trang web để tìm địa chỉ feed hiện tại."
     }
   ],
   "//": "Matched on word boundaries with an open suffix: 'optic' catches 'optics', but 'led' never matches 'called'. An item is kept if it hits one 'strong' term or two 'weak' ones. Manufacturer names are 'strong' because trade-press headlines often name only the company.",

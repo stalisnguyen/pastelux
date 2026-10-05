@@ -10,6 +10,7 @@ import { url } from '../../site';
 >
   <PageHeader
     eyebrow="Tools · Beta"
+    viEyebrow="Công cụ · Beta"
     title="Segment a render for lighting"
     viTitle="Tách vùng ảnh render cho chiếu sáng"
     lede="For the lighting pass in post-production. Upload a render and the tool separates it into solid flat-colour regions — each object, and each wall plane — so you can select and light each one individually in Photoshop, the way you would light them in the scene. Then you download the mask. Two ways to run it: free in-browser (the image never leaves your machine), or cloud AI (Gemini / GPT) with your own API key for cleaner separation — that one sends the image to the provider."
@@ -27,7 +28,7 @@ import { url } from '../../site';
     class="card p-4 mb-6 text-[0.88rem] leading-relaxed max-w-3xl"
     style="border-color: color-mix(in srgb, var(--warning) 40%, transparent)"
   >
-    <strong style="color: var(--warning)">What it gives you, and where it stops.</strong>
+    <strong style="color: var(--warning)">What it gives you, and where it stops.</strong><strong class="vi-block-inline" style="color: var(--warning)">Công cụ làm được gì, và giới hạn ở đâu.</strong>
     <span style="color: var(--text-muted)">
       It turns the render into masks for a lighting pass: each object separated, and each wall plane
       split by orientation, so you can grade the light on every surface independently — a wall
@@ -296,10 +297,11 @@ import { url } from '../../site';
   </section>
 
   <p class="text-[0.8rem] pb-6" style="color: var(--text-faint)">
-    First use downloads the AI model once, then it is cached. Uses your GPU if the browser supports
-    WebGPU. Back to <a href={url('/tools')} class="no-underline hover:underline">all tools</a>.
+    <span>First use downloads the AI model once, then it is cached. Uses your GPU if the browser supports
+    WebGPU. Back to <a href={url('/tools')} class="no-underline hover:underline">all tools</a>.</span>
     <span class="vi-block-inline">
       Lần đầu dùng sẽ tải mô hình AI một lần rồi lưu cache. Dùng GPU nếu trình duyệt hỗ trợ WebGPU.
+      Quay lại <a href={url('/tools')} class="no-underline hover:underline">tất cả công cụ</a>.
     </span>
   </p>
 </Base>
@@ -800,8 +802,8 @@ import { url } from '../../site';
         sel.appendChild(o);
       }
       const relabel = () => {
-        const viOn = !document.documentElement.classList.contains('vi-off');
-        for (const o of sel.options) o.textContent = viOn ? `${o.dataset.en} · ${o.dataset.vi}` : o.dataset.en!;
+        const vi = document.documentElement.classList.contains('lang-vi');
+        for (const o of sel.options) o.textContent = vi ? o.dataset.vi! : o.dataset.en!;
       };
       relabel();
       new MutationObserver(relabel).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });

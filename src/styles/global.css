@@ -438,6 +438,48 @@
   .vi-off .vi-block-inline {
     display: none;
   }
+
+  /* ---- VI mode: Vietnamese only. The pairing script in Base.astro tags the
+     English twin of every Vietnamese element (.en-twin) and copies its
+     typography onto the Vietnamese (--tw-* on .vi-paired), so a translated
+     heading still reads as a heading rather than as an annotation. */
+  .lang-vi .en-twin,
+  .lang-vi .vi-sep {
+    display: none !important;
+  }
+  /* A hidden heading must stay a scroll target for its #anchor. */
+  .lang-vi .en-twin[id] {
+    display: block !important;
+    height: 0;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden;
+    visibility: hidden;
+  }
+  .lang-vi .vi-paired {
+    font-size: var(--tw-fs) !important;
+    font-weight: var(--tw-fw) !important;
+    line-height: var(--tw-lh) !important;
+    color: var(--tw-c) !important;
+    letter-spacing: var(--tw-ls) !important;
+    text-transform: var(--tw-tt) !important;
+    font-family: var(--tw-ff) !important;
+    font-style: var(--tw-fst) !important;
+    border-left: 0 !important;
+    padding-left: 0 !important;
+  }
+  .lang-vi .vi-paired.vi-block {
+    margin-top: var(--tw-mt) !important;
+    margin-bottom: var(--tw-mb) !important;
+  }
+  /* Before the script has run, hide element twins with CSS alone so the
+     English does not flash in VI mode. */
+  .lang-vi:not(.vi-ready)
+    :is(p, h1, h2, h3, h4, h5, h6, ul, ol, li, blockquote, dt, dd, span, label, strong, em, b, small, figcaption):not(.vi-block, .vi-block-inline):has(
+      + :is(.vi-block, .vi-block-inline):not(.vi-solo)
+    ) {
+    display: none;
+  }
   /* The term gloss sits directly under the heading, where a rule would fight
      with the heading's own alignment. */
   .vi-term {

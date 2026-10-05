@@ -30,9 +30,9 @@ const updated = entry.data.updated.toLocaleDateString('en-GB', {
   <div class="grid lg:grid-cols-[minmax(0,1fr)_220px] gap-10 items-start">
     <article class="pt-9 pb-4">
       <nav class="text-[0.82rem] mb-5" style="color: var(--text-faint)" aria-label="Breadcrumb">
-        <a href={url('/learn')} class="no-underline hover:underline">Learn</a>
+        <a href={url('/learn')} class="no-underline hover:underline"><span>Learn</span><span class="vi-block-inline">Kiến thức</span></a>
         <span class="mx-1.5">/</span>
-        <span>{String(entry.data.chapter).padStart(2, '0')} · {entry.data.chapterTitle}</span>
+        <span>{String(entry.data.chapter).padStart(2, '0')} · </span><span>{entry.data.chapterTitle}</span>
         {entry.data.viChapterTitle && <span class="vi-block-inline" style="color: var(--vi-text)"> · {entry.data.viChapterTitle}</span>}
       </nav>
 
@@ -112,7 +112,7 @@ const updated = entry.data.updated.toLocaleDateString('en-GB', {
           <ul class="grid gap-2 text-[0.85rem] border-l pl-3.5" style="border-color: var(--border)">
             {toc.map((h) => (
               <li>
-                <a href={`#${h.slug}`} class="no-underline hover:underline" style="color: var(--text-muted)">
+                <a href={`#${h.slug}`} data-toc class="no-underline hover:underline" style="color: var(--text-muted)">
                   {h.text}
                 </a>
               </li>

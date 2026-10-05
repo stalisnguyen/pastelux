@@ -19,6 +19,7 @@ const viGroup = new Map(
 >
   <PageHeader
     eyebrow="Standards"
+    viEyebrow="Tiêu chuẩn"
     title="Illuminance criteria, compared"
     viTitle="So sánh tiêu chí độ rọi"
     lede="Maintained illuminance, glare, uniformity and colour rendering by space type — EN 12464-1:2021 alongside typical IES practice and Vietnamese TCVN 7114-1."
@@ -36,7 +37,7 @@ const viGroup = new Map(
     class="card p-4 mb-6 text-[0.88rem] leading-relaxed"
     style="border-color: color-mix(in srgb, var(--warning) 40%, transparent)"
   >
-    <strong style="color: var(--warning)">Indicative values — verify before use.</strong>
+    <strong style="color: var(--warning)">Indicative values — verify before use.</strong><strong class="vi-block-inline" style="color: var(--warning)">Giá trị tham khảo — kiểm tra lại trước khi dùng.</strong>
     <span style="color: var(--text-muted)">
       This table exists to orient you quickly, not to certify a design. The EN column reflects
       commonly cited EN 12464-1:2021 reference values; the IES column is indicative of typical
@@ -153,8 +154,8 @@ const viGroup = new Map(
   </div>
 
   <p class="text-[0.82rem] mt-4 pb-4" style="color: var(--text-faint)">
-    Click any EN value to copy it. Full standard list on the
-    <a href={url('/standards')} class="no-underline hover:underline">standards page</a>.
+    <span>Click any EN value to copy it. Full standard list on the
+    <a href={url('/standards')} class="no-underline hover:underline">standards page</a>.</span>
     <span class="vi-block mt-1" style="color: var(--vi-text)">
       Bấm vào số ở cột EN để copy. Danh sách tiêu chuẩn đầy đủ ở
       <a href={url('/standards')} class="no-underline hover:underline">trang tiêu chuẩn</a>.
