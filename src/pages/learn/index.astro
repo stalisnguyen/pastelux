@@ -12,13 +12,14 @@ const articles = (await getCollection('learn'))
 const chapters = [...new Set(articles.map((a) => a.data.chapter))].map((n) => ({
   number: n,
   title: articles.find((a) => a.data.chapter === n)!.data.chapterTitle,
+  viTitle: articles.find((a) => a.data.chapter === n && a.data.viChapterTitle)?.data.viChapterTitle,
   articles: articles.filter((a) => a.data.chapter === n),
 }));
 
 /** Chapters planned but not yet written — shown so the gaps are visible. */
 const planned = [
-  { number: 6, title: 'By typology', note: 'Office, retail, hospitality, museum, healthcare, landscape' },
-  { number: 9, title: 'Tools & software', note: 'Dialux evo, Relux, AGi32, Rhino + Grasshopper' },
+  { number: 6, title: 'By typology', viTitle: 'Theo loại công trình', note: 'Office, retail, hospitality, museum, healthcare, landscape', viNote: 'Văn phòng, bán lẻ, khách sạn – nhà hàng, bảo tàng, y tế, cảnh quan' },
+  { number: 9, title: 'Tools & software', viTitle: 'Công cụ & phần mềm', note: 'Dialux evo, Relux, AGi32, Rhino + Grasshopper', viNote: 'Các phần mềm tính toán và mô phỏng chiếu sáng thường dùng' },
 ].filter((p) => !chapters.some((c) => c.number === p.number));
 ---
 
@@ -29,8 +30,14 @@ const planned = [
   <PageHeader
     eyebrow="The fixed layer"
     title="Learn"
+    viTitle="Kiến thức"
     lede="Written once, revised when the standards move. Everything here is the part of the craft that does not change every morning."
-  />
+  >
+    <p class="vi-block vi-def mt-2 text-[0.95rem] max-w-2xl leading-relaxed">
+      Viết một lần, cập nhật khi tiêu chuẩn thay đổi. Đây là phần kiến thức nền của nghề — những thứ
+      không đổi mỗi sáng như tin tức.
+    </p>
+  </PageHeader>
 
   <div class="grid gap-10 pb-6">
     {
@@ -42,10 +49,12 @@ const planned = [
             </span>
             <h2 id={`ch-${ch.number}`} class="text-lg font-semibold">
               {ch.title}
+              {ch.viTitle && <span class="vi-block-inline font-normal" style="color: var(--vi-text)"> · {ch.viTitle}</span>}
             </h2>
             <span class="h-px flex-1" style="background: var(--border)" />
             <span class="text-xs" style="color: var(--text-faint)">
               {ch.articles.length} {ch.articles.length === 1 ? 'article' : 'articles'}
+              <span class="vi-block-inline" style="color: var(--vi-text)"> · {ch.articles.length} bài</span>
             </span>
           </div>
 
@@ -54,6 +63,11 @@ const planned = [
               <a href={url(`/learn/${a.id}`)} class="card p-5 no-underline block" style="color: var(--text)">
                 <ArticleGlyph chapter={a.data.chapter} variant={a.data.order} height={86} />
                 <h3 class="font-semibold leading-snug">{a.data.title}</h3>
+                {a.data.viTitle && (
+                  <p class="vi-block text-[0.9rem] mt-0.5 leading-snug" style="color: var(--vi-text)">
+                    {a.data.viTitle}
+                  </p>
+                )}
                 <p class="text-[0.9rem] mt-2 leading-relaxed" style="color: var(--text-muted)">
                   {a.data.summary}
                 </p>
@@ -63,7 +77,7 @@ const planned = [
                   </p>
                 )}
                 <div class="flex items-center gap-2 mt-3.5 flex-wrap">
-                  <span class="chip">{a.data.readingMinutes} min read</span>
+                  <span class="chip" title={`Đọc khoảng ${a.data.readingMinutes} phút`}>{a.data.readingMinutes} min read</span>
                   {a.data.topics.map((t) => (
                     <span class="chip">{t}</span>
                   ))}
@@ -81,6 +95,7 @@ const planned = [
           <div class="flex items-center gap-3 mb-4">
             <h2 id="planned" class="text-lg font-semibold" style="color: var(--text-muted)">
               Planned
+              <span class="vi-block-inline font-normal" style="color: var(--vi-text)"> · Sắp viết</span>
             </h2>
             <span class="h-px flex-1" style="background: var(--border)" />
           </div>
@@ -92,10 +107,12 @@ const planned = [
                 </p>
                 <h3 class="font-semibold mt-1" style="color: var(--text-muted)">
                   {p.title}
+                  <span class="vi-block-inline font-normal" style="color: var(--vi-text)"> · {p.viTitle}</span>
                 </h3>
                 <p class="text-[0.88rem] mt-1.5" style="color: var(--text-faint)">
                   {p.note}
                 </p>
+                <p class="vi-block text-[0.84rem] mt-1" style="color: var(--vi-text)">{p.viNote}</p>
               </div>
             ))}
           </div>

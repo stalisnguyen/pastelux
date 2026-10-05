@@ -1,9 +1,11 @@
 ---
 title: 'Circadian design without the hand-waving'
+viTitle: 'Thiết kế theo nhịp sinh học, không nói suông'
 summary: 'CIE S 026, melanopic EDI and what a defensible human-centric specification looks like in 2026.'
 viSummary: 'CIE S 026, melanopic EDI, và một bản spec circadian đủ chặt để bảo vệ bạn trước khách hàng và nhà thầu.'
 chapter: 5
 chapterTitle: 'Human-centric lighting'
+viChapterTitle: 'Chiếu sáng lấy con người làm trung tâm'
 order: 1
 topics: ['circadian', 'standards']
 readingMinutes: 9
@@ -14,19 +16,31 @@ updated: 2026-07-22
 the field a measurable quantity and WELL turned that quantity into a credit, it has become
 something you can specify, calculate and be held to.
 
+<p class="vi-block vi-def">"Human-centric lighting" (chiếu sáng lấy con người làm trung tâm) gần như chỉ là thuật ngữ marketing suốt thập kỷ qua. Từ khi CIE S 026 cho ngành một đại lượng đo được và WELL biến đại lượng đó thành một tín chỉ, nó đã trở thành thứ bạn có thể chỉ định, tính toán và phải chịu trách nhiệm.</p>
+
 The shift is simple to state: **lux is no longer the only illuminance that matters.**
+
+<p class="vi-block vi-def">Sự thay đổi nói ra rất đơn giản: <strong>lux không còn là độ rọi (illuminance) duy nhất đáng quan tâm.</strong></p>
 
 ## Why the eye needed a second metric
 
+<p class="vi-block vi-heading">Vì sao mắt cần một thước đo thứ hai</p>
+
 The photopic curve V(λ), which defines the lumen, describes the cone response that governs vision.
 It peaks at 555 nm, in the green.
+
+<p class="vi-block vi-def">Đường cong photopic V(λ), dùng để định nghĩa lumen, mô tả đáp ứng của tế bào nón — thứ chi phối thị giác. Nó đạt đỉnh ở 555 nm, vùng xanh lá.</p>
 
 Intrinsically photosensitive retinal ganglion cells — ipRGCs, discovered in the early 2000s — do
 not contribute to image formation. They contain melanopsin, peak around 490 nm in the blue, and
 they drive circadian entrainment, melatonin suppression, alertness and pupil size.
 
+<p class="vi-block vi-def">Tế bào hạch võng mạc nhạy sáng nội tại — ipRGC, được phát hiện đầu những năm 2000 — không tham gia tạo hình ảnh. Chúng chứa melanopsin, đạt đỉnh quanh 490 nm ở vùng xanh lam, và điều khiển việc đồng bộ nhịp sinh học, ức chế melatonin, sự tỉnh táo và kích thước đồng tử.</p>
+
 So the same 500 lux can be strongly alerting or nearly circadian-neutral, depending entirely on
 spectrum. The lumen cannot see that difference. That is the gap CIE S 026 fills.
+
+<p class="vi-block vi-def">Vì thế cùng 500 lux có thể kích thích tỉnh táo mạnh hoặc gần như trung tính với nhịp sinh học, hoàn toàn tuỳ vào phổ. Lumen không thấy được khác biệt đó. Đó là khoảng trống mà CIE S 026 lấp vào.</p>
 
 import SpectrumCurves from '../../components/diagrams/SpectrumCurves.astro';
 import KelvinScale from '../../components/diagrams/KelvinScale.astro';
@@ -35,16 +49,24 @@ import KelvinScale from '../../components/diagrams/KelvinScale.astro';
 
 ## Melanopic EDI, and the arithmetic behind it
 
+<p class="vi-block vi-heading">Melanopic EDI và phép tính đằng sau</p>
+
 **Melanopic Equivalent Daylight Illuminance (mEDI)** is illuminance weighted by the melanopsin
 response instead of V(λ), expressed in the equivalent lux of D65 daylight.
 
+<p class="vi-block vi-def"><strong>Melanopic Equivalent Daylight Illuminance (mEDI)</strong> — độ rọi tương đương melanopic — là độ rọi được trọng số theo đáp ứng của melanopsin thay vì V(λ), tính bằng lux tương đương của ánh sáng ban ngày D65.</p>
+
 The practical shortcut:
+
+<p class="vi-block vi-def">Cách tính nhanh trong thực tế:</p>
 
 ```
 mEDI ≈ vertical photopic lux at the eye × M-DER
 ```
 
 **M-DER** (melanopic daylight efficacy ratio) is a property of the spectrum alone. Typical values:
+
+<p class="vi-block vi-def"><strong>M-DER</strong> (melanopic daylight efficacy ratio, tỷ số M/P) là đặc tính của riêng phổ ánh sáng. Giá trị điển hình:</p>
 
 | Source | M-DER (approx.) |
 |---|---|
@@ -56,17 +78,25 @@ mEDI ≈ vertical photopic lux at the eye × M-DER
 | 5000 K LED | 0.90 |
 | D65 daylight | 1.00 |
 
+<p class="vi-block vi-def">Nguồn sáng · M-DER (xấp xỉ): LED 2200 K — 0.35; LED 2700 K — 0.45; LED 3000 K — 0.52; LED 3500 K — 0.65; LED 4000 K — 0.75; LED 5000 K — 0.90; ánh sáng ban ngày D65 — 1.00.</p>
+
 <KelvinScale />
 
 Two things follow immediately, and both matter more than any product selection:
+
+<p class="vi-block vi-def">Hai hệ quả rút ra ngay, và cả hai quan trọng hơn bất kỳ lựa chọn sản phẩm nào:</p>
 
 **It is vertical, at the eye.** Roughly 1.2 m above floor for a seated occupant, facing the normal
 direction of view. Your 500 lx horizontal desk calculation tells you very little — vertical
 illuminance at the eye in a typical office is often only 30–50% of the horizontal figure.
 
+<p class="vi-block vi-def"><strong>Nó đo theo phương đứng, tại mắt.</strong> Khoảng 1.2 m trên sàn với người ngồi, nhìn theo hướng nhìn thông thường. Phép tính 500 lx trên mặt bàn nằm ngang nói với bạn rất ít — độ rọi đứng tại mắt trong một văn phòng điển hình thường chỉ bằng 30–50% con số nằm ngang.</p>
+
 **Spectrum can double or halve your result.** 300 lx vertical at 2700 K gives about 135 mEDI.
 The same 300 lx at 5000 K gives about 270 mEDI. Identical lux, identical energy, entirely
 different biological outcome.
+
+<p class="vi-block vi-def"><strong>Phổ có thể làm kết quả tăng gấp đôi hoặc giảm một nửa.</strong> 300 lx đứng ở 2700 K cho khoảng 135 mEDI. Cũng 300 lx đó ở 5000 K cho khoảng 270 mEDI. Cùng lux, cùng năng lượng, kết quả sinh học hoàn toàn khác.</p>
 
 import CircadianClock from '../../components/diagrams/CircadianClock.astro';
 
@@ -74,8 +104,12 @@ import CircadianClock from '../../components/diagrams/CircadianClock.astro';
 
 ## The targets people actually cite
 
+<p class="vi-block vi-heading">Các mục tiêu thường được trích dẫn</p>
+
 From the 2022 international consensus recommendations, now widely referenced in WELL and in
 practice:
+
+<p class="vi-block vi-def">Theo khuyến nghị đồng thuận quốc tế năm 2022, hiện được tham chiếu rộng rãi trong WELL và trong thực tế hành nghề:</p>
 
 | Period | Target mEDI (vertical, at eye) |
 |---|---|
@@ -83,25 +117,39 @@ practice:
 | Evening, 3 h before sleep | **≤ 10 lx** |
 | Sleep environment | **≤ 1 lx** |
 
+<p class="vi-block vi-def">Thời điểm · mEDI mục tiêu (phương đứng, tại mắt): ban ngày — <strong>≥ 250 lx</strong>; buổi tối, 3 giờ trước khi ngủ — <strong>≤ 10 lx</strong>; môi trường ngủ — <strong>≤ 1 lx</strong>.</p>
+
 The daytime figure is the demanding one. Hitting 250 mEDI from electric light alone at 3000 K
 requires roughly 480 lx vertical at the eye — which in a typical open plan means somewhere
 between 700 and 1000 lx horizontal. That is an energy and glare problem, and often a code problem.
 
+<p class="vi-block vi-def">Con số ban ngày mới là con số khó. Đạt 250 mEDI chỉ bằng đèn điện ở 3000 K cần khoảng 480 lx đứng tại mắt — trong một văn phòng mở điển hình nghĩa là khoảng 700 đến 1000 lx nằm ngang. Đó là bài toán năng lượng và chói loá, và thường là cả bài toán quy chuẩn.</p>
+
 ## Which is why the answer is usually not the luminaire
 
+<p class="vi-block vi-heading">Vì thế lời giải thường không nằm ở bộ đèn</p>
+
 Three levers, in order of effectiveness:
+
+<p class="vi-block vi-def">Ba đòn bẩy, theo thứ tự hiệu quả:</p>
 
 **1. Daylight.** Overcast daylight through a window delivers thousands of mEDI. No electric scheme
 competes on cost or quality. Seat plan, glazing, blind control strategy and internal partition
 heights determine circadian performance in a daylit building far more than the fittings do. Push
 these decisions into concept stage, where you can still influence them.
 
+<p class="vi-block vi-def"><strong>1. Ánh sáng tự nhiên.</strong> Ánh sáng trời nhiều mây qua cửa sổ cho hàng nghìn mEDI. Không phương án đèn điện nào cạnh tranh nổi về chi phí hay chất lượng. Bố trí chỗ ngồi, kính, chiến lược điều khiển rèm và chiều cao vách ngăn bên trong quyết định hiệu quả nhịp sinh học của một toà nhà có ánh sáng tự nhiên nhiều hơn hẳn so với bộ đèn. Hãy đẩy những quyết định này lên giai đoạn ý tưởng, khi bạn còn tác động được.</p>
+
 **2. Vertical surfaces.** Since mEDI is vertical at the eye, lighting the walls is
 disproportionately effective. A wall-washed room delivers markedly higher mEDI than a downlit one
 at the same horizontal lux, and it lowers UGR at the same time. This is the highest-leverage move
 available to a lighting designer working inside a fixed architecture.
 
+<p class="vi-block vi-def"><strong>2. Bề mặt đứng.</strong> Vì mEDI đo theo phương đứng tại mắt, chiếu sáng tường hiệu quả vượt trội. Phòng được rửa tường cho mEDI cao hơn rõ rệt so với phòng chỉ có downlight ở cùng mức lux ngang, đồng thời giảm UGR. Đây là nước đi có đòn bẩy lớn nhất cho người thiết kế chiếu sáng khi kiến trúc đã cố định.</p>
+
 **3. Then tunable white.** Genuinely useful — but check two things before you specify it:
+
+<p class="vi-block vi-def"><strong>3. Sau đó mới đến tunable white.</strong> Thực sự hữu ích — nhưng hãy kiểm tra hai điều trước khi chỉ định:</p>
 
 - **Constant output across the tuning range.** Many tunable fittings lose 20–35% of lumens at the
   extremes. If your lux calculation used the 4000 K figure and the space runs at 2700 K in the
@@ -110,17 +158,30 @@ available to a lighting designer working inside a fixed architecture.
   installation at whatever CCT it was left on. Write the schedule into the O&M manual and name
   the responsible party.
 
+<ul class="vi-block vi-def">
+<li><strong>Quang thông không đổi trên toàn dải điều chỉnh.</strong> Nhiều đèn tunable mất 20–35% lumen ở hai đầu dải. Nếu phép tính lux của bạn dùng số liệu 4000 K mà buổi tối không gian chạy ở 2700 K, bạn đang dưới mục tiêu mà không ai để ý.</li>
+<li><strong>Ai hiệu chỉnh nghiệm thu, và ai bảo trì.</strong> Một hệ tunable không có người phụ trách chỉ là hệ cố định ở CCT nào nó bị bỏ lại. Hãy ghi lịch trình vào sổ tay vận hành và bảo trì (O&amp;M) và nêu tên bên chịu trách nhiệm.</li>
+</ul>
+
 ## Evening is easier, and more neglected
+
+<p class="vi-block vi-heading">Buổi tối dễ hơn, nhưng bị bỏ quên nhiều hơn</p>
 
 The ≤10 lx evening target is far easier to hit than the daytime one, and often more valuable —
 especially in residential, hospitality and healthcare, where late-evening light exposure is
 directly implicated in sleep quality.
 
+<p class="vi-block vi-def">Mục tiêu ≤10 lx buổi tối dễ đạt hơn nhiều so với mục tiêu ban ngày, và thường giá trị hơn — nhất là ở nhà ở, khách sạn và y tế, nơi ánh sáng lúc khuya liên quan trực tiếp đến chất lượng giấc ngủ.</p>
+
 Practical moves: warm CCT after dark (2200–2700 K), low mounting heights, indirect and
 surface-mounted sources, and a genuine curfew scene rather than a global dim. A 5% dim of a
 4000 K scheme still has high melanopic content per lux; a switch to 2200 K at 20% does not.
 
+<p class="vi-block vi-def">Cách làm thực tế: CCT ấm sau khi trời tối (2200–2700 K), cao độ lắp đặt thấp, nguồn sáng gián tiếp và gắn nổi, và một cảnh sáng "giờ đi ngủ" thực sự thay vì dim đồng loạt. Phương án 4000 K dim xuống 5% vẫn có hàm lượng melanopic trên mỗi lux cao; chuyển sang 2200 K ở 20% thì không.</p>
+
 ## What a defensible specification contains
+
+<p class="vi-block vi-heading">Một bản spec đứng vững được gồm những gì</p>
 
 > Design daytime target: ≥ 250 lx melanopic EDI (CIE S 026) measured vertically at 1.2 m
 > in the seated direction of view, at all regularly occupied workstations, between 09:00 and 15:00,
@@ -128,24 +189,38 @@ surface-mounted sources, and a genuine curfew scene rather than a global dim. A 
 > Evening scene (after 19:00): ≤ 10 lx melanopic EDI, CCT ≤ 2700 K.
 > Contractor to submit α-opic toolbox calculations per CIE S 026 for each luminaire type.
 
+<p class="vi-block vi-def">Mục tiêu thiết kế ban ngày: ≥ 250 lx melanopic EDI (CIE S 026) đo theo phương đứng ở 1.2 m, theo hướng nhìn khi ngồi, tại mọi vị trí làm việc thường xuyên có người, từ 09:00 đến 15:00, với rèm ở vị trí vận hành thông thường. Cảnh buổi tối (sau 19:00): ≤ 10 lx melanopic EDI, CCT ≤ 2700 K. Nhà thầu nộp bảng tính α-opic toolbox theo CIE S 026 cho từng loại bộ đèn.</p>
+
 Note what that pins down: the metric, the plane, the height, the direction, the location, the
 time, and the blind position. Every one of those is a place a circadian claim usually goes vague,
 and every one of them changes the answer.
 
+<p class="vi-block vi-def">Hãy để ý những gì đoạn trên chốt lại: đại lượng, mặt phẳng, cao độ, hướng, vị trí, thời gian và vị trí rèm. Mỗi yếu tố là một chỗ mà tuyên bố circadian thường trở nên mơ hồ, và yếu tố nào cũng làm thay đổi kết quả.</p>
+
 ## Two honest caveats
+
+<p class="vi-block vi-heading">Hai lưu ý thẳng thắn</p>
 
 **CS and mEDI disagree.** Circadian Stimulus, from the Lighting Research Center, is built on a
 melatonin-suppression model and will give you a different answer from melanopic EDI for the same
 installation. Neither is wrong; they model different things. State which one you designed to, and
 do not mix them within a project.
 
+<p class="vi-block vi-def"><strong>CS và mEDI không khớp nhau.</strong> Circadian Stimulus (kích thích nhịp sinh học) của Lighting Research Center dựa trên mô hình ức chế melatonin, và sẽ cho kết quả khác với melanopic EDI trên cùng một hệ đèn. Không cái nào sai; chúng mô hình hoá những thứ khác nhau. Hãy nêu rõ bạn thiết kế theo chỉ số nào, và đừng trộn lẫn trong một dự án.</p>
+
 **The evidence base is still moving.** The direction of travel — bright and cool by day, dim and
 warm by night — is well supported. Precise dose-response thresholds for specific populations are
 not settled. Design robustly, avoid promising health outcomes in writing, and be careful about
 what appears in the client-facing report.
 
+<p class="vi-block vi-def"><strong>Cơ sở bằng chứng vẫn đang thay đổi.</strong> Định hướng chung — ban ngày sáng và mát, ban đêm tối và ấm — được ủng hộ rõ ràng. Ngưỡng liều–đáp ứng chính xác cho từng nhóm người thì chưa ngã ngũ. Hãy thiết kế chắc tay, tránh cam kết kết quả sức khoẻ bằng văn bản, và cẩn trọng với những gì đưa vào báo cáo gửi khách hàng.</p>
+
 ## The one-minute check
+
+<p class="vi-block vi-heading">Kiểm tra trong một phút</p>
 
 Stand at the workstation. Hold the meter at eye height, facing the direction the occupant faces.
 Read the lux. Multiply by the M-DER from the table above. If you are below 250, more downlight
 will not fix it — you need daylight, brighter vertical surfaces, or a cooler spectrum.
+
+<p class="vi-block vi-def">Đứng tại vị trí làm việc. Cầm máy đo ở cao độ mắt, quay về hướng người ngồi nhìn. Đọc số lux. Nhân với M-DER trong bảng trên. Nếu dưới 250, thêm downlight sẽ không giải quyết được — bạn cần ánh sáng tự nhiên, bề mặt đứng sáng hơn, hoặc phổ lạnh hơn.</p>

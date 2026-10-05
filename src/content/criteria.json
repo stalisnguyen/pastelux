@@ -11,7 +11,8 @@
     "ra": "≥80",
     "ies": "300–500 (ambient + task)",
     "vn": "500",
-    "note": "EN 12464-1:2021 also asks for cylindrical illuminance ≥150 lx and wall/ceiling illuminance ≥75/50 lx in the area."
+    "note": "EN 12464-1:2021 also asks for cylindrical illuminance ≥150 lx and wall/ceiling illuminance ≥75/50 lx in the area.",
+    "viNote": "EN 12464-1:2021 còn yêu cầu độ rọi trụ (cylindrical illuminance) ≥150 lx và độ rọi tường/trần ≥75/50 lx trong khu vực."
   },
   {
     "id": "office-cad",
@@ -25,7 +26,8 @@
     "ra": "≥80",
     "ies": "300–500",
     "vn": "500",
-    "note": "Screen-reflection control matters more than the lux number; check luminaire luminance at 65°+."
+    "note": "Screen-reflection control matters more than the lux number; check luminaire luminance at 65°+.",
+    "viNote": "Kiểm soát phản xạ trên màn hình quan trọng hơn con số lux; kiểm tra độ chói của bộ đèn ở góc từ 65° trở lên."
   },
   {
     "id": "office-meeting",
@@ -39,7 +41,8 @@
     "ra": "≥80",
     "ies": "300–500, dimmable",
     "vn": "500",
-    "note": "Must be dimmable for presentation scenes; add vertical illuminance for video calls."
+    "note": "Must be dimmable for presentation scenes; add vertical illuminance for video calls.",
+    "viNote": "Bắt buộc dimming được cho cảnh trình chiếu; bổ sung độ rọi đứng cho họp video."
   },
   {
     "id": "office-reception",
@@ -79,7 +82,8 @@
     "ra": "≥40",
     "ies": "50–100",
     "vn": "100",
-    "note": "Raise toward the illuminance of adjoining spaces to avoid adaptation problems at the threshold."
+    "note": "Raise toward the illuminance of adjoining spaces to avoid adaptation problems at the threshold.",
+    "viNote": "Nâng gần bằng độ rọi của các không gian liền kề để tránh mắt phải thích nghi đột ngột ở ngưỡng cửa."
   },
   {
     "id": "circulation-stairs",
@@ -93,7 +97,8 @@
     "ra": "≥40",
     "ies": "100",
     "vn": "150",
-    "note": "Model the tread nosings — flat, shadowless light on a stair is a genuine safety hazard."
+    "note": "Model the tread nosings — flat, shadowless light on a stair is a genuine safety hazard.",
+    "viNote": "Tạo khối cho mũi bậc — ánh sáng phẳng, không bóng trên cầu thang là một nguy cơ an toàn thực sự."
   },
   {
     "id": "circulation-lift",
@@ -133,7 +138,8 @@
     "ra": "≥80",
     "ies": "100–200",
     "vn": "200",
-    "note": "Vertical illuminance at the mirror is the real design driver, not the horizontal average."
+    "note": "Vertical illuminance at the mirror is the real design driver, not the horizontal average.",
+    "viNote": "Độ rọi đứng tại gương mới là yếu tố quyết định thiết kế, không phải giá trị trung bình mặt ngang."
   },
   {
     "id": "amenity-plant",
@@ -160,7 +166,8 @@
     "ra": "≥80",
     "ies": "300–500",
     "vn": "300",
-    "note": "Evening-use classrooms are commonly designed to 500 lx."
+    "note": "Evening-use classrooms are commonly designed to 500 lx.",
+    "viNote": "Lớp học dùng buổi tối thường được thiết kế ở 500 lx."
   },
   {
     "id": "edu-board",
@@ -174,7 +181,8 @@
     "ra": "≥80",
     "ies": "500 vertical",
     "vn": "500",
-    "note": "Vertical plane, and specular reflection from the board toward seated students must be checked."
+    "note": "Vertical plane, and specular reflection from the board toward seated students must be checked.",
+    "viNote": "Mặt phẳng đứng; phải kiểm tra phản xạ gương từ bảng về phía học sinh đang ngồi."
   },
   {
     "id": "edu-lecture",
@@ -214,7 +222,8 @@
     "ra": "≥80",
     "ies": "200 vertical",
     "vn": "200",
-    "note": "Vertical plane on the spines; a horizontal-only calculation will pass and the shelves will still be dark."
+    "note": "Vertical plane on the spines; a horizontal-only calculation will pass and the shelves will still be dark.",
+    "viNote": "Mặt phẳng đứng trên gáy sách; tính toán chỉ theo mặt ngang vẫn đạt mà kệ sách vẫn tối."
   },
   {
     "id": "retail-sales",
@@ -228,7 +237,8 @@
     "ra": "≥80",
     "ies": "300–1000 by segment",
     "vn": "300",
-    "note": "EN gives a floor. Retail is designed on contrast ratios (feature:ambient typically 3:1 to 10:1), not on average lux."
+    "note": "EN gives a floor. Retail is designed on contrast ratios (feature:ambient typically 3:1 to 10:1), not on average lux.",
+    "viNote": "EN chỉ đưa ra mức sàn. Bán lẻ được thiết kế theo tỷ lệ tương phản (điểm nhấn : nền thường 3:1 đến 10:1), không theo lux trung bình."
   },
   {
     "id": "retail-till",
@@ -255,7 +265,8 @@
     "ra": "≥90",
     "ies": "300–500",
     "vn": "—",
-    "note": "High Ra and strong R9; vertical, soft and from the front. This detail sells clothes or loses them."
+    "note": "High Ra and strong R9; vertical, soft and from the front. This detail sells clothes or loses them.",
+    "viNote": "Ra cao và R9 mạnh; ánh sáng đứng, mềm và từ phía trước. Chi tiết này quyết định quần áo bán được hay không."
   },
   {
     "id": "hosp-reception",
@@ -269,7 +280,8 @@
     "ra": "≥80",
     "ies": "200–300",
     "vn": "300",
-    "note": "Standards set the task minimum; the atmosphere is made in the layers around it."
+    "note": "Standards set the task minimum; the atmosphere is made in the layers around it.",
+    "viNote": "Tiêu chuẩn chỉ đặt mức tối thiểu cho công việc; không khí được tạo ra từ các lớp sáng xung quanh."
   },
   {
     "id": "hosp-kitchen",
@@ -283,7 +295,8 @@
     "ra": "≥80",
     "ies": "500",
     "vn": "500",
-    "note": "IP rating and cleanability usually dictate the fitting before photometrics do."
+    "note": "IP rating and cleanability usually dictate the fitting before photometrics do.",
+    "viNote": "Cấp IP và khả năng vệ sinh thường quyết định việc chọn đèn trước cả các thông số quang học."
   },
   {
     "id": "hosp-restaurant",
@@ -297,7 +310,8 @@
     "ra": "≥90 recommended",
     "ies": "50–200, dimmable",
     "vn": "—",
-    "note": "Deliberately unregulated by EN 12464-1. Design to facial modelling and table luminance, and keep R9 high."
+    "note": "Deliberately unregulated by EN 12464-1. Design to facial modelling and table luminance, and keep R9 high.",
+    "viNote": "EN 12464-1 cố ý không quy định. Thiết kế theo khả năng tạo khối khuôn mặt và độ chói mặt bàn, và giữ R9 cao."
   },
   {
     "id": "health-ward",
@@ -311,7 +325,8 @@
     "ra": "≥80",
     "ies": "100–300",
     "vn": "100",
-    "note": "Also needs reading (300 lx), examination (1000 lx) and night-watch (≤5 lx) scenes on separate control."
+    "note": "Also needs reading (300 lx), examination (1000 lx) and night-watch (≤5 lx) scenes on separate control.",
+    "viNote": "Cần thêm các cảnh đọc sách (300 lx), khám bệnh (1000 lx) và trực đêm (≤5 lx), điều khiển riêng."
   },
   {
     "id": "health-exam",
@@ -325,7 +340,8 @@
     "ra": "≥90",
     "ies": "1000",
     "vn": "1000",
-    "note": "Ra ≥ 90 with strong R9 is clinically relevant, not cosmetic — skin and tissue colour is diagnostic."
+    "note": "Ra ≥ 90 with strong R9 is clinically relevant, not cosmetic — skin and tissue colour is diagnostic.",
+    "viNote": "Ra ≥ 90 với R9 mạnh có ý nghĩa lâm sàng, không chỉ thẩm mỹ — màu da và mô là dữ kiện chẩn đoán."
   },
   {
     "id": "health-corridor-night",
@@ -339,7 +355,8 @@
     "ra": "≥80",
     "ies": "50",
     "vn": "50",
-    "note": "Keep melanopic content minimal — ≤2700 K and low mounting height, so staff and patients stay entrained."
+    "note": "Keep melanopic content minimal — ≤2700 K and low mounting height, so staff and patients stay entrained.",
+    "viNote": "Giữ thành phần melanopic ở mức tối thiểu — ≤2700 K và đèn lắp thấp, để nhân viên và bệnh nhân giữ đúng nhịp sinh học."
   },
   {
     "id": "industry-general",
@@ -366,7 +383,8 @@
     "ra": "≥90",
     "ies": "1000+",
     "vn": "1000",
-    "note": "Colour checking calls for a defined CCT (often 6500 K) as well as high Ra."
+    "note": "Colour checking calls for a defined CCT (often 6500 K) as well as high Ra.",
+    "viNote": "Kiểm tra màu cần một CCT xác định (thường 6500 K) bên cạnh Ra cao."
   },
   {
     "id": "industry-store",
@@ -380,7 +398,8 @@
     "ra": "≥60",
     "ies": "100–200",
     "vn": "150",
-    "note": "20 lx when unoccupied — this is where occupancy control pays for itself fastest."
+    "note": "20 lx when unoccupied — this is where occupancy control pays for itself fastest.",
+    "viNote": "20 lx khi không có người — đây là nơi điều khiển theo hiện diện (occupancy) hoàn vốn nhanh nhất."
   },
   {
     "id": "parking-indoor",
@@ -407,7 +426,8 @@
     "ra": "≥40",
     "ies": "300 (transition zone)",
     "vn": "300",
-    "note": "Daytime transition lighting to manage eye adaptation; drops to 75 lx at night."
+    "note": "Daytime transition lighting to manage eye adaptation; drops to 75 lx at night.",
+    "viNote": "Chiếu sáng chuyển tiếp ban ngày để mắt kịp thích nghi; giảm xuống 75 lx vào ban đêm."
   },
   {
     "id": "culture-gallery",
@@ -421,7 +441,8 @@
     "ra": "≥90",
     "ies": "50 (conservation)",
     "vn": "—",
-    "note": "Conservation-driven: 50 lx for textiles, works on paper and dyed leather; 150–200 lx for oil and tempera; annual exposure in lx·h is the real limit, not instantaneous lux."
+    "note": "Conservation-driven: 50 lx for textiles, works on paper and dyed leather; 150–200 lx for oil and tempera; annual exposure in lx·h is the real limit, not instantaneous lux.",
+    "viNote": "Theo yêu cầu bảo tồn: 50 lx cho hàng dệt, tác phẩm trên giấy và da nhuộm; 150–200 lx cho tranh sơn dầu và tempera; giới hạn thực sự là tổng phơi sáng năm tính bằng lx·h, không phải lux tức thời."
   },
   {
     "id": "culture-lobby",
@@ -435,6 +456,7 @@
     "ra": "≥80",
     "ies": "100–200",
     "vn": "200",
-    "note": "Design the adaptation sequence from daylit entrance down to a 50 lx gallery, or the exhibits will read as black."
+    "note": "Design the adaptation sequence from daylit entrance down to a 50 lx gallery, or the exhibits will read as black.",
+    "viNote": "Thiết kế chuỗi thích nghi từ sảnh có ánh sáng tự nhiên xuống phòng trưng bày 50 lx, nếu không hiện vật sẽ trông đen kịt."
   }
 ]

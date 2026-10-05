@@ -24,13 +24,24 @@ const stamp = new Date(`${entry.data.date}T00:00:00Z`).toLocaleDateString('en-GB
   year: 'numeric',
   timeZone: 'UTC',
 });
+// Same date in Vietnamese, shown under the English title.
+const viStamp = new Date(`${entry.data.date}T00:00:00Z`).toLocaleDateString('vi-VN', {
+  weekday: 'long',
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+  timeZone: 'UTC',
+});
 ---
 
 <Base title={`Digest — ${entry.data.date}`} description={`Architectural lighting industry digest for ${stamp}.`}>
   <PageHeader eyebrow="Digest" title={stamp}>
+    <p class="vi-block mt-1.5 text-[1.15rem] font-medium leading-snug" style="color: var(--vi-text)">
+      Bản tin · {viStamp}
+    </p>
     <nav class="mt-5 flex gap-3 items-center text-[0.85rem]" aria-label="Digest navigation">
       {older && <a href={url(`/archive/${older.data.date}`)} class="no-underline hover:underline">← {older.data.date}</a>}
-      <a href={url('/archive')} class="no-underline hover:underline" style="color: var(--text-muted)">All digests</a>
+      <a href={url('/archive')} class="no-underline hover:underline" style="color: var(--text-muted)">All digests<span class="vi-block-inline" style="color: var(--vi-text)"> · Tất cả bản tin</span></a>
       {newer && <a href={url(`/archive/${newer.data.date}`)} class="no-underline hover:underline">{newer.data.date} →</a>}
     </nav>
   </PageHeader>
@@ -46,6 +57,7 @@ const stamp = new Date(`${entry.data.date}T00:00:00Z`).toLocaleDateString('en-GB
       entry.data.items.length === 0 && (
         <p class="card p-6" style="color: var(--text-muted)">
           No items were published for this date.
+          <span class="vi-block mt-1.5 text-[0.92rem]" style="color: var(--vi-text)">Không có tin nào được đăng trong ngày này.</span>
         </p>
       )
     }

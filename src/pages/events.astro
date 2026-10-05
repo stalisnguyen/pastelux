@@ -16,6 +16,13 @@ const kindStyle: Record<string, string> = {
   award: 'color: var(--success)',
   deadline: 'color: var(--warning)',
 };
+// Vietnamese name of each kind — shown as a tooltip, the chip is too small for a second voice.
+const viKind: Record<string, string> = {
+  conference: 'Hội thảo',
+  fair: 'Hội chợ triển lãm',
+  award: 'Giải thưởng',
+  deadline: 'Hạn chót',
+};
 
 const range = (e: { start: string; end?: string }) => {
   const s = new Date(`${e.start}T00:00:00Z`);
@@ -35,6 +42,7 @@ const daysTo = (d: string) => Math.ceil((Date.parse(d) - now) / 86_400_000);
   <PageHeader
     eyebrow="Calendar"
     title="Events"
+    viTitle="Sự kiện"
     lede="Conferences, fairs and award deadlines. Every entry records the date its details were last checked and the source they came from, and an automated job re-tests each link weekly. Still confirm with the organiser before booking anything."
   >
     <p class="vi-block vi-def mt-2 text-[0.95rem] max-w-2xl leading-relaxed">
@@ -45,11 +53,14 @@ const daysTo = (d: string) => Math.ceil((Date.parse(d) - now) / 86_400_000);
   </PageHeader>
 
   <section aria-labelledby="upcoming-h" class="mb-12">
-    <h2 id="upcoming-h" class="text-lg font-semibold mb-4">Upcoming</h2>
+    <h2 id="upcoming-h" class="text-lg font-semibold mb-4">Upcoming<span class="vi-block-inline font-normal text-[0.9rem]" style="color: var(--vi-text)"> · Sắp diễn ra</span></h2>
     {
       upcoming.length === 0 ? (
         <p class="card p-6" style="color: var(--text-muted)">
           Nothing scheduled. Add entries to <code class="font-mono text-[0.85em]">src/content/events.json</code>.
+          <span class="vi-block mt-1.5 text-[0.92rem]" style="color: var(--vi-text)">
+            Chưa có sự kiện nào. Thêm mục vào <code class="font-mono text-[0.85em]">src/content/events.json</code>.
+          </span>
         </p>
       ) : (
         <div class="grid gap-3">
@@ -61,6 +72,7 @@ const daysTo = (d: string) => Math.ceil((Date.parse(d) - now) / 86_400_000);
                 </p>
                 <p class="text-[0.78rem] mt-0.5" style="color: var(--text-faint)">
                   in {daysTo(e.data.start)} days
+                  <span class="vi-block" style="color: var(--vi-text)">còn {daysTo(e.data.start)} ngày</span>
                 </p>
               </div>
 
@@ -71,7 +83,7 @@ const daysTo = (d: string) => Math.ceil((Date.parse(d) - now) / 86_400_000);
                       {e.data.name}
                     </a>
                   </h3>
-                  <span class="chip" style={kindStyle[e.data.kind]}>
+                  <span class="chip" style={kindStyle[e.data.kind]} title={viKind[e.data.kind]}>
                     {e.data.kind}
                   </span>
                 </div>
@@ -83,8 +95,12 @@ const daysTo = (d: string) => Math.ceil((Date.parse(d) - now) / 86_400_000);
                     {e.data.note}
                   </p>
                 )}
+                {e.data.viNote && (
+                  <p class="vi-block vi-def text-[0.84rem] mt-1.5 leading-relaxed">{e.data.viNote}</p>
+                )}
                 <p class="text-[0.72rem] mt-2.5" style="color: var(--text-faint)">
                   Dates and link checked {e.data.verified} · {e.data.source}
+                  <span class="vi-block mt-0.5" style="color: var(--vi-text)">Ngày và link được kiểm tra lần cuối: {e.data.verified}</span>
                 </p>
               </div>
             </article>
@@ -99,6 +115,7 @@ const daysTo = (d: string) => Math.ceil((Date.parse(d) - now) / 86_400_000);
       <section aria-labelledby="past-h" class="pb-6">
         <h2 id="past-h" class="text-lg font-semibold mb-4" style="color: var(--text-muted)">
           Past
+          <span class="vi-block-inline font-normal text-[0.9rem]" style="color: var(--vi-text)"> · Đã diễn ra</span>
         </h2>
         <div class="grid gap-2">
           {past.map((e) => (

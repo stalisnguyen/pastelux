@@ -39,6 +39,16 @@ const stamp = today
       timeZone: 'UTC',
     })
   : '';
+// Same date, written the Vietnamese way — shown under the English stamp.
+const viStamp = today
+  ? new Date(`${today.data.date}T00:00:00Z`).toLocaleDateString('vi-VN', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+      timeZone: 'UTC',
+    })
+  : '';
 
 const daysTo = (d: string) =>
   Math.ceil((Date.parse(d) - Date.now()) / 86_400_000);
@@ -49,12 +59,15 @@ const daysTo = (d: string) =>
   <section class="pt-10 pb-8">
     <div class="flex flex-wrap items-end gap-x-6 gap-y-2">
       <div>
-        <p class="label !mb-1.5" style="color: var(--accent)">Today</p>
+        <p class="label !mb-1.5" style="color: var(--accent)">Today<span class="vi-block-inline" style="color: var(--vi-text)"> · Hôm nay</span></p>
         <h1 class="text-3xl md:text-[2.5rem] font-semibold tracking-tight">
           {site.tagline}
         </h1>
+        <p class="vi-block mt-1.5 text-[1.15rem] font-medium leading-snug" style="color: var(--vi-text)">
+          Chiếu sáng kiến trúc, luôn cập nhật.
+        </p>
       </div>
-      {stamp && <p class="text-sm ml-auto pb-1.5" style="color: var(--text-faint)">{stamp}</p>}
+      {stamp && <p class="text-sm ml-auto pb-1.5" style="color: var(--text-faint)">{stamp}<span class="vi-block text-[0.8rem] text-right" style="color: var(--vi-text)">{viStamp}</span></p>}
     </div>
     <div class="kbar h-[2px] w-full mt-6 rounded-full opacity-70"></div>
   </section>
@@ -63,8 +76,8 @@ const daysTo = (d: string) =>
     <!-- ------------------------------------------------------- digest -->
     <section aria-labelledby="digest-heading">
       <div class="flex items-baseline justify-between mb-4">
-        <h2 id="digest-heading" class="text-lg font-semibold">From the industry</h2>
-        <a href={url('/archive')} class="text-[0.85rem] no-underline hover:underline">Archive →</a>
+        <h2 id="digest-heading" class="text-lg font-semibold">From the industry<span class="vi-block font-normal text-[0.9rem]" style="color: var(--vi-text)">Tin trong ngành</span></h2>
+        <a href={url('/archive')} class="text-[0.85rem] no-underline hover:underline text-right shrink-0">Archive →<span class="vi-block text-[0.78rem]" style="color: var(--vi-text)">Lưu trữ</span></a>
       </div>
 
       {
@@ -74,6 +87,7 @@ const daysTo = (d: string) =>
             style="color: var(--warning); border-color: color-mix(in srgb, var(--warning) 35%, transparent)"
           >
             Summaries are unavailable for this digest — headlines and links only.
+            <span class="vi-block mt-1" style="color: var(--vi-text)">Bản tin này chưa có tóm tắt — chỉ có tiêu đề và liên kết.</span>
           </p>
         )
       }
@@ -87,10 +101,14 @@ const daysTo = (d: string) =>
           </div>
         ) : (
           <div class="card p-6">
-            <p class="font-medium">No digest yet.</p>
+            <p class="font-medium">No digest yet.<span class="vi-block-inline font-normal" style="color: var(--vi-text)"> · Chưa có bản tin.</span></p>
             <p class="text-[0.92rem] mt-1.5" style="color: var(--text-muted)">
               Run <code class="font-mono text-[0.85em]">npm run news</code> locally, or wait for the
               scheduled GitHub Action to publish the first one.
+            </p>
+            <p class="vi-block vi-def text-[0.88rem] mt-1.5">
+              Chạy <code class="font-mono text-[0.85em]">npm run news</code> trên máy, hoặc đợi GitHub
+              Action chạy theo lịch đăng bản tin đầu tiên.
             </p>
           </div>
         )
@@ -104,12 +122,16 @@ const daysTo = (d: string) =>
           <section class="card p-5" aria-labelledby="term-heading">
             <p id="term-heading" class="label" style="color: var(--accent)">
               Term of the day
+              <span class="vi-block-inline" style="color: var(--vi-text)"> · Thuật ngữ hôm nay</span>
             </p>
             <h3 class="text-[1.15rem] font-semibold mt-1">
               <a href={`${url('/glossary')}#${term.id}`} class="no-underline" style="color: var(--text)">
                 {term.data.term}
               </a>
             </h3>
+            {term.data.vi && (
+              <p class="vi-block vi-term text-[0.85rem] mt-0.5 font-medium">{term.data.vi}</p>
+            )}
             {(term.data.symbol || term.data.unit) && (
               <p class="font-mono text-[0.8rem] mt-1" style="color: var(--text-faint)">
                 {[term.data.symbol, term.data.unit].filter(Boolean).join('  ·  ')}
@@ -118,8 +140,12 @@ const daysTo = (d: string) =>
             <p class="text-[0.9rem] mt-2.5 leading-relaxed" style="color: var(--text-muted)">
               {term.data.definition}
             </p>
+            {term.data.viDefinition && (
+              <p class="vi-block vi-def text-[0.86rem] mt-1.5 leading-relaxed">{term.data.viDefinition}</p>
+            )}
             <a href={url('/glossary')} class="text-[0.82rem] no-underline hover:underline mt-3 inline-block">
               All {glossary.length} terms →
+              <span class="vi-block-inline" style="color: var(--vi-text)"> · Tất cả {glossary.length} thuật ngữ</span>
             </a>
           </section>
         )
@@ -130,37 +156,49 @@ const daysTo = (d: string) =>
           <section class="card p-5" aria-labelledby="read-heading">
             <p id="read-heading" class="label" style="color: var(--accent-cool)">
               Read today
+              <span class="vi-block-inline" style="color: var(--vi-text)"> · Bài đọc hôm nay</span>
             </p>
             <h3 class="text-[1.05rem] font-semibold mt-1 leading-snug">
               <a href={url(`/learn/${feature.id}`)} class="no-underline" style="color: var(--text)">
                 {feature.data.title}
               </a>
             </h3>
+            {feature.data.viTitle && (
+              <p class="vi-block text-[0.9rem] mt-0.5 leading-snug" style="color: var(--vi-text)">
+                {feature.data.viTitle}
+              </p>
+            )}
             <p class="text-[0.9rem] mt-2 leading-relaxed" style="color: var(--text-muted)">
               {feature.data.summary}
             </p>
+            {feature.data.viSummary && (
+              <p class="vi-block vi-def text-[0.86rem] mt-1.5 leading-relaxed">{feature.data.viSummary}</p>
+            )}
             <p class="text-[0.78rem] mt-3" style="color: var(--text-faint)">
               {feature.data.chapterTitle} · {feature.data.readingMinutes} min
+              <span class="vi-block-inline" style="color: var(--vi-text)">
+                · {feature.data.viChapterTitle ? `${feature.data.viChapterTitle} · ` : ''}{feature.data.readingMinutes} phút đọc
+              </span>
             </p>
           </section>
         )
       }
 
       <section class="card p-5" aria-labelledby="tools-heading">
-        <p id="tools-heading" class="label">Quick tools</p>
+        <p id="tools-heading" class="label">Quick tools<span class="vi-block-inline" style="color: var(--vi-text)"> · Công cụ nhanh</span></p>
         <ul class="mt-1 text-[0.92rem] grid gap-1.5">
-          <li><a href={url('/tools#lumen')} class="no-underline hover:underline">Lumen method</a></li>
-          <li><a href={url('/tools#beam')} class="no-underline hover:underline">Beam angle → spot size</a></li>
-          <li><a href={url('/tools#isl')} class="no-underline hover:underline">Inverse square law</a></li>
-          <li><a href={url('/tools#medi')} class="no-underline hover:underline">Melanopic EDI</a></li>
-          <li><a href={url('/standards/compare')} class="no-underline hover:underline">Illuminance criteria table</a></li>
+          <li><a href={url('/tools#lumen')} class="no-underline hover:underline">Lumen method</a><span class="vi-block text-[0.8rem]" style="color: var(--vi-text)">Phương pháp quang thông</span></li>
+          <li><a href={url('/tools#beam')} class="no-underline hover:underline">Beam angle → spot size</a><span class="vi-block text-[0.8rem]" style="color: var(--vi-text)">Góc chiếu (beam angle) → đường kính vệt sáng</span></li>
+          <li><a href={url('/tools#isl')} class="no-underline hover:underline">Inverse square law</a><span class="vi-block text-[0.8rem]" style="color: var(--vi-text)">Định luật nghịch đảo bình phương</span></li>
+          <li><a href={url('/tools#medi')} class="no-underline hover:underline">Melanopic EDI</a><span class="vi-block text-[0.8rem]" style="color: var(--vi-text)">Độ rọi tương đương melanopic</span></li>
+          <li><a href={url('/standards/compare')} class="no-underline hover:underline">Illuminance criteria table</a><span class="vi-block text-[0.8rem]" style="color: var(--vi-text)">Bảng tiêu chí độ rọi</span></li>
         </ul>
       </section>
 
       {
         nextEvents.length > 0 && (
           <section class="card p-5" aria-labelledby="events-heading">
-            <p id="events-heading" class="label">Coming up</p>
+            <p id="events-heading" class="label">Coming up<span class="vi-block-inline" style="color: var(--vi-text)"> · Sắp diễn ra</span></p>
             <ul class="mt-1 grid gap-3">
               {nextEvents.map((e) => (
                 <li class="text-[0.9rem]">
@@ -169,12 +207,14 @@ const daysTo = (d: string) =>
                   </a>
                   <p class="text-[0.78rem] mt-0.5" style="color: var(--text-faint)">
                     {e.data.city} · in {daysTo(e.data.start)} days
+                    <span class="vi-block-inline" style="color: var(--vi-text)"> · còn {daysTo(e.data.start)} ngày</span>
                   </p>
                 </li>
               ))}
             </ul>
             <a href={url('/events')} class="text-[0.82rem] no-underline hover:underline mt-3 inline-block">
               All events →
+              <span class="vi-block-inline" style="color: var(--vi-text)"> · Tất cả sự kiện</span>
             </a>
           </section>
         )
@@ -185,8 +225,8 @@ const daysTo = (d: string) =>
   <!-- ------------------------------------------------------ knowledge -->
   <section class="mt-14" aria-labelledby="learn-heading">
     <div class="flex items-baseline justify-between mb-4">
-      <h2 id="learn-heading" class="text-lg font-semibold">The fixed layer</h2>
-      <a href={url('/learn')} class="text-[0.85rem] no-underline hover:underline">All articles →</a>
+      <h2 id="learn-heading" class="text-lg font-semibold">The fixed layer<span class="vi-block font-normal text-[0.9rem]" style="color: var(--vi-text)">Kiến thức nền</span></h2>
+      <a href={url('/learn')} class="text-[0.85rem] no-underline hover:underline text-right shrink-0">All articles →<span class="vi-block text-[0.78rem]" style="color: var(--vi-text)">Tất cả bài viết</span></a>
     </div>
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
       {
@@ -195,8 +235,14 @@ const daysTo = (d: string) =>
             <ArticleGlyph chapter={a.data.chapter} variant={a.data.order} height={78} />
             <p class="text-[0.72rem] font-mono" style="color: var(--accent)">
               {String(a.data.chapter).padStart(2, '0')} · {a.data.chapterTitle}
+              {a.data.viChapterTitle && <span class="vi-block-inline font-sans" style="color: var(--vi-text)"> · {a.data.viChapterTitle}</span>}
             </p>
             <h3 class="font-semibold mt-1.5 leading-snug text-[1rem]">{a.data.title}</h3>
+            {a.data.viTitle && (
+              <p class="vi-block text-[0.88rem] mt-0.5 leading-snug" style="color: var(--vi-text)">
+                {a.data.viTitle}
+              </p>
+            )}
             <p class="text-[0.88rem] mt-1.5 leading-relaxed" style="color: var(--text-muted)">
               {a.data.summary}
             </p>

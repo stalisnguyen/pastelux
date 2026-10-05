@@ -12,7 +12,8 @@
     "verified": "2026-07-23",
     "source": "Vietbuild Construction International Fair Exhibition Corporation (organiser); dates cross-checked against eventseye and showsbee listings",
     "expectText": "Exhibition Corporation",
-    "note": "Construction, building materials and interior/exterior decoration — the largest local trade fair, with a lighting and decoration section. Phase 1 ran 24–28 June 2026."
+    "note": "Construction, building materials and interior/exterior decoration — the largest local trade fair, with a lighting and decoration section. Phase 1 ran 24–28 June 2026.",
+    "viNote": "Xây dựng, vật liệu xây dựng và trang trí nội – ngoại thất — hội chợ thương mại lớn nhất trong nước, có khu riêng cho chiếu sáng và trang trí. Đợt 1 đã diễn ra 24–28/6/2026."
   },
   {
     "id": "vietbuild-hanoi-2026-p2",
@@ -27,7 +28,8 @@
     "verified": "2026-07-23",
     "source": "tradefairdates and showsbee listings, cross-checked against VOV coverage of the 2026 Hanoi series. The organiser's own site does not publish a forward schedule, so these dates are second-hand — confirm before travelling",
     "expectText": "Exhibition Corporation",
-    "note": "The Hanoi series runs in three phases a year. Phase 1 ran 26–30 March at the new VEC."
+    "note": "The Hanoi series runs in three phases a year. Phase 1 ran 26–30 March at the new VEC.",
+    "viNote": "Chuỗi triển lãm tại Hà Nội diễn ra ba đợt mỗi năm. Đợt 1 đã diễn ra 26–30/3 tại VEC mới."
   },
   {
     "id": "iald-enlighten-americas-2026",
@@ -42,7 +44,8 @@
     "source": "IALD event listing (EA26), corroborated by Inside Lighting's events calendar and GVA Lighting",
     "expectText": "Enlighten Americas",
     "unverifiableUrl": "iald.org sits behind Cloudflare and returns 403 to any automated check. This URL was confirmed by hand, so the link checker skips it rather than reporting a false failure.",
-    "note": "The Americas half of the Enlighten series. Same boutique format as the Europe edition."
+    "note": "The Americas half of the Enlighten series. Same boutique format as the Europe edition.",
+    "viNote": "Phần châu Mỹ của chuỗi Enlighten. Cùng định dạng hội thảo quy mô nhỏ, chọn lọc như bản châu Âu."
   },
   {
     "id": "hklf-autumn-2026",
@@ -57,7 +60,8 @@
     "verified": "2026-07-23",
     "source": "HKTDC official event page; cross-checked against Meetings & Exhibitions Hong Kong listing",
     "expectText": "Hong Kong International Lighting Fair",
-    "note": "The closest large-scale sourcing fair to Vietnam. The Autumn edition is the bigger of the two; a Spring edition runs in April."
+    "note": "The closest large-scale sourcing fair to Vietnam. The Autumn edition is the bigger of the two; a Spring edition runs in April.",
+    "viNote": "Hội chợ tìm nguồn cung quy mô lớn gần Việt Nam nhất. Bản mùa Thu lớn hơn trong hai đợt; bản mùa Xuân diễn ra vào tháng 4."
   },
   {
     "id": "ldi-2026",
@@ -72,7 +76,8 @@
     "verified": "2026-07-23",
     "source": "LDI Show official site (show overview). Expo runs 6–8 December; Pro Training runs 2–8 December",
     "expectText": "Live Design",
-    "note": "Entertainment and architainment lighting — the strongest place to see DMX and pixel control in the flesh."
+    "note": "Entertainment and architainment lighting — the strongest place to see DMX and pixel control in the flesh.",
+    "viNote": "Chiếu sáng giải trí và architainment — nơi tốt nhất để xem tận mắt điều khiển DMX và pixel."
   },
   {
     "id": "vietbuild-hanoi-2026-p3",
@@ -86,7 +91,8 @@
     "verified": "2026-07-23",
     "source": "tradefairdates listing for the Hanoi Phase 3 edition. Second-hand, as the organiser publishes no forward schedule — confirm before travelling",
     "expectText": "Exhibition Corporation",
-    "note": "Venue not yet announced at the time of checking."
+    "note": "Venue not yet announced at the time of checking.",
+    "viNote": "Địa điểm chưa được công bố tại thời điểm kiểm tra."
   },
   {
     "id": "light-building-2028",
@@ -101,7 +107,8 @@
     "verified": "2026-07-23",
     "source": "Messe Frankfurt official site. Biennial — this is the next edition after March 2026",
     "expectText": "Light + Building",
-    "note": "The industry's largest biennial fair. Trade visitors only; private visitors are not admitted."
+    "note": "The industry's largest biennial fair. Trade visitors only; private visitors are not admitted.",
+    "viNote": "Hội chợ hai năm một lần lớn nhất của ngành. Chỉ dành cho khách thương mại; không nhận khách tham quan cá nhân."
   },
   {
     "id": "iald-enlighten-europe-2026",
@@ -116,7 +123,8 @@
     "source": "arc magazine, 'Registration opens for IALD Enlighten Europe 2026'; confirmed by A1 Lighting and EdisonReport",
     "unverifiableUrl": "iald.org sits behind Cloudflare and returns 403 to any automated check. This URL was confirmed by hand, so the link checker skips it rather than reporting a false failure.",
     "expectText": "Enlighten Europe",
-    "note": "Boutique conference, capped below 400 attendees. Watch for the 2027 edition — the call for presentations usually opens the previous November."
+    "note": "Boutique conference, capped below 400 attendees. Watch for the 2027 edition — the call for presentations usually opens the previous November.",
+    "viNote": "Hội thảo quy mô nhỏ, giới hạn dưới 400 người tham dự. Theo dõi bản 2027 — đợt nhận bài trình bày thường mở vào tháng 11 năm trước."
   },
   {
     "id": "darc-awards-2026",
@@ -130,6 +138,7 @@
     "verified": "2026-07-23",
     "source": "darcawards.com and darc magazine",
     "expectText": "peer-to-peer",
-    "note": "Peer-voted, run by arc and darc magazines with Light Collective. Categories: Structures, Places, Spaces, Art, Event, Kit. Entry for the next cycle usually opens in the autumn — the site was still showing the previous edition when last checked."
+    "note": "Peer-voted, run by arc and darc magazines with Light Collective. Categories: Structures, Places, Spaces, Art, Event, Kit. Entry for the next cycle usually opens in the autumn — the site was still showing the previous edition when last checked.",
+    "viNote": "Giải do chính giới trong nghề bình chọn, tổ chức bởi tạp chí arc và darc cùng Light Collective. Hạng mục: Structures, Places, Spaces, Art, Event, Kit. Đợt nhận hồ sơ mùa sau thường mở vào mùa thu — lần kiểm tra gần nhất trang vẫn hiển thị kỳ trước."
   }
 ]

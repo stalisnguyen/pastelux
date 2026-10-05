@@ -321,6 +321,17 @@
     font-size: 1.16rem;
     margin-top: 1.9em;
   }
+  /* Vietnamese line directly under an h2/h3 — kept out of the heading
+     itself so the table of contents stays English. */
+  .prose .vi-heading {
+    color: var(--vi-text);
+    font-weight: 500;
+    margin-top: 0.25em;
+  }
+  .prose ul.vi-def,
+  .prose ol.vi-def {
+    padding-left: 2em;
+  }
   .prose ul,
   .prose ol {
     padding-left: 1.35em;

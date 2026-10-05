@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import PageHeader from '../../components/PageHeader.astro';
-import { url } from '../../site';
+import { url, VI_TYPOLOGY } from '../../site';
 
 const projects = (await getCollection('projects'))
   .filter((p) => !p.data.draft)
@@ -19,6 +19,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <PageHeader
     eyebrow={`${projects.length} ${projects.length === 1 ? 'case study' : 'case studies'}`}
     title="Projects"
+    viTitle="Dự án"
     lede="Built work, read the way a designer needs it — what the scheme was trying to do, the numbers behind it, and what it taught."
   >
     <p class="vi-block vi-def mt-2 text-[0.95rem] max-w-2xl leading-relaxed">
@@ -43,11 +44,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     typologies.length > 1 && (
       <div class="flex flex-wrap gap-2 mb-6" data-pagefind-ignore>
         <button class="chip chip-accent typ-btn cursor-pointer" data-typ="all" type="button" aria-pressed="true">
-          All
+          All<span class="vi-block-inline" style="color: var(--vi-text)"> · Tất cả</span>
         </button>
         {typologies.map((t) => (
           <button class="chip typ-btn cursor-pointer" data-typ={t} type="button" aria-pressed="false">
             {t}
+            {VI_TYPOLOGY[t] && <span class="vi-block-inline" style="color: var(--vi-text)"> · {VI_TYPOLOGY[t]}</span>}
           </button>
         ))}
       </div>
@@ -57,7 +59,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   {
     projects.length === 0 ? (
       <div class="card p-6 max-w-2xl">
-        <p class="font-medium">No case studies yet.</p>
+        <p class="font-medium">No case studies yet.<span class="vi-block-inline" style="color: var(--vi-text)"> · Chưa có dự án nào.</span></p>
         <p class="text-[0.92rem] mt-1.5 leading-relaxed" style="color: var(--text-muted)">
           Add one by creating <code class="font-mono text-[0.85em]">src/content/projects/&lt;slug&gt;.mdx</code>{' '}
           and dropping the photographs into{' '}
@@ -86,6 +88,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             <div class="p-4">
               <p class="text-[0.72rem] font-mono" style="color: var(--accent)">
                 {p.data.typology} · {p.data.year}
+                {VI_TYPOLOGY[p.data.typology] && <span class="vi-block-inline" style="color: var(--vi-text)"> · {VI_TYPOLOGY[p.data.typology]}</span>}
               </p>
               <h2 class="font-semibold mt-1.5 leading-snug">{p.data.title}</h2>
               <p class="text-[0.86rem] mt-1" style="color: var(--text-faint)">
@@ -94,6 +97,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
               <p class="text-[0.88rem] mt-2 leading-relaxed" style="color: var(--text-muted)">
                 {p.data.summary}
               </p>
+              {p.data.viSummary && (
+                <p class="vi-block vi-def text-[0.84rem] mt-1.5 leading-relaxed">{p.data.viSummary}</p>
+              )}
             </div>
           </a>
         ))}

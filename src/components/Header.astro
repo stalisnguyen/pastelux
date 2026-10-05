@@ -7,6 +7,19 @@ import ViToggle from './ViToggle.astro';
 const path = Astro.url.pathname.replace(import.meta.env.BASE_URL.replace(/\/$/, ''), '') || '/';
 const isActive = (href: string) =>
   href === '/' ? path === '/' : path === href || path.startsWith(href + '/');
+
+// Vietnamese name of each section. The bar is too tight for a second line,
+// so it rides along as a tooltip.
+const viNav: Record<string, string> = {
+  '/': 'Hôm nay',
+  '/learn': 'Kiến thức',
+  '/projects': 'Dự án',
+  '/standards': 'Tiêu chuẩn',
+  '/directory': 'Danh bạ',
+  '/tools': 'Công cụ',
+  '/glossary': 'Thuật ngữ',
+  '/events': 'Sự kiện',
+};
 ---
 
 <header
@@ -42,6 +55,7 @@ const isActive = (href: string) =>
                 : 'color: var(--text-muted)'
             }
             aria-current={isActive(item.href) ? 'page' : undefined}
+            title={viNav[item.href]}
           >
             {item.label}
           </a>

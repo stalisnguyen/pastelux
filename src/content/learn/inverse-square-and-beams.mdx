@@ -1,9 +1,11 @@
 ---
 title: 'Beam angles, spot sizes and the inverse square law'
+viTitle: 'Góc chiếu, kích thước vệt sáng và định luật nghịch đảo bình phương'
 summary: 'The three pieces of hand arithmetic that let you sketch a scheme in a meeting without opening Dialux.'
 viSummary: 'Ba phép tính nhẩm giúp bạn phác một phương án ngay giữa cuộc họp mà không cần mở Dialux.'
 chapter: 1
 chapterTitle: 'Fundamentals'
+viChapterTitle: 'Kiến thức nền tảng'
 order: 2
 topics: ['optics']
 readingMinutes: 6
@@ -13,15 +15,23 @@ updated: 2026-07-18
 Calculation software is for verification. In a design meeting you need answers in seconds, and
 three formulas cover most of what gets asked.
 
+<p class="vi-block vi-def">Phần mềm tính toán là để kiểm chứng. Trong buổi họp thiết kế, bạn cần câu trả lời trong vài giây, và ba công thức là đủ cho hầu hết các câu hỏi.</p>
+
 ## Inverse square law
 
+<p class="vi-block vi-heading">Định luật nghịch đảo bình phương</p>
+
 Illuminance from a point source falls with the square of distance:
+
+<p class="vi-block vi-def">Độ rọi từ một nguồn điểm giảm theo bình phương khoảng cách:</p>
 
 ```
 E = I / d²
 ```
 
 With the surface tilted at angle θ from the beam's normal:
+
+<p class="vi-block vi-def">Khi bề mặt nghiêng một góc θ so với pháp tuyến của chùm sáng:</p>
 
 ```
 E = I × cos θ / d²
@@ -30,15 +40,23 @@ E = I × cos θ / d²
 So a 5000 cd spotlight at 4 m gives 5000 / 16 = **313 lux** on axis. At 6 m it gives 139 lux.
 Moving a fixture 50% further away costs you 56% of the light.
 
+<p class="vi-block vi-def">Như vậy một đèn rọi 5000 cd ở khoảng cách 4 m cho 5000 / 16 = <strong>313 lux</strong> trên trục. Ở 6 m còn 139 lux. Dời đèn ra xa thêm 50% làm bạn mất 56% ánh sáng.</p>
+
 **The validity limit matters.** The inverse square law assumes a point source, which in practice
 means the distance must be at least about five times the largest dimension of the emitting
 surface. It is fine for a downlight at 3 m. It is wrong for a 1.5 m linear fitting at 2 m, where
 the falloff is closer to 1/d.
 
+<p class="vi-block vi-def"><strong>Giới hạn áp dụng rất quan trọng.</strong> Định luật nghịch đảo bình phương giả định nguồn điểm, trên thực tế nghĩa là khoảng cách phải ít nhất khoảng năm lần kích thước lớn nhất của bề mặt phát sáng. Áp dụng cho downlight ở 3 m thì ổn. Áp dụng cho một đèn tuyến tính 1.5 m ở khoảng cách 2 m thì sai, vì khi đó độ rọi suy giảm gần với 1/d hơn.</p>
+
 ## Beam angle to spot size
+
+<p class="vi-block vi-heading">Từ góc chiếu ra kích thước vệt sáng</p>
 
 Beam angle is the full angle between the two directions where intensity has fallen to 50% of
 peak. Field angle is the same idea at 10%, and describes the visible spill.
+
+<p class="vi-block vi-def">Góc chiếu (beam angle) là góc toàn phần giữa hai hướng mà cường độ sáng đã giảm còn 50% giá trị đỉnh. Góc trường (field angle) cùng khái niệm đó ở mức 10%, mô tả vùng sáng tràn còn nhìn thấy được.</p>
 
 ```
 spot diameter = 2 × distance × tan(beam angle ÷ 2)
@@ -51,6 +69,8 @@ import WallLighting from '../../components/diagrams/WallLighting.astro';
 
 At 4 m throw:
 
+<p class="vi-block vi-def">Với khoảng cách chiếu 4 m:</p>
+
 | Beam | Spot diameter | Character |
 |---|---|---|
 | 10° | 0.7 m | Object accent, single sculpture |
@@ -59,35 +79,60 @@ At 4 m throw:
 | 36° | 2.60 m | Wide accent, circulation |
 | 60° | 4.60 m | General downlight |
 
+<p class="vi-block vi-def">Các cột: góc chiếu · đường kính vệt sáng · tính chất. 10°: 0.7 m — nhấn một vật, một tác phẩm điêu khắc · 15°: 1.05 m — tranh, tâm bàn · 24°: 1.70 m — nhấn sáng chung, nhóm ghế ngồi · 36°: 2.60 m — nhấn sáng rộng, lối đi · 60°: 4.60 m — downlight chiếu sáng chung.</p>
+
 Two numbers worth memorising: at a 3 m throw a 24° beam gives roughly a 1.3 m pool, and a 60°
 beam roughly 3.5 m. Most residential and hospitality sketching happens around those.
 
+<p class="vi-block vi-def">Hai con số nên thuộc lòng: ở khoảng cách chiếu 3 m, góc chiếu 24° cho vệt sáng khoảng 1.3 m, còn góc 60° khoảng 3.5 m. Phần lớn việc phác thảo cho nhà ở và khách sạn, nhà hàng xoay quanh hai mốc đó.</p>
+
 ## Spacing to height ratio
+
+<p class="vi-block vi-heading">Tỷ lệ khoảng cách trên chiều cao</p>
 
 For even general lighting on a horizontal plane, spacing between luminaires should not exceed
 roughly 1.0–1.5 × the mounting height above the working plane, depending on the distribution.
+
+<p class="vi-block vi-def">Để chiếu sáng chung đều trên mặt phẳng ngang, khoảng cách giữa các bộ đèn không nên vượt quá khoảng 1.0–1.5 lần chiều cao lắp đặt tính từ mặt phẳng làm việc, tuỳ theo phân bố quang của đèn.</p>
 
 For a 2.7 m ceiling and a 0.8 m desk, the height above the plane is 1.9 m, so downlights want to
 sit at roughly 1.9–2.6 m centres. If the architect's reflected ceiling plan shows 4 m centres,
 the room will be scalloped and patchy no matter which fixture you pick.
 
+<p class="vi-block vi-def">Với trần 2.7 m và bàn cao 0.8 m, chiều cao trên mặt phẳng làm việc là 1.9 m, nên downlight cần đặt cách nhau khoảng 1.9–2.6 m. Nếu bản vẽ mặt bằng trần phản chiếu của kiến trúc sư bố trí cách nhau 4 m, căn phòng sẽ loang lổ vệt sáng hình vỏ sò dù bạn chọn đèn nào.</p>
+
 ## Wall washing geometry
+
+<p class="vi-block vi-heading">Hình học rửa tường</p>
 
 To wash a wall evenly rather than graze it, the rule of thumb is:
 
+<p class="vi-block vi-def">Để rửa tường (wall washing) đều thay vì chiếu sượt, quy tắc kinh nghiệm là:</p>
+
 - Offset from the wall ≈ **one third of the wall height**
 - Spacing between washers ≈ **the same as the offset**, or slightly more
+
+<ul class="vi-block vi-def">
+<li>Khoảng cách từ tường ≈ <strong>một phần ba chiều cao tường</strong></li>
+<li>Khoảng cách giữa các đèn rửa tường ≈ <strong>bằng khoảng cách từ tường</strong>, hoặc lớn hơn một chút</li>
+</ul>
 
 For a 3 m wall: fixtures roughly 1 m off the wall at roughly 1–1.2 m centres. Move to 0.15 m off
 the wall and you are no longer washing, you are grazing — which is a legitimate choice, but a
 different one, and it will reveal every imperfection in the plaster.
 
+<p class="vi-block vi-def">Với tường cao 3 m: đặt đèn cách tường khoảng 1 m, các đèn cách nhau khoảng 1–1.2 m. Dời đèn vào cách tường 0.15 m thì bạn không còn rửa tường nữa mà đang chiếu sượt (grazing) — đó là một lựa chọn hợp lý nhưng khác hẳn, và nó sẽ phơi bày mọi khuyết điểm của lớp trát.</p>
+
 <WallLighting />
 
 ## Working example
 
+<p class="vi-block vi-heading">Ví dụ thực hành</p>
+
 *A 4 m high hotel lobby. The client wants a 2 m diameter pool of light on a round table, at
 roughly 300 lux, with a sharp edge.*
+
+<p class="vi-block vi-def"><em>Sảnh khách sạn cao 4 m. Khách hàng muốn một vệt sáng đường kính 2 m trên bàn tròn, khoảng 300 lux, mép sáng sắc nét.</em></p>
 
 1. Throw is 4 m minus 0.75 m table height = **3.25 m**.
 2. Required beam ≈ 2 × arctan(1.0 / 3.25) = **34°**. Specify a 36° optic.
@@ -95,12 +140,25 @@ roughly 300 lux, with a sharp edge.*
 4. Ask the manufacturer for a 36° fitting with ≥3200 cd centre-beam. If the datasheet says
    2000 cd, you need two fittings, a narrower optic, or a lower target.
 
+<ol class="vi-block vi-def">
+<li>Khoảng cách chiếu là 4 m trừ chiều cao bàn 0.75 m = <strong>3.25 m</strong>.</li>
+<li>Góc chiếu cần thiết ≈ 2 × arctan(1.0 / 3.25) = <strong>34°</strong>. Chọn optic 36°.</li>
+<li>Cường độ đỉnh cần thiết: I = E × d² = 300 × 3.25² = <strong>3170 cd</strong>.</li>
+<li>Hỏi nhà sản xuất loại đèn 36° có cường độ tâm chùm ≥3200 cd. Nếu datasheet ghi 2000 cd, bạn cần hai đèn, một optic hẹp hơn, hoặc hạ mục tiêu xuống.</li>
+</ol>
+
 That is a complete, defensible answer in about ninety seconds, and it is right to within the
 tolerance of the finishes.
 
+<p class="vi-block vi-def">Đó là một câu trả lời hoàn chỉnh, bảo vệ được, trong khoảng chín mươi giây, và chính xác trong phạm vi sai số của vật liệu hoàn thiện.</p>
+
 ## Do not skip the software
+
+<p class="vi-block vi-heading">Đừng bỏ qua phần mềm</p>
 
 Hand calculations get you the concept and keep you credible in a room. They cannot handle
 interreflection, and interreflection is where 20–40% of the light in a bright, light-coloured
 room comes from. Sketch by hand, verify in Dialux, Relux or AGi32, and always mock up anything
 where texture or a specific finish is doing the work.
+
+<p class="vi-block vi-def">Tính tay giúp bạn có ý tưởng và giữ uy tín trong phòng họp. Nhưng nó không xử lý được phản xạ liên hoàn (interreflection), trong khi phản xạ liên hoàn tạo ra 20–40% ánh sáng trong một căn phòng sáng màu. Hãy phác bằng tay, kiểm chứng bằng Dialux, Relux hoặc AGi32, và luôn làm mẫu thử tại chỗ (mock-up) cho bất cứ chỗ nào mà kết cấu bề mặt hay một lớp hoàn thiện cụ thể đóng vai trò chính.</p>

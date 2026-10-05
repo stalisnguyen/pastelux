@@ -2,9 +2,11 @@
 interface Props {
   eyebrow?: string;
   title: string;
+  /** Vietnamese title, a quieter second line under the English one. */
+  viTitle?: string;
   lede?: string;
 }
-const { eyebrow, title, lede } = Astro.props;
+const { eyebrow, title, viTitle, lede } = Astro.props;
 ---
 
 <div class="pt-10 pb-7">
@@ -16,6 +18,13 @@ const { eyebrow, title, lede } = Astro.props;
     )
   }
   <h1 class="text-3xl md:text-[2.4rem] font-semibold">{title}</h1>
+  {
+    viTitle && (
+      <p class="vi-block mt-1 text-[1.15rem] md:text-[1.3rem] font-medium" style="color: var(--vi-text)">
+        {viTitle}
+      </p>
+    )
+  }
   {
     lede && (
       <p class="mt-3 text-[1.05rem] max-w-2xl leading-relaxed" style="color: var(--text-muted)">

@@ -10,14 +10,15 @@
   class="lb"
   aria-label="Image viewer"
 >
-  <button class="lb-close" data-lb-close aria-label="Close viewer">&times;</button>
-  <button class="lb-nav lb-prev" data-lb-prev aria-label="Previous image">&#8249;</button>
-  <button class="lb-nav lb-next" data-lb-next aria-label="Next image">&#8250;</button>
+  <button class="lb-close" data-lb-close aria-label="Close viewer" title="Đóng">&times;</button>
+  <button class="lb-nav lb-prev" data-lb-prev aria-label="Previous image" title="Ảnh trước">&#8249;</button>
+  <button class="lb-nav lb-next" data-lb-next aria-label="Next image" title="Ảnh sau">&#8250;</button>
 
   <figure class="lb-fig">
     <img id="lb-img" alt="" />
     <figcaption>
       <span id="lb-cap"></span>
+      <span id="lb-cap-vi" class="vi-block" style="color: var(--vi-text)"></span>
       <span id="lb-count" class="lb-count"></span>
     </figcaption>
   </figure>
@@ -135,6 +136,8 @@
       img.src = el.dataset.full ?? el.href;
       img.alt = el.dataset.alt ?? '';
       if (cap) cap.textContent = el.dataset.caption ?? el.dataset.alt ?? '';
+      const capVi = document.getElementById('lb-cap-vi');
+      if (capVi) capVi.textContent = el.dataset.viCaption ?? '';
       if (count) count.textContent = `${index + 1} / ${triggers.length}`;
     };
 

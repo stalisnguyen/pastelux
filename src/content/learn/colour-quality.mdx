@@ -1,9 +1,11 @@
 ---
 title: 'Colour quality: what CRI hides and TM-30 reveals'
+viTitle: 'Chất lượng màu: điều CRI che giấu và TM-30 phơi bày'
 summary: 'Ra 90 is not a specification. Duv, R9, SDCM and TM-30 are where colour is actually won or lost.'
 viSummary: 'Ra 90 không phải là một spec. Duv, R9, SDCM và TM-30 mới là nơi quyết định màu sắc đẹp hay hỏng.'
 chapter: 2
 chapterTitle: 'Light sources & luminaires'
+viChapterTitle: 'Nguồn sáng & bộ đèn'
 order: 2
 topics: ['optics', 'product']
 readingMinutes: 8
@@ -14,26 +16,46 @@ A datasheet that says "3000 K, Ra 90" has told you almost nothing. Two products 
 description can render a client's marble lobby as warm cream or as slightly sour green, and only
 one of them will survive the site walk.
 
+<p class="vi-block vi-def">Một datasheet ghi "3000 K, Ra 90" gần như chưa nói gì với bạn. Hai sản phẩm cùng khớp mô tả đó có thể khiến sảnh đá marble của khách hàng hiện lên màu kem ấm hoặc hơi xanh chua, và chỉ một trong hai qua được buổi kiểm tra công trường.</p>
+
 ## CCT is a shorthand, not an address
+
+<p class="vi-block vi-heading">CCT là cách gọi tắt, không phải toạ độ</p>
 
 Correlated colour temperature reduces a two-dimensional chromaticity to one number: the
 temperature of the blackbody radiator that looks most similar. Any point on a line perpendicular
 to the Planckian locus maps to the same CCT.
 
+<p class="vi-block vi-def">Nhiệt độ màu tương quan (CCT) rút gọn một toạ độ màu hai chiều thành một con số: nhiệt độ của vật đen bức xạ có màu trông giống nhất. Mọi điểm trên một đường vuông góc với quỹ tích Planck (Planckian locus) đều cho cùng một CCT.</p>
+
 Which means **two 3000 K sources can sit visibly apart** — one slightly above the locus (green),
 one below (pink). The distance is **Duv**, and it is the number that decides whether your white
 walls look clean.
+
+<p class="vi-block vi-def">Nghĩa là <strong>hai nguồn 3000 K có thể lệch nhau thấy rõ</strong> — một nằm hơi trên quỹ tích (ngả xanh lá), một nằm dưới (ngả hồng). Khoảng cách đó là <strong>Duv</strong>, và đó là con số quyết định tường trắng của bạn trông có sạch hay không.</p>
 
 - Positive Duv → green/yellow cast. Skin looks ill. Marble looks dirty.
 - Negative Duv → pink/magenta cast. Often flattering, sometimes cloying.
 - Architectural acceptance window: **|Duv| ≤ 0.006**, tighter for hospitality and healthcare.
 
+<ul class="vi-block vi-def">
+<li>Duv dương → ngả xanh lá/vàng. Da trông ốm yếu. Đá marble trông bẩn.</li>
+<li>Duv âm → ngả hồng/tím. Thường tôn người, đôi khi ngọt quá đà.</li>
+<li>Ngưỡng chấp nhận cho kiến trúc: <strong>|Duv| ≤ 0.006</strong>, chặt hơn cho khách sạn và y tế.</li>
+</ul>
+
 Specify CCT **and** Duv, or specify a chromaticity target with an SDCM tolerance. Never CCT alone.
+
+<p class="vi-block vi-def">Hãy chỉ định CCT <strong>và</strong> Duv, hoặc chỉ định một toạ độ màu mục tiêu kèm dung sai SDCM. Đừng bao giờ chỉ ghi CCT.</p>
 
 ## SDCM: the number that keeps a run of lights looking like one product
 
+<p class="vi-block vi-heading">SDCM: con số giữ cho cả dãy đèn trông như cùng một sản phẩm</p>
+
 MacAdam ellipses describe how far chromaticity can drift before an average observer notices.
 Tolerance is quoted in steps.
+
+<p class="vi-block vi-def">Elip MacAdam mô tả toạ độ màu có thể trôi bao xa trước khi một người quan sát bình thường nhận ra. Dung sai được ghi theo bậc (step).</p>
 
 | Tolerance | Where it belongs |
 |---|---|
@@ -42,55 +64,95 @@ Tolerance is quoted in steps.
 | 5 SDCM | Acceptable only where fittings are never seen together |
 | 7 SDCM | Industrial and back-of-house only |
 
+<p class="vi-block vi-def">Dung sai · Dùng ở đâu: 2 SDCM — bảo tàng, bán lẻ cao cấp, dãy đèn liên tục lộ ra; 3 SDCM — mặc định cho mọi dự án kiến trúc; 5 SDCM — chỉ chấp nhận khi các đèn không bao giờ được nhìn thấy cùng lúc; 7 SDCM — chỉ cho công nghiệp và khu hậu cần.</p>
+
 A 5-SDCM run of coves on a white ceiling shows visible banding. This is one of the most common
 and most expensive post-completion complaints in the industry, and it is entirely avoidable at
 specification stage for a small cost premium.
 
+<p class="vi-block vi-def">Một dãy hắt trần (cove) 5-SDCM trên trần trắng sẽ lộ rõ các dải lệch màu. Đây là một trong những khiếu nại sau hoàn thiện phổ biến và tốn kém nhất của ngành, và hoàn toàn tránh được ở giai đoạn chỉ định với chi phí tăng thêm rất nhỏ.</p>
+
 ## CRI, and its blind spot
+
+<p class="vi-block vi-heading">CRI và điểm mù của nó</p>
 
 Ra averages the colour shift of eight **pastel** test samples, R1–R8. Nothing saturated is in
 that average. A phosphor-converted LED can be optimised to score well on eight desaturated
 patches while rendering deep red as brown.
 
+<p class="vi-block vi-def">Ra lấy trung bình độ lệch màu của tám mẫu thử màu <strong>nhạt</strong>, R1–R8. Không có màu bão hoà nào trong phép trung bình đó. Một LED phủ phosphor có thể được tối ưu để ghi điểm cao trên tám mẫu nhạt màu trong khi biến màu đỏ đậm thành màu nâu.</p>
+
 That is why **R9** — strong red — is the number to demand alongside Ra:
+
+<p class="vi-block vi-def">Đó là lý do <strong>R9</strong> — đỏ đậm — là con số phải đòi kèm theo Ra:</p>
 
 - **R9 ≥ 50**: minimum for anything with people in it
 - **R9 ≥ 90**: retail food, healthcare, hospitality, timber and textile-heavy interiors
 
+<ul class="vi-block vi-def">
+<li><strong>R9 ≥ 50</strong>: tối thiểu cho mọi không gian có người</li>
+<li><strong>R9 ≥ 90</strong>: bán lẻ thực phẩm, y tế, khách sạn, nội thất nhiều gỗ và vải</li>
+</ul>
+
 Skin tone, raw meat, red wine, teak, brick and every warm textile in the building depend on R9.
 It is routinely the weakest figure on a datasheet, and it is routinely left off the spec.
 
+<p class="vi-block vi-def">Màu da, thịt sống, rượu vang đỏ, gỗ teak, gạch và mọi loại vải tông ấm trong toà nhà đều phụ thuộc vào R9. Nó thường là con số yếu nhất trên datasheet, và cũng thường bị bỏ sót khỏi spec.</p>
+
 ## TM-30: two numbers instead of one
 
+<p class="vi-block vi-heading">TM-30: hai con số thay vì một</p>
+
 IES TM-30 uses 99 real-world colour samples and reports two figures:
+
+<p class="vi-block vi-def">IES TM-30 dùng 99 mẫu màu thực tế và báo cáo hai chỉ số:</p>
 
 - **Rf — fidelity.** How accurately colours match the reference. Analogous to Ra but far more
   robust. Target **Rf ≥ 85**.
 - **Rg — gamut.** Whether the source saturates or mutes colour overall. 100 is neutral,
   above 100 saturates, below 100 mutes. Target **Rg 95–110** for general architectural work.
 
+<ul class="vi-block vi-def">
+<li><strong>Rf — độ trung thực.</strong> Màu khớp với nguồn tham chiếu chính xác đến đâu. Tương tự Ra nhưng đáng tin cậy hơn nhiều. Mục tiêu <strong>Rf ≥ 85</strong>.</li>
+<li><strong>Rg — gam màu.</strong> Nhìn tổng thể, nguồn sáng làm màu rực lên hay nhạt đi. 100 là trung tính, trên 100 làm rực, dưới 100 làm nhạt. Mục tiêu <strong>Rg 95–110</strong> cho công trình kiến trúc thông thường.</li>
+</ul>
+
 The pair matters because they are independent. A source can have Rf 92 and Rg 88 — accurate but
 visibly flat and lifeless. Retail often deliberately wants Rg 105–115 to make merchandise pop.
 Rf alone cannot express that intent; Ra cannot express it at all.
+
+<p class="vi-block vi-def">Cặp số này quan trọng vì chúng độc lập với nhau. Một nguồn có thể có Rf 92 và Rg 88 — chính xác nhưng trông phẳng và thiếu sức sống. Bán lẻ thường cố ý muốn Rg 105–115 để hàng hoá nổi bật. Riêng Rf không thể hiện được ý đồ đó; Ra thì hoàn toàn không.</p>
 
 TM-30 also produces a colour vector graphic showing *which* hue bins are shifted and in which
 direction. When a client says "the reds look wrong", that graphic is how you find out whether
 they are right.
 
+<p class="vi-block vi-def">TM-30 còn tạo ra một biểu đồ vector màu cho thấy <em>những</em> nhóm sắc độ (hue bin) nào bị lệch và lệch theo hướng nào. Khi khách hàng nói "màu đỏ trông sai sai", biểu đồ đó là cách bạn biết họ có đúng hay không.</p>
+
 ## A specification that actually protects you
+
+<p class="vi-block vi-heading">Một bản spec thực sự bảo vệ bạn</p>
 
 > Nominal 3000 K, Duv 0.000 ± 0.004, ≤3 SDCM initial and maintained,
 > Ra ≥ 90, R9 ≥ 50, TM-30 Rf ≥ 85 and Rg 95–110.
 > Chromaticity maintenance ≤ 3 SDCM over the warranty period.
 > LM-80 data with TM-21 projection at the specified drive current and Tc to be provided.
 
+<p class="vi-block vi-def">Danh định 3000 K, Duv 0.000 ± 0.004, ≤3 SDCM ban đầu và duy trì, Ra ≥ 90, R9 ≥ 50, TM-30 Rf ≥ 85 và Rg 95–110. Duy trì toạ độ màu ≤ 3 SDCM trong suốt thời gian bảo hành. Cung cấp dữ liệu LM-80 kèm ngoại suy TM-21 tại đúng dòng điện vận hành và Tc đã chỉ định.</p>
+
 Two clauses in there do most of the work and are almost always missing. **"Maintained"** SDCM
 stops a supplier delivering a tight initial bin that drifts apart within two years. And
 **LM-80 data at the actual drive current and case temperature** stops an L70 figure measured on
 a cool bench being applied to a fitting sealed in an insulated ceiling void at 65 °C.
 
+<p class="vi-block vi-def">Hai điều khoản trong đó gánh phần lớn công việc và gần như luôn bị thiếu. SDCM <strong>"duy trì"</strong> ngăn nhà cung cấp giao một bin ban đầu thật chặt rồi trôi lệch nhau trong vòng hai năm. Và <strong>dữ liệu LM-80 tại dòng điện vận hành và nhiệt độ vỏ thực tế</strong> ngăn việc một con số L70 đo trên bàn thử mát mẻ bị áp cho một bộ đèn kín trong khoang trần cách nhiệt ở 65 °C.</p>
+
 ## The practical check
+
+<p class="vi-block vi-heading">Kiểm tra thực tế</p>
 
 Before you commit to a product across a whole building, get three samples from **different
 production batches**, run them side by side on a white wall for an hour, and look at them next to
 the actual finish samples. Every number above is a proxy for that fifteen-minute test.
+
+<p class="vi-block vi-def">Trước khi chốt một sản phẩm cho cả toà nhà, hãy lấy ba mẫu từ <strong>các lô sản xuất khác nhau</strong>, bật cạnh nhau trên một bức tường trắng trong một giờ, và nhìn chúng bên cạnh mẫu vật liệu hoàn thiện thật. Mọi con số ở trên chỉ là đại diện cho bài kiểm tra mười lăm phút đó.</p>

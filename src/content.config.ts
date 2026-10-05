@@ -9,9 +9,12 @@ const learn = defineCollection({
     summary: z.string(),
     /** Vietnamese one-liner, shown under the English on cards and article heads. */
     viSummary: z.string().optional(),
+    /** Vietnamese title, shown as a second line under the English one. */
+    viTitle: z.string().optional(),
     /** Chapter number drives ordering and the "01 · Fundamentals" grouping. */
     chapter: z.number(),
     chapterTitle: z.string(),
+    viChapterTitle: z.string().optional(),
     order: z.number().default(0),
     topics: z.array(z.string()).default([]),
     readingMinutes: z.number().default(5),
@@ -36,6 +39,8 @@ const daily = defineCollection({
           source: z.string(),
           published: z.string(),
           summary: z.string().default(''),
+          viTitle: z.string().default(''),
+          viSummary: z.string().default(''),
           topics: z.array(z.string()).default([]),
         })
       )
@@ -104,6 +109,7 @@ const events = defineCollection({
     /** Set when the host blocks automated checks, so check-links.mjs can skip it. */
     unverifiableUrl: z.string().optional(),
     note: z.string().optional(),
+    viNote: z.string().optional(),
   }),
 });
 
@@ -125,6 +131,7 @@ const criteria = defineCollection({
     ies: z.string(),
     vn: z.string(),
     note: z.string().optional(),
+    viNote: z.string().optional(),
   }),
 });
 
@@ -141,6 +148,7 @@ const projects = defineCollection({
   schema: z.object({
     title: z.string(),
     summary: z.string(),
+    viSummary: z.string().optional(),
     studio: z.string(),
     location: z.string(),
     year: z.number(),
@@ -153,6 +161,7 @@ const projects = defineCollection({
           src: z.string(),
           alt: z.string().min(8),
           caption: z.string().optional(),
+          viCaption: z.string().optional(),
         })
       )
       .min(1),
@@ -160,7 +169,14 @@ const projects = defineCollection({
     /** Set true for the shipped example so the UI can label it honestly. */
     placeholder: z.boolean().default(false),
     facts: z
-      .array(z.object({ label: z.string(), value: z.string() }))
+      .array(
+        z.object({
+          label: z.string(),
+          value: z.string(),
+          viLabel: z.string().optional(),
+          viValue: z.string().optional(),
+        })
+      )
       .default([]),
     topics: z.array(z.string()).default([]),
     updated: z.coerce.date(),

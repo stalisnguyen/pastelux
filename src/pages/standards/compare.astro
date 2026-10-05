@@ -20,6 +20,7 @@ const viGroup = new Map(
   <PageHeader
     eyebrow="Standards"
     title="Illuminance criteria, compared"
+    viTitle="So sánh tiêu chí độ rọi"
     lede="Maintained illuminance, glare, uniformity and colour rendering by space type — EN 12464-1:2021 alongside typical IES practice and Vietnamese TCVN 7114-1."
   >
     <p class="vi-block vi-def mt-2 text-[0.95rem] max-w-2xl leading-relaxed">
@@ -44,6 +45,14 @@ const viGroup = new Map(
       your contract calls up. EN 12464-1:2021 also applies context modifiers and separate
       cylindrical, wall and ceiling illuminance requirements that a single number cannot express.
     </span>
+    <span class="vi-block vi-def mt-2 text-[0.85rem]">
+      <strong>Giá trị tham khảo — kiểm tra trước khi dùng.</strong> Bảng này để định hướng nhanh,
+      không dùng để nghiệm thu thiết kế. Cột EN là các giá trị tham chiếu thường được trích của
+      EN 12464-1:2021; cột IES thể hiện thực hành phổ biến ở Bắc Mỹ chứ không phải một con số trích
+      dẫn duy nhất; cột VN theo TCVN 7114-1:2008. Đối chiếu từng con số với bản tiêu chuẩn hiện hành
+      đã mua và phiên bản hợp đồng yêu cầu. EN 12464-1:2021 còn có hệ số điều chỉnh theo bối cảnh và
+      các yêu cầu riêng về độ rọi trụ, độ rọi tường và trần mà một con số không thể diễn tả hết.
+    </span>
   </div>
 
   <TaskAreas />
@@ -51,6 +60,7 @@ const viGroup = new Map(
   <div class="flex flex-wrap items-center gap-2 mb-4" data-pagefind-ignore>
     <button class="chip chip-accent grp-btn cursor-pointer" data-group="all" type="button" aria-pressed="true">
       All
+      <span class="vi-block-inline" style="color: var(--vi-text)"> · Tất cả</span>
     </button>
     {
       groups.map((g) => (
@@ -64,6 +74,7 @@ const viGroup = new Map(
       id="crit-filter"
       type="search"
       placeholder="Lọc không gian — vd: office, văn phòng, phòng họp…"
+      data-ph-en="Filter spaces — e.g. office, meeting room…"
       class="field !py-1 !text-[0.85rem] w-full sm:!w-auto sm:ml-auto sm:min-w-[10rem]"
       aria-label="Filter spaces"
     />
@@ -76,7 +87,7 @@ const viGroup = new Map(
       </caption>
       <thead>
         <tr>
-          <th scope="col" class="min-w-[15rem]">Space</th>
+          <th scope="col" class="min-w-[15rem]">Space<span class="vi-block-inline font-normal normal-case tracking-normal" style="color: var(--vi-text)"> · Không gian</span></th>
           <th scope="col" title="Maintained illuminance, EN 12464-1:2021">Ēm (lx)<br /><span class="font-normal normal-case tracking-normal opacity-70">EN</span></th>
           <th scope="col" title="Unified Glare Rating limit">UGR</th>
           <th scope="col" title="Minimum uniformity on the task area">Uo</th>
@@ -110,6 +121,9 @@ const viGroup = new Map(
                     {r.data.note}
                   </p>
                 )}
+                {r.data.viNote && (
+                  <p class="vi-block vi-def text-[0.76rem] mt-1 leading-relaxed">{r.data.viNote}</p>
+                )}
               </td>
               <td class="num">
                 <button
@@ -141,6 +155,10 @@ const viGroup = new Map(
   <p class="text-[0.82rem] mt-4 pb-4" style="color: var(--text-faint)">
     Click any EN value to copy it. Full standard list on the
     <a href={url('/standards')} class="no-underline hover:underline">standards page</a>.
+    <span class="vi-block mt-1" style="color: var(--vi-text)">
+      Bấm vào số ở cột EN để copy. Danh sách tiêu chuẩn đầy đủ ở
+      <a href={url('/standards')} class="no-underline hover:underline">trang tiêu chuẩn</a>.
+    </span>
   </p>
 </Base>
 

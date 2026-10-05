@@ -20,6 +20,7 @@ const stops = Array.from({ length: 41 }, (_, i) => NM_MIN + i * 10);
 <Figure
   label="Photopic and melanopic action spectra plotted against wavelength"
   caption="The lumen is defined by V(λ), which peaks at 555 nm. Melanopsin — the pigment driving circadian response — peaks near 490 nm. The gap between the two curves is the whole reason a second metric was needed: the same lux can be strongly alerting or nearly neutral. Curve shapes are schematic."
+  viCaption="Lumen được định nghĩa theo đường <b>photopic V(λ)</b> (độ nhạy thị giác ban ngày), đỉnh ở 555 nm. Melanopsin — sắc tố điều khiển phản ứng nhịp sinh học — có đỉnh <b>melanopic</b> gần 490 nm. Khoảng lệch giữa hai đường cong chính là lý do cần thêm một thước đo thứ hai: cùng một mức lux có thể rất kích thích tỉnh táo hoặc gần như không tác động. Trục ngang <b>wavelength (nm)</b> là bước sóng, trục đứng <b>relative response</b> là đáp ứng tương đối. Hình dạng đường cong chỉ mang tính sơ đồ."
 >
   <svg viewBox={`0 0 ${W} ${H}`} role="img">
     <defs>

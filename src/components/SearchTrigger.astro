@@ -8,6 +8,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   class="btn !py-1.5 !px-2.5 md:!pr-2"
   aria-label="Search the site"
   aria-haspopup="dialog"
+  title="Tìm kiếm"
 >
   <svg
     width="16"
@@ -51,16 +52,18 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       id="search-input"
       type="search"
       autocomplete="off"
-      placeholder="Search articles, terms, standards…"
+      placeholder="Tìm bài viết, thuật ngữ, tiêu chuẩn…"
+      data-ph-en="Search articles, terms, standards…"
       class="flex-1 bg-transparent border-0 outline-none text-base"
       style="color: var(--text)"
       aria-label="Search query"
     />
-    <button id="search-close" class="btn !px-2 !py-1 text-xs" type="button">Esc</button>
+    <button id="search-close" class="btn !px-2 !py-1 text-xs" type="button" title="Đóng">Esc</button>
   </div>
   <div id="search-results" class="max-h-[60vh] overflow-y-auto p-2 text-sm">
     <p class="px-3 py-6 text-center" style="color: var(--text-faint)">
       Start typing to search.
+      <span class="vi-block mt-1" style="color: var(--vi-text)">Gõ để bắt đầu tìm kiếm.</span>
     </p>
   </div>
 </dialog>
@@ -121,15 +124,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
     async function run() {
       const q = input.value.trim();
-      if (!q) return message('Start typing to search.');
+      if (!q) return message('Start typing to search.<span class="vi-block-inline" style="color: var(--vi-text)"> · Gõ để bắt đầu tìm.</span>');
       await ensureIndex();
       if (loadFailed || !pagefind) {
-        return message('Search index unavailable. Run <code>npm run build</code> first.');
+        return message('Search index unavailable. Run <code>npm run build</code> first.<span class="vi-block-inline" style="color: var(--vi-text)"> · Chưa có chỉ mục tìm kiếm.</span>');
       }
       const mine = ++seq;
       const search = await pagefind.search(q);
       if (mine !== seq) return;
-      if (!search.results.length) return message(`No results for “${escapeHtml(q)}”.`);
+      if (!search.results.length) return message(`No results for “${escapeHtml(q)}”.<span class="vi-block-inline" style="color: var(--vi-text)"> · Không tìm thấy kết quả.</span>`);
 
       const top = await Promise.all(search.results.slice(0, 8).map((r) => r.data()));
       if (mine !== seq) return;

@@ -76,3 +76,15 @@ export function url(path: string): string {
   if (path === '/') return base || '/';
   return `${base}${path.startsWith('/') ? path : `/${path}`}`;
 }
+
+/** Vietnamese names for project typologies (Projects list chips, cards, breadcrumbs). */
+export const VI_TYPOLOGY: Record<string, string> = {
+  Restaurant: 'Nhà hàng',
+  Residential: 'Nhà ở',
+  Museum: 'Bảo tàng',
+  'Commercial centre': 'Trung tâm thương mại',
+  Office: 'Văn phòng',
+  Hospitality: 'Khách sạn',
+  Retail: 'Bán lẻ',
+  'Façade': 'Mặt dựng',
+};

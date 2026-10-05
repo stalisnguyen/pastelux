@@ -23,6 +23,9 @@ const spokes = [-75, -60, -45, -30, -15, 0, 15, 30, 45, 60, 75];
   label={`Polar photometric curves comparing ${beams.join('°, ')}° beam angles`}
   caption={caption ??
     'Polar intensity distribution for three optics of identical lumen output. The radius at any angle is the relative luminous intensity in that direction — the same flux, shaped three different ways.'}
+  viCaption={caption
+    ? undefined
+    : 'Biểu đồ cực phân bố cường độ sáng của ba optic có cùng quang thông. Bán kính tại mỗi góc là cường độ sáng tương đối theo hướng đó — cùng một lượng quang thông, được định hình theo ba cách. Chú giải <b>… beam</b> ghi góc chiếu (beam angle) của từng optic; các vòng <b>%</b> là cường độ tương đối, các nhãn <b>0°–75°</b> là góc lệch so với phương thẳng đứng hướng xuống.'}
 >
   <svg viewBox={`0 0 ${W} ${H}`} role="img">
     <!-- radial grid -->

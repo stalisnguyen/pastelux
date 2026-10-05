@@ -1,9 +1,11 @@
 ---
 title: 'Choosing a control protocol in 2026'
+viTitle: 'Chọn giao thức điều khiển năm 2026'
 summary: '0–10 V, DALI-2, D4i, DALI+, DMX and Matter — what each is genuinely for, and the questions that decide between them.'
 viSummary: '0–10 V, DALI-2, D4i, DALI+, DMX và Matter — mỗi thứ thực sự dùng để làm gì, và ba câu hỏi giúp bạn chọn đúng.'
 chapter: 4
 chapterTitle: 'Controls'
+viChapterTitle: 'Điều khiển'
 order: 1
 topics: ['controls']
 readingMinutes: 8
@@ -13,12 +15,18 @@ updated: 2026-07-19
 Control is where lighting schemes are most often compromised, usually because the protocol was
 chosen by the electrical contractor on price rather than by the designer on intent.
 
+<p class="vi-block vi-def">Điều khiển là khâu mà phương án chiếu sáng hay bị thoả hiệp nhất, thường vì giao thức do nhà thầu điện chọn theo giá, chứ không phải do người thiết kế chọn theo ý đồ.</p>
+
 ## The field, briefly
+
+<p class="vi-block vi-heading">Tổng quan nhanh</p>
 
 **0–10 V / 1–10 V.** Analogue. A low-voltage pair carries a dimming level to a whole circuit.
 Cheap, universal, and understood by every electrician on earth. Not addressable — the circuit is
 the smallest unit of control. Polarity-sensitive, susceptible to voltage drop on long runs, and
 gives you no feedback whatsoever. Legitimate for simple, static installations with few zones.
+
+<p class="vi-block vi-def"><strong>0–10 V / 1–10 V.</strong> Analogue. Một cặp dây điện áp thấp truyền mức điều chỉnh độ sáng (dimming) cho cả một mạch. Rẻ, phổ biến, thợ điện nào cũng hiểu. Không định địa chỉ được — đơn vị điều khiển nhỏ nhất là cả mạch. Nhạy với cực tính, dễ sụt áp trên tuyến dây dài, và hoàn toàn không phản hồi trạng thái. Chỉ hợp lý cho công trình đơn giản, tĩnh, ít vùng.</p>
 
 **DALI-2.** Digital, addressable, bidirectional. Up to 64 addresses per bus, 16 groups, 16 scenes.
 Every fitting is individually reachable and reports its own status and faults. DALI-2 (unlike the
@@ -26,76 +34,116 @@ original DALI) certifies control devices as well as gear, so certified parts gen
 interoperate. This is the default for commercial architectural work and should be your starting
 assumption.
 
+<p class="vi-block vi-def"><strong>DALI-2.</strong> Kỹ thuật số, định địa chỉ được, truyền hai chiều. Tối đa 64 địa chỉ mỗi bus, 16 nhóm, 16 cảnh sáng (scene). Từng bộ đèn đều gọi riêng được và tự báo trạng thái, lỗi của mình. Khác với DALI đời đầu, DALI-2 chứng nhận cả thiết bị điều khiển lẫn bộ nguồn (control gear), nên các sản phẩm đã chứng nhận thực sự tương thích với nhau. Đây là mặc định cho công trình kiến trúc thương mại và nên là giả định xuất phát của bạn.</p>
+
 **D4i.** DALI-2 plus a defined data model inside the luminaire — energy metering, diagnostics,
 lifetime and temperature data — and a bus supply for a sensor mounted on the fitting. The
 foundation for luminaire-level analytics and for connected outdoor lighting.
+
+<p class="vi-block vi-def"><strong>D4i.</strong> DALI-2 cộng thêm một mô hình dữ liệu chuẩn bên trong bộ đèn — đo điện năng, chẩn đoán, dữ liệu tuổi thọ và nhiệt độ — cùng nguồn bus cho cảm biến gắn trên đèn. Đây là nền tảng cho phân tích dữ liệu ở cấp bộ đèn và cho chiếu sáng ngoài trời kết nối mạng.</p>
 
 **DALI+.** DALI messaging carried over IP and wireless (Thread) rather than the two-wire bus.
 Lets a wireless retrofit zone share one commissioning model and one control language with the
 wired new-build parts of the same estate. Actively maturing through 2026, with wireless-to-DALI
 gateways now common at the fair stands.
 
+<p class="vi-block vi-def"><strong>DALI+.</strong> Bản tin DALI truyền qua IP và không dây (Thread) thay vì bus hai dây. Nhờ đó, một vùng cải tạo dùng không dây có thể chung một mô hình hiệu chỉnh nghiệm thu (commissioning) và một ngôn ngữ điều khiển với phần xây mới đi dây trong cùng quần thể công trình. Đang hoàn thiện nhanh trong năm 2026; gateway từ không dây sang DALI giờ đã phổ biến tại các gian hàng triển lãm.</p>
+
 **DMX512 / RDM.** From stage lighting. 512 unidirectional channels per universe, high refresh
 rate, built for smooth colour and movement. The standard choice for colour-changing façades,
 media walls and any pixel work. RDM adds a return path for addressing and status.
+
+<p class="vi-block vi-def"><strong>DMX512 / RDM.</strong> Xuất phát từ chiếu sáng sân khấu. 512 kênh một chiều mỗi universe, tốc độ làm tươi cao, sinh ra để chuyển màu và chuyển động mượt. Là lựa chọn chuẩn cho mặt dựng đổi màu, media wall và mọi thiết kế điều khiển theo pixel. RDM bổ sung đường phản hồi để đặt địa chỉ và đọc trạng thái.</p>
 
 **Matter.** IP-based application layer over Wi-Fi and Thread, aimed at consumer interoperability.
 Increasingly present where residential and hospitality lighting meets the wider smart-building
 stack. It is not a replacement for DALI or DMX in architectural work — it lacks the addressability
 granularity and scene fidelity — but it is a real integration layer at the boundary.
 
+<p class="vi-block vi-def"><strong>Matter.</strong> Lớp ứng dụng chạy trên IP qua Wi-Fi và Thread, nhắm tới khả năng tương thích cho thiết bị dân dụng. Ngày càng hay gặp ở nơi chiếu sáng nhà ở và khách sạn giao với hệ thống toà nhà thông minh rộng hơn. Nó không thay thế DALI hay DMX trong công trình kiến trúc — thiếu độ chi tiết về địa chỉ và độ trung thực của cảnh sáng — nhưng là một lớp tích hợp thực sự ở vùng ranh giới.</p>
+
 ## Three questions that decide it
+
+<p class="vi-block vi-heading">Ba câu hỏi quyết định lựa chọn</p>
 
 **1. Do you need to address the individual fitting?**
 If a single luminaire ever needs a different level or colour from its neighbour on the same
 circuit, you need addressability. That rules out 0–10 V immediately. In practice this is true of
 almost every scheme with any design ambition.
 
+<p class="vi-block vi-def"><strong>1. Bạn có cần điều khiển riêng từng bộ đèn không?</strong> Nếu có lúc một bộ đèn cần mức sáng hay màu khác với bộ đèn bên cạnh trên cùng mạch, bạn cần khả năng định địa chỉ. Điều đó loại ngay 0–10 V. Trên thực tế, gần như phương án nào có chút tham vọng thiết kế cũng rơi vào trường hợp này.</p>
+
 **2. Do you need smooth colour at high refresh?**
 Colour-changing façades, media content, anything with movement: DMX. DALI can change colour
 (device type 8) but its refresh rate makes fades visibly steppy on large fields.
+
+<p class="vi-block vi-def"><strong>2. Bạn có cần chuyển màu mượt với tốc độ làm tươi cao không?</strong> Mặt dựng đổi màu, nội dung media, bất cứ thứ gì có chuyển động: dùng DMX. DALI vẫn đổi màu được (device type 8) nhưng tốc độ làm tươi khiến các lần chuyển (fade) bị giật bậc rõ rệt trên mảng lớn.</p>
 
 **3. Do you need the installation to report back?**
 Energy sub-metering, lamp-failure alerts, hours-run for maintenance planning: DALI-2, and D4i if
 you want data at the luminaire rather than the driver.
 
+<p class="vi-block vi-def"><strong>3. Bạn có cần hệ thống báo ngược về không?</strong> Đo điện năng theo nhánh, cảnh báo hỏng đèn, đếm giờ vận hành để lập kế hoạch bảo trì: dùng DALI-2, và D4i nếu bạn muốn dữ liệu nằm ở bộ đèn chứ không chỉ ở driver.</p>
+
 A very common and entirely correct answer on a mixed project: **DALI-2 for the interior,
 DMX for the façade, a gateway between them, and one front end.**
 
+<p class="vi-block vi-def">Một đáp án rất phổ biến và hoàn toàn đúng cho dự án hỗn hợp: <strong>DALI-2 cho nội thất, DMX cho mặt dựng, một gateway nối hai bên, và một giao diện điều khiển chung.</strong></p>
+
 ## The parts everyone underestimates
+
+<p class="vi-block vi-heading">Những phần ai cũng đánh giá thấp</p>
 
 **Commissioning is a work package, not a switch.** It needs a named party, a fee line, a defined
 scene schedule agreed with the client, site attendance and a written record. Uncommissioned
 DALI is more expensive and less capable than 0–10 V. Every scheme that "never worked properly"
 failed here.
 
+<p class="vi-block vi-def"><strong>Hiệu chỉnh nghiệm thu là một gói công việc, không phải một công tắc.</strong> Nó cần một bên chịu trách nhiệm được chỉ định, một dòng phí, một lịch cảnh sáng thống nhất với chủ đầu tư, thời gian có mặt tại công trường và biên bản bằng văn bản. DALI không được hiệu chỉnh nghiệm thu còn đắt hơn và kém hơn 0–10 V. Mọi phương án “chưa bao giờ chạy cho ra hồn” đều hỏng ở khâu này.</p>
+
 **Write the scene schedule during design.** Room by room: scene name, which groups, what level,
 what CCT, what fade time, what triggers it. It is a table you can produce in detailed design and
 it is the single most valuable document you will hand the commissioning engineer.
+
+<p class="vi-block vi-def"><strong>Viết lịch cảnh sáng (scene schedule) ngay trong giai đoạn thiết kế.</strong> Từng phòng một: tên cảnh, những nhóm nào, mức sáng bao nhiêu, CCT nào, thời gian fade bao lâu, cái gì kích hoạt. Đó là một bảng bạn làm được ngay ở thiết kế chi tiết, và là tài liệu giá trị nhất bạn trao cho kỹ sư commissioning.</p>
 
 **Bus topology and load.** DALI is 64 addresses, 250 mA typical bus supply, 300 m maximum cable
 run. Fittings with multiple channels (tunable white, RGBW) consume multiple addresses — a tunable
 white fitting is commonly two. Count addresses at the schedule stage, not on site.
 
+<p class="vi-block vi-def"><strong>Cấu trúc bus và tải.</strong> DALI có 64 địa chỉ, nguồn bus thường 250 mA, chiều dài cáp tối đa 300 m. Bộ đèn nhiều kênh (tunable white, RGBW) chiếm nhiều địa chỉ — một bộ tunable white thường chiếm hai. Hãy đếm địa chỉ ở giai đoạn lập bảng thống kê đèn, đừng để ra công trường mới đếm.</p>
+
 **Emergency lighting is a parallel system.** Self-test emergency gear can sit on DALI, but the
 emergency function must remain independent of the control system's health. Coordinate it early
 with the fire strategy; retrofitting this is painful.
 
+<p class="vi-block vi-def"><strong>Chiếu sáng sự cố là một hệ thống song song.</strong> Thiết bị sự cố tự kiểm tra có thể nằm trên DALI, nhưng chức năng sự cố phải độc lập với tình trạng của hệ điều khiển. Phối hợp sớm với phương án phòng cháy; sửa lại về sau rất khổ.</p>
+
 **"DALI compatible" ≠ DALI-2 certified.** Only certified products carry an interoperability
 guarantee. Ask for the certificate number, and check it on the DALI Alliance register.
 
+<p class="vi-block vi-def"><strong>“Tương thích DALI” ≠ được chứng nhận DALI-2.</strong> Chỉ sản phẩm đã chứng nhận mới được bảo đảm khả năng tương thích. Hãy hỏi số chứng nhận và tra trên danh bạ của DALI Alliance.</p>
+
 ## Cybersecurity is now in scope
+
+<p class="vi-block vi-heading">An ninh mạng giờ đã nằm trong phạm vi</p>
 
 IES LP-6-25 added guidance on cybersecurity for lighting controls, which tells you where the
 industry has arrived. Once lighting sits on the building IP network, it becomes an attack surface
 and an IT stakeholder appears.
+
+<p class="vi-block vi-def">IES LP-6-25 đã bổ sung hướng dẫn về an ninh mạng cho hệ điều khiển chiếu sáng — cho thấy ngành đã đi tới đâu. Khi chiếu sáng nằm trên mạng IP của toà nhà, nó trở thành một bề mặt tấn công, và xuất hiện thêm một bên liên quan từ bộ phận IT.</p>
 
 Practical minimum: put lighting on its own VLAN, change default credentials at commissioning and
 record that you did, establish who owns firmware updates for the lifetime of the installation,
 and get the IT team into a coordination meeting before the gateway is specified rather than after
 their security review blocks handover.
 
+<p class="vi-block vi-def">Mức tối thiểu thực tế: đưa chiếu sáng vào VLAN riêng, đổi thông tin đăng nhập mặc định khi commissioning và ghi lại là đã đổi, xác định ai chịu trách nhiệm cập nhật firmware trong suốt vòng đời hệ thống, và mời đội IT vào họp phối hợp trước khi chỉ định gateway, chứ đừng đợi tới khi buổi rà soát bảo mật của họ chặn việc bàn giao.</p>
+
 ## Rules of thumb
+
+<p class="vi-block vi-heading">Quy tắc kinh nghiệm</p>
 
 - Simple, static, few zones, tight budget → **0–10 V**, and be honest with the client about what
   they are giving up.
@@ -105,5 +153,15 @@ their security review blocks handover.
 - Residential and hospitality touching a wider smart-home stack → DALI or DMX at the core,
   **Matter at the boundary**.
 
+<ul class="vi-block vi-def">
+<li>Đơn giản, tĩnh, ít vùng, ngân sách eo hẹp → <strong>0–10 V</strong>, và nói thật với chủ đầu tư về những gì họ phải đánh đổi.</li>
+<li>Bất kỳ dự án thương mại nào có ý đồ thiết kế → <strong>DALI-2</strong>, thêm D4i khi dữ liệu bộ đèn có giá trị.</li>
+<li>Màu sắc, chuyển động, pixel, mặt dựng → <strong>DMX/RDM</strong>.</li>
+<li>Cải tạo không dây trong một quần thể đã đi dây → <strong>DALI+ kèm gateway</strong>.</li>
+<li>Nhà ở và khách sạn chạm tới hệ sinh thái nhà thông minh rộng hơn → DALI hoặc DMX ở lõi, <strong>Matter ở vùng ranh giới</strong>.</li>
+</ul>
+
 And whatever you choose: budget the commissioning, write the scene schedule, and name the person
 who owns the system in year three.
+
+<p class="vi-block vi-def">Và dù chọn gì: hãy đưa commissioning vào ngân sách, viết lịch cảnh sáng, và chỉ định rõ người chịu trách nhiệm hệ thống vào năm thứ ba.</p>

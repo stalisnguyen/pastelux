@@ -1,9 +1,11 @@
 ---
 title: 'Inside the LED: what you are actually specifying'
+viTitle: 'Bên trong LED: thực ra bạn đang chỉ định điều gì'
 summary: 'Blue die plus phosphor, and everything that follows from it — COB against mid-power, junction temperature, and why a lumen figure without a drive current means nothing.'
 viSummary: 'Chip xanh lam cộng lớp phosphor, và mọi hệ quả kéo theo — COB so với mid-power, nhiệt độ mối nối, và vì sao con số lumen không kèm dòng điện là vô nghĩa.'
 chapter: 2
 chapterTitle: 'Light sources & luminaires'
+viChapterTitle: 'Nguồn sáng & bộ đèn'
 order: 3
 topics: ['product', 'optics']
 readingMinutes: 9
@@ -15,25 +17,39 @@ covered in a phosphor that absorbs some of that blue and re-emits it broadly acr
 and red. What reaches the eye is the leftover blue plus the phosphor's re-emission, and the ratio
 between the two is what you buy when you specify a colour temperature.
 
+<p class="vi-block vi-def">Gần như mọi LED trắng trong kiến trúc đều dùng cùng một mẹo: một chip (die) phát ánh sáng xanh lam ở khoảng 450 nm, phủ lớp phosphor hấp thụ một phần ánh xanh đó rồi phát xạ lại trên dải rộng qua vàng, xanh lục và đỏ. Thứ đến được mắt là phần xanh lam còn sót lại cộng với phần phát xạ lại của phosphor, và tỷ lệ giữa hai phần đó chính là thứ bạn mua khi chỉ định một nhiệt độ màu.</p>
+
 Once you know that, most of the datasheet stops being arbitrary.
 
+<p class="vi-block vi-def">Hiểu được điều đó, phần lớn datasheet không còn có vẻ tuỳ tiện nữa.</p>
+
 ## Why the spectrum has that shape
+
+<p class="vi-block vi-heading">Vì sao phổ có hình dạng như vậy</p>
 
 The blue spike is the die showing through. The broad hump is the phosphor. The dip between them —
 usually around 480 nm — is where neither contributes much, and it is a direct consequence of the
 method rather than a flaw in a particular product.
+
+<p class="vi-block vi-def">Đỉnh nhọn xanh lam là ánh sáng của chip lọt qua. Phần gò rộng là phosphor. Chỗ trũng giữa hai phần — thường quanh 480 nm — là nơi cả hai đều đóng góp ít, và đó là hệ quả trực tiếp của phương pháp chứ không phải lỗi của một sản phẩm cụ thể.</p>
 
 That dip matters twice over. It sits close to the melanopsin peak at 490 nm, so two sources at the
 same CCT can differ in circadian effect more than their colour temperature suggests. And a thin
 red tail is why R9 is so often the weakest number on the sheet: adding red phosphor costs
 efficacy, so it is the first thing value-engineered out.
 
+<p class="vi-block vi-def">Chỗ trũng đó quan trọng ở hai mặt. Nó nằm gần đỉnh melanopsin ở 490 nm, nên hai nguồn sáng cùng CCT có thể khác nhau về tác động nhịp sinh học nhiều hơn mức nhiệt độ màu gợi ý. Còn phần đuôi đỏ mỏng là lý do R9 thường là con số yếu nhất trên datasheet: thêm phosphor đỏ làm giảm hiệu suất, nên đó là thứ đầu tiên bị cắt khi cắt giảm chi phí (VE).</p>
+
 More phosphor means warmer light and lower efficacy. A 2700 K product is typically 10–20% less
 efficient than the same platform at 4000 K, for exactly this reason. That is not a defect to
 argue about with a supplier — it is physics, and it belongs in the energy calculation from the
 start.
 
+<p class="vi-block vi-def">Càng nhiều phosphor thì ánh sáng càng ấm và hiệu suất càng thấp. Một sản phẩm 2700 K thường kém hiệu quả hơn 10–20% so với cùng nền tảng ở 4000 K, chính vì lý do này. Đó không phải lỗi để tranh cãi với nhà cung cấp — đó là vật lý, và cần đưa vào tính toán năng lượng ngay từ đầu.</p>
+
 ## The three packages
+
+<p class="vi-block vi-heading">Ba kiểu đóng gói chip</p>
 
 **Mid-power.** Small plastic-bodied emitters, dozens or hundreds on a board. Cheap, efficient and
 the basis of almost all panels, battens and linear fittings. Each emitter is a separate small
@@ -41,51 +57,85 @@ source, so a clear lens over an array gives you a grid of bright dots — which 
 fittings nearly always need a diffuser, and why they look terrible when the diffuser is removed
 to gain output.
 
+<p class="vi-block vi-def"><strong>Mid-power.</strong> Các chip nhỏ vỏ nhựa, hàng chục đến hàng trăm con trên một bo mạch. Rẻ, hiệu suất cao, là nền tảng của hầu hết đèn panel, đèn máng và đèn tuyến tính. Mỗi chip là một nguồn sáng nhỏ riêng biệt, nên đặt thấu kính trong lên cả mảng sẽ thấy một lưới chấm sáng — đó là lý do các đèn này gần như luôn cần tấm tán xạ, và trông rất tệ khi tấm tán xạ bị tháo ra để tăng quang thông.</p>
+
 **High-power.** Single ceramic-based emitters, roughly 1–3 W each, each with its own optic.
 Chosen when you need genuine beam control: spotlights, projectors, exterior. More expensive per
 lumen, but you can actually put the light where you want it.
+
+<p class="vi-block vi-def"><strong>High-power.</strong> Chip đơn trên đế gốm, khoảng 1–3 W mỗi chip, mỗi chip có optic riêng. Được chọn khi bạn cần kiểm soát chùm sáng thực sự: đèn rọi, đèn chiếu, chiếu sáng ngoại thất. Đắt hơn tính trên mỗi lumen, nhưng bạn thực sự đặt được ánh sáng vào đúng chỗ mình muốn.</p>
 
 **COB (chip-on-board).** Many dies bonded directly to a substrate under one shared phosphor
 layer, presenting a single small bright surface. The closest thing to a point source, so it takes
 a reflector cleanly and gives crisp shadows — good for accent work, and correspondingly harsh if
 that is not what you wanted.
 
+<p class="vi-block vi-def"><strong>COB (chip-on-board).</strong> Nhiều chip gắn trực tiếp lên một đế chung dưới một lớp phosphor duy nhất, tạo thành một bề mặt sáng nhỏ duy nhất. Gần với nguồn điểm nhất, nên ăn khớp với chóa phản quang và cho bóng đổ sắc nét — tốt cho chiếu sáng điểm nhấn, và gắt tương ứng nếu đó không phải điều bạn muốn.</p>
+
 The package choice is really a choice about **source size**, and source size determines what
 optics can do. A small source can be collimated into a narrow beam; a large one cannot, no matter
 what reflector you put in front of it.
 
+<p class="vi-block vi-def">Việc chọn kiểu đóng gói thực chất là chọn <strong>kích thước nguồn sáng</strong>, và kích thước nguồn quyết định quang học làm được gì. Nguồn nhỏ có thể gom thành chùm hẹp; nguồn lớn thì không, dù bạn đặt chóa phản quang nào phía trước.</p>
+
 ## Binning, and the number that actually matters
+
+<p class="vi-block vi-heading">Phân loại bin, và con số thực sự quan trọng</p>
 
 Manufacturing spreads output across flux, forward voltage and chromaticity, so emitters are sorted
 into bins. Flux binning affects consistency of level; chromaticity binning affects whether a run
 of fittings looks like one product.
 
+<p class="vi-block vi-def">Quá trình sản xuất tạo ra sai lệch về quang thông, điện áp thuận và sắc độ, nên các chip được phân loại vào các bin. Bin quang thông ảnh hưởng đến độ đồng nhất về mức sáng; bin sắc độ quyết định một dãy đèn có trông như cùng một sản phẩm hay không.</p>
+
 The specification number is **SDCM** — MacAdam steps. Ask for ≤3 SDCM on anything where fittings
 are seen together, and ask for it **maintained**, not just initial. A tight initial bin that drifts
 apart over two years is a warranty argument you will lose without that word in the specification.
 
+<p class="vi-block vi-def">Con số cần ghi trong chỉ định là <strong>SDCM</strong> — số bước MacAdam. Yêu cầu ≤3 SDCM ở mọi chỗ các đèn được nhìn thấy cùng nhau, và yêu cầu mức đó phải được <strong>duy trì</strong> (maintained), không chỉ lúc ban đầu. Một bin ban đầu chặt nhưng trôi lệch sau hai năm là cuộc tranh cãi bảo hành mà bạn sẽ thua nếu chỉ định thiếu chữ đó.</p>
+
 ## Heat is the whole story
+
+<p class="vi-block vi-heading">Nhiệt là toàn bộ câu chuyện</p>
 
 An LED converts roughly a third of its input to light and the rest to heat, and unlike a lamp it
 cannot radiate that heat away — it must be conducted out through the board and the heat sink.
 
+<p class="vi-block vi-def">LED chuyển khoảng một phần ba năng lượng đầu vào thành ánh sáng, phần còn lại thành nhiệt, và không như bóng đèn truyền thống, nó không thể bức xạ nhiệt đó đi — nhiệt phải được dẫn ra qua bo mạch và bộ tản nhiệt.</p>
+
 **Junction temperature (Tj)** is the temperature at the die itself, and it governs everything:
+
+<p class="vi-block vi-def"><strong>Nhiệt độ mối nối (Tj)</strong> là nhiệt độ tại chính chip, và nó chi phối mọi thứ:</p>
 
 - **Output falls** as Tj rises. A hot LED is a dim LED, immediately and reversibly.
 - **Colour shifts**, usually toward green in phosphor-converted white.
 - **Lifetime collapses.** The relationship is roughly exponential; 10 °C hotter can halve it.
 
+<ul class="vi-block vi-def">
+<li><strong>Quang thông giảm</strong> khi Tj tăng. LED nóng là LED tối, ngay lập tức và có thể phục hồi.</li>
+<li><strong>Màu bị lệch</strong>, thường ngả về xanh lục ở LED trắng chuyển đổi bằng phosphor.</li>
+<li><strong>Tuổi thọ sụt giảm mạnh.</strong> Quan hệ gần như hàm mũ; nóng hơn 10 °C có thể làm tuổi thọ giảm một nửa.</li>
+</ul>
+
 Which is why a lumen figure quoted without a drive current and a case temperature tells you
 nothing. The same emitter driven at 350 mA and 700 mA gives very different output, efficacy and
 life, and manufacturers quote whichever combination flatters the product.
+
+<p class="vi-block vi-def">Đó là lý do con số lumen đưa ra mà không kèm dòng điện cấp (drive current) và nhiệt độ vỏ (case temperature) chẳng cho bạn biết gì. Cùng một chip chạy ở 350 mA và 700 mA cho quang thông, hiệu suất và tuổi thọ rất khác nhau, và nhà sản xuất sẽ công bố tổ hợp nào làm sản phẩm trông đẹp nhất.</p>
 
 **What to ask for:** LM-80 test data with a TM-21 projection, at the drive current and case
 temperature the fitting actually runs at. Not the emitter manufacturer's bench figures. If a
 supplier cannot produce this, they do not know their own product's lifetime.
 
+<p class="vi-block vi-def"><strong>Cần yêu cầu gì:</strong> dữ liệu thử nghiệm LM-80 kèm dự báo TM-21, ở đúng dòng điện cấp và nhiệt độ vỏ mà bộ đèn thực tế vận hành. Không phải số liệu đo trên bàn thử của nhà sản xuất chip. Nếu nhà cung cấp không đưa ra được, họ không biết tuổi thọ sản phẩm của chính mình.</p>
+
 ## Reading a lumen claim
 
+<p class="vi-block vi-heading">Đọc một con số lumen</p>
+
 Three different numbers get called "lumens", and suppliers move between them freely:
+
+<p class="vi-block vi-def">Có ba con số khác nhau cùng được gọi là “lumen”, và nhà cung cấp chuyển qua lại giữa chúng một cách thoải mái:</p>
 
 | | What it is | Roughly |
 |---|---|---|
@@ -93,22 +143,36 @@ Three different numbers get called "lumens", and suppliers move between them fre
 | **Module lumens** | On its board, at working temperature | 85–92% |
 | **Luminaire lumens** | Out of the fitting, after optics, lens and driver losses | 65–85% |
 
+<p class="vi-block vi-def">Các cột: loại · bản chất · tỷ lệ xấp xỉ. Lumen chip (emitter lumens): chip LED trần đo trên bàn thử ở 25 °C — 100% · Lumen module: chip trên bo mạch, ở nhiệt độ làm việc — 85–92% · Lumen bộ đèn (luminaire lumens): ánh sáng ra khỏi bộ đèn, sau tổn hao qua quang học, thấu kính và driver — 65–85%.</p>
+
 Only the third is real. Ask for delivered luminaire lumens and luminaire efficacy in lm/W, tested
 per LM-79, and treat any chip-level efficacy claim as marketing.
 
+<p class="vi-block vi-def">Chỉ con số thứ ba là thật. Hãy yêu cầu quang thông thực phát của bộ đèn và hiệu suất phát sáng bộ đèn tính bằng lm/W, thử nghiệm theo LM-79, và coi mọi tuyên bố hiệu suất ở cấp chip là quảng cáo.</p>
+
 ## What this changes about specifying
+
+<p class="vi-block vi-heading">Điều này thay đổi cách chỉ định ra sao</p>
 
 **Write the drive current into the schedule.** It is the single fact that connects the lumen
 claim, the efficacy, the lifetime and the warranty. Without it every other number is unanchored.
+
+<p class="vi-block vi-def"><strong>Ghi dòng điện cấp vào bảng thống kê đèn.</strong> Đó là dữ kiện duy nhất nối liền con số lumen, hiệu suất, tuổi thọ và bảo hành. Thiếu nó, mọi con số khác đều không có điểm tựa.</p>
 
 **Ask how the fitting sheds heat.** A slim, sealed, plastic-bodied downlight in an insulated
 ceiling void is a thermal problem regardless of the brand on it. This is where cheap fittings
 actually fail — not in the LED, but in the path the heat was supposed to take.
 
+<p class="vi-block vi-def"><strong>Hỏi bộ đèn tản nhiệt bằng cách nào.</strong> Một downlight mỏng, kín, vỏ nhựa đặt trong khoảng trần có lớp cách nhiệt là một bài toán nhiệt, bất kể thương hiệu nào. Đây là chỗ đèn rẻ thực sự hỏng — không phải ở LED, mà ở đường thoát nhiệt lẽ ra phải có.</p>
+
 **Treat efficacy and colour quality as a trade you are making deliberately.** Ra 90 with a good R9
 costs roughly 10–15% of efficacy against Ra 80. That is a decision about the building, not a
 technical detail to be delegated to the contractor.
 
+<p class="vi-block vi-def"><strong>Coi hiệu suất và chất lượng màu là sự đánh đổi bạn chủ động lựa chọn.</strong> Ra 90 với R9 tốt tốn khoảng 10–15% hiệu suất so với Ra 80. Đó là quyết định về công trình, không phải chi tiết kỹ thuật để giao phó cho nhà thầu.</p>
+
 **Assume the driver dies first.** It is the shortest-lived component in the assembly, and whether
 it can be replaced without dismantling the fitting is a maintenance decision made at concept
 stage.
+
+<p class="vi-block vi-def"><strong>Giả định driver sẽ hỏng trước.</strong> Đó là linh kiện có tuổi thọ ngắn nhất trong cụm, và việc có thay được nó mà không phải tháo rời bộ đèn hay không là quyết định bảo trì được đưa ra ngay từ giai đoạn ý tưởng.</p>

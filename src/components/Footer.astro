@@ -11,23 +11,27 @@ const year = new Date().getFullYear();
         <p class="text-sm mt-1.5 leading-relaxed" style="color: var(--text-muted)">
           {site.description}
         </p>
+        <p class="vi-block vi-def text-[0.82rem] mt-1.5 leading-relaxed">
+          Kho kiến thức thực hành cho nhà thiết kế chiếu sáng kiến trúc: trắc quang, tiêu chuẩn, điều
+          khiển và chiếu sáng vì con người — kèm bản tin ngành được làm mới mỗi sáng.
+        </p>
       </div>
 
       <div class="flex gap-10 text-sm">
         <div>
-          <p class="label">Knowledge</p>
+          <p class="label">Knowledge<span class="vi-block-inline" style="color: var(--vi-text)"> · Kiến thức</span></p>
           <ul class="space-y-1.5" style="color: var(--text-muted)">
-            <li><a href={url('/learn')} class="no-underline hover:underline">Articles</a></li>
-            <li><a href={url('/standards')} class="no-underline hover:underline">Standards</a></li>
-            <li><a href={url('/glossary')} class="no-underline hover:underline">Glossary</a></li>
+            <li><a href={url('/learn')} class="no-underline hover:underline">Articles</a><span class="vi-block text-[0.78rem]" style="color: var(--vi-text)">Bài viết</span></li>
+            <li><a href={url('/standards')} class="no-underline hover:underline">Standards</a><span class="vi-block text-[0.78rem]" style="color: var(--vi-text)">Tiêu chuẩn</span></li>
+            <li><a href={url('/glossary')} class="no-underline hover:underline">Glossary</a><span class="vi-block text-[0.78rem]" style="color: var(--vi-text)">Thuật ngữ</span></li>
           </ul>
         </div>
         <div>
-          <p class="label">Daily</p>
+          <p class="label">Daily<span class="vi-block-inline" style="color: var(--vi-text)"> · Hằng ngày</span></p>
           <ul class="space-y-1.5" style="color: var(--text-muted)">
-            <li><a href={url('/')} class="no-underline hover:underline">Today</a></li>
-            <li><a href={url('/archive')} class="no-underline hover:underline">Archive</a></li>
-            <li><a href={url('/events')} class="no-underline hover:underline">Events</a></li>
+            <li><a href={url('/')} class="no-underline hover:underline">Today</a><span class="vi-block text-[0.78rem]" style="color: var(--vi-text)">Hôm nay</span></li>
+            <li><a href={url('/archive')} class="no-underline hover:underline">Archive</a><span class="vi-block text-[0.78rem]" style="color: var(--vi-text)">Lưu trữ</span></li>
+            <li><a href={url('/events')} class="no-underline hover:underline">Events</a><span class="vi-block text-[0.78rem]" style="color: var(--vi-text)">Sự kiện</span></li>
           </ul>
         </div>
       </div>
@@ -38,10 +42,13 @@ const year = new Date().getFullYear();
       style="border-color: var(--border); color: var(--text-faint)"
     >
       <span>© {year} {site.name}</span>
-      <a href={url('/about')} class="no-underline hover:underline">About &amp; sources</a>
+      <a href={url('/about')} class="no-underline hover:underline">About &amp; sources<span class="vi-block-inline" style="color: var(--vi-text)"> · Giới thiệu &amp; nguồn tin</span></a>
       <span
         >Headlines are linked to their publishers. Summaries are written here, not copied.</span
       >
+      <span class="vi-block w-full" style="color: var(--vi-text)">
+        Tiêu đề dẫn về nơi đăng gốc. Phần tóm tắt được viết tại đây, không sao chép.
+      </span>
     </div>
 
     <!-- A small dedication. The site name is already both of ours: Pastel + lux. -->

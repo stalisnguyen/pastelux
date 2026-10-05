@@ -21,21 +21,36 @@ const monthLabel = (key: string) =>
     year: 'numeric',
     timeZone: 'UTC',
   });
+// Same month in Vietnamese, e.g. "tháng 10 năm 2026".
+const viMonthLabel = (key: string) =>
+  new Date(`${key}-01T00:00:00Z`).toLocaleDateString('vi-VN', {
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'UTC',
+  });
 ---
 
 <Base title="Archive" description="Every daily digest published on Pastelux.">
   <PageHeader
     eyebrow={`${digests.length} ${digests.length === 1 ? 'digest' : 'digests'}`}
     title="Archive"
+    viTitle="Lưu trữ bản tin"
     lede="Every morning's digest, kept."
-  />
+  >
+    <p class="vi-block vi-def mt-2 text-[0.95rem] max-w-2xl leading-relaxed">
+      Mọi bản tin buổi sáng đều được giữ lại ở đây.
+    </p>
+  </PageHeader>
 
   {
     digests.length === 0 ? (
       <div class="card p-6">
-        <p class="font-medium">Nothing archived yet.</p>
+        <p class="font-medium">Nothing archived yet.<span class="vi-block-inline font-normal" style="color: var(--vi-text)"> · Chưa có bản tin nào được lưu.</span></p>
         <p class="text-[0.92rem] mt-1.5" style="color: var(--text-muted)">
           Digests appear here once the scheduled job has run at least once.
+        </p>
+        <p class="vi-block vi-def text-[0.88rem] mt-1.5">
+          Bản tin sẽ xuất hiện ở đây sau khi tác vụ theo lịch chạy ít nhất một lần.
         </p>
       </div>
     ) : (
@@ -46,6 +61,9 @@ const monthLabel = (key: string) =>
               <h2 id={`m-${month}`} class="text-[0.95rem] font-semibold" style="color: var(--text-muted)">
                 {monthLabel(month)}
               </h2>
+              <span class="vi-block-inline text-[0.88rem]" style="color: var(--vi-text)">
+                {viMonthLabel(month)}
+              </span>
               <span class="h-px flex-1" style="background: var(--border)" />
             </div>
             <div class="grid gap-2">
@@ -59,9 +77,9 @@ const monthLabel = (key: string) =>
                     {d.data.date}
                   </span>
                   <span class="text-[0.9rem] truncate" style="color: var(--text-muted)">
-                    {d.data.items[0]?.title ?? 'No items'}
+                    {d.data.items[0]?.title ?? <>No items<span class="vi-block-inline" style="color: var(--vi-text)"> · Không có tin</span></>}
                   </span>
-                  <span class="ml-auto chip shrink-0">{d.data.items.length}</span>
+                  <span class="ml-auto chip shrink-0" title={`${d.data.items.length} tin`}>{d.data.items.length}</span>
                 </a>
               ))}
             </div>

@@ -185,10 +185,12 @@ For each article you receive a headline, publisher and the publisher's own blurb
 
 Return, for each item:
 - "summary": 1-2 sentences, maximum 45 words, in your OWN words. Never copy phrasing from the blurb. Lead with what a lighting designer would need to know: the technical substance, the standard affected, the specification consequence. Skip marketing language entirely. If the blurb is too thin to say anything substantive, write a plain factual sentence about what the article covers. Plain declarative English, no hype, no exclamation marks.
+- "viTitle": the headline rendered in natural Vietnamese for a Vietnamese lighting designer. Keep product names, brand names, standards and industry terms (lux, UGR, CRI, DALI, LED, beam angle…) in English.
+- "viSummary": the same content as "summary" in natural, concise Vietnamese — not word-for-word — with the same terminology rule. Established Vietnamese terms: illuminance = độ rọi, luminance = độ chói, luminous flux = quang thông, glare = chói, colour temperature = nhiệt độ màu, colour rendering = độ hoàn màu, luminaire = bộ đèn, facade = mặt dựng, controls = điều khiển.
 - "topics": 1-3 tags from exactly this list: circadian, standards, controls, facade, sustainability, optics, product, awards, research, practice.
 - "keep": false if the item is not genuinely relevant to professional architectural lighting practice (consumer product roundups, deals, unrelated architecture with no lighting content), otherwise true.
 
-Return ONLY a JSON array, one object per input item, in the same order, each with keys id, summary, topics, keep. No prose, no markdown fences.`;
+Return ONLY a JSON array, one object per input item, in the same order, each with keys id, summary, viTitle, viSummary, topics, keep. No prose, no markdown fences.`;
 
 async function summarise(items) {
   const payload = items.map((it, i) => ({
@@ -207,7 +209,7 @@ async function summarise(items) {
     },
     body: JSON.stringify({
       model: MODEL,
-      max_tokens: 4000,
+      max_tokens: 8000,
       system: SYSTEM_PROMPT,
       messages: [{ role: 'user', content: JSON.stringify(payload, null, 1) }],
     }),
@@ -343,6 +345,8 @@ async function main() {
           return {
             ...it,
             summary: s?.summary?.trim() ?? '',
+            viTitle: s?.viTitle?.trim() ?? '',
+            viSummary: s?.viSummary?.trim() ?? '',
             topics: Array.isArray(s?.topics) && s.topics.length ? s.topics : ruleTopics(it, config.topicRules),
           };
         })
@@ -355,7 +359,7 @@ async function main() {
   }
 
   if (degraded) {
-    items = items.map((it) => ({ ...it, summary: '', topics: ruleTopics(it, config.topicRules) }));
+    items = items.map((it) => ({ ...it, summary: '', viTitle: '', viSummary: '', topics: ruleTopics(it, config.topicRules) }));
   }
 
   // 7. Rotations.
@@ -375,12 +379,14 @@ async function main() {
     date,
     generatedAt: new Date().toISOString(),
     degraded,
-    items: items.map(({ title, url, source, published, summary, topics }) => ({
+    items: items.map(({ title, url, source, published, summary, viTitle, viSummary, topics }) => ({
       title,
       url,
       source,
       published: published || new Date().toISOString(),
       summary,
+      viTitle: viTitle ?? '',
+      viSummary: viSummary ?? '',
       topics: (topics ?? []).slice(0, 3),
     })),
     termOfDay: rotate(glossary.map((g) => g.id), date),

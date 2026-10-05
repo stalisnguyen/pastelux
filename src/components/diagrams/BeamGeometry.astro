@@ -25,6 +25,9 @@ const spot = spotDiameter(throwM, beam);
   label={`Section showing a ${beam} degree beam at ${throwM} metre throw`}
   caption={caption ??
     `A ${beam}° beam at ${throwM} m throw lands a ${spot.toFixed(2)} m pool. Beam angle is measured where intensity falls to 50% of peak; the paler field angle, at 10%, is the spill you also have to design for.`}
+  viCaption={caption
+    ? undefined
+    : `Chùm ${beam}° ở khoảng cách chiếu <b>throw</b> ${throwM} m tạo vệt sáng đường kính <b>Ø</b> ${spot.toFixed(2)} m. <b>Beam angle</b> (góc chiếu) đo tại nơi cường độ sáng còn 50% so với đỉnh; vùng nhạt hơn bên ngoài là <b>field</b> (góc trường, 10%) — phần ánh sáng tràn mà bạn cũng phải tính đến khi thiết kế.`}
 >
   <svg viewBox={`0 0 ${W} ${H}`} role="img">
     <defs>

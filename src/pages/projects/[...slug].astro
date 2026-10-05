@@ -3,7 +3,7 @@ import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Lightbox from '../../components/Lightbox.astro';
 import SaveButton from '../../components/SaveButton.astro';
-import { url } from '../../site';
+import { url, VI_TYPOLOGY } from '../../site';
 
 export async function getStaticPaths() {
   const projects = (await getCollection('projects')).filter((p) => !p.data.draft);
@@ -20,9 +20,10 @@ const img = (src: string) => `${base}/projects/${d.folder}/${src}`;
 <Base title={d.title} description={d.summary}>
   <article class="pt-9 pb-4">
     <nav class="text-[0.82rem] mb-5" style="color: var(--text-faint)" aria-label="Breadcrumb">
-      <a href={url('/projects')} class="no-underline hover:underline">Projects</a>
+      <a href={url('/projects')} class="no-underline hover:underline">Projects<span class="vi-block-inline"> · Dự án</span></a>
       <span class="mx-1.5">/</span>
       <span>{d.typology}</span>
+      {VI_TYPOLOGY[d.typology] && <span class="vi-block-inline" style="color: var(--vi-text)"> · {VI_TYPOLOGY[d.typology]}</span>}
     </nav>
 
     <h1 class="text-3xl md:text-[2.25rem] font-semibold leading-tight">{d.title}</h1>
@@ -32,6 +33,11 @@ const img = (src: string) => `${base}/projects/${d.folder}/${src}`;
     <p class="mt-3 text-[1.08rem] leading-relaxed max-w-2xl" style="color: var(--text-muted)">
       {d.summary}
     </p>
+    {
+      d.viSummary && (
+        <p class="vi-block vi-def mt-2 text-[1rem] leading-relaxed max-w-2xl">{d.viSummary}</p>
+      )
+    }
 
     <div class="flex items-center gap-4 mt-5 flex-wrap">
       <SaveButton
@@ -69,6 +75,7 @@ const img = (src: string) => `${base}/projects/${d.folder}/${src}`;
             data-full={img(im.src)}
             data-alt={im.alt}
             data-caption={im.caption ?? im.alt}
+            data-vi-caption={im.viCaption}
             aria-label={`Open image ${i + 1}: ${im.alt}`}
           >
             <img src={img(im.src)} alt={im.alt} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
@@ -78,6 +85,7 @@ const img = (src: string) => `${base}/projects/${d.folder}/${src}`;
     </div>
     <p class="text-[0.76rem] mt-2.5" style="color: var(--text-faint)">
       {d.credit} · click any image to enlarge
+      <span class="vi-block-inline" style="color: var(--vi-text)"> · bấm vào ảnh để phóng to</span>
     </p>
 
     <!-- ------------------------------------------------------------ facts -->
@@ -86,10 +94,14 @@ const img = (src: string) => `${base}/projects/${d.folder}/${src}`;
         <dl class="facts mt-9">
           {d.facts.map((f) => (
             <div class="card p-4">
-              <dt class="label !mb-1">{f.label}</dt>
+              <dt class="label !mb-1">
+                {f.label}
+                {f.viLabel && <span class="vi-block normal-case tracking-normal font-normal" style="color: var(--vi-text)">{f.viLabel}</span>}
+              </dt>
               <dd class="font-mono text-[0.95rem]" style="color: var(--accent)">
                 {f.value}
               </dd>
+              {f.viValue && <dd class="vi-block text-[0.86rem] mt-0.5" style="color: var(--vi-text)">{f.viValue}</dd>}
             </div>
           ))}
         </dl>
@@ -102,6 +114,7 @@ const img = (src: string) => `${base}/projects/${d.folder}/${src}`;
 
     <p class="mt-12 pt-6 border-t text-[0.8rem]" style="border-color: var(--border); color: var(--text-faint)">
       Updated {d.updated.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+      <span class="vi-block-inline" style="color: var(--vi-text)"> · cập nhật {d.updated.toLocaleDateString('vi-VN', { day: 'numeric', month: 'numeric', year: 'numeric' })}</span>
     </p>
   </article>
 

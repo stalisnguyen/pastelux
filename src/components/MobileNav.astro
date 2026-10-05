@@ -8,6 +8,30 @@ const isActive = (href: string) =>
 /** True when the current page lives behind "More", so the button reads as active. */
 const moreActive = mobileMore.some((i) => isActive(i.href));
 
+/**
+ * Vietnamese for each section, keyed by href. The bottom bar shows the name as
+ * a small second line under the English label; the "More" sheet has room for
+ * the name and the hint.
+ */
+const viNav: Record<string, { label: string; hint?: string }> = {
+  '/': { label: 'Hôm nay' },
+  '/learn': { label: 'Kiến thức' },
+  '/tools': { label: 'Công cụ' },
+  '/standards': { label: 'Tiêu chuẩn' },
+  '/projects': { label: 'Dự án', hint: 'Phân tích dự án thực tế' },
+  '/glossary': { label: 'Thuật ngữ', hint: 'Định nghĩa thuật ngữ' },
+  // the English hint for Directory is already Vietnamese
+  '/directory': { label: 'Danh bạ' },
+  '/events': { label: 'Sự kiện', hint: 'Hội chợ và hạn chót' },
+  '/saved': { label: 'Đã lưu', hint: 'Mục bạn đã đánh dấu' },
+  '/archive': { label: 'Lưu trữ', hint: 'Các bản tin trước' },
+  '/about': { label: 'Giới thiệu', hint: 'Nguồn tin và thông tin trang' },
+};
+const viLine = (href: string) => {
+  const v = viNav[href];
+  return v ? [v.label, v.hint].filter(Boolean).join(' · ') : '';
+};
+
 const icons: Record<string, string> = {
   sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.5 1.5M17.6 17.6l1.5 1.5M19.1 4.9l-1.5 1.5M6.4 17.6l-1.5 1.5"/>',
   book: '<path d="M4 4.5A2.5 2.5 0 016.5 2H20v18H6.5A2.5 2.5 0 004 22z"/><path d="M4 17.5A2.5 2.5 0 016.5 15H20"/>',
@@ -38,6 +62,11 @@ const icons: Record<string, string> = {
           >
             <svg viewBox="0 0 24 24" aria-hidden="true" set:html={icons[item.icon]} />
             {item.label}
+            {viNav[item.href] && (
+              <span class="vi-block text-[0.58rem] font-normal -mt-0.5" style="color: var(--vi-text)">
+                {viNav[item.href].label}
+              </span>
+            )}
           </a>
         </li>
       ))
@@ -53,6 +82,7 @@ const icons: Record<string, string> = {
       >
         <svg viewBox="0 0 24 24" aria-hidden="true" set:html={icons.more} />
         More
+        <span class="vi-block text-[0.58rem] font-normal -mt-0.5" style="color: var(--vi-text)">Thêm</span>
       </button>
     </li>
   </ul>
@@ -60,7 +90,7 @@ const icons: Record<string, string> = {
 
 <dialog id="more-sheet" class="sheet md:hidden" aria-label="More sections">
   <div class="sheet-grip"></div>
-  <p class="sheet-title">More</p>
+  <p class="sheet-title">More<span class="vi-block-inline normal-case tracking-normal" style="color: var(--vi-text)"> · Thêm</span></p>
   <ul class="sheet-list">
     {
       mobileMore.map((item) => (
@@ -75,13 +105,18 @@ const icons: Record<string, string> = {
             <span>
               <strong>{item.label}</strong>
               <em>{item.hint}</em>
+              {viLine(item.href) && (
+                <span class="vi-block text-[0.78rem]" style="color: var(--vi-text)">
+                  {viLine(item.href)}
+                </span>
+              )}
             </span>
           </a>
         </li>
       ))
     }
   </ul>
-  <button id="more-close" class="btn sheet-close" type="button">Close</button>
+  <button id="more-close" class="btn sheet-close" type="button">Close<span class="vi-block-inline font-normal" style="color: var(--vi-text)"> · Đóng</span></button>
 </dialog>
 
 <style>

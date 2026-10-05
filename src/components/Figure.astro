@@ -1,23 +1,37 @@
 ---
 interface Props {
   caption?: string;
+  /** Vietnamese caption, shown under the English one when VI is on. */
+  viCaption?: string;
   /** Accessible description of what the drawing shows. */
   label: string;
   maxWidth?: string;
   /** Removes the card frame — for glyphs and inline marks. */
   bare?: boolean;
 }
-const { caption, label, maxWidth = '100%', bare = false } = Astro.props;
+const { caption, viCaption, label, maxWidth = '100%', bare = false } = Astro.props;
 ---
 
 <figure class="fig" style={`max-width:${maxWidth}`} role="group" aria-label={label}>
   <div class={bare ? '' : 'fig-frame'}>
     <slot />
   </div>
-  {caption && <figcaption class="fig-cap" set:html={caption} />}
+  {
+    (caption || viCaption) && (
+      <figcaption class="fig-cap">
+        {caption && <span set:html={caption} />}
+        {viCaption && <span class="vi-block fig-cap-vi" set:html={viCaption} />}
+      </figcaption>
+    )
+  }
 </figure>
 
 <style>
+  .fig-cap-vi {
+    color: var(--vi-text);
+    margin-top: 0.3em;
+    line-height: 1.7;
+  }
   .fig {
     margin-block: 1.9em;
     width: 100%;
