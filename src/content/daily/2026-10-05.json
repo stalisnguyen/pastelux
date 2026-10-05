@@ -1,19 +1,58 @@
 {
   "date": "2026-10-05",
-  "generatedAt": "2026-10-05T13:53:50.516Z",
+  "generatedAt": "2026-10-05T14:20:14.408Z",
   "degraded": false,
   "items": [
     {
-      "title": "Product Monday: Turn Deck Lights Into Party Lights",
-      "url": "https://www.lightnowblog.com/2026/10/product-monday-turn-deck-lights-into-party-lights",
-      "source": "LightNOW",
-      "published": "Mon, 05 Oct 2026 05:27:42 +0000",
-      "summary": "AMP Lighting added an RGBCW smart deck light to its AMP iQ landscape system, offering app-based colour and white-tunable control for low-glare outdoor accent lighting.",
-      "viTitle": "Sản phẩm thứ Hai: Biến đèn deck thành đèn tiệc",
-      "viSummary": "AMP Lighting bổ sung đèn deck thông minh RGBCW vào hệ thống chiếu sáng cảnh quan AMP iQ, điều khiển màu sắc và nhiệt độ màu trắng qua ứng dụng, phù hợp chiếu sáng điểm nhấn ngoài trời với độ chói thấp.",
+      "title": "DALI Alliance announces inaugural Global Sumit + Expo",
+      "url": "https://www.arc-magazine.com/dali-alliance-announces-inaugural-global-sumit-expo",
+      "source": "arc",
+      "published": "Tue, 29 Sep 2026 10:09:40 +0000",
+      "summary": "The DALI Alliance will hold its first Global DALI Summit and Expo in Utrecht, gathering the lighting controls industry around the DALI standard's development and adoption.",
+      "viTitle": "DALI Alliance công bố Global Summit + Expo đầu tiên",
+      "viSummary": "DALI Alliance sẽ tổ chức Global DALI Summit + Expo đầu tiên tại Utrecht, quy tụ ngành điều khiển chiếu sáng để thảo luận về phát triển và ứng dụng chuẩn DALI.",
       "topics": [
-        "product",
+        "controls",
+        "standards"
+      ]
+    },
+    {
+      "title": "DALI Lighting Awards 2027 open for entries",
+      "url": "https://www.a1lightingmagazine.com/awards/dali-lighting-awards-2027-open-for-entries",
+      "source": "A1 Lighting",
+      "published": "Fri, 25 Sep 2026 11:49:53 +0000",
+      "summary": "Entries are open for the 2027 DALI Lighting Awards, recognising projects that make substantive use of DALI control protocols; deadline is 8 January 2027, with winners announced at the DALI 27 event.",
+      "viTitle": "DALI Lighting Awards 2027 mở nhận hồ sơ dự thi",
+      "viSummary": "Giải DALI Lighting Awards 2027 đã mở nhận hồ sơ, vinh danh các dự án khai thác tốt giao thức điều khiển DALI. Hạn nộp là 8/1/2027, kết quả công bố tại sự kiện DALI 27.",
+      "topics": [
+        "standards",
+        "awards"
+      ]
+    },
+    {
+      "title": "Pharos powers heritage facade lighting at Parliament of Victoria",
+      "url": "https://www.a1lightingmagazine.com/latest-news/pharos-powers-heritage-facade-lighting-at-parliament-of-victoria",
+      "source": "A1 Lighting",
+      "published": "Wed, 23 Sep 2026 11:23:22 +0000",
+      "summary": "Pharos control system replaces the Parliament of Victoria's ageing sodium vapour floodlighting with a more adjustable facade scheme, allowing finer control over how the heritage stonework is revealed at night.",
+      "viTitle": "Pharos vận hành hệ thống chiếu sáng mặt dựng di sản tại Parliament of Victoria",
+      "viSummary": "Hệ điều khiển Pharos thay thế đèn pha sodium cũ tại tòa nhà Parliament of Victoria, cho phép điều chỉnh linh hoạt hơn để làm nổi bật chi tiết mặt dựng di sản vào ban đêm.",
+      "topics": [
+        "facade",
         "controls"
+      ]
+    },
+    {
+      "title": "ENERGY STAR Transitioning From EPA to DOE",
+      "url": "https://www.lightnowblog.com/2026/09/energy-star-transitioning-from-epa-to-doe",
+      "source": "LightNOW",
+      "published": "Tue, 22 Sep 2026 05:23:54 +0000",
+      "summary": "ENERGY STAR's federal oversight is shifting from the EPA to the DOE; the fixtures and lamps categories are already discontinued, leaving only downlight and ceiling fan programs active, which affects US spec compliance pathways.",
+      "viTitle": "ENERGY STAR chuyển giao quản lý từ EPA sang DOE",
+      "viSummary": "Việc quản lý chương trình ENERGY STAR đang chuyển từ EPA sang DOE. Các hạng mục đèn và bóng đèn đã ngừng từ trước, chỉ còn chương trình cho đèn downlight và quạt trần, ảnh hưởng đến các tiêu chí spec tại Mỹ.",
+      "topics": [
+        "standards",
+        "practice"
       ]
     }
   ],
