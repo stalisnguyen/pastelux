@@ -13,8 +13,8 @@
         "product",
         "practice"
       ],
-      "viTitle": "Light Forms mang đến diện mạo chào đón ấn tượng cho Baltic Works",
-      "viSummary": "Light Forms cung cấp giải pháp chiếu sáng cho dự án cải tạo Baltic Works tại Gateshead, phối hợp cùng đơn vị thiết kế chiếu sáng Park Lighting Design trong khuôn khổ tái phát triển công trình."
+      "viTitle": "Light Forms thổi luồng sinh khí mới cho lối vào Baltic Works",
+      "viSummary": "Light Forms cung cấp giải pháp chiếu sáng cho dự án cải tạo Baltic Works tại Gateshead, phối hợp cùng Park Lighting Design trong khuôn khổ tái phát triển công trình."
     },
     {
       "title": "Lighting As Industrial Machine Vision Infrastructure",
@@ -27,7 +27,7 @@
         "research"
       ],
       "viTitle": "Chiếu sáng như hạ tầng cho thị giác máy công nghiệp",
-      "viSummary": "Chất lượng chiếu sáng, độ đồng đều và khả năng điều khiển được xem là hạ tầng thiết yếu cho hệ thống thị giác máy của robot, ảnh hưởng trực tiếp đến độ chính xác kiểm tra và thời gian vận hành sản xuất trong môi trường công nghiệp - nội dung đáng chú ý với các nhà thiết kế quang học cho hệ thống thị giác máy."
+      "viSummary": "Chất lượng ánh sáng, độ đồng đều và khả năng điều khiển được xem là hạ tầng then chốt cho hệ thống thị giác máy của robot, ảnh hưởng trực tiếp đến độ chính xác kiểm tra và thời gian vận hành sản xuất. Vấn đề này đáng lưu ý với các nhà thiết kế quang học cho hệ thống vision."
     },
     {
       "title": "SLL and ILP to co-host sustainability roadshow",
@@ -40,7 +40,7 @@
         "standards"
       ],
       "viTitle": "SLL và ILP đồng tổ chức chuỗi sự kiện về phát triển bền vững",
-      "viSummary": "SLL và Lighting Industry Association phối hợp tổ chức chuỗi roadshow về phát triển bền vững, dự kiến đề cập đến carbon hàm chứa, tiêu chuẩn năng lượng và thực hành thiết kế chiếu sáng dành cho các chuyên gia trong ngành."
+      "viSummary": "SLL và Lighting Industry Association phối hợp tổ chức roadshow về bền vững, dự kiến bàn về carbon ẩn, tiêu chuẩn năng lượng và thực hành thiết kế chiếu sáng cho giới chuyên môn."
     },
     {
       "title": "FRA’s $5.3 Billion Program Creates Lighting Opportunities",
@@ -52,7 +52,7 @@
         "practice"
       ],
       "viTitle": "Gói đầu tư 5,3 tỷ USD của FRA mở ra cơ hội cho ngành chiếu sáng",
-      "viSummary": "Gói tài trợ NRPP trị giá 5,3 tỷ USD của Federal Railroad Administration bao gồm các hạng mục nâng cấp chiếu sáng cho 41 dự án đường sắt hành khách tại 23 bang, từ hiện đại hóa đoàn tàu, cải tạo nhà ga đến chiếu sáng an toàn tại các điểm giao cắt."
+      "viSummary": "Gói tài trợ NRPP trị giá 5,3 tỷ USD của Cục Đường sắt Liên bang Mỹ bao gồm hạng mục nâng cấp chiếu sáng cho 41 dự án đường sắt chở khách tại 23 bang, từ hiện đại hóa đoàn tàu, cải tạo nhà ga đến chiếu sáng an toàn tại các điểm giao cắt đường ray."
     },
     {
       "title": "New Scientist Magazine Cover Story On “Red Light Starvation”",
@@ -64,8 +64,8 @@
         "circadian",
         "research"
       ],
-      "viTitle": "New Scientist đăng bài bìa về “tình trạng thiếu ánh sáng đỏ”",
-      "viSummary": "New Scientist cho biết đèn LED và kính lọc hồng ngoại đã làm giảm mức tiếp xúc ánh sáng đỏ và hồng ngoại trong môi trường sống, đặt ra câu hỏi về tác động sinh học của sự dịch chuyển quang phổ do các lựa chọn thiết kế tiết kiệm năng lượng gây ra."
+      "viTitle": "New Scientist đưa tin trang bìa về “tình trạng thiếu hụt ánh sáng đỏ”",
+      "viSummary": "New Scientist cho biết đèn LED và kính lọc hồng ngoại đang làm giảm lượng ánh sáng đỏ và hồng ngoại con người tiếp xúc hàng ngày, đặt ra câu hỏi về tác động sinh học của sự dịch chuyển phổ ánh sáng do các lựa chọn thiết kế tiết kiệm năng lượng gây ra."
     }
   ],
   "termOfDay": "value-engineering",

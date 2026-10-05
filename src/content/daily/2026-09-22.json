@@ -14,8 +14,8 @@
         "product",
         "controls"
       ],
-      "viTitle": "Product Monday: Dòng đèn chiếu sáng nhịp sinh học Korrus Ecosense",
-      "viSummary": "Korrus ra mắt dòng đèn chiếu sáng nhịp sinh học tích hợp gồm nhiều loại bộ đèn khác nhau, hướng tới việc tạo ra ánh sáng tunable đồng bộ cho toàn bộ không gian thay vì từng bộ đèn riêng lẻ, giải quyết yêu cầu \"tất cả hoặc không gì cả\" của chiếu sáng theo nhịp sinh học."
+      "viTitle": "Product Monday: Dòng đèn circadian Korrus Ecosense",
+      "viSummary": "Korrus ra mắt dòng đèn circadian tích hợp gồm nhiều loại bộ đèn khác nhau, hướng tới việc đồng bộ ánh sáng tunable trên toàn bộ không gian thay vì từng đèn riêng lẻ, giải quyết yêu cầu \"tất cả hoặc không gì cả\" của chiếu sáng circadian."
     },
     {
       "title": "DALI Alliance announces DALI 27 Inaugural Global Summit + Expo",
@@ -28,8 +28,8 @@
         "controls",
         "practice"
       ],
-      "viTitle": "DALI Alliance công bố Hội nghị và Triển lãm Toàn cầu DALI 27 đầu tiên",
-      "viSummary": "DALI Alliance sẽ tổ chức Hội nghị và Triển lãm Toàn cầu đầu tiên tại Utrecht vào tháng 2 năm 2027, quy tụ các chuyên gia chiếu sáng và tòa nhà thông minh để thảo luận về những phát triển mới trong giao thức điều khiển chiếu sáng kỹ thuật số."
+      "viTitle": "DALI Alliance công bố DALI 27 Inaugural Global Summit + Expo",
+      "viSummary": "DALI Alliance sẽ tổ chức Global Summit và Expo đầu tiên tại Utrecht vào tháng 2/2027, quy tụ giới chuyên môn chiếu sáng và smart building để bàn về những bước tiến của giao thức điều khiển chiếu sáng kỹ thuật số."
     },
     {
       "title": "Product Monday: Venetian Blinds Upcycled Into Luminaires",
@@ -42,8 +42,8 @@
         "sustainability",
         "optics"
       ],
-      "viTitle": "Product Monday: Rèm Venetian Blinds được tái chế thành bộ đèn",
-      "viSummary": "Một nhà thiết kế đã tái sử dụng các thanh nhôm của rèm Venetian bị bỏ đi làm bộ phận khuếch tán và phản xạ ánh sáng trong một dòng bộ đèn dạng module, biến phần cứng che nắng thành hình học kiểm soát ánh sáng, như một bài tập thiết kế tuần hoàn."
+      "viTitle": "Product Monday: Biến rèm lá sách thành bộ đèn",
+      "viSummary": "Một nhà thiết kế tận dụng các lá nhôm rèm Venetian bỏ đi làm phần khuếch tán và phản xạ ánh sáng cho một dòng đèn module, biến phụ kiện che nắng thành hình học kiểm soát ánh sáng, như một bài tập về thiết kế tuần hoàn."
     },
     {
       "title": "London Aquatics Centre upgrades to next-generation LED lighting with Signify",
@@ -56,8 +56,8 @@
         "sustainability",
         "product"
       ],
-      "viTitle": "London Aquatics Centre nâng cấp lên hệ thống chiếu sáng LED thế hệ mới cùng Signify",
-      "viSummary": "Giải pháp LED retrofit của Signify tại London Aquatics Centre đáp ứng yêu cầu chiếu sáng truyền hình của World Aquatics, giảm tới 60% mức tiêu thụ năng lượng khi hoạt động ở công suất tối đa, đồng thời sử dụng công nghệ hỗ trợ AR để căn chỉnh đèn chính xác trong cấu trúc kiến trúc phức tạp."
+      "viTitle": "London Aquatics Centre nâng cấp lên hệ đèn LED thế hệ mới cùng Signify",
+      "viSummary": "Gói retrofit LED của Signify tại London Aquatics Centre đáp ứng yêu cầu chiếu sáng truyền hình của World Aquatics, giảm tới 60% năng lượng tiêu thụ ở công suất tối đa, đồng thời dùng công nghệ AR hỗ trợ căn chỉnh góc chiếu trong điều kiện hình học kiến trúc phức tạp."
     }
   ],
   "termOfDay": "beam-angle",

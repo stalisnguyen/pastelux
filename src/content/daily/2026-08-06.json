@@ -13,8 +13,8 @@
         "product",
         "sustainability"
       ],
-      "viTitle": "Cảng Södra Port tại Mönsterås hưởng lợi từ đèn cột LED tiết kiệm năng lượng của CU Phosco",
-      "viSummary": "Energisystem Sweden đã lắp đặt bộ đèn cột CU Phosco FL820 tại cảng Mönsterås của Södra, giúp giảm 59% công suất lắp đặt chiếu sáng, đồng thời cải thiện tầm nhìn tại cầu cảng và an toàn vận hành."
+      "viTitle": "Cảng Södra Port tại Mönsterås hưởng lợi từ hệ thống đèn cột LED tiết kiệm năng lượng của CU Phosco",
+      "viSummary": "Energisystem Sweden lắp đặt đèn cột CU Phosco FL820 tại cảng Mönsterås của Södra, giảm 59% công suất chiếu sáng lắp đặt, đồng thời cải thiện tầm nhìn tại bến tàu và an toàn vận hành."
     },
     {
       "title": "Future Designs carbon careful™ initiative preserves existing luminaires across Crawley schools",
@@ -27,8 +27,8 @@
         "practice",
         "product"
       ],
-      "viTitle": "Sáng kiến carbon careful™ của Future Designs giữ lại bộ đèn hiện có tại các trường học ở Crawley",
-      "viSummary": "Chương trình carbon careful của Future Designs đã thay thế đèn huỳnh quang nguyên bản trong lớp học bằng LED tại ba trường trung học ở Crawley, ưu tiên giữ lại và nâng cấp thân bộ đèn hiện có thay vì thay thế toàn bộ."
+      "viTitle": "Sáng kiến carbon careful™ của Future Designs giữ lại bộ đèn cũ tại các trường học ở Crawley",
+      "viSummary": "Chương trình carbon careful của Future Designs thay đèn huỳnh quang lớp học bằng LED tại ba trường trung học ở Crawley, ưu tiên giữ lại và nâng cấp thân đèn hiện có thay vì thay mới toàn bộ."
     },
     {
       "title": "Modeling When Light Matters Most for Circadian Health",
@@ -40,8 +40,8 @@
         "circadian",
         "research"
       ],
-      "viTitle": "Mô hình hóa thời điểm ánh sáng quan trọng nhất đối với sức khỏe nhịp sinh học",
-      "viSummary": "Một mô hình toán học mới về phản ứng nhịp sinh học cho thấy tác động của ánh sáng buổi tối phụ thuộc nhiều vào mức ánh sáng ban ngày, trong đó điều kiện ban ngày sáng hơn giúp tăng khả năng chống chịu với ánh sáng gây rối loạn vào buổi tối."
+      "viTitle": "Mô hình hóa thời điểm ánh sáng ảnh hưởng mạnh nhất đến sức khỏe nhịp sinh học",
+      "viSummary": "Một mô hình toán học mới về phản ứng nhịp sinh học cho thấy tác động của ánh sáng buổi tối phụ thuộc nhiều vào mức ánh sáng ban ngày: ban ngày càng sáng, cơ thể càng ít bị xáo trộn bởi ánh sáng tối."
     },
     {
       "title": "IEA Article Describes New Era Of LED Lighting",
@@ -54,7 +54,7 @@
         "research"
       ],
       "viTitle": "Bài viết của IEA mô tả kỷ nguyên mới của chiếu sáng LED",
-      "viSummary": "IEA cho rằng ngành chiếu sáng đang bước vào giai đoạn chuyển đổi thứ hai, vượt ra ngoài làn sóng hiệu suất LED trước đây, dù bài viết chưa nêu rõ trọng tâm kỹ thuật hay chính sách cụ thể của giai đoạn tiếp theo này."
+      "viSummary": "IEA cho rằng ngành chiếu sáng đang bước vào giai đoạn chuyển đổi thứ hai, sau làn sóng hiệu suất LED, dù bài viết chưa nêu rõ trọng tâm kỹ thuật hay chính sách cụ thể của giai đoạn tiếp theo này."
     },
     {
       "title": "Smart Home Trends For Multifamily Properties",
@@ -66,8 +66,8 @@
         "controls",
         "practice"
       ],
-      "viTitle": "Xu hướng nhà thông minh cho bất động sản đa hộ gia đình",
-      "viSummary": "Một báo cáo của Parks Associates cho rằng các tòa nhà đa hộ gia đình đang chuyển từ các thiết bị nhà thông minh riêng lẻ sang nền tảng quản lý tòa nhà thống nhất, trong đó điều khiển chiếu sáng là một phần của hệ thống tích hợp kiểm soát ra vào, an ninh và năng lượng."
+      "viTitle": "Xu hướng nhà thông minh cho bất động sản chung cư",
+      "viSummary": "Một whitepaper của Parks Associates cho rằng các tòa nhà chung cư đang chuyển từ thiết bị smart-home rời rạc sang nền tảng quản lý tòa nhà hợp nhất, trong đó điều khiển chiếu sáng chỉ là một phần trong hệ thống tích hợp gồm kiểm soát ra vào, an ninh và năng lượng."
     },
     {
       "title": "Lucent Lighting elevates rooftop escape AZOTEA Leeds with layered architectural lighting",
@@ -79,8 +79,8 @@
         "practice",
         "product"
       ],
-      "viTitle": "Lucent Lighting nâng tầm không gian sân thượng AZOTEA Leeds với chiếu sáng kiến trúc nhiều lớp",
-      "viSummary": "Mistry Lighting đã thiết kế một phương án chiếu sáng nhiều lớp cho AZOTEA, quán bar trên sân thượng tại Leeds, với bộ đèn do Lucent Lighting cung cấp nhằm tạo ra các khu vực và không khí riêng biệt trong không gian ngoài trời."
+      "viTitle": "Lucent Lighting nâng tầm sân thượng AZOTEA ở Leeds bằng ánh sáng kiến trúc nhiều lớp",
+      "viSummary": "Mistry Lighting thiết kế hệ thống chiếu sáng nhiều lớp cho AZOTEA, một quán bar sân thượng ở Leeds, với bộ đèn do Lucent Lighting cung cấp, tạo ra các khu vực và không khí riêng biệt cho không gian ngoài trời."
     },
     {
       "title": "FCC Approves Controversial Satellite Mirror Project",
@@ -93,7 +93,7 @@
         "practice"
       ],
       "viTitle": "FCC phê duyệt dự án vệ tinh gương gây tranh cãi",
-      "viSummary": "FCC đã phê duyệt một chuyến phóng thử nghiệm cho vệ tinh gương của Reflect Orbital, một khái niệm truyền ánh sáng từ không gian, làm dấy lên các vấn đề quản lý liên quan đến ô nhiễm ánh sáng, an toàn công cộng và tác động đến thiên văn học."
+      "viSummary": "FCC đã duyệt cho phóng thử vệ tinh gương của Reflect Orbital, một khái niệm truyền ánh sáng từ không gian, làm dấy lên câu hỏi về quản lý ô nhiễm ánh sáng, an toàn công cộng và ảnh hưởng đến quan sát thiên văn."
     },
     {
       "title": "Will Mineral Paints Gain Traction In The Lighting Industry?",
@@ -105,8 +105,8 @@
         "product",
         "sustainability"
       ],
-      "viTitle": "Liệu sơn khoáng có được ưa chuộng trong ngành chiếu sáng?",
-      "viSummary": "Các lớp phủ gốc khoáng, được đánh giá cao về độ bền và khả năng thoáng khí trong các công trình di sản và công trình sinh thái, đang được đề xuất như một lớp hoàn thiện cao cấp thay thế cho sơn hoặc sơn tĩnh điện thông thường trên vỏ bộ đèn."
+      "viTitle": "Liệu sơn khoáng có chỗ đứng trong ngành chiếu sáng?",
+      "viSummary": "Các loại sơn gốc khoáng, vốn được đánh giá cao về độ bền và khả năng thoáng khí trong công trình di sản và xây dựng xanh, đang được đề xuất như một lớp hoàn thiện cao cấp thay thế cho sơn hoặc sơn tĩnh điện thông thường trên vỏ bộ đèn."
     },
     {
       "title": "Collingwood lights up Northampton Saints hospitality and net zero drive",
@@ -119,8 +119,8 @@
         "sustainability",
         "practice"
       ],
-      "viTitle": "Collingwood chiếu sáng khu vực tiếp khách của Northampton Saints trong nỗ lực hướng tới net zero",
-      "viSummary": "Collingwood Lighting đã hoàn thành giai đoạn một của việc cải tạo chiếu sáng LED tại khán đài Barwell của Northampton Saints, thay thế các bộ đèn hiện có tại khu vực khán đài và tiếp khách nhằm cải thiện không khí và giảm tiêu thụ năng lượng."
+      "viTitle": "Collingwood chiếu sáng khu hospitality của Northampton Saints, hướng tới net zero",
+      "viSummary": "Collingwood Lighting hoàn thành giai đoạn một của việc cải tạo đèn LED tại khán đài Barwell của Northampton Saints, thay toàn bộ đèn cũ ở khu khán giả và khu hospitality nhằm cải thiện không khí và giảm tiêu thụ năng lượng."
     },
     {
       "title": "House Passes Bill To Create Permanent Daylight Savings Time",
@@ -133,7 +133,7 @@
         "standards"
       ],
       "viTitle": "Hạ viện Mỹ thông qua dự luật áp dụng giờ mùa hè vĩnh viễn",
-      "viSummary": "Hạ viện Mỹ đã thông qua dự luật áp dụng giờ mùa hè vĩnh viễn; dự luật vẫn cần Thượng viện phê duyệt, và thay đổi này sẽ ảnh hưởng đến thiết kế chiếu sáng theo nhịp sinh học cũng như mô hình tiếp xúc ánh sáng vào buổi tối."
+      "viSummary": "Hạ viện Mỹ thông qua dự luật biến giờ mùa hè thành quy định vĩnh viễn, còn chờ Thượng viện phê chuẩn. Thay đổi này sẽ ảnh hưởng đến thiết kế chiếu sáng theo nhịp sinh học và mô hình tiếp xúc ánh sáng buổi tối."
     }
   ],
   "termOfDay": "maintenance-factor",
