@@ -12,7 +12,9 @@
       "topics": [
         "sustainability",
         "research"
-      ]
+      ],
+      "viTitle": "FCC phê duyệt dự án gương vệ tinh gây tranh cãi",
+      "viSummary": "FCC đã phê duyệt một đợt phóng thử nghiệm vệ tinh gương không gian của Reflect Orbital, với mục tiêu phản chiếu ánh sáng mặt trời xuống các vị trí mặt đất. Dự án này làm dấy lên các vấn đề về ô nhiễm ánh sáng, chói và quy định pháp lý liên quan đến chiếu sáng ngoài trời và việc bảo vệ bầu trời tối."
     },
     {
       "title": "House Passes Bill To Create Permanent Daylight Savings Time",
@@ -23,7 +25,9 @@
       "topics": [
         "circadian",
         "controls"
-      ]
+      ],
+      "viTitle": "Hạ viện Mỹ thông qua dự luật áp dụng giờ mùa hè vĩnh viễn",
+      "viSummary": "Hạ viện Mỹ đã thông qua dự luật áp dụng giờ mùa hè (DST) quanh năm, nhưng vẫn cần Thượng viện và Tổng thống phê chuẩn. Nếu được ban hành, việc áp dụng DST vĩnh viễn sẽ ảnh hưởng đến lịch trình ánh sáng tự nhiên, các giả định trong thiết kế chiếu sáng theo nhịp sinh học, cũng như việc lập trình hệ thống điều khiển dựa trên thời điểm mặt trời mọc/lặn."
     },
     {
       "title": "Trump Administration Declines To Renew USMCA Trade Deal",
@@ -34,7 +38,9 @@
       "topics": [
         "practice",
         "product"
-      ]
+      ],
+      "viTitle": "Chính quyền Trump từ chối gia hạn hiệp định thương mại USMCA",
+      "viSummary": "Chính quyền Mỹ sẽ không gia hạn USMCA theo hình thức hiện tại, dẫn đến một quá trình rà soát kéo dài thay vì gây gián đoạn thương mại ngay lập tức. Điều này có thể tác động lâu dài đến nguồn cung ứng, giá cả và khả năng cung cấp sản phẩm theo yêu cầu kỹ thuật của các nhà sản xuất đèn chiếu sáng."
     }
   ],
   "termOfDay": "luminance",

@@ -13,7 +13,9 @@
         "circadian",
         "controls",
         "practice"
-      ]
+      ],
+      "viTitle": "Hạ viện Mỹ thông qua dự luật áp dụng giờ mùa hè vĩnh viễn",
+      "viSummary": "Hạ viện Mỹ đã thông qua Đạo luật Sunshine Protection nhằm áp dụng giờ mùa hè (daylight saving time) vĩnh viễn; nếu được ban hành, điều này sẽ ảnh hưởng đến lịch trình của hệ thống controls và các chiến lược chiếu sáng circadian liên kết với ánh sáng ngày, hơn là tác động đến thiết kế bộ đèn."
     },
     {
       "title": "Trump Administration Declines To Renew USMCA Trade Deal",
@@ -24,7 +26,9 @@
       "topics": [
         "practice",
         "sustainability"
-      ]
+      ],
+      "viTitle": "Chính quyền Trump từ chối gia hạn hiệp định thương mại USMCA",
+      "viSummary": "Chính quyền Mỹ từ chối gia hạn USMCA theo hình thức hiện tại, mở ra một quá trình xem xét kéo dài có thể ảnh hưởng đến nguồn cung, thuế quan và giá cả đối với các nhà sản xuất và nhà thiết kế chiếu sáng trên khắp Bắc Mỹ."
     },
     {
       "title": "White Light helps bring ‘fantasmagorical’ magic to life at the Watermill Theatre",
@@ -34,7 +38,9 @@
       "summary": "White Light supported lighting designer Jai Morjaria's design for Chitty Chitty Bang Bang at the Watermill Theatre, adapting effects for a compact venue.",
       "topics": [
         "practice"
-      ]
+      ],
+      "viTitle": "White Light góp phần tạo nên phép màu 'kỳ ảo' tại Watermill Theatre",
+      "viSummary": "White Light đã hỗ trợ nhà thiết kế ánh sáng Jai Morjaria thực hiện thiết kế cho vở Chitty Chitty Bang Bang tại Watermill Theatre, điều chỉnh các hiệu ứng để phù hợp với không gian nhỏ gọn của nhà hát."
     }
   ],
   "termOfDay": "lpd",

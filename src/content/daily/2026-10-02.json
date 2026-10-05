@@ -11,7 +11,9 @@
       "summary": "IES has published RP-27-26 on photobiological safety for lighting systems, revising the 500-lux distance calculation, UV risk-group duration rules, lumen-to-radiant-power conversion and the spectral weighting function table, affecting compliance checks for fixture specification.",
       "topics": [
         "standards"
-      ]
+      ],
+      "viTitle": "Ba tiêu chuẩn IES mới được công bố",
+      "viSummary": "IES vừa công bố RP-27-26 về an toàn quang sinh học cho hệ thống chiếu sáng, sửa đổi cách tính khoảng cách 500-lux, quy tắc thời gian cho các nhóm rủi ro UV, công thức chuyển đổi lumen sang công suất bức xạ và bảng hàm trọng số phổ, ảnh hưởng đến việc kiểm tra tuân thủ khi chọn bộ đèn."
     }
   ],
   "termOfDay": "cut-off-angle",

@@ -13,7 +13,9 @@
         "facade",
         "controls",
         "sustainability"
-      ]
+      ],
+      "viTitle": "Hệ thống điều khiển chiếu sáng hiện đại hồi sinh vương cung thánh đường cổ",
+      "viSummary": "Pharos Architectural Controls đã được lắp đặt để điều khiển hệ thống chiếu sáng mặt ngoài của Sint-Petrusbasiliek tại Oirschot, thay thế hệ thống cũ bằng giải pháp điều khiển dạng mạng, tiết kiệm năng lượng, phù hợp với chiếu sáng mặt dựng công trình di sản."
     },
     {
       "title": "DLC Finalizes Networked Lighting Controls (NLC) V5.2",
@@ -24,7 +26,9 @@
       "topics": [
         "standards",
         "controls"
-      ]
+      ],
+      "viTitle": "DLC hoàn tất tiêu chuẩn Networked Lighting Controls (NLC) phiên bản 5.2",
+      "viSummary": "Yêu cầu NLC V5.2 của DLC có hiệu lực từ tháng 8/2026, siết chặt các quy định về khả năng tương thích và báo cáo, đồng thời mở rộng phạm vi NLC sang các hệ thống tích hợp trong tòa nhà như HVAC - điều mà các nhà thiết kế chiếu sáng cần theo dõi để đảm bảo tuân thủ trong tương lai."
     },
     {
       "title": "House Passes Bill To Create Permanent Daylight Savings Time",
@@ -35,7 +39,9 @@
       "topics": [
         "controls",
         "circadian"
-      ]
+      ],
+      "viTitle": "Hạ viện Mỹ thông qua dự luật áp dụng giờ mùa hè vĩnh viễn",
+      "viSummary": "Hạ viện Mỹ đã thông qua dự luật đưa giờ mùa hè (daylight saving time) trở thành vĩnh viễn, còn chờ Thượng viện phê duyệt; nếu được ban hành, thay đổi này sẽ ảnh hưởng đến cài đặt thời gian thiên văn và logic lập lịch trong các hệ thống điều khiển chiếu sáng ngoại thất và chiếu sáng theo nhịp sinh học kết nối mạng."
     },
     {
       "title": "Trump Administration Declines To Renew USMCA Trade Deal",
@@ -46,7 +52,9 @@
       "topics": [
         "practice",
         "sustainability"
-      ]
+      ],
+      "viTitle": "Chính quyền Trump từ chối gia hạn hiệp định thương mại USMCA",
+      "viSummary": "Chính quyền Trump sẽ không gia hạn USMCA theo hình thức hiện tại, mở đầu một quá trình rà soát kéo dài có thể tác động đến nguồn cung linh kiện, thuế quan và giá cả của các nhà sản xuất và nhà thiết kế chiếu sáng tại Bắc Mỹ."
     },
     {
       "title": "Foscarini – Asteria",
@@ -57,7 +65,9 @@
       "topics": [
         "product",
         "optics"
-      ]
+      ],
+      "viTitle": "Foscarini - Asteria",
+      "viSummary": "Bộ đèn Asteria của Foscarini, lần đầu ra mắt tại Euroluce 2025, làm mới định dạng đèn chùm nhiều nhánh với dáng vẻ tối giản, mang tính kiến trúc, phù hợp cho các dự án chiếu sáng trang trí."
     },
     {
       "title": "Collingwood lights up Northampton Saints hospitality and net zero drive",
@@ -68,7 +78,9 @@
       "topics": [
         "sustainability",
         "product"
-      ]
+      ],
+      "viTitle": "Collingwood chiếu sáng khu vực hospitality của Northampton Saints, hướng tới net zero",
+      "viSummary": "Collingwood Lighting đã lắp đặt các bộ đèn LED mới tại khán đài Barwell của Northampton Saints, là giai đoạn một trong kế hoạch cải tạo nhằm nâng cao chất lượng chiếu sáng khu vực hospitality của sân vận động và giảm tiêu thụ năng lượng."
     }
   ],
   "termOfDay": "l70",

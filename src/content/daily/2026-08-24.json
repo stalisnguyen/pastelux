@@ -13,7 +13,9 @@
         "circadian",
         "research",
         "practice"
-      ]
+      ],
+      "viTitle": "Chiếu sáng cho học tập hòa nhập thần kinh",
+      "viSummary": "Bài viết bàn về thiết kế chiếu sáng dựa trên khoa học thần kinh như một công cụ giảm tải nhận thức, cải thiện khả năng định hướng và hỗ trợ sức khỏe tinh thần của sinh viên, mở rộng tư duy thiết kế hướng đến khả năng tiếp cận trong môi trường khuôn viên giáo dục đại học."
     },
     {
       "title": "Typology Catenary Ring Light",
@@ -25,7 +27,9 @@
         "product",
         "facade",
         "optics"
-      ]
+      ],
+      "viTitle": "Đèn vòng Catenary Ring Light của Typology",
+      "viSummary": "Catenary Ring Light của Typology là bộ đèn ngoài trời với dạng vòng tròn treo lơ lửng, kết hợp giữa hiện diện kiến trúc mang tính điêu khắc và chức năng chiếu sáng khu vực."
     },
     {
       "title": "A layered lighting design for Madinat Jumeirah",
@@ -36,7 +40,9 @@
       "topics": [
         "practice",
         "product"
-      ]
+      ],
+      "viTitle": "Thiết kế chiếu sáng đa lớp cho Madinat Jumeirah",
+      "viSummary": "Bài viết trình bày giải pháp chiếu sáng đa lớp được áp dụng cho khu nghỉ dưỡng Madinat Jumeirah tại Dubai, phối hợp chiếu sáng kiến trúc, cảnh quan và không gian khách sạn xuyên suốt các khách sạn, khu chợ souk, spa và khu vực sự kiện của tổ hợp."
     },
     {
       "title": "Making the beautiful game unforgettable – Signify Comment",
@@ -47,7 +53,9 @@
       "topics": [
         "practice",
         "product"
-      ]
+      ],
+      "viTitle": "Biến môn thể thao vua thành khoảnh khắc khó quên – Góc nhìn từ Signify",
+      "viSummary": "Bài bình luận từ bộ phận chiếu sáng chuyên nghiệp của Signify tại Anh, bàn về vai trò của chiếu sáng sân vận động và thể thao trong việc tạo bầu không khí và đảm bảo chất lượng hình ảnh truyền hình tại các sự kiện bóng đá lớn."
     },
     {
       "title": "TRT Lighting modernises Frenchgate Tunnel with LED retrofit",
@@ -59,7 +67,9 @@
         "sustainability",
         "product",
         "practice"
-      ]
+      ],
+      "viTitle": "TRT Lighting hiện đại hóa hầm Frenchgate bằng giải pháp cải tạo LED",
+      "viSummary": "TRT Lighting đã thay thế các bộ đèn sodium cao áp và đèn huỳnh quang cũ tại hầm Frenchgate ở Doncaster bằng giải pháp cải tạo sang LED, nhằm giải quyết chi phí bảo trì ngày càng tăng của hành lang giao thông trung chuyển này."
     }
   ],
   "termOfDay": "rgbw",

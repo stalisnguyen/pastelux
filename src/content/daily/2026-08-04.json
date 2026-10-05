@@ -11,7 +11,9 @@
       "summary": "",
       "topics": [
         "controls"
-      ]
+      ],
+      "viTitle": "Nghệ thuật thiết kế tiệm kem",
+      "viSummary": ""
     },
     {
       "title": "IEA Article Describes New Era Of LED Lighting",
@@ -21,7 +23,9 @@
       "summary": "",
       "topics": [
         "sustainability"
-      ]
+      ],
+      "viTitle": "Bài viết của IEA mô tả kỷ nguyên mới của chiếu sáng LED",
+      "viSummary": ""
     },
     {
       "title": "LEDVANCE becomes Official Lighting Partner of FC Bayern Munich roots, global reach: partnership through 2029",
@@ -31,7 +35,9 @@
       "summary": "",
       "topics": [
         "practice"
-      ]
+      ],
+      "viTitle": "LEDVANCE trở thành Đối tác Chiếu sáng Chính thức của FC Bayern Munich: gắn kết cội nguồn, vươn tầm toàn cầu với hợp tác đến năm 2029",
+      "viSummary": ""
     },
     {
       "title": "Trump Administration Declines To Renew USMCA Trade Deal",
@@ -39,7 +45,9 @@
       "source": "LightNOW",
       "published": "Tue, 21 Jul 2026 05:35:11 +0000",
       "summary": "",
-      "topics": []
+      "topics": [],
+      "viTitle": "Chính quyền Trump từ chối gia hạn hiệp định thương mại USMCA",
+      "viSummary": ""
     }
   ],
   "termOfDay": "macadam-ellipse",

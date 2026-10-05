@@ -12,7 +12,9 @@
       "topics": [
         "research",
         "product"
-      ]
+      ],
+      "viTitle": "Công nghệ LED được ứng dụng trong thiết bị photobiomodulation như thế nào",
+      "viSummary": "Bài viết phân tích cách các thông số kỹ thuật LED, như kiểm soát bước sóng và thiết kế driver, đang được ứng dụng vào các thiết bị photobiomodulation dùng trong trị liệu da, hữu ích cho các nhà thiết kế quan tâm đến ứng dụng của LED ngoài chiếu sáng."
     }
   ],
   "termOfDay": "dali-plus",

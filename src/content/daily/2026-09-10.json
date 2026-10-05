@@ -12,7 +12,9 @@
       "topics": [
         "product",
         "practice"
-      ]
+      ],
+      "viTitle": "Light Forms mang đến diện mạo chào đón ấn tượng cho Baltic Works",
+      "viSummary": "Light Forms cung cấp giải pháp chiếu sáng cho dự án cải tạo Baltic Works tại Gateshead, phối hợp cùng đơn vị thiết kế chiếu sáng Park Lighting Design trong khuôn khổ tái phát triển công trình."
     },
     {
       "title": "Lighting As Industrial Machine Vision Infrastructure",
@@ -23,7 +25,9 @@
       "topics": [
         "optics",
         "research"
-      ]
+      ],
+      "viTitle": "Chiếu sáng như hạ tầng cho thị giác máy công nghiệp",
+      "viSummary": "Chất lượng chiếu sáng, độ đồng đều và khả năng điều khiển được xem là hạ tầng thiết yếu cho hệ thống thị giác máy của robot, ảnh hưởng trực tiếp đến độ chính xác kiểm tra và thời gian vận hành sản xuất trong môi trường công nghiệp - nội dung đáng chú ý với các nhà thiết kế quang học cho hệ thống thị giác máy."
     },
     {
       "title": "SLL and ILP to co-host sustainability roadshow",
@@ -34,7 +38,9 @@
       "topics": [
         "sustainability",
         "standards"
-      ]
+      ],
+      "viTitle": "SLL và ILP đồng tổ chức chuỗi sự kiện về phát triển bền vững",
+      "viSummary": "SLL và Lighting Industry Association phối hợp tổ chức chuỗi roadshow về phát triển bền vững, dự kiến đề cập đến carbon hàm chứa, tiêu chuẩn năng lượng và thực hành thiết kế chiếu sáng dành cho các chuyên gia trong ngành."
     },
     {
       "title": "FRA’s $5.3 Billion Program Creates Lighting Opportunities",
@@ -44,7 +50,9 @@
       "summary": "The Federal Railroad Administration's $5.3 billion NRPP funding package includes lighting upgrades across 41 passenger rail projects in 23 states, covering fleet modernization, station overhauls and grade-crossing safety lighting.",
       "topics": [
         "practice"
-      ]
+      ],
+      "viTitle": "Gói đầu tư 5,3 tỷ USD của FRA mở ra cơ hội cho ngành chiếu sáng",
+      "viSummary": "Gói tài trợ NRPP trị giá 5,3 tỷ USD của Federal Railroad Administration bao gồm các hạng mục nâng cấp chiếu sáng cho 41 dự án đường sắt hành khách tại 23 bang, từ hiện đại hóa đoàn tàu, cải tạo nhà ga đến chiếu sáng an toàn tại các điểm giao cắt."
     },
     {
       "title": "New Scientist Magazine Cover Story On “Red Light Starvation”",
@@ -55,7 +63,9 @@
       "topics": [
         "circadian",
         "research"
-      ]
+      ],
+      "viTitle": "New Scientist đăng bài bìa về “tình trạng thiếu ánh sáng đỏ”",
+      "viSummary": "New Scientist cho biết đèn LED và kính lọc hồng ngoại đã làm giảm mức tiếp xúc ánh sáng đỏ và hồng ngoại trong môi trường sống, đặt ra câu hỏi về tác động sinh học của sự dịch chuyển quang phổ do các lựa chọn thiết kế tiết kiệm năng lượng gây ra."
     }
   ],
   "termOfDay": "value-engineering",

@@ -13,7 +13,9 @@
         "product",
         "practice",
         "optics"
-      ]
+      ],
+      "viTitle": "Hiệu suất High Bay trong đèn panel âm trần phẳng",
+      "viSummary": "Một xu hướng ngách đang xuất hiện với các bộ đèn panel âm trần phẳng có quang thông cao, đạt mức hiệu suất chiếu sáng tương đương đèn high bay nhưng vẫn lắp vừa khung trần tiêu chuẩn, mang lại độ rọi kiểu công nghiệp cho một số ứng dụng nhất định chứ không thay thế hoàn toàn đèn high bay treo."
     },
     {
       "title": "Creating A Digital Twin For Lighting Manufacturers",
@@ -24,7 +26,9 @@
       "topics": [
         "product",
         "practice"
-      ]
+      ],
+      "viTitle": "Xây dựng digital twin cho các nhà sản xuất thiết bị chiếu sáng",
+      "viSummary": "Bài viết cho rằng các nhà sản xuất thiết bị chiếu sáng đang nâng cao năng suất nhờ xây dựng digital twin cho hoạt động sản xuất và chuỗi cung ứng, một xu hướng ứng dụng AI liên quan đến cách sản phẩm đến được với dự án, tuy nhiên chưa đề cập chi tiết ở khía cạnh thiết kế."
     }
   ],
   "termOfDay": "contrast-ratio",

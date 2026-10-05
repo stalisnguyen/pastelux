@@ -12,7 +12,9 @@
       "topics": [
         "awards",
         "practice"
-      ]
+      ],
+      "viTitle": "Giải thưởng Silhouette kỷ niệm 5 năm chương trình cố vấn khi Mùa 6 chuẩn bị khởi động",
+      "viSummary": "Chương trình cố vấn Silhouette Awards dành cho các nhà thiết kế ánh sáng mới nổi sắp bước vào mùa thứ sáu, với các chi tiết sẽ được công bố tại một sự kiện trực tuyến vào tháng 9."
     },
     {
       "title": "PLASA Awards for Innovation 2026 winners announced",
@@ -23,7 +25,9 @@
       "topics": [
         "awards",
         "product"
-      ]
+      ],
+      "viTitle": "Công bố người thắng giải PLASA Awards for Innovation 2026",
+      "viSummary": "PLASA đã công bố những người thắng giải PLASA Awards for Innovation 2026 tại PLASA Show London, vinh danh các công nghệ mới trong lĩnh vực công nghệ giải trí và sự kiện."
     },
     {
       "title": "Measuring Good Design",
@@ -33,7 +37,9 @@
       "summary": "A Signify executive discusses how to assess and quantify the value of illuminated architecture, though the piece offers no concrete metrics or methodology in this excerpt.",
       "topics": [
         "practice"
-      ]
+      ],
+      "viTitle": "Đo lường thiết kế tốt",
+      "viSummary": "Một lãnh đạo của Signify bàn về cách đánh giá và định lượng giá trị của kiến trúc được chiếu sáng, dù đoạn trích này chưa đưa ra số liệu hay phương pháp cụ thể nào."
     },
     {
       "title": "Illinois Passes Its Dark Sky Bill Into Law",
@@ -45,7 +51,9 @@
         "standards",
         "sustainability",
         "practice"
-      ]
+      ],
+      "viTitle": "Illinois thông qua Dự luật Bầu trời tối thành luật",
+      "viSummary": "Đạo luật Dark Sky Act (SB 3037) mới của Illinois, có hiệu lực từ ngày 1/1/2027, mở rộng các quy định trên toàn bang nhằm hạn chế ô nhiễm ánh sáng, bổ sung thêm một khu vực pháp lý mà các thiết kế chiếu sáng ngoại thất phải tuân thủ tiêu chí bầu trời tối."
     }
   ],
   "termOfDay": "adjustable-spot",

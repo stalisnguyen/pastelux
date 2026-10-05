@@ -12,7 +12,9 @@
       "topics": [
         "awards",
         "product"
-      ]
+      ],
+      "viTitle": "Công bố người chiến thắng PLASA Awards for Innovation 2026",
+      "viSummary": "PLASA đã công bố những người chiến thắng giải Awards for Innovation 2026, vinh danh các công nghệ chiếu sáng giải trí và sân khấu mới giúp cải thiện độ an toàn, hiệu suất và hiệu năng."
     },
     {
       "title": "Showlight comes to Spain in 2029",
@@ -22,7 +24,9 @@
       "summary": "Showlight, the quadrennial lighting design conference, will hold its 2029 edition in Granada, Spain, sponsored by manufacturers Ayrton and SGM.",
       "topics": [
         "practice"
-      ]
+      ],
+      "viTitle": "Showlight sẽ đến Tây Ban Nha vào năm 2029",
+      "viSummary": "Showlight, hội nghị thiết kế chiếu sáng tổ chức 4 năm một lần, sẽ diễn ra kỳ 2029 tại Granada, Tây Ban Nha, với sự tài trợ của các nhà sản xuất Ayrton và SGM."
     },
     {
       "title": "Measuring Good Design",
@@ -33,7 +37,9 @@
       "topics": [
         "practice",
         "standards"
-      ]
+      ],
+      "viTitle": "Đo lường một thiết kế tốt",
+      "viSummary": "Một bài viết góc nhìn ngành đặt câu hỏi về cách đánh giá giá trị và chất lượng của kiến trúc được chiếu sáng, gợi mở vấn đề về các tiêu chí đo lường một thiết kế chiếu sáng tốt, vượt ra ngoài đánh giá cảm tính."
     }
   ],
   "termOfDay": "uplight-ratio",

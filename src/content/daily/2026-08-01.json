@@ -11,7 +11,9 @@
       "summary": "A Parks Associates whitepaper argues multifamily developments are shifting from standalone smart-home features to unified building-intelligence platforms, positioning lighting controls as one component within broader connectivity, access and energy management systems.",
       "topics": [
         "controls"
-      ]
+      ],
+      "viTitle": "Xu hướng nhà thông minh cho các dự án nhà ở đa hộ gia đình",
+      "viSummary": "Một báo cáo của Parks Associates cho rằng các dự án nhà ở đa hộ gia đình đang chuyển từ các tính năng nhà thông minh riêng lẻ sang nền tảng trí tuệ tòa nhà thống nhất, trong đó điều khiển chiếu sáng chỉ là một thành phần trong hệ thống kết nối, kiểm soát ra vào và quản lý năng lượng tổng thể."
     },
     {
       "title": "Lucent Lighting elevates rooftop escape AZOTEA Leeds with layered architectural lighting",
@@ -22,7 +24,9 @@
       "topics": [
         "practice",
         "product"
-      ]
+      ],
+      "viTitle": "Lucent Lighting nâng tầm không gian sân thượng AZOTEA Leeds bằng ánh sáng kiến trúc nhiều lớp",
+      "viSummary": "Một quán bar kiêm nhà hàng trên sân thượng tại Leeds vừa được triển khai giải pháp chiếu sáng nhiều lớp do Mistry Lighting thiết kế, sử dụng bộ đèn từ Lucent Lighting, minh họa cho các hướng tiếp cận hiện nay trong chiếu sáng nhấn và tạo không khí cho ngành hospitality."
     },
     {
       "title": "Will Mineral Paints Gain Traction In The Lighting Industry?",
@@ -33,7 +37,9 @@
       "topics": [
         "product",
         "sustainability"
-      ]
+      ],
+      "viTitle": "Sơn khoáng liệu có chỗ đứng trong ngành chiếu sáng?",
+      "viSummary": "Các loại sơn phủ gốc khoáng, vốn được đánh giá cao nhờ khả năng thoáng khí và độ bền trong các công trình di sản và công trình xanh, đang được nghiên cứu như một lớp hoàn thiện ít tác động môi trường thay thế cho sơn thường hoặc sơn tĩnh điện trên vỏ bộ đèn."
     },
     {
       "title": "Collingwood lights up Northampton Saints hospitality and net zero drive",
@@ -44,7 +50,9 @@
       "topics": [
         "practice",
         "sustainability"
-      ]
+      ],
+      "viTitle": "Collingwood thắp sáng khu hospitality của Northampton Saints, thúc đẩy mục tiêu net zero",
+      "viSummary": "Collingwood Lighting đã hoàn thành việc cải tạo đèn LED cho khán đài Barwell tại sân bóng bầu dục Northampton Saints, đây là giai đoạn đầu của chương trình chiếu sáng lại toàn sân nhằm nâng cao trải nghiệm khán giả và giảm tiêu thụ năng lượng."
     },
     {
       "title": "DLC Finalizes Networked Lighting Controls (NLC) V5.2",
@@ -55,7 +63,9 @@
       "topics": [
         "standards",
         "controls"
-      ]
+      ],
+      "viTitle": "DLC hoàn thiện tiêu chuẩn Networked Lighting Controls (NLC) phiên bản V5.2",
+      "viSummary": "DesignLights Consortium đã hoàn tất phiên bản NLC V5.2, có hiệu lực từ tháng 8 năm 2026, siết chặt các yêu cầu về khả năng tương thích và báo cáo, đồng thời mở rộng phạm vi điều khiển chiếu sáng mạng sang các hệ thống tòa nhà tích hợp như HVAC, đáng chú ý với các nhà thiết kế đang theo dõi các sản phẩm điều khiển đạt chuẩn DLC."
     },
     {
       "title": "Modern lighting control brings new life to historic basilica",
@@ -67,7 +77,9 @@
         "controls",
         "facade",
         "sustainability"
-      ]
+      ],
+      "viTitle": "Hệ thống điều khiển chiếu sáng hiện đại thổi luồng sinh khí mới cho thánh đường cổ",
+      "viSummary": "Pharos Architectural Controls đã lắp đặt hệ thống điều khiển mới cho chiếu sáng ngoại thất của Sint-Petrusbasiliek tại Oirschot, thay thế hệ thống cũ nhằm cải thiện hiệu quả năng lượng và tính linh hoạt lâu dài trên mặt dựng của công trình được xếp hạng di sản."
     }
   ],
   "termOfDay": "luminous-flux",

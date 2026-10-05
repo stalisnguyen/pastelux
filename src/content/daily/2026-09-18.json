@@ -13,7 +13,9 @@
         "standards",
         "controls",
         "practice"
-      ]
+      ],
+      "viTitle": "DALI Alliance công bố Hội nghị và Triển lãm Toàn cầu DALI 27 đầu tiên",
+      "viSummary": "DALI Alliance sẽ tổ chức hội nghị và triển lãm toàn cầu đầu tiên mang tên DALI 27 tại Utrecht vào tháng 2/2027, quy tụ các chuyên gia chiếu sáng và tòa nhà thông minh xoay quanh các tiêu chuẩn điều khiển chiếu sáng kỹ thuật số."
     },
     {
       "title": "Product Monday: Venetian Blinds Upcycled Into Luminaires",
@@ -24,7 +26,9 @@
       "topics": [
         "product",
         "sustainability"
-      ]
+      ],
+      "viTitle": "Product Monday: Biến rèm lá dọc kiểu Venetian thành bộ đèn",
+      "viSummary": "Một nhà thiết kế tận dụng các lá nhôm của rèm Venetian bị bỏ đi để tạo ra một dòng bộ đèn module, dùng chính những chi tiết vốn để chắn ánh sáng tự nhiên nhằm dẫn hướng và khuếch tán ánh sáng nhân tạo, một ví dụ về tư duy thiết kế tuần hoàn trong sản xuất đèn."
     },
     {
       "title": "London Aquatics Centre upgrades to next-generation LED lighting with Signify",
@@ -36,7 +40,9 @@
         "standards",
         "product",
         "sustainability"
-      ]
+      ],
+      "viTitle": "London Aquatics Centre nâng cấp lên hệ thống chiếu sáng LED thế hệ mới cùng Signify",
+      "viSummary": "Signify đã thay thế hệ thống LED tại London Aquatics Centre, cho biết tiết kiệm năng lượng tới 60% ở công suất tối đa và đáp ứng yêu cầu chiếu sáng truyền hình của World Aquatics, đồng thời sử dụng công cụ căn chỉnh dựa trên AR để định hướng đèn chính xác trong không gian phức tạp của công trình."
     },
     {
       "title": "Showlight comes to Spain in 2029",
@@ -46,7 +52,9 @@
       "summary": "The Showlight entertainment-lighting conference will relocate to Granada, Spain for its 2029 edition, sponsored by manufacturers Ayrton and SGM.",
       "topics": [
         "practice"
-      ]
+      ],
+      "viTitle": "Showlight đến Tây Ban Nha vào năm 2029",
+      "viSummary": "Hội nghị chiếu sáng giải trí Showlight sẽ chuyển địa điểm tổ chức đến Granada, Tây Ban Nha cho kỳ 2029, với sự tài trợ của các nhà sản xuất Ayrton và SGM."
     },
     {
       "title": "Lighting As Industrial Machine Vision Infrastructure",
@@ -58,7 +66,9 @@
         "optics",
         "research",
         "practice"
-      ]
+      ],
+      "viTitle": "Chiếu sáng như hạ tầng cho thị giác máy công nghiệp",
+      "viSummary": "Bài viết cho rằng độ đồng đều, chất lượng và khả năng điều khiển ánh sáng là nền tảng cho độ chính xác của thị giác máy trong robot công nghiệp, qua đó đặt thiết kế chiếu sáng vào vị trí hạ tầng cốt lõi cho độ tin cậy kiểm tra và tính liên tục sản xuất, chứ không chỉ là yếu tố phụ."
     }
   ],
   "termOfDay": "aiming-angle",

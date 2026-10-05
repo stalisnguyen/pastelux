@@ -12,7 +12,9 @@
       "topics": [
         "product",
         "practice"
-      ]
+      ],
+      "viTitle": "Một nền tảng phần mềm mới dành cho các nhà sản xuất đèn chiếu sáng",
+      "viSummary": "Electrify Connect là một nền tảng phần mềm mới dành cho các nhà sản xuất đèn chiếu sáng, tích hợp bộ cấu hình sản phẩm, CRM, PIM, tạo spec-sheet và cổng thông tin cho specifier vào một hệ thống duy nhất, thay thế cho các công cụ rời rạc trước đây."
     }
   ],
   "termOfDay": "throw-distance",

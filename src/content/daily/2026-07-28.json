@@ -12,7 +12,9 @@
       "topics": [
         "product",
         "sustainability"
-      ]
+      ],
+      "viTitle": "Sơn khoáng có thể trở thành xu hướng trong ngành chiếu sáng?",
+      "viSummary": "Lớp phủ khoáng - được ưa chuộng nhờ khả năng thoáng khí và độ bền trên mặt dựng các công trình di sản và công trình xanh - đang được xem xét như một giải pháp hoàn thiện thay thế cho sơn tĩnh điện hoặc sơn thông thường trên vỏ bộ đèn, dù việc ứng dụng trong ngành chiếu sáng vẫn còn mang tính dự đoán."
     },
     {
       "title": "Collingwood lights up Northampton Saints hospitality and net zero drive",
@@ -23,7 +25,9 @@
       "topics": [
         "product",
         "sustainability"
-      ]
+      ],
+      "viTitle": "Collingwood chiếu sáng khu vực hospitality của Northampton Saints, hướng tới net zero",
+      "viSummary": "Collingwood Lighting đã thay thế hệ thống chiếu sáng khán đài Barwell của Northampton Saints bằng đèn LED, nằm trong kế hoạch cải tạo theo từng giai đoạn nhằm nâng cao trải nghiệm khán giả và giảm tiêu thụ năng lượng."
     },
     {
       "title": "DLC Finalizes Networked Lighting Controls (NLC) V5.2",
@@ -34,7 +38,9 @@
       "topics": [
         "standards",
         "controls"
-      ]
+      ],
+      "viTitle": "DLC hoàn thiện phiên bản Networked Lighting Controls (NLC) V5.2",
+      "viSummary": "DesignLights Consortium đã hoàn thiện NLC V5.2, có hiệu lực từ tháng 8/2026, siết chặt yêu cầu về khả năng tương thích và báo cáo đối với hệ thống điều khiển chiếu sáng kết nối mạng, đồng thời mở rộng tích hợp với HVAC và các hệ thống tòa nhà khác."
     },
     {
       "title": "Modern lighting control brings new life to historic basilica",
@@ -45,7 +51,9 @@
       "topics": [
         "controls",
         "facade"
-      ]
+      ],
+      "viTitle": "Hệ thống điều khiển chiếu sáng hiện đại thổi luồng sinh khí mới vào vương cung thánh đường cổ",
+      "viSummary": "Pharos Architectural Controls đã cung cấp hệ thống điều khiển chiếu sáng mới cho mặt dựng Sint-Petrusbasiliek tại Oirschot, thay thế hệ thống cũ nhằm cải thiện hiệu quả năng lượng và khả năng bảo trì lâu dài cho hệ thống chiếu sáng mặt dựng."
     },
     {
       "title": "Redevelopment of Clayton J. Lloyd International Airport in Anguilla features CU Phosco high mast lighting",
@@ -56,7 +64,9 @@
       "topics": [
         "product",
         "standards"
-      ]
+      ],
+      "viTitle": "Dự án cải tạo sân bay quốc tế Clayton J. Lloyd ở Anguilla sử dụng đèn high mast của CU Phosco",
+      "viSummary": "CU Phosco đã cung cấp hệ thống đèn LED high mast đạt chuẩn ICAO cho khu vực đỗ tàu bay và sân đỗ được cải tạo tại sân bay quốc tế Clayton J. Lloyd, Anguilla, phối hợp cùng Precision ATM nhằm nâng cao khả năng quan sát và an toàn khu bay."
     },
     {
       "title": "Messe Frankfurt acquires LiGHT Expo London",
@@ -66,7 +76,9 @@
       "summary": "Messe Frankfurt has acquired LiGHT Expo London from [d]arc media, taking over organisation of the UK specification-community trade show through its London subsidiary.",
       "topics": [
         "practice"
-      ]
+      ],
+      "viTitle": "Messe Frankfurt mua lại LiGHT Expo London",
+      "viSummary": "Messe Frankfurt đã mua lại LiGHT Expo London từ [d]arc media, tiếp quản việc tổ chức triển lãm thương mại dành cho cộng đồng chuyên gia thiết kế chiếu sáng tại Anh thông qua công ty con tại London."
     }
   ],
   "termOfDay": "linear-luminaire",

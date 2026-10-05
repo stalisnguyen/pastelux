@@ -12,7 +12,9 @@
       "topics": [
         "standards",
         "product"
-      ]
+      ],
+      "viTitle": "ENERGY STAR chuyển giao quản lý từ EPA sang DOE",
+      "viSummary": "Việc giám sát chương trình ENERGY STAR ở cấp liên bang đang chuyển từ EPA sang DOE; chương trình đã loại bỏ các hạng mục bộ đèn và bóng đèn nhưng vẫn giữ chứng nhận cho downlight và quạt trần, điều này ảnh hưởng đến các tài liệu spec tham chiếu sản phẩm đạt chuẩn."
     }
   ],
   "termOfDay": "binning",

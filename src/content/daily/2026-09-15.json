@@ -12,7 +12,9 @@
       "topics": [
         "product",
         "sustainability"
-      ]
+      ],
+      "viTitle": "Product Monday: Biến mành rèm Venetian thành bộ đèn",
+      "viSummary": "Bộ sưu tập Keker của nhà thiết kế Reza Raeisifar tái sử dụng các nan mành nhôm Venetian bị bỏ đi để tạo thành những bộ đèn hình trụ, minh họa cho cách tiếp cận kinh tế tuần hoàn trong việc định hình và khuếch tán ánh sáng từ vật liệu tái chế."
     },
     {
       "title": "London Aquatics Centre upgrades to next-generation LED lighting with Signify",
@@ -24,7 +26,9 @@
         "product",
         "standards",
         "sustainability"
-      ]
+      ],
+      "viTitle": "London Aquatics Centre nâng cấp lên hệ thống chiếu sáng LED thế hệ mới cùng Signify",
+      "viSummary": "Signify đã thay thế toàn bộ hệ thống chiếu sáng của London Aquatics Centre bằng một hệ thống LED đáp ứng yêu cầu truyền hình của World Aquatics, tuyên bố tiết kiệm năng lượng tới 60% ở công suất tối đa và sử dụng công nghệ căn chỉnh hỗ trợ AR để đảm bảo độ chính xác khi lắp đặt."
     },
     {
       "title": "Showlight comes to Spain in 2029",
@@ -34,7 +38,9 @@
       "summary": "The Showlight conference, aimed at entertainment and architainment lighting professionals, will hold its 2029 edition in Granada, Spain, sponsored by Ayrton and SGM.",
       "topics": [
         "practice"
-      ]
+      ],
+      "viTitle": "Showlight sẽ đến Tây Ban Nha vào năm 2029",
+      "viSummary": "Hội nghị Showlight, dành cho các chuyên gia chiếu sáng giải trí và architainment, sẽ tổ chức kỳ 2029 tại Granada, Tây Ban Nha, với sự tài trợ của Ayrton và SGM."
     },
     {
       "title": "Thorn and Zumtobel light the future of learning at Coláiste na Mí",
@@ -45,7 +51,9 @@
       "topics": [
         "product",
         "practice"
-      ]
+      ],
+      "viTitle": "Thorn và Zumtobel thắp sáng tương lai giáo dục tại Coláiste na Mí",
+      "viSummary": "Thorn và Zumtobel đã cung cấp giải pháp chiếu sáng theo từng giai đoạn cho khuôn viên trường Coláiste na Mí, bao phủ các phòng học, không gian sinh hoạt chung và các cơ sở chuyên biệt trong khuôn khổ dự án triển khai trên nhiều tòa nhà."
     }
   ],
   "termOfDay": "accent-lighting",
