@@ -119,12 +119,23 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://example.com
           ['font-family', '--tw-ff'], ['font-style', '--tw-fst'],
           ['margin-top', '--tw-mt'], ['margin-bottom', '--tw-mb'],
         ];
-        function adopt(twin, vi) {
-          twin.classList.add('en-twin');
-          vi.classList.add('vi-paired');
+        // Copied values are resolved ones (a colour is rgb(), not var(--text)),
+        // so they go stale when the theme or the breakpoint changes — every
+        // pair is restyled then. Computed style reads fine on a hidden twin.
+        const pairs = [];
+        function restyle(twin, vi) {
           const cs = getComputedStyle(twin);
           for (const [prop, v] of COPY) vi.style.setProperty(v, cs.getPropertyValue(prop));
         }
+        function adopt(twin, vi) {
+          twin.classList.add('en-twin');
+          vi.classList.add('vi-paired');
+          pairs.push([twin, vi]);
+          restyle(twin, vi);
+        }
+        const restyleAll = () => {
+          for (const [twin, vi] of pairs) if (twin.isConnected) restyle(twin, vi);
+        };
 
         function pair(vi) {
           if (vi.dataset.viPaired) return;
@@ -187,6 +198,17 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://example.com
 
         scan(document.body);
         document.documentElement.classList.add('vi-ready');
+
+        // theme switch: restyle now, and again once colour transitions settle
+        new MutationObserver(() => {
+          restyleAll();
+          setTimeout(restyleAll, 300);
+        }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(restyleAll, 150);
+        });
         new MutationObserver((muts) => {
           for (const m of muts)
             for (const n of m.addedNodes) if (n.nodeType === 1) scan(n);

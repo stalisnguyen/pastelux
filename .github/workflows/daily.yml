@@ -12,6 +12,11 @@ on:
         description: 'Digest date (YYYY-MM-DD). Defaults to today (UTC).'
         required: false
         type: string
+      redo_vi:
+        description: 'Re-translate the Vietnamese of every past digest (after a prompt change).'
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -49,7 +54,12 @@ jobs:
       - name: Fill missing Vietnamese
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: node scripts/translate-digests.mjs --limit 120
+        run: |
+          if [ "${{ inputs.redo_vi }}" = "true" ]; then
+            node scripts/translate-digests.mjs --redo
+          else
+            node scripts/translate-digests.mjs --limit 120
+          fi
 
       - name: Commit if anything changed
         id: commit

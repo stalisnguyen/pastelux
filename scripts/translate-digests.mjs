@@ -10,6 +10,7 @@
  *   node scripts/translate-digests.mjs            # every file still missing VI
  *   node scripts/translate-digests.mjs --limit 5  # at most 5 files this run
  *   node scripts/translate-digests.mjs --dry      # list what would be sent
+ *   node scripts/translate-digests.mjs --redo     # re-translate everything (after a prompt change)
  */
 import { readFile, readdir, writeFile } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
@@ -20,6 +21,7 @@ const DIR = join(ROOT, 'src/content/daily');
 const MODEL = process.env.ANTHROPIC_MODEL || 'claude-sonnet-5';
 const args = process.argv.slice(2);
 const DRY = args.includes('--dry');
+const REDO = args.includes('--redo');
 const LIMIT = Number(args[args.indexOf('--limit') + 1]) || Infinity;
 const log = (m) => console.log(`[vi] ${m}`);
 
@@ -27,13 +29,13 @@ const SYSTEM_PROMPT = `You translate the daily news digest of Pastelux, a refere
 
 For each item you receive a headline and (when present) an English summary. Return:
 - "viTitle": the headline in natural Vietnamese.
-- "viSummary": the summary in natural, concise Vietnamese — not word-for-word. Empty string if the English summary is empty.
+- "viSummary": the summary in natural, concise Vietnamese — not word-for-word. Empty string if the English summary is empty. Write the Vietnamese as a Vietnamese industry editor would write it from scratch, not as a translation: restructure sentences freely, avoid calques and English word order, avoid overusing "nó", "được", "một", "việc", "sự"; keep it short and plain.
 
 Keep product names, brand names, organisations, standards and industry terms (lux, UGR, CRI, DALI, LED, beam angle…) in English. Established Vietnamese terms: illuminance = độ rọi, luminance = độ chói, luminous flux = quang thông, glare = chói, colour temperature = nhiệt độ màu, colour rendering = độ hoàn màu, luminaire = bộ đèn, facade = mặt dựng, controls = điều khiển. No hype, no exclamation marks.
 
 Return ONLY a JSON array, one object per input item, in the same order, each with keys id, viTitle, viSummary. No prose, no markdown fences.`;
 
-const needsVi = (it) => !it.viTitle || (it.summary && !it.viSummary);
+const needsVi = (it) => REDO || !it.viTitle || (it.summary && !it.viSummary);
 
 async function translate(items) {
   const res = await fetch('https://api.anthropic.com/v1/messages', {
@@ -93,8 +95,8 @@ async function main() {
         const t = out.get(i);
         return {
           ...it,
-          viTitle: it.viTitle || t?.viTitle?.trim() || '',
-          viSummary: it.viSummary || (it.summary ? t?.viSummary?.trim() || '' : ''),
+          viTitle: (REDO ? '' : it.viTitle) || t?.viTitle?.trim() || it.viTitle || '',
+          viSummary: it.summary ? (REDO ? '' : it.viSummary) || t?.viSummary?.trim() || it.viSummary || '' : '',
         };
       });
       await writeFile(path, JSON.stringify(day, null, 2) + '\n', 'utf8');

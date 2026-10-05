@@ -1,8 +1,8 @@
 ---
 title: 'The four quantities, and which one you are actually designing'
-viTitle: 'Bốn đại lượng, và đại lượng bạn thực sự đang thiết kế'
+viTitle: 'Bốn đại lượng trắc quang, và đâu mới là thứ bạn thực sự thiết kế'
 summary: 'Lumen, candela, lux and cd/m² describe the same light at four different moments. Confusing them is the root of most bad lighting arguments.'
-viSummary: 'Lumen, candela, lux và cd/m² mô tả cùng một luồng ánh sáng ở bốn thời điểm khác nhau. Nhầm lẫn giữa chúng là gốc rễ của phần lớn tranh cãi trong nghề.'
+viSummary: 'Lumen, candela, lux và cd/m² mô tả cùng một luồng sáng ở bốn thời điểm khác nhau. Phần lớn những cuộc tranh cãi lạc đề về chiếu sáng đều bắt nguồn từ chỗ nhầm giữa chúng.'
 chapter: 1
 chapterTitle: 'Fundamentals'
 viChapterTitle: 'Kiến thức nền tảng'
@@ -17,11 +17,11 @@ quantities and assuming they mean the same thing. The manufacturer talks lumens,
 talks lux, the client talks "brightness", and the eye — the only judge that matters — responds
 to none of the above.
 
-<p class="vi-block vi-def">Mọi tranh cãi về trắc quang trong dự án rốt cuộc đều quy về chuyện hai người dùng hai đại lượng khác nhau mà cứ ngỡ là cùng một thứ. Nhà sản xuất nói lumen, tiêu chuẩn nói lux, khách hàng nói “độ sáng”, còn con mắt — vị giám khảo duy nhất có ý nghĩa — lại không phản ứng với thứ nào trong số đó.</p>
+<p class="vi-block vi-def">Mọi cuộc tranh cãi về trắc quang trong dự án rốt cuộc đều quy về một chuyện: hai người dùng hai đại lượng khác nhau mà cứ tưởng là một. Nhà sản xuất nói lumen, tiêu chuẩn nói lux, khách hàng nói “độ sáng”, còn con mắt — giám khảo duy nhất đáng kể — chẳng phản ứng với thứ nào trong số đó.</p>
 
 There are four quantities. They describe the same light at four successive moments in its life.
 
-<p class="vi-block vi-def">Có bốn đại lượng. Chúng mô tả cùng một luồng ánh sáng ở bốn thời điểm nối tiếp nhau trong vòng đời của nó.</p>
+<p class="vi-block vi-def">Có bốn đại lượng, mô tả cùng một luồng sáng ở bốn chặng nối tiếp nhau trên đường đi của nó.</p>
 
 import PhotometricChain from '../../components/diagrams/PhotometricChain.astro';
 import PolarCurve from '../../components/diagrams/PolarCurve.astro';
@@ -35,65 +35,65 @@ import PolarCurve from '../../components/diagrams/PolarCurve.astro';
 **Φv, in lumens.** The total light a source emits in all directions, weighted by the eye's
 photopic sensitivity curve V(λ), which peaks at 555 nm.
 
-<p class="vi-block vi-def"><strong>Φv, đơn vị lumen.</strong> Tổng lượng ánh sáng một nguồn phát ra theo mọi hướng, tính theo trọng số của đường cong độ nhạy photopic V(λ) của mắt, đạt đỉnh ở 555 nm.</p>
+<p class="vi-block vi-def"><strong>Φv, đơn vị lumen.</strong> Tổng lượng ánh sáng nguồn phát ra theo mọi hướng, có trọng số theo đường cong độ nhạy photopic V(λ) của mắt (đỉnh ở 555 nm).</p>
 
 Lumens are a total. They carry no information about direction. A 3000 lm bare lamp and a 3000 lm
 narrow-beam projector are the same number and completely different design instruments. This is why
 "how many lumens do I need?" is not answerable and "what distribution do I need?" is.
 
-<p class="vi-block vi-def">Lumen là một con số tổng. Nó không mang thông tin gì về hướng. Một bóng đèn trần 3000 lm và một đèn chiếu chùm hẹp 3000 lm có cùng con số, nhưng là hai công cụ thiết kế hoàn toàn khác nhau. Vì thế câu hỏi “tôi cần bao nhiêu lumen?” không có lời đáp, còn “tôi cần phân bố ánh sáng thế nào?” thì có.</p>
+<p class="vi-block vi-def">Lumen là một con số tổng, không chứa thông tin gì về hướng. Một bóng đèn không chóa 3000 lm và một đèn chiếu chùm hẹp 3000 lm có cùng con số, nhưng là hai công cụ thiết kế khác hẳn nhau. Vì vậy câu hỏi “cần bao nhiêu lumen?” không trả lời được, còn “cần phân bố ánh sáng thế nào?” thì trả lời được.</p>
 
 ## 2. Luminous intensity — light heading somewhere
 
-<p class="vi-block vi-heading">2. Cường độ sáng — ánh sáng đi về một hướng</p>
+<p class="vi-block vi-heading">2. Cường độ sáng — ánh sáng đi theo hướng nào</p>
 
 **Iv, in candelas.** Flux per unit solid angle in a specific direction.
 
-<p class="vi-block vi-def"><strong>Iv, đơn vị candela.</strong> Quang thông trên một đơn vị góc khối theo một hướng xác định.</p>
+<p class="vi-block vi-def"><strong>Iv, đơn vị candela.</strong> Quang thông trên một đơn vị góc khối, theo một hướng xác định.</p>
 
 Candelas are what a photometric file stores: a table of intensity against vertical and horizontal
 angle. The polar curve on a datasheet is a slice through that table. When you choose between a 15°
 and a 40° optic on the same LED module, the lumens barely change and the candelas at nadir change
 by roughly a factor of six.
 
-<p class="vi-block vi-def">Candela là thứ được lưu trong file trắc quang (IES / LDT): một bảng cường độ sáng theo góc đứng và góc ngang. Biểu đồ cực (polar curve) trên datasheet là một lát cắt qua bảng đó. Khi bạn chọn giữa quang học 15° và 40° trên cùng một module LED, lumen gần như không đổi, còn candela tại phương thẳng đứng xuống (nadir) chênh nhau khoảng sáu lần.</p>
+<p class="vi-block vi-def">File trắc quang (IES / LDT) lưu chính là candela: một bảng cường độ sáng theo góc đứng và góc ngang. Biểu đồ cực (polar curve) trên datasheet là một lát cắt của bảng đó. Cùng một module LED, đổi từ quang học 15° sang 40° thì lumen gần như giữ nguyên, nhưng candela tại phương thẳng đứng xuống (nadir) chênh nhau chừng sáu lần.</p>
 
 <PolarCurve />
 
 ## 3. Illuminance — light arriving
 
-<p class="vi-block vi-heading">3. Độ rọi — ánh sáng chạm tới</p>
+<p class="vi-block vi-heading">3. Độ rọi — ánh sáng chạm tới bề mặt</p>
 
 **E, in lux (lm/m²).** Flux landing on a surface, per unit area.
 
-<p class="vi-block vi-def"><strong>E, đơn vị lux (lm/m²).</strong> Quang thông rơi trên một bề mặt, tính trên một đơn vị diện tích.</p>
+<p class="vi-block vi-def"><strong>E, đơn vị lux (lm/m²).</strong> Quang thông rơi xuống một bề mặt, tính trên mỗi đơn vị diện tích.</p>
 
 This is what a light meter reads and what essentially every standard regulates, because it is
 cheap to measure and easy to verify on site. It is a property of the surface, not of the source —
 the same luminaire produces different lux on a desk, on the floor and on the wall behind it.
 
-<p class="vi-block vi-def">Đây là con số máy đo lux hiển thị và là đại lượng mà gần như mọi tiêu chuẩn đều quy định, vì nó rẻ để đo và dễ kiểm chứng tại công trường. Nó là thuộc tính của bề mặt, không phải của nguồn sáng — cùng một bộ đèn cho ra mức lux khác nhau trên mặt bàn, trên sàn và trên bức tường phía sau.</p>
+<p class="vi-block vi-def">Đây là con số máy đo lux hiển thị, và gần như tiêu chuẩn nào cũng quy định theo nó, vì đo rẻ và dễ kiểm chứng tại công trường. Độ rọi là thuộc tính của bề mặt chứ không phải của nguồn sáng — cùng một bộ đèn, nhưng mặt bàn, sàn và bức tường phía sau mỗi chỗ một mức lux.</p>
 
 Illuminance is also the quantity most likely to mislead you. A room can meet 500 lx on the working
 plane and still feel like a car park, because horizontal illuminance says nothing about what the
 vertical surfaces are doing. EN 12464-1:2021 responded to exactly this by adding requirements for
 cylindrical, wall and ceiling illuminance alongside the old horizontal number.
 
-<p class="vi-block vi-def">Độ rọi cũng là đại lượng dễ đánh lừa bạn nhất. Một căn phòng có thể đạt 500 lx trên mặt phẳng làm việc mà vẫn có cảm giác như bãi đỗ xe, vì độ rọi ngang không nói gì về các bề mặt đứng. EN 12464-1:2021 đã phản ứng đúng với điều này bằng cách bổ sung yêu cầu về độ rọi trụ, độ rọi tường và độ rọi trần, bên cạnh con số độ rọi ngang cũ.</p>
+<p class="vi-block vi-def">Độ rọi cũng là đại lượng dễ đánh lừa bạn nhất. Một căn phòng đạt 500 lx trên mặt phẳng làm việc vẫn có thể trông như bãi đỗ xe, vì độ rọi ngang chẳng cho biết gì về các bề mặt đứng. EN 12464-1:2021 nhắm đúng vào chỗ này: ngoài con số độ rọi ngang cũ, tiêu chuẩn bổ sung yêu cầu về độ rọi trụ, độ rọi tường và độ rọi trần.</p>
 
 ## 4. Luminance — light seen
 
-<p class="vi-block vi-heading">4. Độ chói — ánh sáng được nhìn thấy</p>
+<p class="vi-block vi-heading">4. Độ chói — ánh sáng mắt nhìn thấy</p>
 
 **L, in cd/m² (nits).** Intensity per unit projected area of a surface, as seen from the observer's
 position.
 
-<p class="vi-block vi-def"><strong>L, đơn vị cd/m² (nit).</strong> Cường độ sáng trên một đơn vị diện tích chiếu của bề mặt, nhìn từ vị trí người quan sát.</p>
+<p class="vi-block vi-def"><strong>L, đơn vị cd/m² (nit).</strong> Cường độ sáng trên một đơn vị diện tích hình chiếu của bề mặt, nhìn từ vị trí người quan sát.</p>
 
 This is the only one of the four the eye actually responds to. Brightness, contrast, modelling,
 glare, sparkle — all of it is luminance. For a matte (Lambertian) surface:
 
-<p class="vi-block vi-def">Đây là đại lượng duy nhất trong bốn đại lượng mà mắt thực sự phản ứng. Độ sáng cảm nhận, tương phản, tạo khối, chói loá, lấp lánh — tất cả đều là độ chói. Với một bề mặt mờ (Lambertian):</p>
+<p class="vi-block vi-def">Trong bốn đại lượng, mắt chỉ thực sự phản ứng với đại lượng này. Độ sáng cảm nhận, tương phản, tạo khối, chói loá, lấp lánh — tất cả đều là độ chói. Với bề mặt mờ (Lambertian):</p>
 
 ```
 L = E × ρ / π
@@ -103,12 +103,12 @@ where ρ is the reflectance. A wall at 200 lx with ρ = 0.8 reads at about 51 cd
 on a dark timber wall at ρ = 0.15 reads at 9.5 cd/m² — a surface five times darker, from an
 identical lux calculation that both would pass.
 
-<p class="vi-block vi-def">trong đó ρ là hệ số phản xạ. Một bức tường 200 lx với ρ = 0.8 có độ chói khoảng 51 cd/m². Cùng 200 lx trên tường gỗ tối màu với ρ = 0.15 chỉ còn 9.5 cd/m² — một bề mặt tối hơn năm lần, từ cùng một bài tính lux mà cả hai đều đạt.</p>
+<p class="vi-block vi-def">trong đó ρ là hệ số phản xạ. Tường 200 lx, ρ = 0.8 có độ chói khoảng 51 cd/m². Vẫn 200 lx nhưng trên tường gỗ tối màu ρ = 0.15 thì chỉ còn 9.5 cd/m² — bề mặt tối hơn năm lần, dù bài tính lux y hệt nhau và cả hai đều đạt.</p>
 
 > Design in lux because that is what you can verify. Judge in luminance, because that is what
 > your client will see.
 
-<p class="vi-block vi-def">Thiết kế bằng lux, vì đó là thứ bạn kiểm chứng được. Đánh giá bằng độ chói, vì đó là thứ khách hàng của bạn sẽ nhìn thấy.</p>
+<p class="vi-block vi-def">Thiết kế bằng lux, vì đó là thứ bạn kiểm chứng được. Đánh giá bằng độ chói, vì đó là thứ khách hàng sẽ nhìn thấy.</p>
 
 ## The chain in one line
 
@@ -121,7 +121,7 @@ identical lux calculation that both would pass.
 | 3 | Illuminance | E | lx | How much lands here? |
 | 4 | Luminance | L | cd/m² | How bright does it look? |
 
-<p class="vi-block vi-def">Các cột: đại lượng, ký hiệu, đơn vị, câu hỏi nó trả lời. 1 — Quang thông, Φv, lm: có bao nhiêu ánh sáng? · 2 — Cường độ sáng, Iv, cd: ánh sáng đi về hướng nào? · 3 — Độ rọi, E, lx: bao nhiêu ánh sáng rơi xuống đây? · 4 — Độ chói, L, cd/m²: trông sáng đến mức nào?</p>
+<p class="vi-block vi-def">Các cột: đại lượng, ký hiệu, đơn vị, trả lời câu hỏi gì. 1 — Quang thông, Φv, lm: có bao nhiêu ánh sáng? · 2 — Cường độ sáng, Iv, cd: ánh sáng đi về hướng nào? · 3 — Độ rọi, E, lx: bao nhiêu ánh sáng rơi xuống chỗ này? · 4 — Độ chói, L, cd/m²: trông sáng cỡ nào?</p>
 
 ## Two habits worth forming
 
@@ -131,13 +131,13 @@ identical lux calculation that both would pass.
 1.6 m, and 300 lux cylindrical are three different specifications and three different schemes.
 Write the plane and the height into the spec every time.
 
-<p class="vi-block vi-def"><strong>Ghi rõ mặt phẳng.</strong> “300 lux” là chưa đủ. 300 lux ngang ở 0.8 m, 300 lux đứng ở 1.6 m và 300 lux trụ là ba yêu cầu kỹ thuật khác nhau và ba phương án khác nhau. Lần nào cũng phải ghi mặt phẳng và độ cao vào thuyết minh kỹ thuật.</p>
+<p class="vi-block vi-def"><strong>Ghi rõ mặt phẳng.</strong> Chỉ ghi “300 lux” là thiếu. 300 lux ngang ở cao độ 0.8 m, 300 lux đứng ở 1.6 m và 300 lux trụ là ba yêu cầu kỹ thuật khác nhau, dẫn tới ba phương án khác nhau. Lần nào cũng phải ghi mặt phẳng và cao độ vào spec.</p>
 
 **Sanity-check in luminance before you commit.** Take your calculated illuminance on the key
 surfaces, multiply by the *actual* finish reflectance, divide by π. If the feature wall lands
 within 3:1 of the ambient background, the "feature" will not read as one.
 
-<p class="vi-block vi-def"><strong>Kiểm tra nhanh bằng độ chói trước khi chốt.</strong> Lấy độ rọi đã tính trên các bề mặt chính, nhân với hệ số phản xạ <em>thực tế</em> của vật liệu hoàn thiện, rồi chia cho π. Nếu bức tường điểm nhấn chỉ chênh dưới 3:1 so với nền xung quanh, “điểm nhấn” sẽ không hiện ra như một điểm nhấn.</p>
+<p class="vi-block vi-def"><strong>Kiểm tra nhanh bằng độ chói trước khi chốt.</strong> Lấy độ rọi đã tính trên các bề mặt chính, nhân với hệ số phản xạ <em>thực tế</em> của vật liệu hoàn thiện, rồi chia cho π. Nếu bức tường điểm nhấn chỉ sáng hơn nền xung quanh chưa tới 3:1, mắt sẽ không thấy nó là “điểm nhấn”.</p>
 
 ## Where this goes wrong on real projects
 
@@ -149,4 +149,4 @@ the lux calculation moved. Every luminance in the room did. Confirm final reflec
 of detailed design and re-run the numbers — it takes an afternoon and it is the difference between
 the render and the building.
 
-<p class="vi-block vi-def">Lỗi phổ biến nhất là một phương án được tính hoàn toàn bằng độ rọi ngang, rồi bàn giao vào một căn phòng mà vật liệu hoàn thiện đã bị đổi sau khi thiết kế chiếu sáng được duyệt. Không gì trong bài tính lux thay đổi. Nhưng mọi giá trị độ chói trong phòng thì đã khác. Hãy xác nhận hệ số phản xạ cuối cùng khi kết thúc thiết kế chi tiết và chạy lại số liệu — mất một buổi chiều, nhưng đó là khác biệt giữa bản render và công trình thật.</p>
+<p class="vi-block vi-def">Lỗi hay gặp nhất: phương án tính toàn bộ bằng độ rọi ngang, rồi đem vào một căn phòng mà vật liệu hoàn thiện đã bị đổi sau khi phần chiếu sáng duyệt xong. Bài tính lux không xê dịch chút nào, nhưng độ chói của mọi bề mặt trong phòng thì đã khác. Hãy chốt lại hệ số phản xạ cuối cùng khi xong thiết kế chi tiết và chạy lại số — mất một buổi chiều, nhưng đó là khoảng cách giữa bản render và công trình thật.</p>
