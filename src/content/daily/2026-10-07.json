@@ -1,0 +1,61 @@
+{
+  "date": "2026-10-07",
+  "generatedAt": "2026-10-06T21:31:38.409Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "Product Monday: Turn Deck Lights Into Party Lights",
+      "url": "https://www.lightnowblog.com/2026/10/product-monday-turn-deck-lights-into-party-lights",
+      "source": "LightNOW",
+      "published": "Mon, 05 Oct 2026 05:27:42 +0000",
+      "summary": "AMP Lighting added an RGBCW smart deck light to its AMP iQ outdoor system, offering app-controlled colour and white tuning for low-glare landscape installations.",
+      "viTitle": "Product Monday: Biến đèn sàn deck thành đèn tiệc",
+      "viSummary": "AMP Lighting bổ sung đèn deck RGBCW thông minh vào hệ AMP iQ, cho phép điều khiển màu và ánh sáng trắng qua app, thiết kế chống chói cho lắp đặt cảnh quan ngoài trời.",
+      "topics": [
+        "product",
+        "controls"
+      ]
+    },
+    {
+      "title": "Ideaworks partners with Element7 in USA",
+      "url": "https://www.arc-magazine.com/ideaworks-partners-with-element7-in-usa",
+      "source": "arc",
+      "published": "Tue, 29 Sep 2026 10:56:05 +0000",
+      "summary": "Lighting design studio Ideaworks has formed a partnership with Element7, a luxury flooring company, to expand its operations in North America. No technical or project details are given.",
+      "viTitle": "Ideaworks hợp tác với Element7 tại Mỹ",
+      "viSummary": "Studio thiết kế chiếu sáng Ideaworks bắt tay với Element7, công ty sàn gỗ cao cấp, để mở rộng hoạt động tại Bắc Mỹ. Thông tin kỹ thuật hay dự án cụ thể chưa được công bố.",
+      "topics": [
+        "practice"
+      ]
+    },
+    {
+      "title": "DALI Alliance announces inaugural Global Sumit + Expo",
+      "url": "https://www.arc-magazine.com/dali-alliance-announces-inaugural-global-sumit-expo",
+      "source": "arc",
+      "published": "Tue, 29 Sep 2026 10:09:40 +0000",
+      "summary": "The DALI Alliance will hold its first Global Summit and Expo, DALI 27, in Utrecht, Netherlands, bringing together the controls industry around DALI protocol development and adoption.",
+      "viTitle": "DALI Alliance công bố Global Summit + Expo đầu tiên",
+      "viSummary": "DALI Alliance tổ chức Global Summit + Expo đầu tiên mang tên DALI 27 tại Utrecht, Hà Lan, quy tụ ngành điều khiển chiếu sáng xoay quanh phát triển và ứng dụng chuẩn DALI.",
+      "topics": [
+        "standards",
+        "controls",
+        "practice"
+      ]
+    },
+    {
+      "title": "DALI Lighting Awards 2027 open for entries",
+      "url": "https://www.a1lightingmagazine.com/awards/dali-lighting-awards-2027-open-for-entries",
+      "source": "A1 Lighting",
+      "published": "Fri, 25 Sep 2026 11:49:53 +0000",
+      "summary": "The DALI Alliance has opened entries for its 2027 Lighting Awards, closing 8 January 2027, recognising projects built on DALI control technology; winners will be announced at the inaugural DALI Global Summit in Utrecht.",
+      "viTitle": "Giải thưởng DALI Lighting Awards 2027 chính thức nhận hồ sơ",
+      "viSummary": "DALI Alliance bắt đầu nhận hồ sơ cho giải DALI Lighting Awards 2027, hạn chót 8/1/2027, dành cho các dự án ứng dụng công nghệ điều khiển DALI. Kết quả sẽ công bố tại DALI Global Summit đầu tiên ở Utrecht.",
+      "topics": [
+        "awards",
+        "controls"
+      ]
+    }
+  ],
+  "termOfDay": "daylight-harvesting",
+  "projectOfDay": "luminaire-types"
+}
