@@ -1,0 +1,61 @@
+{
+  "date": "2026-10-08",
+  "generatedAt": "2026-10-07T21:51:56.534Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "Sprowston Town Council Future-Proofs Street Lighting with CU Phosco LED Upgrade",
+      "url": "https://www.a1lightingmagazine.com/street-lighting/sprowston-town-council-future-proofs-street-lighting",
+      "source": "A1 Lighting",
+      "published": "Wed, 07 Oct 2026 11:35:45 +0000",
+      "summary": "Sprowston Town Council replaced over 800 street lights with CU Phosco E950 LED luminaires, paired with a condition survey to cut energy and maintenance costs under a long-term asset upgrade programme.",
+      "viTitle": "Hội đồng thị trấn Sprowston nâng cấp chiếu sáng đường phố bằng đèn LED CU Phosco",
+      "viSummary": "Hội đồng thị trấn Sprowston lắp hơn 800 bộ đèn đường LED CU Phosco E950, kết hợp khảo sát hiện trạng hạ tầng nhằm giảm tiêu thụ điện năng và chi phí bảo trì trong chương trình nâng cấp dài hạn.",
+      "topics": [
+        "sustainability",
+        "product"
+      ]
+    },
+    {
+      "title": "ICEL 2026: Emergency lighting sector calls for greater collaboration, competence and accountability",
+      "url": "https://www.a1lightingmagazine.com/latest-news/icel-2026",
+      "source": "A1 Lighting",
+      "published": "Fri, 02 Oct 2026 10:04:50 +0000",
+      "summary": "ICEL's 2026 conference highlighted calls for tighter collaboration and accountability on emergency lighting across design, installation and maintenance phases, reinforcing life-safety compliance obligations that specifiers must track through a building's full lifecycle.",
+      "viTitle": "ICEL 2026: Ngành chiếu sáng sự cố kêu gọi tăng cường hợp tác, năng lực và trách nhiệm giải trình",
+      "viSummary": "Hội nghị ICEL 2026 nhấn mạnh cần hợp tác chặt chẽ hơn và trách nhiệm rõ ràng hơn giữa các bên trong suốt vòng đời công trình, nhằm đảm bảo tuân thủ các tiêu chuẩn an toàn sinh mạng cho hệ thống chiếu sáng sự cố.",
+      "topics": [
+        "standards",
+        "practice"
+      ]
+    },
+    {
+      "title": "Three Newly Published IES Standards",
+      "url": "https://www.lightnowblog.com/2026/10/three-newly-published-ies-standards",
+      "source": "LightNOW",
+      "published": "Thu, 01 Oct 2026 05:45:03 +0000",
+      "summary": "IES published RP-27-26 (photobiological safety), updating the 500-lux measurement distance calculation, UV radiation risk-group duration, NEI settings, optical system notes, lumen-to-radiant-power conversion and the Table A-2 spectral weighting function, affecting luminaire safety testing and classification.",
+      "viTitle": "Ba tiêu chuẩn IES mới được công bố",
+      "viSummary": "IES vừa ban hành RP-27-26 về an toàn sinh học quang học, với các thay đổi về cách tính khoảng cách đo 500-lux, thời lượng nhóm rủi ro bức xạ UV, thiết lập NEI, chuyển đổi quang thông sang công suất bức xạ và bảng hàm trọng số phổ A-2 — ảnh hưởng trực tiếp đến kiểm tra và phân loại an toàn bộ đèn.",
+      "topics": [
+        "standards",
+        "research"
+      ]
+    },
+    {
+      "title": "High Bay Performance In Recessed Flat Panels",
+      "url": "https://www.lightnowblog.com/2026/09/high-bay-performance-in-recessed-flat-panels",
+      "source": "LightNOW",
+      "published": "Mon, 28 Sep 2026 05:18:04 +0000",
+      "summary": "Recessed, flat-panel high-bay luminaires delivering high lumen output in a standard ceiling grid are gaining selective traction for industrial spaces wanting high-bay performance without visible suspended fixtures, not replacing conventional linear or round high bays.",
+      "viTitle": "Hiệu suất high bay trong các tấm panel âm trần phẳng",
+      "viSummary": "Xu hướng mới: bộ đèn high bay dạng panel âm trần phẳng, quang thông cao, lắp vừa khung trần tiêu chuẩn, đang được chọn dùng cho không gian công nghiệp muốn chiếu sáng mạnh mà không lộ đèn treo. Đây là lựa chọn bổ sung, không thay thế hoàn toàn high bay dạng treo truyền thống.",
+      "topics": [
+        "product",
+        "optics"
+      ]
+    }
+  ],
+  "termOfDay": "diffuser",
+  "projectOfDay": "photometric-quantities"
+}
