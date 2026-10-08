@@ -1,0 +1,63 @@
+{
+  "date": "2026-10-09",
+  "generatedAt": "2026-10-08T21:55:35.852Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "WAC Group Founder Inducted into ALA Lighting Hall of Fame",
+      "url": "https://www.a1lightingmagazine.com/people/wac-group-founder-inducted-into-ala-lighting-hall-of-fame",
+      "source": "A1 Lighting",
+      "published": "Thu, 08 Oct 2026 11:03:01 +0000",
+      "summary": "Tony Wang, founder and chairman of WAC Group, was inducted into the American Lighting Association's Hall of Fame in 2026, recognising long-term contributions to the lighting industry.",
+      "viTitle": "Nhà sáng lập WAC Group được vinh danh trong ALA Lighting Hall of Fame",
+      "viSummary": "Tony Wang, Chủ tịch kiêm người sáng lập WAC Group, được đưa vào Đại sảnh Danh vọng của American Lighting Association năm 2026, ghi nhận đóng góp lâu dài cho ngành chiếu sáng.",
+      "topics": [
+        "awards"
+      ]
+    },
+    {
+      "title": "When More Material Does Not Mean Better Performance",
+      "url": "https://www.archdaily.com/1186502/when-more-material-does-not-mean-better-performance",
+      "source": "ArchDaily",
+      "published": "Thu, 08 Oct 2026 06:45:00 +0000",
+      "summary": "The article argues building envelopes must selectively admit or block daylight, heat, air and sound rather than simply maximise material mass, a framing directly relevant to facade and daylighting strategy.",
+      "viTitle": "Khi nhiều vật liệu hơn không đồng nghĩa với hiệu suất tốt hơn",
+      "viSummary": "Bài viết lập luận rằng mặt dựng công trình cần chọn lọc cho ánh sáng, nhiệt, không khí và âm thanh đi qua hoặc bị chặn, thay vì chỉ tăng khối lượng vật liệu, liên quan trực tiếp đến chiến lược daylighting và facade.",
+      "topics": [
+        "facade",
+        "sustainability",
+        "practice"
+      ]
+    },
+    {
+      "title": "Global Smart Street Light Installations Growing At 18% CAGR",
+      "url": "https://www.lightnowblog.com/2026/10/global-smart-street-light-installations-growing-at-18-cagr",
+      "source": "LightNOW",
+      "published": "Thu, 08 Oct 2026 05:26:36 +0000",
+      "summary": "Berg Insight data show networked smart streetlight installations reaching 38.5 million units globally by end of 2025, projected to grow at an 18% CAGR to 87.6 million units, driven by municipal LED retrofit programmes with centralised control.",
+      "viTitle": "Số lượng đèn đường smart lighting toàn cầu tăng trưởng 18% mỗi năm",
+      "viSummary": "Theo Berg Insight, số đèn đường được điều khiển riêng lẻ đạt 38,5 triệu bộ vào cuối 2025 và sẽ tăng lên 87,6 triệu bộ, phản ánh xu hướng các đô thị chuyển sang LED kết hợp controls tập trung.",
+      "topics": [
+        "controls",
+        "product",
+        "sustainability"
+      ]
+    },
+    {
+      "title": "DALI Lighting Awards 2027 open for entries",
+      "url": "https://www.a1lightingmagazine.com/awards/dali-lighting-awards-2027-open-for-entries",
+      "source": "A1 Lighting",
+      "published": "Fri, 25 Sep 2026 11:49:53 +0000",
+      "summary": "Entries for the DALI Lighting Awards 2027 close 8 January 2027; winners will be announced at the DALI Alliance's first Global DALI Summit + Expo, giving specifiers a benchmark of notable DALI-based control projects.",
+      "viTitle": "DALI Lighting Awards 2027 mở nhận hồ sơ dự thi",
+      "viSummary": "DALI Lighting Awards 2027 nhận hồ sơ đến ngày 8/1/2027, kết quả công bố tại DALI Global Summit + Expo đầu tiên, là dịp tham khảo các dự án điều khiển DALI tiêu biểu.",
+      "topics": [
+        "awards",
+        "controls",
+        "standards"
+      ]
+    }
+  ],
+  "termOfDay": "dmx",
+  "projectOfDay": "by-typology"
+}
