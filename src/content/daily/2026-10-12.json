@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-12",
+  "generatedAt": "2026-10-11T20:51:39.561Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "Sprowston Town Council Future-Proofs Street Lighting with CU Phosco LED Upgrade",
+      "url": "https://www.a1lightingmagazine.com/street-lighting/sprowston-town-council-future-proofs-street-lighting",
+      "source": "A1 Lighting",
+      "published": "Wed, 07 Oct 2026 11:35:45 +0000",
+      "summary": "Sprowston Town Council replaced street lighting with over 800 CU Phosco E950 LED luminaires, paired with a condition survey of existing infrastructure, to cut energy use and maintenance costs.",
+      "viTitle": "Sprowston Town Council nâng cấp đèn đường bằng LED CU Phosco",
+      "viSummary": "Sprowston Town Council thay hơn 800 bộ đèn LED CU Phosco E950 cho hệ thống chiếu sáng đường phố, kết hợp khảo sát hiện trạng hạ tầng để giảm tiêu thụ năng lượng và chi phí bảo trì.",
+      "topics": [
+        "product",
+        "sustainability",
+        "practice"
+      ]
+    },
+    {
+      "title": "Three Newly Published IES Standards",
+      "url": "https://www.lightnowblog.com/2026/10/three-newly-published-ies-standards",
+      "source": "LightNOW",
+      "published": "Thu, 01 Oct 2026 05:45:03 +0000",
+      "summary": "IES has published updated RP-27-26 on photobiological safety for lighting systems, revising the 500-lux measurement distance, UV risk-group duration limits, NEI settings and the spectral weighting function table, affecting optical radiation testing and classification of luminaires.",
+      "viTitle": "Ba tiêu chuẩn IES mới được công bố",
+      "viSummary": "IES vừa công bố bản cập nhật RP-27-26 về an toàn quang sinh học cho hệ thống chiếu sáng, thay đổi cách tính khoảng cách 500-lux, thời gian Risk Group với UV, thiết lập NEI và bảng hàm trọng số phổ, ảnh hưởng đến cách kiểm tra và phân loại bộ đèn theo nguy cơ bức xạ quang học.",
+      "topics": [
+        "standards",
+        "research"
+      ]
+    },
+    {
+      "title": "DALI Alliance announces inaugural Global Sumit + Expo",
+      "url": "https://www.arc-magazine.com/dali-alliance-announces-inaugural-global-sumit-expo",
+      "source": "arc",
+      "published": "Tue, 29 Sep 2026 10:09:40 +0000",
+      "summary": "The DALI Alliance will hold its first Global DALI Summit + Expo (DALI 27) in Utrecht, bringing together manufacturers and specifiers around DALI-2 and DALI+ control protocols and interoperability.",
+      "viTitle": "DALI Alliance công bố Global Summit + Expo đầu tiên",
+      "viSummary": "DALI Alliance tổ chức Global DALI Summit + Expo đầu tiên (DALI 27) tại Utrecht, quy tụ nhà sản xuất và nhà thiết kế bàn về khả năng tương thích của DALI-2 và DALI+.",
+      "topics": [
+        "controls",
+        "standards"
+      ]
+    },
+    {
+      "title": "High Bay Performance In Recessed Flat Panels",
+      "url": "https://www.lightnowblog.com/2026/09/high-bay-performance-in-recessed-flat-panels",
+      "source": "LightNOW",
+      "published": "Mon, 28 Sep 2026 05:18:04 +0000",
+      "summary": "Recessed, high-lumen flat-panel luminaires set into ceiling grids are emerging as a selective alternative to suspended linear or round high bays, mainly where owners want high-bay illuminance without visible fixtures hanging below the ceiling.",
+      "viTitle": "Hiệu suất kiểu high bay ở đèn flat panel âm trần",
+      "viSummary": "Đèn flat panel âm trần cho quang thông cao đang nổi lên như lựa chọn thay thế một phần cho đèn high bay tuyến tính hoặc tròn treo trần, phù hợp khi chủ đầu tư muốn độ rọi kiểu công nghiệp mà không để lộ bộ đèn dưới trần.",
+      "topics": [
+        "product",
+        "optics"
+      ]
+    }
+  ],
+  "termOfDay": "emergency-lighting",
+  "projectOfDay": "control-protocols"
+}
