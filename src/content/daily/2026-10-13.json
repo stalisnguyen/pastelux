@@ -1,0 +1,61 @@
+{
+  "date": "2026-10-13",
+  "generatedAt": "2026-10-12T23:34:07.465Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "Equation",
+      "url": "https://www.arc-magazine.com/equation",
+      "source": "arc",
+      "published": "Mon, 12 Oct 2026 14:18:13 +0000",
+      "summary": "The article marks the continued presence of Equation Lighting in the market since 1986, though the publisher's blurb gives no further technical or product detail.",
+      "viTitle": "Equation",
+      "viSummary": "Bài viết nhắc đến sự hiện diện liên tục của Equation Lighting trên thị trường từ năm 1986, nhưng blurb không cung cấp thêm chi tiết kỹ thuật hay sản phẩm.",
+      "topics": [
+        "product"
+      ]
+    },
+    {
+      "title": "LEDVANCE publishes 2025 Sustainability Report: progress on decarbonisation",
+      "url": "https://www.a1lightingmagazine.com/sustainability/ledvance-publishes-2025-sustainability-report",
+      "source": "A1 Lighting",
+      "published": "Mon, 12 Oct 2026 12:59:11 +0000",
+      "summary": "LEDVANCE's 2025 ESG report details decarbonisation progress, EcoVadis Gold status and renewable-energy investment, signalling supply-chain sustainability credentials relevant to specifiers prioritising embodied-carbon criteria.",
+      "viTitle": "LEDVANCE công bố Báo cáo Phát triển bền vững 2025: tiến triển giảm phát thải carbon",
+      "viSummary": "Báo cáo ESG năm 2025 của LEDVANCE nêu tiến độ giảm phát thải carbon, chứng nhận EcoVadis Gold và đầu tư vào năng lượng tái tạo, cho thấy cam kết bền vững trong chuỗi cung ứng mà các nhà thiết kế quan tâm đến carbon có thể tham khảo.",
+      "topics": [
+        "sustainability",
+        "product"
+      ]
+    },
+    {
+      "title": "Product Monday: First DLC NLC V5.2 Listed NLC+Thermostats",
+      "url": "https://www.lightnowblog.com/2026/10/product-monday-first-dlc-nlc-v5-2-listed-nlcthermostats",
+      "source": "LightNOW",
+      "published": "Mon, 12 Oct 2026 05:28:57 +0000",
+      "summary": "LiteTrace Brands' Autani networked lighting control system is now the first NLC-integrated thermostat listed under DLC's Technical Requirements V5.2, letting specifiers combine lighting and HVAC control on one qualified platform.",
+      "viTitle": "Hệ thống NLC tích hợp thermostat đầu tiên được liệt kê theo DLC V5.2",
+      "viSummary": "Hệ điều khiển chiếu sáng nối mạng Autani của LiteTrace Brands trở thành sản phẩm NLC tích hợp thermostat đầu tiên có trong danh sách DLC theo tiêu chuẩn kỹ thuật V5.2, cho phép kết hợp điều khiển chiếu sáng và HVAC trên cùng nền tảng đạt chuẩn.",
+      "topics": [
+        "controls",
+        "standards",
+        "product"
+      ]
+    },
+    {
+      "title": "Global Smart Street Light Installations Growing At 18% CAGR",
+      "url": "https://www.lightnowblog.com/2026/10/global-smart-street-light-installations-growing-at-18-cagr",
+      "source": "LightNOW",
+      "published": "Thu, 08 Oct 2026 05:26:36 +0000",
+      "summary": "Berg Insight data shows individually controlled smart streetlights worldwide reached 38.5 million units in 2025, projected to grow to 87.6 million by the forecast period at an 18% CAGR, signalling wider municipal adoption of networked LED controls.",
+      "viTitle": "Lắp đặt đèn đường thông minh toàn cầu tăng trưởng 18% mỗi năm",
+      "viSummary": "Theo số liệu của Berg Insight, số đèn đường thông minh có điều khiển riêng lẻ trên toàn cầu đạt 38,5 triệu bộ vào cuối 2025 và dự kiến tăng lên 87,6 triệu bộ, với tốc độ tăng trưởng kép 18% mỗi năm, cho thấy điều khiển LED kết nối mạng đang trở thành xu hướng chủ đạo trong chiếu sáng đô thị.",
+      "topics": [
+        "controls",
+        "sustainability"
+      ]
+    }
+  ],
+  "termOfDay": "fixture-schedule",
+  "projectOfDay": "dark-sky-facade"
+}
