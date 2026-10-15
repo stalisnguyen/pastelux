@@ -1,0 +1,58 @@
+{
+  "date": "2026-10-16",
+  "generatedAt": "2026-10-15T20:14:21.819Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "Equation",
+      "url": "https://www.arc-magazine.com/equation",
+      "source": "arc",
+      "published": "Mon, 12 Oct 2026 14:18:13 +0000",
+      "summary": "A profile piece on Equation Lighting, tracing the company's history in the lighting design industry since its founding in 1986.",
+      "viTitle": "Equation",
+      "viSummary": "Bài viết giới thiệu về công ty Equation Lighting, điểm lại lịch sử hoạt động trong ngành thiết kế chiếu sáng kể từ khi thành lập năm 1986.",
+      "topics": [
+        "practice"
+      ]
+    },
+    {
+      "title": "What’s happening at Hong Kong Lighting Fair 2026",
+      "url": "https://www.arc-magazine.com/whats-happening-at-hong-kong-lighting-fair-2026",
+      "source": "arc",
+      "published": "Mon, 12 Oct 2026 08:48:09 +0000",
+      "summary": "Preview of the Hong Kong Lighting Fair 2026, an HKTDC trade event positioning Hong Kong as a hub for international lighting manufacturers and buyers this October.",
+      "viTitle": "Những điều đáng chú ý tại Hội chợ Chiếu sáng Hong Kong 2026",
+      "viSummary": "Bài viết giới thiệu Hội chợ Chiếu sáng Hong Kong 2026 do HKTDC tổ chức vào tháng 10, nơi quy tụ các nhà sản xuất và khách mua trong ngành chiếu sáng quốc tế.",
+      "topics": [
+        "practice"
+      ]
+    },
+    {
+      "title": "Signify achieves its highest-ever EcoVadis score of 88 and Platinum medal",
+      "url": "https://www.a1lightingmagazine.com/awards/signify-achieves-its-highest-ever-ecovadis-score",
+      "source": "A1 Lighting",
+      "published": "Fri, 09 Oct 2026 10:56:09 +0000",
+      "summary": "Signify's EcoVadis sustainability score rose to 88/100, with a perfect environment-theme score, extending its Platinum rating streak to seven years. Corporate ESG news with no direct specification impact.",
+      "viTitle": "Signify đạt điểm EcoVadis cao nhất từ trước đến nay: 88 điểm, huy chương Platinum",
+      "viSummary": "Signify đạt 88/100 điểm EcoVadis, trong đó hạng mục môi trường đạt tuyệt đối 100 điểm, giữ huy chương Platinum năm thứ bảy liên tiếp. Đây là tin về ESG doanh nghiệp, không ảnh hưởng trực tiếp đến thiết kế chiếu sáng.",
+      "topics": [
+        "sustainability"
+      ]
+    },
+    {
+      "title": "Sprowston Town Council Future-Proofs Street Lighting with CU Phosco LED Upgrade",
+      "url": "https://www.a1lightingmagazine.com/street-lighting/sprowston-town-council-future-proofs-street-lighting",
+      "source": "A1 Lighting",
+      "published": "Wed, 07 Oct 2026 11:35:45 +0000",
+      "summary": "CU Phosco supplied over 800 E950 LED street luminaires for Sprowston Town Council, paired with a condition survey of existing infrastructure to cut energy use and maintenance costs under a long-term asset management programme.",
+      "viTitle": "Hội đồng thị trấn Sprowston nâng cấp chiếu sáng đường phố bằng đèn LED CU Phosco",
+      "viSummary": "CU Phosco cung cấp hơn 800 bộ đèn LED E950 cho chương trình nâng cấp chiếu sáng đường phố của Sprowston, kết hợp khảo sát hiện trạng hạ tầng để giảm tiêu thụ điện năng và chi phí bảo trì trong dài hạn.",
+      "topics": [
+        "product",
+        "sustainability"
+      ]
+    }
+  ],
+  "termOfDay": "focusing",
+  "projectOfDay": "inverse-square-and-beams"
+}
