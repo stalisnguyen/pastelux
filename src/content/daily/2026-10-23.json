@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-23",
+  "generatedAt": "2026-10-22T20:27:49.266Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "Recolight Revive gives existing luminaires a second life",
+      "url": "https://www.a1lightingmagazine.com/latest-news/recolight-revive",
+      "source": "A1 Lighting",
+      "published": "Thu, 22 Oct 2026 10:00:57 +0000",
+      "summary": "Recolight Revive is a remanufacturing service that retains existing luminaire housings while fitting new LED modules and controls, offering an alternative to full replacement; relevant for retrofit specification and circular economy approaches in lighting projects.",
+      "viTitle": "Recolight Revive mang lại vòng đời mới cho bộ đèn cũ",
+      "viSummary": "Recolight ra mắt dịch vụ tái chế tân trang Recolight Revive, giữ lại vỏ đèn còn dùng được và thay mới đầu LED cùng hệ điều khiển, thay vì phải thay toàn bộ bộ đèn. Giải pháp này hướng tới giảm rác thải và kéo dài tuổi thọ thiết bị chiếu sáng.",
+      "topics": [
+        "sustainability",
+        "practice",
+        "controls"
+      ]
+    },
+    {
+      "title": "Lighting Controls Industry Quietly Leaving Lighting Industry",
+      "url": "https://www.lightnowblog.com/2026/10/lighting-controls-industry-quietly-leaving-lighting-industry",
+      "source": "LightNOW",
+      "published": "Thu, 22 Oct 2026 05:12:27 +0000",
+      "summary": "DLC's Networked Lighting Controls Technical Requirements V5.2 took effect August 17, 2026, adding thermostat integration and occupancy-linked features; signals that NLC specifications are drifting further from core lighting industry standards, relevant for spec writers tracking controls compliance.",
+      "viTitle": "Ngành điều khiển chiếu sáng đang âm thầm tách khỏi ngành chiếu sáng",
+      "viSummary": "DLC áp dụng tiêu chuẩn kỹ thuật NLC V5.2 từ 17/8/2026, bổ sung tích hợp thermostat và tính năng theo cảm biến chiếm dụng. Điều này cho thấy điều khiển chiếu sáng mạng đang ngày càng tách rời khỏi tiêu chuẩn chiếu sáng truyền thống, cần lưu ý khi viết đặc tả kỹ thuật.",
+      "topics": [
+        "controls",
+        "standards"
+      ]
+    },
+    {
+      "title": "Lucent Lighting brings warmth and precision to a private residence in Côte d’Or",
+      "url": "https://www.a1lightingmagazine.com/latest-news/lucent-lighting",
+      "source": "A1 Lighting",
+      "published": "Tue, 20 Oct 2026 12:59:30 +0000",
+      "summary": "Lucent Lighting supplied architectural luminaires for a stone-and-timber private residence in Côte d'Or, with a warm, integrated scheme by designer Su Bishop calibrated to the building's traditional materials and detailing.",
+      "viTitle": "Lucent Lighting mang ánh sáng ấm áp và tinh tế đến một biệt thự tư nhân ở Côte d'Or",
+      "viSummary": "Lucent Lighting cung cấp bộ đèn kiến trúc cho một biệt thự bằng đá và gỗ tại Côte d'Or, theo phương án chiếu sáng ấm, tích hợp kỹ lưỡng do nhà thiết kế Su Bishop thực hiện, phù hợp với chất liệu và chi tiết kiến trúc truyền thống.",
+      "topics": [
+        "product",
+        "practice"
+      ]
+    },
+    {
+      "title": "Light up the future of smart buildings at Smart Buildings Show 2026",
+      "url": "https://www.a1lightingmagazine.com/show-news/smart-buildings-show-2026",
+      "source": "A1 Lighting",
+      "published": "Fri, 09 Oct 2026 11:08:04 +0000",
+      "summary": "An industry trade event covering smart-building technology, including occupancy sensing, lighting controls, energy management and connectivity, takes place at ExCeL London on 14-15 October 2026.",
+      "viTitle": "Smart Buildings Show 2026: điểm hẹn công nghệ tòa nhà thông minh",
+      "viSummary": "Triển lãm Smart Buildings Show diễn ra tại ExCeL London ngày 14-15/10/2026, quy tụ các công nghệ về cảm biến hiện diện, điều khiển chiếu sáng, quản lý năng lượng và kết nối cho tòa nhà thông minh.",
+      "topics": [
+        "controls",
+        "practice"
+      ]
+    }
+  ],
+  "termOfDay": "inground-uplight",
+  "projectOfDay": "control-protocols"
+}
