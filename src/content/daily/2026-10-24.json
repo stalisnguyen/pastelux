@@ -1,0 +1,60 @@
+{
+  "date": "2026-10-24",
+  "generatedAt": "2026-10-23T20:16:03.581Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "Signify comment: Putting circularity at the heart of specification",
+      "url": "https://www.arc-magazine.com/signify-comment-putting-circularity-at-the-heart-of-specification",
+      "source": "arc",
+      "published": "Fri, 23 Oct 2026 15:41:49 +0000",
+      "summary": "Signify argues that circularity criteria—material recovery, modularity, upgradability—should be built into lighting specifications alongside energy efficiency metrics, though the piece offers no concrete technical guidance.",
+      "viTitle": "Signify: Đưa tính tuần hoàn vào trọng tâm của việc chỉ định sản phẩm chiếu sáng",
+      "viSummary": "Signify cho rằng các tiêu chí tuần hoàn như khả năng thu hồi vật liệu, module hóa, nâng cấp được cần đưa vào hồ sơ specification chiếu sáng song song với chỉ tiêu hiệu suất năng lượng, dù bài viết chưa đưa ra hướng dẫn kỹ thuật cụ thể.",
+      "topics": [
+        "sustainability",
+        "practice"
+      ]
+    },
+    {
+      "title": "DALI Part 151 supports surge protection for connected outdoor lighting",
+      "url": "https://www.a1lightingmagazine.com/lighting-controls/dali-part-151-supports-surge-protection-for-connected-outdoor-lighting",
+      "source": "A1 Lighting",
+      "published": "Fri, 23 Oct 2026 11:15:54 +0000",
+      "summary": "DALI Alliance's Part 151 defines minimum surge-protection requirements for DALI control devices exposed to electrical transients in outdoor installations, and is now moving from spec into certified products for manufacturers to adopt.",
+      "viTitle": "DALI Part 151 hỗ trợ bảo vệ chống xung điện cho hệ thống chiếu sáng ngoài trời kết nối",
+      "viSummary": "DALI Alliance vừa ban hành Part 151, quy định mức bảo vệ tối thiểu chống xung điện (surge) cho các thiết bị điều khiển DALI lắp đặt ngoài trời, nơi dễ chịu tác động của xung điện cảm ứng. Tiêu chuẩn này đang chuyển từ giai đoạn specification sang sản phẩm được chứng nhận.",
+      "topics": [
+        "standards",
+        "controls"
+      ]
+    },
+    {
+      "title": "Circular Lighting Live 2026: from theory to practice",
+      "url": "https://www.arc-magazine.com/circular-lighting-live-2026-from-theory-to-practice",
+      "source": "arc",
+      "published": "Mon, 19 Oct 2026 14:52:16 +0000",
+      "summary": "A UK industry event examines practical approaches to extending the service life of existing luminaires rather than replacing them, reflecting growing interest in refurbishment and reuse within the lighting sector.",
+      "viTitle": "Circular Lighting Live 2026: từ lý thuyết đến thực hành",
+      "viSummary": "Sự kiện ngành chiếu sáng tại Anh bàn về cách kéo dài tuổi thọ bộ đèn hiện có thay vì thay mới, phản ánh xu hướng ngày càng quan tâm đến tái sử dụng và cải tạo luminaire trong ngành.",
+      "topics": [
+        "sustainability",
+        "practice"
+      ]
+    },
+    {
+      "title": "What’s happening at Hong Kong Lighting Fair 2026",
+      "url": "https://www.arc-magazine.com/whats-happening-at-hong-kong-lighting-fair-2026",
+      "source": "arc",
+      "published": "Mon, 12 Oct 2026 08:48:09 +0000",
+      "summary": "The Hong Kong Lighting Fair 2026 will take place in October, bringing together international lighting manufacturers and buyers; the article covers event logistics rather than technical content.",
+      "viTitle": "Những điều diễn ra tại Hong Kong Lighting Fair 2026",
+      "viSummary": "Hong Kong Lighting Fair 2026 sẽ diễn ra vào tháng 10, quy tụ các nhà sản xuất và người mua chiếu sáng quốc tế; bài viết chủ yếu nói về thông tin sự kiện, không đi sâu kỹ thuật.",
+      "topics": [
+        "practice"
+      ]
+    }
+  ],
+  "termOfDay": "inverse-square-law",
+  "projectOfDay": "dark-sky-facade"
+}
