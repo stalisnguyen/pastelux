@@ -1,0 +1,61 @@
+{
+  "date": "2026-10-25",
+  "generatedAt": "2026-10-24T19:21:02.418Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "Recolight Revive gives existing luminaires a second life",
+      "url": "https://www.a1lightingmagazine.com/latest-news/recolight-revive",
+      "source": "A1 Lighting",
+      "published": "Thu, 22 Oct 2026 10:00:57 +0000",
+      "summary": "Recolight has launched a remanufacturing service that retains existing luminaire housings while upgrading them with new LED engines and controls, giving specifiers a lower-impact alternative to full replacement on retrofit projects.",
+      "viTitle": "Recolight Revive mang lại vòng đời thứ hai cho bộ đèn cũ",
+      "viSummary": "Recolight ra mắt dịch vụ tân trang Recolight Revive, giữ lại thân đèn hiện có và nâng cấp bằng LED cùng hệ thống controls mới, tạo lựa chọn ít phát thải hơn so với thay thế toàn bộ bộ đèn trong các dự án retrofit.",
+      "topics": [
+        "sustainability",
+        "product",
+        "practice"
+      ]
+    },
+    {
+      "title": "Lighting Controls Industry Quietly Leaving Lighting Industry",
+      "url": "https://www.lightnowblog.com/2026/10/lighting-controls-industry-quietly-leaving-lighting-industry",
+      "source": "LightNOW",
+      "published": "Thu, 22 Oct 2026 05:12:27 +0000",
+      "summary": "DLC's Networked Lighting Controls Technical Requirements V5.2 took effect August 17, 2026, adding thermostat integration that links occupancy sensing to HVAC, a sign that controls standards are drifting away from core lighting specification practice.",
+      "viTitle": "Ngành điều khiển chiếu sáng đang âm thầm rời khỏi ngành chiếu sáng",
+      "viSummary": "Bộ yêu cầu kỹ thuật Networked Lighting Controls V5.2 của DLC có hiệu lực từ 17/8/2026, bổ sung tích hợp thermostat cho phép cảm biến occupancy liên kết với HVAC, cho thấy tiêu chuẩn controls ngày càng tách rời khỏi thực hành chiếu sáng truyền thống.",
+      "topics": [
+        "controls",
+        "standards"
+      ]
+    },
+    {
+      "title": "Reuse, remanufacture and leasing emerge as the new drivers of lighting circularity at Circular Lighting Live 2026",
+      "url": "https://www.a1lightingmagazine.com/sustainability/reuse-remanufacture-and-leasing-at-circular-lighting-live-2026",
+      "source": "A1 Lighting",
+      "published": "Fri, 16 Oct 2026 09:19:07 +0000",
+      "summary": "At Recolight's Circular Lighting Live 2026 conference, industry speakers highlighted reuse, remanufacture and leasing business models as the main practical routes to circularity, with case studies on luminaires kept in service rather than replaced, relevant to WEEE compliance strategy.",
+      "viTitle": "Tái sử dụng, tái sản xuất và cho thuê trở thành động lực mới cho tính tuần hoàn trong ngành chiếu sáng tại Circular Lighting Live 2026",
+      "viSummary": "Tại hội nghị Circular Lighting Live 2026 do Recolight tổ chức, các diễn giả nhấn mạnh mô hình tái sử dụng, tái sản xuất và cho thuê bộ đèn là hướng đi thực tế nhất để đạt tính tuần hoàn, kèm theo các dự án thực tế liên quan đến tuân thủ WEEE.",
+      "topics": [
+        "sustainability",
+        "practice"
+      ]
+    },
+    {
+      "title": "Equation",
+      "url": "https://www.arc-magazine.com/equation",
+      "source": "arc",
+      "published": "Mon, 12 Oct 2026 14:18:13 +0000",
+      "summary": "The article is a profile piece on Equation Lighting, a design practice founded in 1986, marking its continuity in the lighting design field, though the blurb offers no technical or project detail.",
+      "viTitle": "Equation",
+      "viSummary": "Bài viết giới thiệu về Equation Lighting, công ty thiết kế chiếu sáng thành lập từ năm 1986, nhấn mạnh sự bền bỉ của họ trong ngành, nhưng không có thông tin kỹ thuật hay dự án cụ thể.",
+      "topics": [
+        "practice"
+      ]
+    }
+  ],
+  "termOfDay": "ip-rating",
+  "projectOfDay": "design-stages"
+}
