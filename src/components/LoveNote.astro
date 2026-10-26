@@ -6,7 +6,8 @@
  * shares the site with never see it. Each opening draws from a shuffle bag,
  * so every note comes up once before any repeats.
  *
- * The notes live in src/data/love-notes.json — edit freely.
+ * The notes are English only, whatever the site language. They live in
+ * src/data/love-notes.json — one string per note, edit freely.
  */
 import notes from '../data/love-notes.json';
 ---
@@ -20,15 +21,15 @@ import notes from '../data/love-notes.json';
       ></path>
     </svg>
     <p id="ln-text" class="ln-text">
-      <span class="ln-vi"></span><span class="ln-en"></span>
+      
     </p>
     <p class="ln-sign">— Stalis</p>
     <div class="ln-actions">
       <button type="button" class="ln-btn ln-more" data-ln-more>
-        <span class="ln-vi">Thêm một lời nữa</span><span class="ln-en">Another one</span>
+        Another one
       </button>
       <button type="button" class="ln-btn ln-ok" data-ln-close>
-        <span class="ln-vi">Thương lắm</span><span class="ln-en">Love you too</span>
+        Love you too
       </button>
     </div>
   </div>
@@ -108,11 +109,6 @@ import notes from '../data/love-notes.json';
     outline: 2px solid var(--accent-cool);
     outline-offset: 2px;
   }
-  /* one language at a time, following the site's EN / VI switch */
-  :global(html.lang-vi) .ln-en,
-  :global(html:not(.lang-vi)) .ln-vi {
-    display: none;
-  }
   @keyframes ln-fade {
     from {
       opacity: 0;
@@ -169,13 +165,10 @@ import notes from '../data/love-notes.json';
       return notes[i];
     };
 
-    const vi = box.querySelector('.ln-text .ln-vi');
-    const en = box.querySelector('.ln-text .ln-en');
+    const text = box.querySelector('.ln-text');
 
     const show = () => {
-      const n = next();
-      vi.textContent = n.vi;
-      en.textContent = n.en;
+      text.textContent = next();
       if (box.hidden) {
         box.hidden = false;
         box.querySelector('.ln-ok').focus();
