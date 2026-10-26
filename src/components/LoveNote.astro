@@ -1,11 +1,10 @@
 ---
 /**
- * A note from Stalis to Pastel: a random message each time she opens the site.
- *
- * Only on her devices. Opening the site once with ?for=pastel remembers that
- * browser; ?for=off forgets it. Everyone else never sees it. Once per visit
- * (browser session), not on every page, and it works through all notes before
- * repeating one. The blue heart in the footer brings up another note.
+ * A note from Stalis to Pastel, opened by a secret gesture only she knows:
+ * press and hold the blue heart in the footer for about a second (or tap it
+ * three times quickly). Nothing appears on its own, so the many people she
+ * shares the site with never see it. Each opening draws from a shuffle bag,
+ * so every note comes up once before any repeats.
  *
  * The notes live in src/data/love-notes.json — edit freely.
  */
@@ -29,7 +28,7 @@ import notes from '../data/love-notes.json';
         <span class="ln-vi">Thêm một lời nữa</span><span class="ln-en">Another one</span>
       </button>
       <button type="button" class="ln-btn ln-ok" data-ln-close>
-        <span class="ln-vi">Thương anh</span><span class="ln-en">Love you too</span>
+        <span class="ln-vi">Thương lắm</span><span class="ln-en">Love you too</span>
       </button>
     </div>
   </div>
@@ -147,24 +146,12 @@ import notes from '../data/love-notes.json';
 
 <script is:inline define:vars={{ notes }}>
   (() => {
-    const ON = 'pastelux-love';
     const BAG = 'pastelux-love-bag';
-    const SHOWN = 'pastelux-love-shown';
     const box = document.getElementById('love-note');
-    if (!box) return;
+    const heart = document.querySelector('.dedication .heart');
+    if (!box || !heart) return;
 
     const store = (fn) => { try { return fn(); } catch { return null; } };
-
-    // ?for=pastel turns it on for this browser, ?for=off turns it off
-    const params = new URLSearchParams(location.search);
-    const mode = params.get('for');
-    if (mode === 'pastel' || mode === 'off') {
-      store(() => (mode === 'off' ? localStorage.removeItem(ON) : localStorage.setItem(ON, '1')));
-      params.delete('for');
-      const q = params.toString();
-      history.replaceState(null, '', location.pathname + (q ? `?${q}` : '') + location.hash);
-    }
-    if (store(() => localStorage.getItem(ON)) !== '1') return;
 
     // shuffle bag: every note once before any repeats
     const next = () => {
@@ -184,21 +171,18 @@ import notes from '../data/love-notes.json';
 
     const vi = box.querySelector('.ln-text .ln-vi');
     const en = box.querySelector('.ln-text .ln-en');
-    let opener = null;
 
     const show = () => {
       const n = next();
       vi.textContent = n.vi;
       en.textContent = n.en;
       if (box.hidden) {
-        opener = document.activeElement;
         box.hidden = false;
         box.querySelector('.ln-ok').focus();
       }
     };
     const hide = () => {
       box.hidden = true;
-      if (opener && opener.focus) opener.focus();
     };
 
     box.querySelectorAll('[data-ln-close]').forEach((el) => el.addEventListener('click', hide));
@@ -207,27 +191,33 @@ import notes from '../data/love-notes.json';
       if (e.key === 'Escape' && !box.hidden) hide();
     });
 
-    // the footer heart brings up another note
-    const heart = document.querySelector('.dedication .heart');
-    if (heart) {
-      heart.style.cursor = 'pointer';
-      heart.setAttribute('role', 'button');
-      heart.setAttribute('tabindex', '0');
-      heart.setAttribute('aria-label', 'A note for you');
-      heart.removeAttribute('aria-hidden');
-      heart.addEventListener('click', show);
-      heart.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          show();
-        }
-      });
-    }
-
-    // once per visit, a moment after the page has appeared
-    if (store(() => sessionStorage.getItem(SHOWN)) !== '1') {
-      store(() => sessionStorage.setItem(SHOWN, '1'));
-      setTimeout(show, 700);
-    }
+    // The secret: hold the heart ~1 s, or tap it 3 times within ~1.2 s.
+    // Nothing about the heart changes to give it away — no pointer cursor,
+    // no focus ring, no label.
+    heart.style.webkitTouchCallout = 'none';
+    heart.style.userSelect = 'none';
+    heart.style.touchAction = 'manipulation';
+    let holdTimer = 0;
+    let taps = [];
+    heart.addEventListener('pointerdown', () => {
+      clearTimeout(holdTimer);
+      holdTimer = setTimeout(() => {
+        taps = [];
+        show();
+      }, 900);
+    });
+    const cancelHold = () => clearTimeout(holdTimer);
+    heart.addEventListener('pointerup', () => {
+      cancelHold();
+      const now = Date.now();
+      taps = taps.filter((t) => now - t < 1200).concat(now);
+      if (taps.length >= 3) {
+        taps = [];
+        show();
+      }
+    });
+    heart.addEventListener('pointerleave', cancelHold);
+    heart.addEventListener('pointercancel', cancelHold);
+    heart.addEventListener('contextmenu', (e) => e.preventDefault());
   })();
 </script>
