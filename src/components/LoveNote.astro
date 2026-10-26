@@ -1,0 +1,233 @@
+---
+/**
+ * A note from Stalis to Pastel: a random message each time she opens the site.
+ *
+ * Only on her devices. Opening the site once with ?for=pastel remembers that
+ * browser; ?for=off forgets it. Everyone else never sees it. Once per visit
+ * (browser session), not on every page, and it works through all notes before
+ * repeating one. The blue heart in the footer brings up another note.
+ *
+ * The notes live in src/data/love-notes.json — edit freely.
+ */
+import notes from '../data/love-notes.json';
+---
+
+<div id="love-note" class="ln" hidden>
+  <div class="ln-backdrop" data-ln-close></div>
+  <div class="ln-card" role="dialog" aria-modal="true" aria-labelledby="ln-text">
+    <svg class="ln-heart" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        d="M12 21s-8-5.1-10.2-9.6C.5 8.4 2 5 5.3 5c2 0 3.3 1.1 4.2 2.3L12 10l2.5-2.7C15.4 6.1 16.7 5 18.7 5 22 5 23.5 8.4 22.2 11.4 20 15.9 12 21 12 21z"
+      ></path>
+    </svg>
+    <p id="ln-text" class="ln-text">
+      <span class="ln-vi"></span><span class="ln-en"></span>
+    </p>
+    <p class="ln-sign">— Stalis</p>
+    <div class="ln-actions">
+      <button type="button" class="ln-btn ln-more" data-ln-more>
+        <span class="ln-vi">Thêm một lời nữa</span><span class="ln-en">Another one</span>
+      </button>
+      <button type="button" class="ln-btn ln-ok" data-ln-close>
+        <span class="ln-vi">Thương anh</span><span class="ln-en">Love you too</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .ln {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    display: grid;
+    place-items: center;
+    padding: 1rem;
+  }
+  .ln[hidden] {
+    display: none;
+  }
+  .ln-backdrop {
+    position: absolute;
+    inset: 0;
+    background: color-mix(in srgb, var(--bg) 55%, transparent);
+    backdrop-filter: blur(6px);
+    animation: ln-fade 0.35s ease both;
+  }
+  .ln-card {
+    position: relative;
+    width: min(26rem, 100%);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 1.1rem;
+    padding: 1.6rem 1.5rem 1.2rem;
+    box-shadow: 0 24px 60px -20px rgb(0 0 0 / 0.45);
+    text-align: center;
+    animation: ln-rise 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+  .ln-heart {
+    fill: var(--accent-cool);
+    margin: 0 auto 0.7rem;
+    display: block;
+    animation: ln-beat 2.6s ease-in-out infinite;
+  }
+  .ln-text {
+    font-size: 1.1rem;
+    line-height: 1.65;
+    color: var(--text);
+    text-wrap: pretty;
+  }
+  .ln-sign {
+    margin-top: 0.7rem;
+    font-size: 0.85rem;
+    color: var(--accent-cool);
+  }
+  .ln-actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1.2rem;
+  }
+  .ln-btn {
+    font: inherit;
+    font-size: 0.85rem;
+    padding: 0.5rem 0.9rem;
+    border-radius: 0.6rem;
+    border: 1px solid var(--border-strong);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+  }
+  .ln-ok {
+    background: var(--accent-cool);
+    border-color: var(--accent-cool);
+    color: var(--bg);
+    font-weight: 600;
+  }
+  .ln-btn:focus-visible {
+    outline: 2px solid var(--accent-cool);
+    outline-offset: 2px;
+  }
+  /* one language at a time, following the site's EN / VI switch */
+  :global(html.lang-vi) .ln-en,
+  :global(html:not(.lang-vi)) .ln-vi {
+    display: none;
+  }
+  @keyframes ln-fade {
+    from {
+      opacity: 0;
+    }
+  }
+  @keyframes ln-rise {
+    from {
+      opacity: 0;
+      transform: translateY(14px) scale(0.97);
+    }
+  }
+  @keyframes ln-beat {
+    0%, 100% {
+      transform: scale(1);
+    }
+    15% {
+      transform: scale(1.15);
+    }
+    30% {
+      transform: scale(1);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ln-backdrop,
+    .ln-card,
+    .ln-heart {
+      animation: none;
+    }
+  }
+</style>
+
+<script is:inline define:vars={{ notes }}>
+  (() => {
+    const ON = 'pastelux-love';
+    const BAG = 'pastelux-love-bag';
+    const SHOWN = 'pastelux-love-shown';
+    const box = document.getElementById('love-note');
+    if (!box) return;
+
+    const store = (fn) => { try { return fn(); } catch { return null; } };
+
+    // ?for=pastel turns it on for this browser, ?for=off turns it off
+    const params = new URLSearchParams(location.search);
+    const mode = params.get('for');
+    if (mode === 'pastel' || mode === 'off') {
+      store(() => (mode === 'off' ? localStorage.removeItem(ON) : localStorage.setItem(ON, '1')));
+      params.delete('for');
+      const q = params.toString();
+      history.replaceState(null, '', location.pathname + (q ? `?${q}` : '') + location.hash);
+    }
+    if (store(() => localStorage.getItem(ON)) !== '1') return;
+
+    // shuffle bag: every note once before any repeats
+    const next = () => {
+      let bag = store(() => JSON.parse(localStorage.getItem(BAG) || '[]')) || [];
+      bag = bag.filter((i) => Number.isInteger(i) && i < notes.length);
+      if (!bag.length) {
+        bag = notes.map((_, i) => i);
+        for (let i = bag.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [bag[i], bag[j]] = [bag[j], bag[i]];
+        }
+      }
+      const i = bag.pop();
+      store(() => localStorage.setItem(BAG, JSON.stringify(bag)));
+      return notes[i];
+    };
+
+    const vi = box.querySelector('.ln-text .ln-vi');
+    const en = box.querySelector('.ln-text .ln-en');
+    let opener = null;
+
+    const show = () => {
+      const n = next();
+      vi.textContent = n.vi;
+      en.textContent = n.en;
+      if (box.hidden) {
+        opener = document.activeElement;
+        box.hidden = false;
+        box.querySelector('.ln-ok').focus();
+      }
+    };
+    const hide = () => {
+      box.hidden = true;
+      if (opener && opener.focus) opener.focus();
+    };
+
+    box.querySelectorAll('[data-ln-close]').forEach((el) => el.addEventListener('click', hide));
+    box.querySelector('[data-ln-more]').addEventListener('click', show);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !box.hidden) hide();
+    });
+
+    // the footer heart brings up another note
+    const heart = document.querySelector('.dedication .heart');
+    if (heart) {
+      heart.style.cursor = 'pointer';
+      heart.setAttribute('role', 'button');
+      heart.setAttribute('tabindex', '0');
+      heart.setAttribute('aria-label', 'A note for you');
+      heart.removeAttribute('aria-hidden');
+      heart.addEventListener('click', show);
+      heart.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          show();
+        }
+      });
+    }
+
+    // once per visit, a moment after the page has appeared
+    if (store(() => sessionStorage.getItem(SHOWN)) !== '1') {
+      store(() => sessionStorage.setItem(SHOWN, '1'));
+      setTimeout(show, 700);
+    }
+  })();
+</script>
