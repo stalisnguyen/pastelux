@@ -1,0 +1,61 @@
+{
+  "date": "2026-10-28",
+  "generatedAt": "2026-10-27T21:09:42.988Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "LiGHT 26 invites visitors to Take a Moment – an immersive light art installation",
+      "url": "https://www.a1lightingmagazine.com/latest-news/light-26-invites-visitors-to-take-a-moment-an-immersive-light-art-installation",
+      "source": "A1 Lighting",
+      "published": "Tue, 27 Oct 2026 12:37:05 +0000",
+      "summary": "ZHA and formalighting are staging an immersive light-and-sound installation at LiGHT 26, using dynamic lighting to evoke climate volatility as a reflective exhibition piece for trade show visitors.",
+      "viTitle": "LiGHT 26 giới thiệu Take a Moment – tác phẩm light art sắp đặt đa giác quan",
+      "viSummary": "ZHA phối hợp cùng formalighting dàn dựng tác phẩm sắp đặt ánh sáng và âm thanh tại LiGHT 26, dùng ánh sáng để diễn giải sự biến động khí hậu, tạo không gian suy ngẫm cho khách tham quan triển lãm.",
+      "topics": [
+        "practice",
+        "product"
+      ]
+    },
+    {
+      "title": "Signify comment: Putting circularity at the heart of specification",
+      "url": "https://www.arc-magazine.com/signify-comment-putting-circularity-at-the-heart-of-specification",
+      "source": "arc",
+      "published": "Fri, 23 Oct 2026 15:41:49 +0000",
+      "summary": "The piece argues that circularity criteria should be built into lighting specification from the outset, not treated as an add-on to energy-efficiency targets, reflecting growing pressure for material traceability and reuse in product selection.",
+      "viTitle": "Signify: Đưa tính tuần hoàn vào trọng tâm việc thiết kế kỹ thuật chiếu sáng",
+      "viSummary": "Bài viết cho rằng tiêu chí tuần hoàn cần được tích hợp ngay từ khâu lập hồ sơ kỹ thuật chiếu sáng, chứ không chỉ dừng ở mục tiêu tiết kiệm năng lượng, trước áp lực ngày càng tăng về truy xuất vật liệu và tái sử dụng sản phẩm.",
+      "topics": [
+        "sustainability",
+        "standards"
+      ]
+    },
+    {
+      "title": "DALI Part 151 supports surge protection for connected outdoor lighting",
+      "url": "https://www.a1lightingmagazine.com/lighting-controls/dali-part-151-supports-surge-protection-for-connected-outdoor-lighting",
+      "source": "A1 Lighting",
+      "published": "Fri, 23 Oct 2026 11:15:54 +0000",
+      "summary": "DALI Alliance's Part 151 standard, now reaching certified products, sets minimum surge-protection requirements for DALI control gear exposed to electrical transients in outdoor lighting networks, relevant for street and area lighting specifiers.",
+      "viTitle": "DALI Part 151 hỗ trợ bảo vệ chống xung điện cho hệ thống chiếu sáng ngoài trời kết nối",
+      "viSummary": "Chuẩn DALI Part 151 của DALI Alliance, nay đã có sản phẩm được chứng nhận, quy định yêu cầu tối thiểu về bảo vệ chống xung điện cho thiết bị điều khiển DALI khi lắp đặt ngoài trời, dễ chịu ảnh hưởng của xung quá độ. Đáng chú ý với các dự án chiếu sáng đường phố, khu vực công cộng.",
+      "topics": [
+        "standards",
+        "controls"
+      ]
+    },
+    {
+      "title": "Lucent Lighting brings warmth and precision to a private residence in Côte d’Or",
+      "url": "https://www.a1lightingmagazine.com/latest-news/lucent-lighting",
+      "source": "A1 Lighting",
+      "published": "Tue, 20 Oct 2026 12:59:30 +0000",
+      "summary": "Lucent Lighting supplied architectural luminaires for a private residence in Côte d'Or, France, with a scheme by Su Bishop designed to complement stone, timber and traditional architectural detailing.",
+      "viTitle": "Lucent Lighting mang đến sự ấm áp và tinh tế cho một biệt thự tư nhân tại Côte d'Or",
+      "viSummary": "Lucent Lighting cung cấp bộ đèn kiến trúc cho một biệt thự tư nhân tại Côte d'Or, Pháp, với phương án chiếu sáng do Su Bishop thực hiện nhằm tôn lên chất liệu đá tự nhiên, gỗ và các chi tiết kiến trúc truyền thống.",
+      "topics": [
+        "product",
+        "practice"
+      ]
+    }
+  ],
+  "termOfDay": "driver",
+  "projectOfDay": "led-sources"
+}
