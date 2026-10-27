@@ -282,3 +282,18 @@ const icons: Record<string, string> = {
     });
   }
 </script>
+
+<script is:inline>
+  // Publish the tab bar's real height (it changes with the language line and
+  // the home-indicator inset) so the footer can keep clear of it.
+  (() => {
+    const nav = document.querySelector('.mnav');
+    if (!nav) return;
+    const set = () => {
+      const h = nav.offsetHeight;
+      document.documentElement.style.setProperty('--mnav-h', h ? `${h}px` : '');
+    };
+    set();
+    if ('ResizeObserver' in window) new ResizeObserver(set).observe(nav);
+  })();
+</script>

@@ -487,6 +487,15 @@
   }
 }
 
+/* Below lg the tab bar is fixed over the bottom of the page; the footer
+   keeps clear of it by its measured height (set by MobileNav), which
+   already includes the iPhone home-indicator inset. */
+@media (max-width: 1023.98px) {
+  .site-footer {
+    padding-bottom: calc(var(--mnav-h, calc(4.5rem + env(safe-area-inset-bottom))) + 0.5rem);
+  }
+}
+
 @utility container-page {
   width: 100%;
   max-width: 1200px;
