@@ -1,0 +1,712 @@
+[
+ {
+  "id": "red_heart",
+  "name": "Red heart",
+  "cat": "react"
+ },
+ {
+  "id": "thumbs_up",
+  "name": "Thumbs up",
+  "cat": "react"
+ },
+ {
+  "id": "clapping_hands",
+  "name": "Clapping hands",
+  "cat": "react"
+ },
+ {
+  "id": "star",
+  "name": "Star",
+  "cat": "react"
+ },
+ {
+  "id": "fire",
+  "name": "Fire",
+  "cat": "react"
+ },
+ {
+  "id": "light_bulb",
+  "name": "Light bulb",
+  "cat": "work"
+ },
+ {
+  "id": "check_mark_button",
+  "name": "Check mark button",
+  "cat": "react"
+ },
+ {
+  "id": "cross_mark",
+  "name": "Cross mark",
+  "cat": "react"
+ },
+ {
+  "id": "red_question_mark",
+  "name": "Red question mark",
+  "cat": "react"
+ },
+ {
+  "id": "red_exclamation_mark",
+  "name": "Red exclamation mark",
+  "cat": "react"
+ },
+ {
+  "id": "sparkles",
+  "name": "Sparkles",
+  "cat": "react"
+ },
+ {
+  "id": "smiling_face_with_heart_eyes",
+  "name": "Smiling face with heart-eyes",
+  "cat": "react"
+ },
+ {
+  "id": "star_struck",
+  "name": "Star-struck",
+  "cat": "react"
+ },
+ {
+  "id": "thinking_face",
+  "name": "Thinking face",
+  "cat": "react"
+ },
+ {
+  "id": "eyes",
+  "name": "Eyes",
+  "cat": "react"
+ },
+ {
+  "id": "party_popper",
+  "name": "Party popper",
+  "cat": "react"
+ },
+ {
+  "id": "hundred_points",
+  "name": "Hundred points",
+  "cat": "react"
+ },
+ {
+  "id": "bullseye",
+  "name": "Bullseye",
+  "cat": "react"
+ },
+ {
+  "id": "sparkling_heart",
+  "name": "Sparkling heart",
+  "cat": "react"
+ },
+ {
+  "id": "glowing_star",
+  "name": "Glowing star",
+  "cat": "react"
+ },
+ {
+  "id": "flashlight",
+  "name": "Flashlight",
+  "cat": "work"
+ },
+ {
+  "id": "high_voltage",
+  "name": "High voltage",
+  "cat": "react"
+ },
+ {
+  "id": "crescent_moon",
+  "name": "Crescent moon",
+  "cat": "nature"
+ },
+ {
+  "id": "sun",
+  "name": "Sun",
+  "cat": "nature"
+ },
+ {
+  "id": "sun_with_face",
+  "name": "Sun with face",
+  "cat": "nature"
+ },
+ {
+  "id": "rainbow",
+  "name": "Rainbow",
+  "cat": "nature"
+ },
+ {
+  "id": "candle",
+  "name": "Candle",
+  "cat": "work"
+ },
+ {
+  "id": "gem_stone",
+  "name": "Gem stone",
+  "cat": "work"
+ },
+ {
+  "id": "herb",
+  "name": "Herb",
+  "cat": "nature"
+ },
+ {
+  "id": "potted_plant",
+  "name": "Potted plant",
+  "cat": "nature"
+ },
+ {
+  "id": "tulip",
+  "name": "Tulip",
+  "cat": "nature"
+ },
+ {
+  "id": "pushpin",
+  "name": "Pushpin",
+  "cat": "work"
+ },
+ {
+  "id": "round_pushpin",
+  "name": "Round pushpin",
+  "cat": "work"
+ },
+ {
+  "id": "rocket",
+  "name": "Rocket",
+  "cat": "work"
+ },
+ {
+  "id": "memo",
+  "name": "Memo",
+  "cat": "work"
+ },
+ {
+  "id": "hourglass_done",
+  "name": "Hourglass done",
+  "cat": "work"
+ },
+ {
+  "id": "alarm_clock",
+  "name": "Alarm clock",
+  "cat": "work"
+ },
+ {
+  "id": "hot_beverage",
+  "name": "Hot beverage",
+  "cat": "work"
+ },
+ {
+  "id": "artist_palette",
+  "name": "Artist palette",
+  "cat": "work"
+ },
+ {
+  "id": "straight_ruler",
+  "name": "Straight ruler",
+  "cat": "work"
+ },
+ {
+  "id": "triangular_ruler",
+  "name": "Triangular ruler",
+  "cat": "work"
+ },
+ {
+  "id": "camera_with_flash",
+  "name": "Camera with flash",
+  "cat": "work"
+ },
+ {
+  "id": "house",
+  "name": "House",
+  "cat": "work"
+ },
+ {
+  "id": "couch_and_lamp",
+  "name": "Couch and lamp",
+  "cat": "work"
+ },
+ {
+  "id": "bed",
+  "name": "Bed",
+  "cat": "work"
+ },
+ {
+  "id": "door",
+  "name": "Door",
+  "cat": "work"
+ },
+ {
+  "id": "window",
+  "name": "Window",
+  "cat": "work"
+ },
+ {
+  "id": "mirror",
+  "name": "Mirror",
+  "cat": "work"
+ },
+ {
+  "id": "wrench",
+  "name": "Wrench",
+  "cat": "work"
+ },
+ {
+  "id": "hammer_and_wrench",
+  "name": "Hammer and wrench",
+  "cat": "work"
+ },
+ {
+  "id": "money_bag",
+  "name": "Money bag",
+  "cat": "work"
+ },
+ {
+  "id": "warning",
+  "name": "Warning",
+  "cat": "work"
+ },
+ {
+  "id": "stop_sign",
+  "name": "Stop sign",
+  "cat": "work"
+ },
+ {
+  "id": "hourglass_not_done",
+  "name": "Hourglass not done",
+  "cat": "work"
+ },
+ {
+  "id": "calendar",
+  "name": "Calendar",
+  "cat": "work"
+ },
+ {
+  "id": "megaphone",
+  "name": "Megaphone",
+  "cat": "work"
+ },
+ {
+  "id": "trophy",
+  "name": "Trophy",
+  "cat": "work"
+ },
+ {
+  "id": "thumbs_down",
+  "name": "Thumbs down",
+  "cat": "react"
+ },
+ {
+  "id": "raising_hands",
+  "name": "Raising hands",
+  "cat": "react"
+ },
+ {
+  "id": "smiling_face_with_hearts",
+  "name": "Smiling face with hearts",
+  "cat": "faces"
+ },
+ {
+  "id": "face_blowing_a_kiss",
+  "name": "Face blowing a kiss",
+  "cat": "faces"
+ },
+ {
+  "id": "grinning_squinting_face",
+  "name": "Grinning squinting face",
+  "cat": "faces"
+ },
+ {
+  "id": "face_with_tears_of_joy",
+  "name": "Face with tears of joy",
+  "cat": "faces"
+ },
+ {
+  "id": "smiling_face_with_sunglasses",
+  "name": "Smiling face with sunglasses",
+  "cat": "faces"
+ },
+ {
+  "id": "sleeping_face",
+  "name": "Sleeping face",
+  "cat": "faces"
+ },
+ {
+  "id": "pleading_face",
+  "name": "Pleading face",
+  "cat": "faces"
+ },
+ {
+  "id": "partying_face",
+  "name": "Partying face",
+  "cat": "faces"
+ },
+ {
+  "id": "melting_face",
+  "name": "Melting face",
+  "cat": "faces"
+ },
+ {
+  "id": "saluting_face",
+  "name": "Saluting face",
+  "cat": "faces"
+ },
+ {
+  "id": "exploding_head",
+  "name": "Exploding head",
+  "cat": "faces"
+ },
+ {
+  "id": "face_with_monocle",
+  "name": "Face with monocle",
+  "cat": "faces"
+ },
+ {
+  "id": "nerd_face",
+  "name": "Nerd face",
+  "cat": "faces"
+ },
+ {
+  "id": "smiling_face_with_halo",
+  "name": "Smiling face with halo",
+  "cat": "faces"
+ },
+ {
+  "id": "winking_face",
+  "name": "Winking face",
+  "cat": "faces"
+ },
+ {
+  "id": "relieved_face",
+  "name": "Relieved face",
+  "cat": "faces"
+ },
+ {
+  "id": "yawning_face",
+  "name": "Yawning face",
+  "cat": "faces"
+ },
+ {
+  "id": "shushing_face",
+  "name": "Shushing face",
+  "cat": "faces"
+ },
+ {
+  "id": "zany_face",
+  "name": "Zany face",
+  "cat": "faces"
+ },
+ {
+  "id": "hugging_face",
+  "name": "Hugging face",
+  "cat": "faces"
+ },
+ {
+  "id": "face_holding_back_tears",
+  "name": "Face holding back tears",
+  "cat": "faces"
+ },
+ {
+  "id": "upside_down_face",
+  "name": "Upside-down face",
+  "cat": "faces"
+ },
+ {
+  "id": "cowboy_hat_face",
+  "name": "Cowboy hat face",
+  "cat": "faces"
+ },
+ {
+  "id": "cat_face",
+  "name": "Cat face",
+  "cat": "animals"
+ },
+ {
+  "id": "dog_face",
+  "name": "Dog face",
+  "cat": "animals"
+ },
+ {
+  "id": "rabbit_face",
+  "name": "Rabbit face",
+  "cat": "animals"
+ },
+ {
+  "id": "bear",
+  "name": "Bear",
+  "cat": "animals"
+ },
+ {
+  "id": "panda",
+  "name": "Panda",
+  "cat": "animals"
+ },
+ {
+  "id": "hamster",
+  "name": "Hamster",
+  "cat": "animals"
+ },
+ {
+  "id": "fox",
+  "name": "Fox",
+  "cat": "animals"
+ },
+ {
+  "id": "penguin",
+  "name": "Penguin",
+  "cat": "animals"
+ },
+ {
+  "id": "baby_chick",
+  "name": "Baby chick",
+  "cat": "animals"
+ },
+ {
+  "id": "unicorn",
+  "name": "Unicorn",
+  "cat": "animals"
+ },
+ {
+  "id": "koala",
+  "name": "Koala",
+  "cat": "animals"
+ },
+ {
+  "id": "frog",
+  "name": "Frog",
+  "cat": "animals"
+ },
+ {
+  "id": "butterfly",
+  "name": "Butterfly",
+  "cat": "animals"
+ },
+ {
+  "id": "honeybee",
+  "name": "Honeybee",
+  "cat": "animals"
+ },
+ {
+  "id": "lady_beetle",
+  "name": "Lady beetle",
+  "cat": "animals"
+ },
+ {
+  "id": "teddy_bear",
+  "name": "Teddy bear",
+  "cat": "animals"
+ },
+ {
+  "id": "turtle",
+  "name": "Turtle",
+  "cat": "animals"
+ },
+ {
+  "id": "octopus",
+  "name": "Octopus",
+  "cat": "animals"
+ },
+ {
+  "id": "whale",
+  "name": "Whale",
+  "cat": "animals"
+ },
+ {
+  "id": "owl",
+  "name": "Owl",
+  "cat": "animals"
+ },
+ {
+  "id": "duck",
+  "name": "Duck",
+  "cat": "animals"
+ },
+ {
+  "id": "tiger_face",
+  "name": "Tiger face",
+  "cat": "animals"
+ },
+ {
+  "id": "mouse_face",
+  "name": "Mouse face",
+  "cat": "animals"
+ },
+ {
+  "id": "snail",
+  "name": "Snail",
+  "cat": "animals"
+ },
+ {
+  "id": "blue_heart",
+  "name": "Blue heart",
+  "cat": "hearts"
+ },
+ {
+  "id": "pink_heart",
+  "name": "Pink heart",
+  "cat": "hearts"
+ },
+ {
+  "id": "purple_heart",
+  "name": "Purple heart",
+  "cat": "hearts"
+ },
+ {
+  "id": "yellow_heart",
+  "name": "Yellow heart",
+  "cat": "hearts"
+ },
+ {
+  "id": "green_heart",
+  "name": "Green heart",
+  "cat": "hearts"
+ },
+ {
+  "id": "orange_heart",
+  "name": "Orange heart",
+  "cat": "hearts"
+ },
+ {
+  "id": "white_heart",
+  "name": "White heart",
+  "cat": "hearts"
+ },
+ {
+  "id": "heart_with_ribbon",
+  "name": "Heart with ribbon",
+  "cat": "hearts"
+ },
+ {
+  "id": "two_hearts",
+  "name": "Two hearts",
+  "cat": "hearts"
+ },
+ {
+  "id": "revolving_hearts",
+  "name": "Revolving hearts",
+  "cat": "hearts"
+ },
+ {
+  "id": "love_letter",
+  "name": "Love letter",
+  "cat": "hearts"
+ },
+ {
+  "id": "heart_with_arrow",
+  "name": "Heart with arrow",
+  "cat": "hearts"
+ },
+ {
+  "id": "cherry_blossom",
+  "name": "Cherry blossom",
+  "cat": "nature"
+ },
+ {
+  "id": "sunflower",
+  "name": "Sunflower",
+  "cat": "nature"
+ },
+ {
+  "id": "four_leaf_clover",
+  "name": "Four leaf clover",
+  "cat": "nature"
+ },
+ {
+  "id": "rose",
+  "name": "Rose",
+  "cat": "nature"
+ },
+ {
+  "id": "hibiscus",
+  "name": "Hibiscus",
+  "cat": "nature"
+ },
+ {
+  "id": "cactus",
+  "name": "Cactus",
+  "cat": "nature"
+ },
+ {
+  "id": "strawberry",
+  "name": "Strawberry",
+  "cat": "nature"
+ },
+ {
+  "id": "cherries",
+  "name": "Cherries",
+  "cat": "nature"
+ },
+ {
+  "id": "peach",
+  "name": "Peach",
+  "cat": "nature"
+ },
+ {
+  "id": "avocado",
+  "name": "Avocado",
+  "cat": "nature"
+ },
+ {
+  "id": "shortcake",
+  "name": "Shortcake",
+  "cat": "nature"
+ },
+ {
+  "id": "doughnut",
+  "name": "Doughnut",
+  "cat": "nature"
+ },
+ {
+  "id": "cookie",
+  "name": "Cookie",
+  "cat": "nature"
+ },
+ {
+  "id": "bubble_tea",
+  "name": "Bubble tea",
+  "cat": "nature"
+ },
+ {
+  "id": "soft_ice_cream",
+  "name": "Soft ice cream",
+  "cat": "nature"
+ },
+ {
+  "id": "birthday_cake",
+  "name": "Birthday cake",
+  "cat": "nature"
+ },
+ {
+  "id": "balloon",
+  "name": "Balloon",
+  "cat": "nature"
+ },
+ {
+  "id": "wrapped_gift",
+  "name": "Wrapped gift",
+  "cat": "nature"
+ },
+ {
+  "id": "ribbon",
+  "name": "Ribbon",
+  "cat": "nature"
+ },
+ {
+  "id": "cloud",
+  "name": "Cloud",
+  "cat": "nature"
+ },
+ {
+  "id": "snowflake",
+  "name": "Snowflake",
+  "cat": "nature"
+ },
+ {
+  "id": "ghost",
+  "name": "Ghost",
+  "cat": "nature"
+ },
+ {
+  "id": "crown",
+  "name": "Crown",
+  "cat": "nature"
+ },
+ {
+  "id": "lollipop",
+  "name": "Lollipop",
+  "cat": "nature"
+ }
+]

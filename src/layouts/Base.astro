@@ -193,6 +193,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://example.com
         }
 
         function scan(scope) {
+          // the board's editor redraws its own UI constantly and has no
+          // Vietnamese pairs of its own; never walk it
+          if (scope.closest && scope.closest('.excalidraw')) return;
           tocTwins(scope);
           if (scope.matches && scope.matches(VI)) pair(scope);
           scope.querySelectorAll(VI).forEach(pair);

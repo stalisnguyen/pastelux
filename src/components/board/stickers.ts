@@ -11,7 +11,16 @@ export const NOTE_COLORS = [
   { id: 'gray', fill: '#e9ecef', edge: '#868e96' },
 ];
 
-export const EMOJI = ['❤️', '👍', '👎', '⭐', '🔥', '💡', '✅', '❌', '❓', '❗', '📌', '🎯', '👀', '🙌', '😍', '🤔', '🎉', '💬', '⚡', '🌙', '☀️', '🕯️', '💎', '🌿'];
+/** Flat emoji, grouped like an emoji picker. Rendered with the device's emoji font. */
+export const EMOJI_GROUPS: Array<{ id: string; en: string; vi: string; items: string[] }> = [
+  { id: 'smileys', en: 'Smileys', vi: 'Mặt cười', items: '😀 😃 😄 😁 😆 😅 😂 🤣 🥲 😊 😇 🙂 🙃 😉 😌 😍 🥰 😘 😗 😙 😚 😋 😛 😝 😜 🤪 🤨 🧐 🤓 😎 🥸 🤩 🥳 😏 😒 😞 😔 😟 😕 🙁 ☹️ 😣 😖 😫 😩 🥺 😢 😭 😤 😠 😡 🤯 😳 🥵 🥶 😱 😨 😰 😥 😓 🤗 🤔 🫣 🤭 🫢 🤫 🤥 😶 😐 😑 😬 🫠 🙄 😯 😦 😧 😮 😲 🥱 😴 🤤 😪 😵 🤐 🥴 🤢 🤮 🤧 😷 🤒 🤕'.split(' ') },
+  { id: 'gestures', en: 'Gestures', vi: 'Cử chỉ', items: '👍 👎 👌 🤌 🤏 ✌️ 🤞 🫰 🤟 🤘 🤙 👈 👉 👆 👇 ☝️ 👋 🤚 🖐️ ✋ 🖖 👏 🙌 🫶 👐 🤲 🤝 🙏 ✍️ 💪 👀 🧠 🫡'.split(' ') },
+  { id: 'hearts', en: 'Hearts', vi: 'Tim', items: '❤️ 🧡 💛 💚 💙 🩵 💜 🤎 🖤 🩶 🤍 🩷 💖 💗 💓 💞 💕 💘 💝 💟 ❣️ 💔 ❤️‍🔥 💌 💋'.split(' ') },
+  { id: 'symbols', en: 'Symbols', vi: 'Ký hiệu', items: '✅ ☑️ ✔️ ❌ ❎ ➕ ➖ ❓ ❔ ❗ ❕ ‼️ ⁉️ ⚠️ 🚫 ⛔ 💯 🔥 ⭐ 🌟 ✨ ⚡ 💡 🔦 🕯️ 📌 📍 🎯 🏁 🚩 🔴 🟠 🟡 🟢 🔵 🟣 ⚪ ⚫ 🔺 🔻 ⬆️ ➡️ ⬇️ ⬅️ ↗️ 🔄 🆕 🆗 🆒 💬 💭 🗯️'.split(' ') },
+  { id: 'objects', en: 'Work & home', vi: 'Công việc & nhà', items: '📝 📐 📏 ✏️ 🖊️ 🖍️ 🎨 🖼️ 📷 📸 💻 🖥️ 📱 📅 🗓️ ⏰ ⏳ 📦 📁 📎 🔑 🏠 🏢 🏛️ 🏗️ 🛋️ 🛏️ 🪑 🚪 🪟 🪞 🛁 🚿 🧱 🔧 🔨 🛠️ 🪜 🔌 🔋 💰 💳 ☕ 🍵 🧋 🎁 🎉 🎈 🏆 🥇'.split(' ') },
+  { id: 'nature', en: 'Nature', vi: 'Thiên nhiên', items: '☀️ 🌤️ ⛅ 🌥️ ☁️ 🌧️ ⛈️ 🌩️ 🌈 🌙 🌛 🌝 🌚 ⭐ 🌌 🌅 🌄 🌇 🌆 🏙️ 🌃 🌲 🌳 🌴 🌵 🌿 🍀 🍃 🍂 🍁 🌸 🌺 🌻 🌹 🌷 🌼 💐 🪴 🌊 ❄️ 🔥'.split(' ') },
+  { id: 'animals', en: 'Animals', vi: 'Con vật', items: '🐶 🐱 🐭 🐹 🐰 🦊 🐻 🐼 🐨 🐯 🦁 🐮 🐷 🐸 🐵 🐔 🐧 🐦 🐤 🦆 🦉 🦄 🐝 🦋 🐌 🐞 🐢 🐙 🐬 🐳 🦭 🐠 🦔 🦥'.split(' ') },
+];
 
 export const STAMPS: Array<{ en: string; vi: string; color: string }> = [
   { en: 'APPROVED', vi: 'DUYỆT', color: '#2f9e44' },

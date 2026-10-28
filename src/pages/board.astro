@@ -197,11 +197,56 @@ import BoardApp from '../components/board/BoardApp';
     transform: translateY(-2px);
   }
   .mb-emoji {
-    grid-template-columns: repeat(6, 40px);
+    grid-template-columns: repeat(6, 44px);
+    max-height: 290px;
+    overflow-y: auto;
+  }
+  .mb-emoji img {
+    width: 36px;
+    height: 36px;
+    display: block;
+    margin: auto;
+    transition: transform 0.12s ease;
+  }
+  .mb-emoji button:hover img {
+    transform: scale(1.18);
+  }
+  .mb-emoji-text {
+    grid-template-columns: repeat(7, 38px);
+  }
+  .mb-emoji-text button {
+    width: 38px;
+    height: 38px;
+    font-size: 22px;
+  }
+  .mb-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 8px;
+  }
+  .mb-tabs button {
+    border: 0;
+    border-radius: 999px;
+    padding: 4px 10px;
+    background: var(--mb-hover);
+    color: var(--mb-muted);
+    font: 500 0.76rem var(--font-sans);
+    cursor: pointer;
+  }
+  .mb-tabs button.on {
+    background: var(--mb-accent-soft);
+    color: var(--mb-accent);
+  }
+  .mb-credit {
+    margin-top: 8px;
+    font-size: 0.66rem;
+    color: var(--mb-muted);
+    text-align: right;
   }
   .mb-emoji button {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     font-size: 24px;
     border: 0;
     background: transparent;

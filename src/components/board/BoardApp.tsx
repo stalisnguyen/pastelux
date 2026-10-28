@@ -8,7 +8,8 @@ import {
 import '@excalidraw/excalidraw/index.css';
 import { get, set } from 'idb-keyval';
 import { lightingLibrary } from './library';
-import { NOTE_COLORS, EMOJI, STAMPS, CCT_SWATCHES, templates } from './stickers';
+import { NOTE_COLORS, STAMPS, CCT_SWATCHES, EMOJI_GROUPS, templates } from './stickers';
+import FLUENT from './fluent-stickers.json';
 import { AI_PROXY_URL } from '../../site';
 
 /*
@@ -19,6 +20,8 @@ import { AI_PROXY_URL } from '../../site';
  */
 
 const SCENE_KEY = 'pastelux-board';
+const FILES_KEY = 'pastelux-board-files';
+const UI_OPTIONS = { canvasActions: { toggleTheme: false } } as const;
 const GRID_KEY = 'pastelux-board-grid';
 const NAME_KEY = 'pastelux-board-name';
 const CANVAS_BG = '#f5f6f8';
@@ -47,6 +50,7 @@ const I = {
   frame: 'M7 3v18M17 3v18M3 7h18M3 17h18',
   image: 'M4 5h16v14H4zM4 15l4-4 4 4 3-3 5 5M15 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z',
   sticker: 'M12 3a9 9 0 109 9h-6a3 3 0 01-3-3zM12 3l9 9M8.5 10h.01M14 15c-1 1-3 1-4 0',
+  emoji: 'M12 21a9 9 0 100-18 9 9 0 000 18zM8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01',
   comment: 'M4 5h16v11H9l-5 4z',
   vote: 'M12 21s-7-4.5-7-10a4 4 0 017-2.6A4 4 0 0119 11c0 5.5-7 10-7 10z',
   template: 'M4 4h7v7H4zM13 4h7v4h-7zM13 10h7v10h-7zM4 13h7v7H4z',
@@ -70,9 +74,16 @@ export default function BoardApp() {
   const [showComments, setShowComments] = useState(false);
   const [toast, setToast] = useState('');
   const [sceneTick, setSceneTick] = useState(0);
+  const [stickerTab, setStickerTab] = useState('react');
+  const [emojiTab, setEmojiTab] = useState('smileys');
   const [name, setName] = useState<string>(() => store(() => localStorage.getItem(NAME_KEY) || 'Pastel', 'Pastel'));
   const saveTimer = useRef<number | undefined>(undefined);
   const cascade = useRef(0);
+  const lastTool = useRef('selection');
+  const lastSelection = useRef('');
+  const openPin = useRef<any>(null);
+  const lastFileIds = useRef('');
+  const lastCounts = useRef('');
   const fileInput = useRef<HTMLInputElement>(null);
   const vi = lang === 'vi';
   const t = (en: string, v: string) => (vi ? v : en);
@@ -113,11 +124,16 @@ export default function BoardApp() {
     () => async () => {
       const libraryItems = lightingLibrary(convertToExcalidrawElements);
       const saved = await get<Saved>(SCENE_KEY).catch(() => undefined);
+      const stored = await get<Record<string, any>>(FILES_KEY).catch(() => undefined);
+      const files = stored ?? saved?.files ?? {};
+      // boards saved before files had their own record: force one write so
+      // their images move across before the old record is overwritten
+      lastFileIds.current = stored ? Object.keys(stored).sort().join('|') : '__migrate__';
       return {
         elements: saved?.elements ?? [],
         // a light Miro-like canvas, whatever the site theme
         appState: { viewBackgroundColor: CANVAS_BG, ...(saved?.appState ?? {}), collaborators: new Map() },
-        files: saved?.files ?? {},
+        files,
         libraryItems,
         scrollToContent: Boolean(saved?.elements?.length),
       };
@@ -125,17 +141,45 @@ export default function BoardApp() {
     []
   );
 
+  // Excalidraw calls this on every pointer move: keep the per-event work tiny
+  // and only touch React state when something we show actually changed.
   const onChange = useCallback((elements: readonly any[], appState: any, files: any) => {
-    setTool((cur) => (cur === appState.activeTool?.type ? cur : appState.activeTool?.type));
-    // a selected comment pin opens its thread
+    const type = appState.activeTool?.type;
+    if (type !== lastTool.current) {
+      lastTool.current = type;
+      setTool(type);
+    }
     const ids = Object.keys(appState.selectedElementIds || {});
-    const pin = ids.length === 1 ? elements.find((e) => e.id === ids[0] && e.customData?.kind === 'comment' && !e.isDeleted) : null;
-    setSelectedComment((cur: any) => (cur?.id === pin?.id && cur?.version === pin?.version ? cur : pin ?? null));
+    const selKey = ids.join(',');
+    if (selKey !== lastSelection.current) {
+      lastSelection.current = selKey;
+      const pin = ids.length === 1 ? elements.find((e) => e.id === ids[0] && e.customData?.kind === 'comment' && !e.isDeleted) : null;
+      openPin.current = pin ?? null;
+      setSelectedComment(pin ?? null);
+    } else if (openPin.current) {
+      // the open thread may have gained a reply
+      const pin = elements.find((e) => e.id === openPin.current.id);
+      if (pin && pin.version !== openPin.current.version) {
+        openPin.current = pin.isDeleted ? null : pin;
+        setSelectedComment(openPin.current);
+      }
+    }
     window.clearTimeout(saveTimer.current);
     saveTimer.current = window.setTimeout(() => {
-      setSceneTick((n) => n + 1);
-      const keep: Saved = {
-        elements: elements.filter((e) => !e.isDeleted),
+      const live = elements.filter((e) => !e.isDeleted);
+      // badges and pins changed? only then re-render the counters
+      let c = 0, v = 0;
+      for (const e of live) {
+        if (e.customData?.kind === 'comment') c += 1 + (e.customData.thread?.length ?? 0);
+        else if (e.customData?.kind === 'vote') v += e.customData.count ?? 0;
+      }
+      const counts = `${c}|${v}`;
+      if (counts !== lastCounts.current) {
+        lastCounts.current = counts;
+        setSceneTick((n) => n + 1);
+      }
+      set(SCENE_KEY, {
+        elements: live,
         appState: {
           viewBackgroundColor: appState.viewBackgroundColor,
           currentItemStrokeColor: appState.currentItemStrokeColor,
@@ -145,10 +189,15 @@ export default function BoardApp() {
           scrollY: appState.scrollY,
           zoom: appState.zoom,
         },
-        files,
-      };
-      set(SCENE_KEY, keep).catch(() => {});
-    }, 400);
+        files: {},
+      } satisfies Saved).catch(() => {});
+      // images are heavy: write them only when the set of images changes
+      const fileIds = Object.keys(files || {}).sort().join('|');
+      if (fileIds !== lastFileIds.current) {
+        lastFileIds.current = fileIds;
+        set(FILES_KEY, files).catch(() => {});
+      }
+    }, 500);
   }, []);
 
   // ---------------------------------------------------- scene helpers
@@ -223,7 +272,7 @@ export default function BoardApp() {
   };
 
   const addEmoji = (e: string) => {
-    addAtCenter([{ type: 'text', x: 0, y: 0, text: e, fontSize: 56, fontFamily: 2, customData: { kind: 'sticker' } }], { jitter: true });
+    addAtCenter([{ type: 'text', x: 0, y: 0, text: e, fontSize: 64, fontFamily: 2, customData: { kind: 'emoji' } }], { jitter: true });
     setMenu(null);
   };
   const addStamp = (s: (typeof STAMPS)[number]) => {
@@ -271,23 +320,44 @@ export default function BoardApp() {
     setMenu(null);
   };
 
-  // ---------------------------------------------------- image upload
-  const onPickImage = async (file: File) => {
-    if (!api || !file.type.startsWith('image/')) return;
-    const dataURL: string = await new Promise((res) => {
+  // ---------------------------------------------------- images & stickers
+  const readAsDataURL = (blob: Blob): Promise<string> =>
+    new Promise((res) => {
       const r = new FileReader();
       r.onload = () => res(String(r.result));
-      r.readAsDataURL(file);
+      r.readAsDataURL(blob);
     });
+  const addImage = async (blob: Blob, maxSide: number, customData?: Record<string, unknown>, fileId?: string) => {
+    if (!api) return;
+    const dataURL = await readAsDataURL(blob);
     const img = new Image();
     await new Promise((res) => {
       img.onload = res;
       img.src = dataURL;
     });
-    const scale = Math.min(1, 600 / Math.max(img.naturalWidth, img.naturalHeight));
-    const fileId = `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 8)}`;
-    api.addFiles([{ id: fileId, dataURL, mimeType: file.type, created: Date.now() }]);
-    addAtCenter([{ type: 'image', x: 0, y: 0, width: img.naturalWidth * scale, height: img.naturalHeight * scale, fileId }]);
+    const scale = Math.min(1, maxSide / Math.max(img.naturalWidth, img.naturalHeight));
+    const id = fileId ?? `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 8)}`;
+    if (!api.getFiles()[id]) api.addFiles([{ id, dataURL, mimeType: blob.type || 'image/png', created: Date.now() }]);
+    addAtCenter(
+      [{ type: 'image', x: 0, y: 0, width: img.naturalWidth * scale, height: img.naturalHeight * scale, fileId: id, customData }],
+      { jitter: Boolean(customData) }
+    );
+  };
+  const onPickImage = (file: File) => {
+    if (file.type.startsWith('image/')) addImage(file, 600);
+  };
+  const stickerUrl = (id: string, thumb = false) =>
+    `${import.meta.env.BASE_URL.replace(/\/$/, '')}/stickers/fluent/${thumb ? 'thumbs/' : ''}${id}.png`;
+  const addSticker = async (id: string) => {
+    setMenu(null);
+    try {
+      const res = await fetch(stickerUrl(id));
+      if (!res.ok) throw new Error(String(res.status));
+      // one stored file per sticker, however many times it is placed
+      await addImage(await res.blob(), 120, { kind: 'sticker' }, `sticker-${id}`);
+    } catch {
+      flash(t('Could not load that sticker', 'Không tải được sticker này'));
+    }
   };
 
   // ---------------------------------------------------- votes
@@ -477,20 +547,9 @@ export default function BoardApp() {
     </button>
   );
   const toggleMenu = (id: string) => setMenu((m) => (m === id ? null : id));
-  const thread: Comment[] = selectedComment?.customData?.thread ?? [];
-
-  return (
-    <div className="board-shell">
-      <Excalidraw
-        excalidrawAPI={setApi}
-        initialData={initialData}
-        onChange={onChange}
-        theme="light"
-        langCode="en"
-        gridModeEnabled={grid}
-        name="Pastelux board"
-        UIOptions={{ canvasActions: { toggleTheme: false } }}
-        renderTopRightUI={() => (
+  const commentCount = comments.length;
+  const renderTopRight = useCallback(
+    () => (
           <div className="mb-top">
             <button
               type="button"
@@ -507,11 +566,29 @@ export default function BoardApp() {
             </button>
             <button type="button" className={`board-grid-btn${showComments ? ' on' : ''}`} onClick={() => setShowComments((v) => !v)}>
               <Icon d={I.comment} />
-              <span>{comments.length}</span>
+              <span>{commentCount}</span>
             </button>
           </div>
-        )}
+    ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [grid, showComments, commentCount, vi]
+  );
+  const thread: Comment[] = selectedComment?.customData?.thread ?? [];
+
+  return (
+    <div className="board-shell">
+      <Excalidraw
+        excalidrawAPI={setApi}
+        initialData={initialData}
+        onChange={onChange}
+        theme="light"
+        langCode="en"
+        gridModeEnabled={grid}
+        name="Pastelux board"
+        UIOptions={UI_OPTIONS}
+        renderTopRightUI={renderTopRight}
       />
+
 
       {/* Miro-style vertical toolbar */}
       <nav className="mb-bar" aria-label={t('Board tools', 'Công cụ bảng')}>
@@ -527,6 +604,7 @@ export default function BoardApp() {
         <Btn id="frame" icon={I.frame} label={t('Frame (F)', 'Khung (F)')} active={tool === 'frame'} onClick={() => useTool('frame')} />
         <Btn id="image" icon={I.image} label={t('Upload image', 'Tải ảnh lên')} onClick={() => fileInput.current?.click()} />
         <span className="mb-sep" />
+        <Btn id="emoji" icon={I.emoji} label={t('Emoji', 'Emoji')} onClick={() => toggleMenu('emoji')} />
         <Btn id="stickers" icon={I.sticker} label={t('Stickers & stamps', 'Sticker & con dấu')} onClick={() => toggleMenu('stickers')} />
         <Btn id="comment" icon={I.comment} label={t('Comment (C)', 'Bình luận (C)')} onClick={() => toggleMenu('comment')} />
         <Btn id="vote" icon={I.vote} label={t('Vote', 'Bình chọn')} onClick={() => toggleMenu('vote')} />
@@ -591,32 +669,72 @@ export default function BoardApp() {
               </button>
             </div>
           )}
-          {menu === 'stickers' && (
+          {menu === 'emoji' && (
             <>
-              <p className="mb-pop-title">{t('Stickers', 'Sticker')}</p>
-              <div className="mb-grid mb-emoji">
-                {EMOJI.map((e) => (
-                  <button key={e} type="button" onClick={() => addEmoji(e)}>
+              <div className="mb-tabs" role="tablist">
+                {EMOJI_GROUPS.map((g) => (
+                  <button key={g.id} type="button" role="tab" aria-selected={emojiTab === g.id} className={emojiTab === g.id ? 'on' : ''} onClick={() => setEmojiTab(g.id)}>
+                    {vi ? g.vi : g.en}
+                  </button>
+                ))}
+              </div>
+              <div className="mb-grid mb-emoji mb-emoji-text">
+                {(EMOJI_GROUPS.find((g) => g.id === emojiTab)?.items ?? []).filter(Boolean).map((e, i) => (
+                  <button key={`${e}${i}`} type="button" onClick={() => addEmoji(e)}>
                     {e}
                   </button>
                 ))}
               </div>
-              <p className="mb-pop-title">{t('Stamps', 'Con dấu')}</p>
-              <div className="mb-stamps">
-                {STAMPS.map((s) => (
-                  <button key={s.en} type="button" style={{ color: s.color, borderColor: s.color }} onClick={() => addStamp(s)}>
-                    {vi ? s.vi : s.en}
+            </>
+          )}
+          {menu === 'stickers' && (
+            <>
+              <div className="mb-tabs" role="tablist">
+                {[
+                  ['react', t('React', 'Phản ứng')],
+                  ['faces', t('Faces', 'Mặt cười')],
+                  ['animals', t('Animals', 'Thú cưng')],
+                  ['hearts', t('Hearts', 'Tim')],
+                  ['nature', t('Nature & treats', 'Hoa lá & đồ ăn')],
+                  ['work', t('Work & home', 'Công việc & nhà')],
+                  ['stamps', t('Stamps & colour', 'Con dấu & màu')],
+                ].map(([id, label]) => (
+                  <button key={id} type="button" role="tab" aria-selected={stickerTab === id} className={stickerTab === id ? 'on' : ''} onClick={() => setStickerTab(id)}>
+                    {label}
                   </button>
                 ))}
               </div>
-              <p className="mb-pop-title">{t('Colour temperature', 'Nhiệt độ màu')}</p>
-              <div className="mb-cct">
-                {CCT_SWATCHES.map((s) => (
-                  <button key={s.label} type="button" style={{ background: s.color }} onClick={() => addSwatch(s)}>
-                    {s.label}
-                  </button>
-                ))}
-              </div>
+              {stickerTab !== 'stamps' ? (
+                <div className="mb-grid mb-emoji">
+                  {(FLUENT as Array<{ id: string; name: string; cat: string }>)
+                    .filter((x) => x.cat === stickerTab)
+                    .map((x) => (
+                      <button key={x.id} type="button" title={x.name} aria-label={x.name} onClick={() => addSticker(x.id)}>
+                        <img src={stickerUrl(x.id, true)} alt="" loading="lazy" width="36" height="36" />
+                      </button>
+                    ))}
+                </div>
+              ) : (
+                <>
+                  <p className="mb-pop-title">{t('Stamps', 'Con dấu')}</p>
+                  <div className="mb-stamps">
+                    {STAMPS.map((st) => (
+                      <button key={st.en} type="button" style={{ color: st.color, borderColor: st.color }} onClick={() => addStamp(st)}>
+                        {vi ? st.vi : st.en}
+                      </button>
+                    ))}
+                  </div>
+                  <p className="mb-pop-title">{t('Colour temperature', 'Nhiệt độ màu')}</p>
+                  <div className="mb-cct">
+                    {CCT_SWATCHES.map((sw) => (
+                      <button key={sw.label} type="button" style={{ background: sw.color }} onClick={() => addSwatch(sw)}>
+                        {sw.label}
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
+              <p className="mb-credit">Fluent Emoji © Microsoft · MIT</p>
             </>
           )}
           {menu === 'vote' && (
