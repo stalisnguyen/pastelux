@@ -74,8 +74,8 @@ import Base from '../layouts/Base.astro';
         </div>
       </form>
       <p class="text-[0.75rem] mt-2 pb-6" style="color: var(--text-faint)">
-        <span>Stas runs on Claude. Treat numbers as a starting point and check them against the standard your project uses.</span>
-        <span class="vi-block-inline">Stas chạy trên Claude. Con số chỉ để tham khảo ban đầu — đối chiếu lại với tiêu chuẩn dự án đang dùng.</span>
+        <span>Stas runs on Google Gemini (or Groq). Treat numbers as a starting point and check them against the standard your project uses.</span>
+        <span class="vi-block-inline">Stas chạy trên Google Gemini (hoặc Groq). Con số chỉ để tham khảo ban đầu — đối chiếu lại với tiêu chuẩn dự án đang dùng.</span>
         <button id="ask-forget" type="button" class="underline ml-1" style="color: var(--text-faint)">
           <span>Lock this device</span><span class="vi-block-inline">Khoá thiết bị này</span>
         </button>
@@ -190,11 +190,11 @@ import Base from '../layouts/Base.astro';
     CODE_STORE,
     CHAT_STORE,
     ATTACH_STORE,
-    makeClient,
     askStream,
     describeError,
     renderMarkdown,
     readCode,
+    StasError,
     type Turn,
   } from '../lib/ask';
   import { AI_PROXY_URL } from '../site';
@@ -215,13 +215,7 @@ import Base from '../layouts/Base.astro';
   // ------------------------------------------------------------ state
   const save = () => {
     // images are too heavy for localStorage: keep a marker instead
-    const light = turns.map((m) => ({
-      role: m.role,
-      content:
-        typeof m.content === 'string'
-          ? m.content
-          : m.content.map((b: any) => (b.type === 'image' ? { type: 'text', text: '[image]' } : b)),
-    }));
+    const light = turns.map((m) => ({ role: m.role, text: m.text, hadImage: Boolean(m.image) || (m as any).hadImage }));
     try {
       localStorage.setItem(CHAT_STORE, JSON.stringify(light.slice(-40)));
     } catch {}
@@ -235,8 +229,7 @@ import Base from '../layouts/Base.astro';
   };
 
   // ------------------------------------------------------------ rendering
-  const textOf = (m: Turn) =>
-    typeof m.content === 'string' ? m.content : m.content.filter((b: any) => b.type === 'text' && b.text !== '[image]').map((b: any) => b.text).join('\n');
+  const textOf = (m: any) => (typeof m.text === 'string' ? m.text : '');
 
   function bubble(role: 'user' | 'ai' | 'err', html: string) {
     const el = document.createElement('div');
@@ -263,7 +256,7 @@ import Base from '../layouts/Base.astro';
       return;
     }
     for (const m of turns) {
-      const hasImg = typeof m.content !== 'string' && m.content.some((b: any) => b.type === 'image' || b.text === '[image]');
+      const hasImg = Boolean(m.image) || Boolean((m as any).hadImage);
       const img = hasImg ? `<p style="opacity:.7">🖼 ${t('image', 'ảnh')}</p>` : '';
       if (m.role === 'user') bubble('user', img + escHtml(textOf(m)));
       else bubble('ai', renderMarkdown(textOf(m)));
@@ -308,10 +301,11 @@ import Base from '../layouts/Base.astro';
   async function send(text: string) {
     const code = readCode();
     if (!code) return start();
-    const content: any[] = [];
-    if (pending) content.push({ type: 'image', source: { type: 'base64', media_type: pending.media_type, data: pending.data } });
-    content.push({ type: 'text', text: text || t('Please review this.', 'Góp ý giúp mình nhé.') });
-    const userTurn: Turn = { role: 'user', content };
+    const userTurn: Turn = {
+      role: 'user',
+      text: text || t('Please review this.', 'Góp ý giúp mình nhé.'),
+      ...(pending ? { image: { mime: pending.media_type, data: pending.data } } : {}),
+    };
     turns.push(userTurn);
     bubble('user', (pending ? `<img src="${pending.preview}" alt="" />` : '') + escHtml(text));
     pending = null;
@@ -325,16 +319,16 @@ import Base from '../layouts/Base.astro';
     controller = new AbortController();
     let frame = 0;
     try {
-      const { text: answer, refused } = await askStream(makeClient(code), turns, (so) => {
+      // only the newest image travels; older turns keep their text
+      const wire = turns.map((m, i) => (i === turns.length - 1 ? m : { role: m.role, text: m.text }));
+      const answer = await askStream(code, wire, (so) => {
         cancelAnimationFrame(frame);
         frame = requestAnimationFrame(() => { out.innerHTML = renderMarkdown(so); });
       }, controller.signal);
       cancelAnimationFrame(frame);
-      const final = refused
-        ? t('I can’t help with that one. Try asking it another way.', 'Câu này mình không trả lời được. Thử hỏi theo cách khác nhé.')
-        : answer;
+      const final = answer.trim() || t('No answer came back. Try asking again.', 'Không có câu trả lời. Thử hỏi lại nhé.');
       out.innerHTML = renderMarkdown(final);
-      turns.push({ role: 'assistant', content: final });
+      turns.push({ role: 'assistant', text: final });
       save();
     } catch (err) {
       cancelAnimationFrame(frame);
@@ -342,7 +336,7 @@ import Base from '../layouts/Base.astro';
       out.textContent = describeError(err, vi());
       turns.pop(); // let her resend the same question
       save();
-      if ((err as any)?.status === 401) {
+      if ((err as StasError)?.status === 401) {
         try { localStorage.removeItem(CODE_STORE); } catch {}
         setTimeout(start, 1200);
       }
