@@ -2,14 +2,14 @@
 import Base from '../layouts/Base.astro';
 ---
 
-<Base title="Ask" description="A private lighting-design consult." indexable={false}>
+<Base title="Stas" description="A private lighting-design consult." indexable={false}>
   <div class="ask-wrap">
     <header class="pt-8 pb-4">
       <p class="label !mb-1" style="color: var(--accent-cool)">
         <span>Private</span><span class="vi-block-inline">Riêng tư</span>
       </p>
       <h1 class="text-2xl md:text-3xl font-semibold">
-        <span>Ask AI</span><span class="vi-block-inline">Hỏi AI</span>
+        <span>Ask Stas</span><span class="vi-block-inline">Hỏi Stas</span>
       </h1>
       <p class="text-[0.92rem] mt-1.5" style="color: var(--text-muted)">
         <span>A second opinion on lighting: ask anything, or attach a sketch, render or plan.</span>
@@ -74,8 +74,8 @@ import Base from '../layouts/Base.astro';
         </div>
       </form>
       <p class="text-[0.75rem] mt-2 pb-6" style="color: var(--text-faint)">
-        <span>Answers come from Claude. Treat numbers as a starting point and check them against the standard your project uses.</span>
-        <span class="vi-block-inline">Câu trả lời do Claude viết. Con số chỉ để tham khảo ban đầu — đối chiếu lại với tiêu chuẩn dự án đang dùng.</span>
+        <span>Stas runs on Claude. Treat numbers as a starting point and check them against the standard your project uses.</span>
+        <span class="vi-block-inline">Stas chạy trên Claude. Con số chỉ để tham khảo ban đầu — đối chiếu lại với tiêu chuẩn dự án đang dùng.</span>
         <button id="ask-forget" type="button" class="underline ml-1" style="color: var(--text-faint)">
           <span>Lock this device</span><span class="vi-block-inline">Khoá thiết bị này</span>
         </button>
@@ -255,8 +255,8 @@ import Base from '../layouts/Base.astro';
         'ai',
         renderMarkdown(
           t(
-            'Hi Pastel. Ask me anything about the project you are on — a lux target, a fixture choice, glare in a render, a control scheme. You can attach a sketch or a render too.',
-            'Chào Pastel. Cứ hỏi về dự án cậu đang làm — mức lux, chọn đèn, chói trong render, cách chia cảnh điều khiển. Đính kèm bản phác hay render cũng được.'
+            'Hi Pastel, I’m Stas. Ask me anything about the project you are on — a lux target, a fixture choice, glare in a render, a control scheme. You can attach a sketch or a render too.',
+            'Chào Pastel, mình là Stas. Cứ hỏi về dự án cậu đang làm — mức lux, chọn đèn, chói trong render, cách chia cảnh điều khiển. Đính kèm bản phác hay render cũng được.'
           )
         )
       );

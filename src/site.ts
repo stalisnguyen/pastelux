@@ -108,4 +108,4 @@ export const VI_TYPOLOGY: Record<string, string> = {
  * The Pastelux AI proxy (ai-proxy/). Empty until the Worker is deployed — Ask
  * AI stays hidden while it is empty.
  */
-export const AI_PROXY_URL = '';
+export const AI_PROXY_URL = 'https://pastelux-ai.minhnguyen94-reve.workers.dev';
