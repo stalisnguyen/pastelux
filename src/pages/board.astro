@@ -1,0 +1,52 @@
+---
+import Base from '../layouts/Base.astro';
+import BoardApp from '../components/board/BoardApp';
+---
+
+<Base
+  title="Board"
+  description="A free-form board for sketches, moodboards and quick ceiling plans. Stays in your browser."
+  indexable={false}
+  wide
+>
+  <h1 class="sr-only">Board<span class="vi-block-inline">Bảng nháp</span></h1>
+  <BoardApp client:only="react" />
+  <p class="board-note container-page text-[0.78rem] py-3" style="color: var(--text-faint)">
+    <span>Your board is saved in this browser only — nothing is uploaded. Use the menu (☰) to save it as a file or export PNG / SVG, and drag lighting symbols from the library (book icon).</span>
+    <span class="vi-block-inline">Bảng chỉ lưu trong trình duyệt này, không gửi đi đâu cả. Mở menu (☰) để lưu thành file hoặc xuất PNG / SVG; ký hiệu đèn nằm trong thư viện (biểu tượng cuốn sách), kéo ra là dùng.</span>
+  </p>
+</Base>
+
+<style is:global>
+  .board-shell {
+    height: calc(100dvh - 60px);
+    width: 100%;
+  }
+  @media (max-width: 1023.98px) {
+    .board-shell {
+      height: calc(100dvh - 60px - var(--mnav-h, 4.5rem));
+    }
+  }
+  .board-shell .excalidraw {
+    --ui-font: var(--font-sans);
+  }
+  .board-grid-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    white-space: nowrap;
+    height: 2.25rem;
+    padding: 0 0.7rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-surface-lowest, #ced4da);
+    background: var(--island-bg-color, #fff);
+    color: var(--text-primary-color, inherit);
+    font: 500 0.82rem var(--font-sans);
+    cursor: pointer;
+    box-shadow: var(--shadow-island, none);
+  }
+  .board-grid-btn.on {
+    background: var(--color-primary-light, #e0dfff);
+    border-color: var(--color-primary, #6965db);
+  }
+</style>

@@ -14,6 +14,7 @@ export const nav = [
   { href: '/standards', label: 'Standards' },
   { href: '/directory', label: 'Directory' },
   { href: '/tools', label: 'Tools' },
+  { href: '/board', label: 'Board' },
   { href: '/glossary', label: 'Glossary' },
   { href: '/events', label: 'Events' },
 ];
@@ -32,6 +33,7 @@ export const mobileNav = [
 
 /** Reachable from the "More" sheet on mobile. */
 export const mobileMore = [
+  { href: '/board', label: 'Board', icon: 'image', hint: 'Sketch, moodboard, ceiling plans' },
   { href: '/projects', label: 'Projects', icon: 'image', hint: 'Case studies' },
   { href: '/glossary', label: 'Glossary', icon: 'book', hint: 'Term definitions' },
   { href: '/directory', label: 'Directory', icon: 'building', hint: 'Hãng đèn, studio, tiêu chuẩn' },
