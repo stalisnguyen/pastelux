@@ -206,9 +206,10 @@ import BoardApp from '../components/board/BoardApp';
     transform: translateY(-2px);
   }
   .mb-emoji {
-    grid-template-columns: repeat(6, 44px);
+    grid-template-columns: repeat(6, 42px);
     max-height: 290px;
     overflow-y: auto;
+    overflow-x: hidden;
   }
   .mb-emoji img {
     width: 36px;
@@ -247,6 +248,78 @@ import BoardApp from '../components/board/BoardApp';
     background: var(--mb-accent-soft);
     color: var(--mb-accent);
   }
+  .mb-search {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid var(--mb-line, #e3e5ea);
+    border-radius: 8px;
+    padding: 7px 10px;
+    margin-bottom: 8px;
+    font: 0.84rem var(--font-sans);
+    color: var(--mb-ink);
+    background: #fff;
+  }
+  .mb-empty {
+    font-size: 0.8rem;
+    line-height: 1.45;
+    color: var(--mb-muted);
+    margin: 6px 2px;
+    max-width: 290px;
+  }
+  .mb-mine-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+  .mb-btn {
+    border: 0;
+    border-radius: 8px;
+    padding: 6px 10px;
+    background: var(--mb-accent);
+    color: #fff;
+    font: 600 0.78rem var(--font-sans);
+    cursor: pointer;
+  }
+  .mb-btn-ghost {
+    background: var(--mb-hover);
+    color: var(--mb-ink);
+  }
+  .mb-check {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.78rem;
+    color: var(--mb-muted);
+    margin: 2px 2px 8px;
+  }
+  .mb-mine {
+    position: relative;
+  }
+  .mb-emoji .mb-mine-x {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    font-size: 12px;
+    line-height: 18px;
+    padding: 0;
+    background: #fff;
+    color: var(--mb-muted);
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.2);
+    opacity: 0;
+  }
+  .mb-mine:hover .mb-mine-x,
+  .mb-mine-x:focus-visible {
+    opacity: 1;
+  }
+  @media (hover: none) {
+    .mb-emoji .mb-mine-x {
+      opacity: 1;
+    }
+  }
   .mb-credit {
     margin-top: 8px;
     font-size: 0.66rem;
@@ -254,8 +327,8 @@ import BoardApp from '../components/board/BoardApp';
     text-align: right;
   }
   .mb-emoji button {
-    width: 44px;
-    height: 44px;
+    width: 42px;
+    height: 42px;
     font-size: 24px;
     border: 0;
     background: transparent;

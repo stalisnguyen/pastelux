@@ -13,6 +13,7 @@ import { get, set } from 'idb-keyval';
 import { lightingLibrary } from './library';
 import { NOTE_COLORS, STAMPS, CCT_SWATCHES, EMOJI_GROUPS, templates } from './stickers';
 import FLUENT from './fluent-stickers.json';
+import { loadMine, addMine, removeMine, MAX_MINE, type MySticker } from './mystickers';
 import { AI_PROXY_URL } from '../../site';
 
 /*
@@ -21,6 +22,11 @@ import { AI_PROXY_URL } from '../../site';
  * frame, image, stickers, comments, votes, templates, lighting symbols),
  * built on Excalidraw. Everything stays in this browser (IndexedDB).
  */
+
+// Naming this tab lets libraries.excalidraw.com send "Add to Excalidraw"
+// back into it (a hash change, no reload, no confirm) instead of opening
+// a second board tab that has to load the whole editor again.
+if (typeof window !== 'undefined' && !window.name) window.name = 'pastelux-board';
 
 const SCENE_KEY = 'pastelux-board';
 const FILES_KEY = 'pastelux-board-files';
@@ -86,6 +92,10 @@ export default function BoardApp() {
   const [sceneTick, setSceneTick] = useState(0);
   const [stickerTab, setStickerTab] = useState('react');
   const [emojiTab, setEmojiTab] = useState('smileys');
+  const [stickerQuery, setStickerQuery] = useState('');
+  const [mine, setMine] = useState<MySticker[] | null>(null);
+  const [clearBg, setClearBg] = useState(true);
+  const mineInput = useRef<HTMLInputElement>(null);
   const [name, setName] = useState<string>(() => store(() => localStorage.getItem(NAME_KEY) || 'Pastel', 'Pastel'));
   const saveTimer = useRef<number | undefined>(undefined);
   const cascade = useRef(0);
@@ -95,6 +105,9 @@ export default function BoardApp() {
   const lastFileIds = useRef('');
   const lastCounts = useRef('');
   const fileInput = useRef<HTMLInputElement>(null);
+  const libChannel = useRef<BroadcastChannel | null>(null);
+  const libQuiet = useRef(false);
+  const libCount = useRef(-1);
   const vi = lang === 'vi';
   const t = (en: string, v: string) => (vi ? v : en);
   const aiOn = Boolean(AI_PROXY_URL) && store(() => Boolean(localStorage.getItem('pastelux-ai-code')), false);
@@ -217,15 +230,49 @@ export default function BoardApp() {
         const saved = ((await get(LIB_KEY).catch(() => null)) as any[] | null) ?? [];
         const ids = new Set(saved.map((x: any) => x.id));
         const missing = lightingLibrary(convertToExcalidrawElements).filter((x) => !ids.has(x.id));
+        libCount.current = saved.length + missing.length;
         return { libraryItems: [...saved, ...missing] as any };
       },
       save: async ({ libraryItems }: { libraryItems: any }) => {
         await set(LIB_KEY, libraryItems);
+        // Tell other open board tabs (the install opens a new one) to reload it.
+        const n = libraryItems?.length ?? 0;
+        if (n !== libCount.current) {
+          const added = n > libCount.current;
+          libCount.current = n;
+          if (!libQuiet.current) libChannel.current?.postMessage({ added });
+        }
       },
     }),
     []
   );
   useHandleLibrary({ excalidrawAPI: api, adapter: libraryAdapter });
+
+  // A library installed in another tab shows up here without a reload, and
+  // this tab's older copy never overwrites it.
+  useEffect(() => {
+    if (!api || typeof BroadcastChannel === 'undefined') return;
+    const ch = new BroadcastChannel('pastelux-board-library');
+    libChannel.current = ch;
+    ch.onmessage = async (e) => {
+      const items = ((await get(LIB_KEY).catch(() => null)) as any[] | null) ?? [];
+      libQuiet.current = true;
+      libCount.current = items.length;
+      try {
+        await api.updateLibrary({ libraryItems: items as any, merge: false });
+      } finally {
+        libQuiet.current = false;
+      }
+      if (e.data?.added) {
+        api.toggleSidebar({ name: 'default', tab: 'library', force: true });
+        flash(vi ? 'Đã thêm thư viện mới' : 'New library added');
+      }
+    };
+    return () => {
+      ch.close();
+      libChannel.current = null;
+    };
+  }, [api, flash, vi]);
 
   // ---------------------------------------------------- scene helpers
   const viewCenter = useCallback(() => {
@@ -385,6 +432,43 @@ export default function BoardApp() {
     } catch {
       flash(t('Could not load that sticker', 'Không tải được sticker này'));
     }
+  };
+
+  // My stickers: her own images, kept in this browser.
+  const mineUrls = useMemo(() => new Map((mine ?? []).map((m) => [m.id, URL.createObjectURL(m.blob)])), [mine]);
+  useEffect(() => () => mineUrls.forEach((u) => URL.revokeObjectURL(u)), [mineUrls]);
+  useEffect(() => {
+    if (menu === 'stickers' && mine === null) loadMine().then(setMine);
+  }, [menu, mine]);
+  const placeMine = (m: MySticker) => {
+    setMenu(null);
+    addImage(m.blob, 160, { kind: 'sticker' }, `mine-${m.id}`);
+  };
+  const uploadMine = async (files: FileList | null) => {
+    const list = [...(files ?? [])].filter((f) => f.type.startsWith('image/'));
+    if (!list.length) return;
+    const r = await addMine(list, list.map((f) => f.name.replace(/\.[^.]+$/, '')), clearBg);
+    setMine(r.list);
+    setStickerTab('mine');
+    flash(r.full ? t(`Sticker box is full (${MAX_MINE})`, `Hộp sticker đã đầy (${MAX_MINE})`) : t(`Added ${r.added} sticker${r.added === 1 ? '' : 's'}`, `Đã thêm ${r.added} sticker`));
+  };
+  const saveSelectionAsSticker = async () => {
+    if (!api) return;
+    const s = api.getAppState();
+    const files = api.getFiles();
+    const imgs = api.getSceneElements().filter((e: any) => s.selectedElementIds[e.id] && e.type === 'image' && e.fileId && files[e.fileId]);
+    if (!imgs.length) {
+      flash(t('Select an image on the board first', 'Chọn một ảnh trên bảng trước đã'));
+      return;
+    }
+    const blobs = await Promise.all(imgs.map((e: any) => fetch(files[e.fileId].dataURL).then((r) => r.blob())));
+    const r = await addMine(blobs, blobs.map(() => 'From board'), clearBg);
+    setMine(r.list);
+    setStickerTab('mine');
+    flash(t(`Saved ${r.added} to My stickers`, `Đã lưu ${r.added} vào Sticker của tôi`));
+  };
+  const deleteMine = async (id: string) => {
+    setMine(await removeMine(id));
   };
 
   // ---------------------------------------------------- votes
@@ -557,7 +641,7 @@ export default function BoardApp() {
     if (!pop || !shell) return;
     const maxTop = shell.clientHeight - pop.offsetHeight - 12;
     pop.style.top = `${Math.max(12, Math.min(anchorTop, maxTop))}px`;
-  }, [menu, anchorTop, stickerTab, emojiTab]);
+  }, [menu, anchorTop, stickerTab, emojiTab, stickerQuery, mine]);
 
   // N adds a note, C a comment (when not typing)
   useEffect(() => {
@@ -800,22 +884,96 @@ export default function BoardApp() {
           )}
           {menu === 'stickers' && (
             <>
-              <div className="mb-tabs" role="tablist">
-                {[
-                  ['react', t('React', 'Phản ứng')],
-                  ['faces', t('Faces', 'Mặt cười')],
-                  ['animals', t('Animals', 'Thú cưng')],
-                  ['hearts', t('Hearts', 'Tim')],
-                  ['nature', t('Nature & treats', 'Hoa lá & đồ ăn')],
-                  ['work', t('Work & home', 'Công việc & nhà')],
-                  ['stamps', t('Stamps & colour', 'Con dấu & màu')],
-                ].map(([id, label]) => (
-                  <button key={id} type="button" role="tab" aria-selected={stickerTab === id} className={stickerTab === id ? 'on' : ''} onClick={() => setStickerTab(id)}>
-                    {label}
-                  </button>
-                ))}
-              </div>
-              {stickerTab !== 'stamps' ? (
+              <input
+                className="mb-search"
+                type="search"
+                value={stickerQuery}
+                onChange={(e) => setStickerQuery(e.target.value)}
+                placeholder={t('Search stickers: cat, cake, star…', 'Tìm sticker: cat, cake, star…')}
+                aria-label={t('Search stickers', 'Tìm sticker')}
+              />
+              {!stickerQuery.trim() && (
+                <div className="mb-tabs" role="tablist">
+                  {[
+                    ['mine', t('Mine', 'Của tôi')],
+                    ['react', t('React', 'Phản ứng')],
+                    ['faces', t('Faces', 'Mặt cười')],
+                    ['animals', t('Animals', 'Con vật')],
+                    ['hearts', t('Hearts', 'Tim')],
+                    ['food', t('Food', 'Đồ ăn')],
+                    ['party', t('Fun', 'Vui chơi')],
+                    ['nature', t('Sky & nature', 'Trời & thiên nhiên')],
+                    ['work', t('Work & home', 'Công việc & nhà')],
+                    ['stamps', t('Stamps & colour', 'Con dấu & màu')],
+                  ].map(([id, label]) => (
+                    <button key={id} type="button" role="tab" aria-selected={stickerTab === id} className={stickerTab === id ? 'on' : ''} onClick={() => setStickerTab(id)}>
+                      {label}
+                    </button>
+                  ))}
+                </div>
+              )}
+              {stickerQuery.trim() ? (
+                (() => {
+                  const q = stickerQuery.trim().toLowerCase();
+                  const hits = (FLUENT as Array<{ id: string; name: string; cat: string; kw?: string[] }>).filter(
+                    (x) => x.name.toLowerCase().includes(q) || x.kw?.some((k) => k.toLowerCase().startsWith(q))
+                  );
+                  const mineHits = (mine ?? []).filter((m) => m.name.toLowerCase().includes(q));
+                  return hits.length || mineHits.length ? (
+                    <div className="mb-grid mb-emoji">
+                      {mineHits.map((m) => (
+                        <button key={m.id} type="button" title={m.name} aria-label={m.name} onClick={() => placeMine(m)}>
+                          <img src={mineUrls.get(m.id)} alt="" width="36" height="36" />
+                        </button>
+                      ))}
+                      {hits.map((x) => (
+                        <button key={x.id} type="button" title={x.name} aria-label={x.name} onClick={() => addSticker(x.id)}>
+                          <img src={stickerUrl(x.id, true)} alt="" loading="lazy" width="36" height="36" />
+                        </button>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="mb-empty">{t('No sticker matches. Try an English word, like “dog” or “sun”.', 'Không có sticker nào khớp. Thử một từ tiếng Anh, ví dụ “dog” hoặc “sun”.')}</p>
+                  );
+                })()
+              ) : stickerTab === 'mine' ? (
+                <>
+                  <div className="mb-mine-actions">
+                    <button type="button" className="mb-btn" onClick={() => mineInput.current?.click()}>
+                      {t('+ Add your own', '+ Thêm sticker của bạn')}
+                    </button>
+                    <button type="button" className="mb-btn mb-btn-ghost" onClick={saveSelectionAsSticker}>
+                      {t('Save selected image', 'Lưu ảnh đang chọn')}
+                    </button>
+                  </div>
+                  <label className="mb-check">
+                    <input type="checkbox" checked={clearBg} onChange={(e) => setClearBg(e.target.checked)} />
+                    {t('Remove white background', 'Xoá nền trắng')}
+                  </label>
+                  <input ref={mineInput} type="file" accept="image/*" multiple hidden onChange={(e) => { uploadMine(e.target.files); e.target.value = ''; }} />
+                  {mine && mine.length ? (
+                    <div className="mb-grid mb-emoji">
+                      {mine.map((m) => (
+                        <span key={m.id} className="mb-mine">
+                          <button type="button" title={m.name} aria-label={m.name} onClick={() => placeMine(m)}>
+                            <img src={mineUrls.get(m.id)} alt="" width="36" height="36" />
+                          </button>
+                          <button type="button" className="mb-mine-x" title={t('Remove from My stickers', 'Bỏ khỏi Sticker của tôi')} aria-label={t('Remove', 'Bỏ')} onClick={() => deleteMine(m.id)}>
+                            ×
+                          </button>
+                        </span>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="mb-empty">
+                      {t(
+                        'Your own stickers live here: PNG, JPG, GIF or WebP. They stay in this browser and can be used on any board. Stickers already placed stay on the board even if you remove them here.',
+                        'Sticker riêng của bạn nằm ở đây: PNG, JPG, GIF hoặc WebP. Chúng được lưu trong trình duyệt này và dùng được trên mọi bảng. Sticker đã đặt lên bảng vẫn giữ nguyên dù bạn bỏ chúng khỏi đây.'
+                      )}
+                    </p>
+                  )}
+                </>
+              ) : stickerTab !== 'stamps' ? (
                 <div className="mb-grid mb-emoji">
                   {(FLUENT as Array<{ id: string; name: string; cat: string }>)
                     .filter((x) => x.cat === stickerTab)
