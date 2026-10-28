@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import MobileNav from '../components/MobileNav.astro';
 import LoveNote from '../components/LoveNote.astro';
+import StasFab from '../components/StasFab.astro';
 import { site, url } from '../site';
 
 interface Props {
@@ -95,6 +96,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://example.com
     <Footer />
     <MobileNav />
     <LoveNote />
+    <StasFab />
 
     {/*
       EN / VI pairing. Every Vietnamese element (.vi-block / .vi-block-inline)

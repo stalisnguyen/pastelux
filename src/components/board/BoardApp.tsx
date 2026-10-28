@@ -110,7 +110,7 @@ export default function BoardApp() {
   const libCount = useRef(-1);
   const vi = lang === 'vi';
   const t = (en: string, v: string) => (vi ? v : en);
-  const aiOn = Boolean(AI_PROXY_URL) && store(() => Boolean(localStorage.getItem('pastelux-ai-code')), false);
+  const aiOn = Boolean(AI_PROXY_URL);
 
   // ---------------------------------------------------- site theme & language
   useEffect(() => {
@@ -939,10 +939,10 @@ export default function BoardApp() {
               ) : stickerTab === 'mine' ? (
                 <>
                   <div className="mb-mine-actions">
-                    <button type="button" className="mb-btn" onClick={() => mineInput.current?.click()}>
+                    <button type="button" className="mb-cta" onClick={() => mineInput.current?.click()}>
                       {t('+ Add your own', '+ Thêm sticker của bạn')}
                     </button>
-                    <button type="button" className="mb-btn mb-btn-ghost" onClick={saveSelectionAsSticker}>
+                    <button type="button" className="mb-cta mb-cta-ghost" onClick={saveSelectionAsSticker}>
                       {t('Save selected image', 'Lưu ảnh đang chọn')}
                     </button>
                   </div>

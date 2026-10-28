@@ -1,0 +1,93 @@
+---
+/*
+ * Floating "Ask Stas" button, bottom-right on every page (except the Ask
+ * page itself and the Board, which has Stas in its own toolbar). Visitors
+ * without the access code only reach the locked page.
+ */
+import { url, AI_PROXY_URL } from '../site';
+
+const path = Astro.url.pathname.replace(/\/$/, '');
+const hide = !AI_PROXY_URL || path.endsWith('/ask') || path.endsWith('/board');
+---
+
+{
+  !hide && (
+    <a href={url('/ask')} class="stas-fab" aria-label="Ask Stas · Hỏi Stas" title="Ask Stas · Hỏi Stas">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 3l1.8 4.6L18.5 9.5l-4.7 1.9L12 16l-1.8-4.6L5.5 9.5l4.7-1.9z" />
+        <path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z" />
+      </svg>
+      <span class="stas-fab-label">
+        <span>Ask Stas</span>
+        <span class="vi-block-inline">Hỏi Stas</span>
+      </span>
+    </a>
+  )
+}
+
+<style>
+  .stas-fab {
+    position: fixed;
+    right: 1rem;
+    bottom: calc(var(--mnav-h, 0px) + 1rem);
+    z-index: 45;
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    height: 3.25rem;
+    min-width: 3.25rem;
+    padding: 0 0.95rem;
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--accent-ink, #1a1206);
+    box-shadow:
+      0 6px 18px rgb(0 0 0 / 0.18),
+      0 1px 3px rgb(0 0 0 / 0.12);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition:
+      transform 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+  .stas-fab:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 10px 24px rgb(0 0 0 / 0.22),
+      0 2px 4px rgb(0 0 0 / 0.12);
+  }
+  .stas-fab:focus-visible {
+    outline: 3px solid var(--accent-cool, #4262ff);
+    outline-offset: 3px;
+  }
+  .stas-fab-label {
+    max-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    transition:
+      max-width 0.2s ease,
+      margin 0.2s ease;
+  }
+  .stas-fab:hover .stas-fab-label,
+  .stas-fab:focus-visible .stas-fab-label {
+    max-width: 8rem;
+    margin-left: 0.5rem;
+  }
+  @media (min-width: 1024px) {
+    .stas-fab {
+      right: 1.5rem;
+      bottom: 1.5rem;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .stas-fab,
+    .stas-fab-label {
+      transition: none;
+    }
+  }
+  @media print {
+    .stas-fab {
+      display: none;
+    }
+  }
+</style>

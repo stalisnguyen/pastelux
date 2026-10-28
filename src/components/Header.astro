@@ -1,5 +1,5 @@
 ---
-import { nav, site, url, AI_PROXY_URL } from '../site';
+import { nav, site, url } from '../site';
 import ThemeToggle from './ThemeToggle.astro';
 import SearchTrigger from './SearchTrigger.astro';
 import ViToggle from './ViToggle.astro';
@@ -64,18 +64,6 @@ const viNav: Record<string, string> = {
     </nav>
 
     <div class="ml-auto flex items-center gap-2">
-      <a
-        id="ask-link"
-        href={url('/ask')}
-        class="btn !px-2 !py-1.5 hidden"
-        title="Stas · AI"
-        aria-label="Ask Stas"
-      >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M12 3l1.8 4.6L18.5 9.5l-4.7 1.9L12 16l-1.8-4.6L5.5 9.5l4.7-1.9z"></path>
-          <path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"></path>
-        </svg>
-      </a>
       <SearchTrigger />
       <ViToggle />
       <ThemeToggle />
@@ -83,11 +71,3 @@ const viNav: Record<string, string> = {
   </div>
 </header>
 
-<script is:inline define:vars={{ proxy: AI_PROXY_URL }}>
-  // Ask AI is private: the button only exists on devices unlocked with the code
-  (() => {
-    try {
-      if (proxy && localStorage.getItem('pastelux-ai-code')) document.getElementById('ask-link')?.classList.remove('hidden');
-    } catch {}
-  })();
-</script>
