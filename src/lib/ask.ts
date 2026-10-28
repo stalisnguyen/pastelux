@@ -84,7 +84,20 @@ export function describeError(err: unknown, vi: boolean): string {
     if (err.status === 429) return t('Stas has hit the free plan’s limit for now — try again in a minute.', 'Stas đang chạm giới hạn của gói miễn phí — đợi một phút rồi hỏi lại nhé.');
     if (err.status === 503) return t('Stas is not switched on yet — tell Stalis.', 'Stas chưa được bật — báo Stalis nhé.');
     if (err.status === 413) return t('That image is too large.', 'Ảnh quá lớn.');
-    return t(`Stas could not answer (${err.status}). Try again.`, `Stas chưa trả lời được (${err.status}). Thử lại nhé.`);
+    // the provider's own reason (never contains the key) helps Stalis fix it
+    const why = (() => {
+      const m = String(err.message || '');
+      try {
+        const j = JSON.parse(m.slice(m.indexOf('{')));
+        return String(j?.error?.message || j?.[0]?.error?.message || m);
+      } catch {
+        return m;
+      }
+    })().slice(0, 220);
+    return t(
+      `Stas could not answer (${err.status}). Try again${why ? `. Details for Stalis: ${why}` : '.'}`,
+      `Stas chưa trả lời được (${err.status}). Thử lại nhé${why ? `. Chi tiết để báo Stalis: ${why}` : '.'}`
+    );
   }
   if (err instanceof TypeError) return t('Could not reach Stas. Check the connection and try again.', 'Không kết nối được tới Stas. Kiểm tra mạng rồi thử lại.');
   return t(`Something went wrong: ${String((err as Error)?.message ?? err).slice(0, 160)}`, `Có lỗi: ${String((err as Error)?.message ?? err).slice(0, 160)}`);

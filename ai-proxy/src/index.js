@@ -181,6 +181,7 @@ export default {
     const upstream = provider === 'gemini' ? await geminiRequest(env, system, messages) : await groqRequest(env, system, messages);
     if (!upstream.ok) {
       const detail = (await upstream.text()).slice(0, 400);
+      console.log('upstream error', provider, upstream.status, detail);
       return json(upstream.status === 429 ? 429 : 502, `${provider} ${upstream.status}: ${detail}`, h);
     }
     return new Response(relay(upstream, provider === 'gemini' ? geminiText : groqText), {
