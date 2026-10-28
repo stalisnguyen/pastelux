@@ -1,9 +1,12 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import {
   Excalidraw,
   convertToExcalidrawElements,
   exportToBlob,
   CaptureUpdateAction,
+  useHandleLibrary,
+  viewportCoordsToSceneCoords,
+  sceneCoordsToViewportCoords,
 } from '@excalidraw/excalidraw';
 import '@excalidraw/excalidraw/index.css';
 import { get, set } from 'idb-keyval';
@@ -21,6 +24,7 @@ import { AI_PROXY_URL } from '../../site';
 
 const SCENE_KEY = 'pastelux-board';
 const FILES_KEY = 'pastelux-board-files';
+const LIB_KEY = 'pastelux-board-library';
 const UI_OPTIONS = { canvasActions: { toggleTheme: false } } as const;
 const GRID_KEY = 'pastelux-board-grid';
 const NAME_KEY = 'pastelux-board-name';
@@ -70,6 +74,12 @@ export default function BoardApp() {
   const [api, setApi] = useState<any>(null);
   const [tool, setTool] = useState('selection');
   const [menu, setMenu] = useState<string | null>(null);
+  const [anchorTop, setAnchorTop] = useState(0);
+  // Figma-style comments: comment mode, then click anywhere to drop a pin
+  const [commentMode, setCommentMode] = useState(false);
+  const [draft, setDraft] = useState<{ left: number; top: number; sceneX: number; sceneY: number } | null>(null);
+  const [viewTick, setViewTick] = useState(0);
+  const popRef = useRef<HTMLDivElement>(null);
   const [selectedComment, setSelectedComment] = useState<any>(null);
   const [showComments, setShowComments] = useState(false);
   const [toast, setToast] = useState('');
@@ -122,7 +132,6 @@ export default function BoardApp() {
 
   const initialData = useMemo(
     () => async () => {
-      const libraryItems = lightingLibrary(convertToExcalidrawElements);
       const saved = await get<Saved>(SCENE_KEY).catch(() => undefined);
       const stored = await get<Record<string, any>>(FILES_KEY).catch(() => undefined);
       const files = stored ?? saved?.files ?? {};
@@ -134,7 +143,6 @@ export default function BoardApp() {
         // a light Miro-like canvas, whatever the site theme
         appState: { viewBackgroundColor: CANVAS_BG, ...(saved?.appState ?? {}), collaborators: new Map() },
         files,
-        libraryItems,
         scrollToContent: Boolean(saved?.elements?.length),
       };
     },
@@ -199,6 +207,25 @@ export default function BoardApp() {
       }
     }, 500);
   }, []);
+
+  // Library: persisted in this browser, always including the lighting
+  // symbols, and able to receive libraries added from libraries.excalidraw.com
+  // (they come back to /board/#addLibrary=…).
+  const libraryAdapter = useMemo(
+    () => ({
+      load: async () => {
+        const saved = ((await get(LIB_KEY).catch(() => null)) as any[] | null) ?? [];
+        const ids = new Set(saved.map((x: any) => x.id));
+        const missing = lightingLibrary(convertToExcalidrawElements).filter((x) => !ids.has(x.id));
+        return { libraryItems: [...saved, ...missing] as any };
+      },
+      save: async ({ libraryItems }: { libraryItems: any }) => {
+        await set(LIB_KEY, libraryItems);
+      },
+    }),
+    []
+  );
+  useHandleLibrary({ excalidrawAPI: api, adapter: libraryAdapter });
 
   // ---------------------------------------------------- scene helpers
   const viewCenter = useCallback(() => {
@@ -424,23 +451,32 @@ export default function BoardApp() {
   }, [api, sceneTick, menu]);
 
   // ---------------------------------------------------- comments
-  const addComment = (text: string) => {
+  const addCommentAt = (sceneX: number, sceneY: number, text: string) => {
     if (!api || !text.trim()) return;
-    const s = api.getAppState();
-    const target = api.getSceneElements().find((e: any) => s.selectedElementIds[e.id] && votable(e));
     const thread: Comment[] = [{ by: name, text: text.trim(), at: Date.now() }];
-    const skeleton = { type: 'text', x: 0, y: 0, text: '💬', fontSize: 30, fontFamily: 2, customData: { kind: 'comment', thread, resolved: false } };
-    if (target) {
-      const [pin] = convertToExcalidrawElements([skeleton] as any, { regenerateIds: true }) as any[];
-      api.updateScene({
-        elements: [...api.getSceneElementsIncludingDeleted(), { ...pin, x: target.x + target.width + 6, y: target.y - 10 }],
-        appState: { selectedElementIds: { [pin.id]: true } },
-        captureUpdate: CaptureUpdateAction.IMMEDIATELY,
-      });
-    } else {
-      addAtCenter([skeleton]);
-    }
+    const [pin] = convertToExcalidrawElements(
+      [{ type: 'text', x: 0, y: 0, text: '💬', fontSize: 30, fontFamily: 2, customData: { kind: 'comment', thread, resolved: false } }] as any,
+      { regenerateIds: true }
+    ) as any[];
+    // the pin's tail sits on the clicked point
+    api.updateScene({
+      elements: [...api.getSceneElementsIncludingDeleted(), { ...pin, x: sceneX - 4, y: sceneY - pin.height + 4 }],
+      appState: { selectedElementIds: { [pin.id]: true } },
+      captureUpdate: CaptureUpdateAction.IMMEDIATELY,
+    });
+    setDraft(null);
+  };
+  const startCommentMode = (on: boolean) => {
+    setCommentMode(on);
+    setDraft(null);
     setMenu(null);
+    if (on && api) api.setActiveTool({ type: 'selection' });
+  };
+  const onCommentClick = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!api) return;
+    const shell = (e.currentTarget.closest('.board-shell') as HTMLElement).getBoundingClientRect();
+    const { x, y } = viewportCoordsToSceneCoords({ clientX: e.clientX, clientY: e.clientY }, api.getAppState());
+    setDraft({ left: e.clientX - shell.left, top: e.clientY - shell.top, sceneX: x, sceneY: y });
   };
   const updateComment = (pinId: string, patch: (cd: any) => any) => {
     const next = api.getSceneElementsIncludingDeleted().map((e: any) =>
@@ -482,7 +518,10 @@ export default function BoardApp() {
     }
     const moved = made.map((e) => ({ ...e, x: e.x + ox, y: e.y + oy }));
     api.updateScene({ elements: [...api.getSceneElementsIncludingDeleted(), ...moved], captureUpdate: CaptureUpdateAction.IMMEDIATELY });
-    api.scrollToContent(moved, { fitToContent: true, animate: true });
+    // fit the template, then keep it clear of the left toolbar
+    api.scrollToContent(moved, { fitToViewport: true, viewportZoomFactor: 0.85, animate: false });
+    const st = api.getAppState();
+    api.updateScene({ appState: { scrollX: st.scrollX + 40 / (st.zoom?.value || 1) } });
     setMenu(null);
   };
   const openLibrary = () => {
@@ -512,21 +551,32 @@ export default function BoardApp() {
     window.location.href = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/ask/`;
   };
 
+  useLayoutEffect(() => {
+    const pop = popRef.current;
+    const shell = pop?.closest('.board-shell') as HTMLElement | null;
+    if (!pop || !shell) return;
+    const maxTop = shell.clientHeight - pop.offsetHeight - 12;
+    pop.style.top = `${Math.max(12, Math.min(anchorTop, maxTop))}px`;
+  }, [menu, anchorTop, stickerTab, emojiTab]);
+
   // N adds a note, C a comment (when not typing)
   useEffect(() => {
     if (!api) return;
     const onKey = (e: KeyboardEvent) => {
-      const el = e.target as HTMLElement;
-      if (e.metaKey || e.ctrlKey || e.altKey || el.closest('input, textarea, [contenteditable="true"]')) return;
+      const el = e.target as HTMLElement | null;
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      if (el && typeof el.closest === 'function' && el.closest('input, textarea, [contenteditable="true"]')) return;
       if (api.getAppState().editingTextElement) return;
       if (e.key === 'n' || e.key === 'N') {
         e.preventDefault();
         addNote();
       } else if (e.key === 'c' || e.key === 'C') {
         e.preventDefault();
-        setMenu('comment');
-      } else if (e.key === 'Escape' && menu) {
-        setMenu(null);
+        startCommentMode(!commentMode);
+      } else if (e.key === 'Escape') {
+        if (draft) setDraft(null);
+        else if (commentMode) setCommentMode(false);
+        else if (menu) setMenu(null);
       }
     };
     window.addEventListener('keydown', onKey, true);
@@ -538,6 +588,7 @@ export default function BoardApp() {
     <button
       type="button"
       className={`mb-btn${active ? ' on' : ''}${menu === id ? ' open' : ''}`}
+      data-tool={id}
       onClick={onClick}
       title={label}
       aria-label={label}
@@ -546,7 +597,13 @@ export default function BoardApp() {
       <Icon d={icon} />
     </button>
   );
-  const toggleMenu = (id: string) => setMenu((m) => (m === id ? null : id));
+  // popovers open beside the button that opened them, kept inside the board
+  const toggleMenu = (id: string) => {
+    const btn = document.querySelector<HTMLElement>(`.mb-bar [data-tool="${id}"]`);
+    const shell = btn?.closest('.board-shell') as HTMLElement | null;
+    if (btn && shell) setAnchorTop(btn.getBoundingClientRect().top - shell.getBoundingClientRect().top);
+    setMenu((m) => (m === id ? null : id));
+  };
   const commentCount = comments.length;
   const renderTopRight = useCallback(
     () => (
@@ -574,6 +631,21 @@ export default function BoardApp() {
     [grid, showComments, commentCount, vi]
   );
   const thread: Comment[] = selectedComment?.customData?.thread ?? [];
+  /** Place the thread card beside its pin, kept inside the board. */
+  const pinAnchor = (pin: any): React.CSSProperties => {
+    void viewTick;
+    if (!api || !pin) return {};
+    const st = api.getAppState();
+    const v = sceneCoordsToViewportCoords({ sceneX: pin.x + pin.width, sceneY: pin.y }, st);
+    const left = v.x - st.offsetLeft + 10;
+    const top = v.y - st.offsetTop;
+    const maxLeft = st.width - 332;
+    return {
+      left: Math.max(70, Math.min(left, maxLeft)),
+      top: Math.max(12, Math.min(top, st.height - 260)),
+      right: 'auto',
+    };
+  };
 
   return (
     <div className="board-shell">
@@ -581,14 +653,53 @@ export default function BoardApp() {
         excalidrawAPI={setApi}
         initialData={initialData}
         onChange={onChange}
+        onScrollChange={() => (openPin.current || draft) && setViewTick((n) => n + 1)}
         theme="light"
         langCode="en"
         gridModeEnabled={grid}
         name="Pastelux board"
+        libraryReturnUrl={typeof window !== 'undefined' ? `${window.location.origin}${import.meta.env.BASE_URL.replace(/\/$/, '')}/board/` : undefined}
         UIOptions={UI_OPTIONS}
         renderTopRightUI={renderTopRight}
       />
 
+
+      {/* comment mode: the next click anywhere drops a pin there */}
+      {commentMode && (
+        <div className="mb-comment-layer" onPointerDown={onCommentClick} aria-label={t('Click to comment', 'Bấm để bình luận')}>
+          {!draft && <div className="mb-comment-hint">{t('Click anywhere to comment · Esc to leave', 'Bấm vào bất kỳ đâu để bình luận · Esc để thoát')}</div>}
+        </div>
+      )}
+      {draft && (
+        <form
+          className="mb-draft"
+          style={{ left: draft.left, top: draft.top }}
+          onPointerDown={(e) => e.stopPropagation()}
+          onSubmit={(e) => {
+            e.preventDefault();
+            const box = e.currentTarget.elements.namedItem('c') as HTMLTextAreaElement;
+            addCommentAt(draft.sceneX, draft.sceneY, box.value);
+          }}
+        >
+          <span className="mb-draft-dot" aria-hidden="true" />
+          <textarea
+            name="c"
+            rows={2}
+            autoFocus
+            placeholder={t('Add a comment…', 'Viết bình luận…')}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                (e.currentTarget.form as HTMLFormElement).requestSubmit();
+              }
+            }}
+          />
+          <div className="mb-draft-actions">
+            <button type="button" onClick={() => setDraft(null)}>{t('Cancel', 'Huỷ')}</button>
+            <button type="submit" className="mb-primary">{t('Post', 'Đăng')}</button>
+          </div>
+        </form>
+      )}
 
       {/* Miro-style vertical toolbar */}
       <nav className="mb-bar" aria-label={t('Board tools', 'Công cụ bảng')}>
@@ -606,7 +717,7 @@ export default function BoardApp() {
         <span className="mb-sep" />
         <Btn id="emoji" icon={I.emoji} label={t('Emoji', 'Emoji')} onClick={() => toggleMenu('emoji')} />
         <Btn id="stickers" icon={I.sticker} label={t('Stickers & stamps', 'Sticker & con dấu')} onClick={() => toggleMenu('stickers')} />
-        <Btn id="comment" icon={I.comment} label={t('Comment (C)', 'Bình luận (C)')} onClick={() => toggleMenu('comment')} />
+        <Btn id="comment" icon={I.comment} label={t('Comment (C)', 'Bình luận (C)')} active={commentMode} onClick={() => startCommentMode(!commentMode)} />
         <Btn id="vote" icon={I.vote} label={t('Vote', 'Bình chọn')} onClick={() => toggleMenu('vote')} />
         <Btn id="library" icon={I.library} label={t('Lighting symbols', 'Ký hiệu đèn')} onClick={openLibrary} />
         {aiOn && <Btn id="ai" icon={I.ai} label={t('Ask Stas about this board', 'Hỏi Stas về bảng này')} onClick={askAI} />}
@@ -625,7 +736,7 @@ export default function BoardApp() {
 
       {/* popovers */}
       {menu && (
-        <div className={`mb-pop mb-pop-${menu}`} role="dialog">
+        <div ref={popRef} className={`mb-pop mb-pop-${menu}`} role="dialog" style={{ top: anchorTop }}>
           {menu === 'notes' && (
             <>
               <p className="mb-pop-title">{t('Sticky notes', 'Note')}</p>
@@ -761,23 +872,6 @@ export default function BoardApp() {
               </button>
             </div>
           )}
-          {menu === 'comment' && (
-            <form
-              className="mb-col mb-compose"
-              onSubmit={(e) => {
-                e.preventDefault();
-                const box = e.currentTarget.elements.namedItem('c') as HTMLTextAreaElement;
-                addComment(box.value);
-              }}
-            >
-              <p className="mb-pop-title">{t('New comment', 'Bình luận mới')}</p>
-              <p className="mb-hint">
-                {t('Pinned next to the selected item, or in the middle of the view.', 'Ghim cạnh mục đang chọn, hoặc giữa màn hình nếu chưa chọn gì.')}
-              </p>
-              <textarea name="c" rows={3} autoFocus placeholder={t('Write a comment…', 'Viết bình luận…')} />
-              <button type="submit" className="mb-primary">{t('Post', 'Đăng')}</button>
-            </form>
-          )}
           {menu === 'templates' && (
             <div className="mb-col">
               {templates(vi).map((tp) => (
@@ -792,7 +886,7 @@ export default function BoardApp() {
 
       {/* comment thread of the selected pin */}
       {selectedComment && (
-        <aside className="mb-panel" aria-label={t('Comment', 'Bình luận')}>
+        <aside className="mb-panel mb-thread-pop" aria-label={t('Comment', 'Bình luận')} style={pinAnchor(selectedComment)}>
           <div className="mb-panel-head">
             <b>{t('Comment', 'Bình luận')}</b>
             <button type="button" onClick={() => api.updateScene({ appState: { selectedElementIds: {} } })} aria-label={t('Close', 'Đóng')}>

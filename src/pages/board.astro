@@ -141,8 +141,7 @@ import BoardApp from '../components/board/BoardApp';
   .mb-pop {
     position: absolute;
     left: 70px;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 12px;
     z-index: 6;
     background: var(--mb-bg);
     border-radius: 12px;
@@ -408,6 +407,77 @@ import BoardApp from '../components/board/BoardApp';
     padding: 12px;
     font-size: 0.88rem;
     color: var(--mb-muted);
+  }
+  .mb-comment-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26' viewBox='0 0 26 26'%3E%3Cpath d='M3 23V8a5 5 0 0 1 5-5h10a5 5 0 0 1 5 5v5a5 5 0 0 1-5 5H8z' fill='%234262ff' stroke='white' stroke-width='2'/%3E%3C/svg%3E") 2 24, crosshair;
+  }
+  .mb-comment-hint {
+    position: absolute;
+    left: 50%;
+    top: 14px;
+    transform: translateX(-50%);
+    background: #1a1a2e;
+    color: #fff;
+    font-size: 0.82rem;
+    padding: 6px 12px;
+    border-radius: 999px;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  .mb-draft {
+    position: absolute;
+    z-index: 8;
+    width: 260px;
+    margin: -6px 0 0 14px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: var(--mb-shadow);
+    padding: 10px;
+    color: var(--mb-ink);
+  }
+  .mb-draft-dot {
+    position: absolute;
+    left: -20px;
+    top: 0;
+    width: 14px;
+    height: 14px;
+    border-radius: 50% 50% 50% 0;
+    background: var(--mb-accent);
+    border: 2px solid #fff;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.3);
+  }
+  .mb-draft textarea {
+    width: 100%;
+    border: 1px solid var(--mb-line);
+    border-radius: 8px;
+    padding: 8px;
+    font: inherit;
+    font-size: 0.9rem;
+    color: var(--mb-ink);
+    background: #fff;
+    resize: none;
+  }
+  .mb-draft-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+    margin-top: 6px;
+  }
+  .mb-draft-actions button:not(.mb-primary) {
+    border: 0;
+    background: transparent;
+    color: var(--mb-muted);
+    font: 500 0.85rem var(--font-sans);
+    cursor: pointer;
+  }
+  .mb-draft-actions .mb-primary {
+    margin-top: 0;
+  }
+  .mb-thread-pop {
+    max-height: 60%;
   }
   .mb-toast {
     position: absolute;

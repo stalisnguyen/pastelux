@@ -1,0 +1,249 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import { url } from '../../site';
+---
+
+<Base title="Photometric file viewer" description="Open an IES or EULUMDAT file: polar curve, beam and field angles, flux, efficacy and illuminance cone. Runs in your browser.">
+  <PageHeader
+    eyebrow="Tools"
+    viEyebrow="Công cụ"
+    title="Photometric file viewer"
+    viTitle="Xem file trắc quang"
+    lede="Drop a manufacturer's IES or LDT file to read what the luminaire actually does: the polar curve, beam and field angles, delivered lumens, efficacy, and the lux you get at each mounting height. The file never leaves your browser."
+  >
+    <p class="vi-block vi-def mt-2 text-[0.95rem] max-w-2xl leading-relaxed">
+      Thả file IES hoặc LDT của hãng vào để xem bộ đèn thực sự làm gì: đường cong phân bố cường độ sáng,
+      góc chiếu và góc trường, quang thông thực phát, hiệu suất, và độ rọi ở từng độ cao lắp. File không
+      rời khỏi trình duyệt của bạn.
+    </p>
+  </PageHeader>
+
+  <label id="ph-drop" class="card ph-drop block p-6 text-center cursor-pointer mb-6">
+    <input id="ph-file" type="file" accept=".ies,.IES,.ldt,.LDT,.txt" class="sr-only" />
+    <p class="font-medium">
+      <span>Drop an .ies or .ldt file here, or click to choose</span>
+      <span class="vi-block-inline">Thả file .ies hoặc .ldt vào đây, hoặc bấm để chọn</span>
+    </p>
+    <p class="text-[0.82rem] mt-1" style="color: var(--text-faint)">
+      <span>IES LM-63 (1991–2019) and EULUMDAT.</span><span class="vi-block-inline">Hỗ trợ IES LM-63 (1991–2019) và EULUMDAT.</span>
+      <button id="ph-sample" type="button" class="underline ml-1">
+        <span>Try a sample</span><span class="vi-block-inline">Thử file mẫu</span>
+      </button>
+    </p>
+  </label>
+  <p id="ph-error" class="text-[0.9rem] mb-4 hidden" style="color: var(--warning)"></p>
+
+  <section id="ph-result" class="hidden pb-8">
+    <div class="flex items-baseline gap-3 flex-wrap mb-4">
+      <h2 id="ph-title" class="text-xl font-semibold"></h2>
+      <span id="ph-sub" class="text-[0.9rem]" style="color: var(--text-muted)"></span>
+    </div>
+
+    <div class="grid md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-6 items-start">
+      <div class="card p-4">
+        <svg id="ph-polar" viewBox="-170 -40 340 330" class="w-full h-auto" role="img" aria-label="Polar intensity curve"></svg>
+        <p class="text-[0.78rem] mt-1 flex gap-4 flex-wrap" style="color: var(--text-muted)">
+          <span><b style="color: var(--accent)">——</b> C0–C180</span>
+          <span><b style="color: var(--accent-cool)">- - -</b> C90–C270</span>
+          <span id="ph-scale"></span>
+        </p>
+      </div>
+
+      <div>
+        <div id="ph-stats" class="grid grid-cols-2 gap-3"></div>
+        <div id="ph-warn" class="text-[0.8rem] mt-3 hidden" style="color: var(--warning)"></div>
+        <div class="flex gap-2 mt-4 flex-wrap">
+          <button id="ph-add" type="button" class="btn btn-primary">
+            <span>Add to fixture schedule</span><span class="vi-block-inline">Thêm vào bảng thống kê đèn</span>
+          </button>
+          <a href={url('/tools/schedule')} class="btn">
+            <span>Open schedule</span><span class="vi-block-inline">Mở bảng thống kê</span>
+          </a>
+        </div>
+        <p id="ph-added" class="text-[0.85rem] mt-2 hidden" style="color: var(--success)"></p>
+      </div>
+    </div>
+
+    <div class="card p-4 mt-6">
+      <div class="flex items-baseline gap-3 flex-wrap">
+        <h3 class="font-semibold">
+          <span>Illuminance cone (on axis)</span><span class="vi-block-inline">Bảng cone độ rọi (trên trục)</span>
+        </h3>
+        <label class="text-[0.85rem] flex items-center gap-2" style="color: var(--text-muted)">
+          <span>Plane</span><span class="vi-block-inline">Mặt phẳng</span>
+          <select id="ph-plane" class="field !w-auto !py-1">
+            <option value="0">C0–C180</option>
+            <option value="90">C90–C270</option>
+          </select>
+        </label>
+      </div>
+      <div class="scroll-x mt-3">
+        <table class="datatable">
+          <thead>
+            <tr>
+              <th scope="col"><span>Distance</span><span class="vi-block-inline">Khoảng cách</span></th>
+              <th scope="col"><span>Centre lux</span><span class="vi-block-inline">Lux tâm</span></th>
+              <th scope="col"><span>Beam Ø (50%)</span><span class="vi-block-inline">Ø vệt sáng (50%)</span></th>
+              <th scope="col"><span>Field Ø (10%)</span><span class="vi-block-inline">Ø vùng sáng (10%)</span></th>
+            </tr>
+          </thead>
+          <tbody id="ph-cone"></tbody>
+        </table>
+      </div>
+      <p class="text-[0.78rem] mt-2" style="color: var(--text-faint)">
+        <span>Point-source estimate, perpendicular surface, no reflections or maintenance factor.</span>
+        <span class="vi-block-inline">Ước tính theo nguồn điểm, mặt chiếu vuông góc, chưa tính phản xạ và hệ số duy trì.</span>
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .ph-drop {
+    border-style: dashed;
+    border-width: 2px;
+  }
+  .ph-drop.over {
+    border-color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+  }
+</style>
+
+<script>
+  import { parsePhotometry, summarize, intensity, spreadAngle, type Photometry } from '../../lib/photometry';
+  import { addFixture } from '../../lib/schedule';
+
+  const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+  const vi = () => document.documentElement.classList.contains('lang-vi');
+  const t = (en: string, v: string) => (vi() ? v : en);
+  const fmt = (n: number | null | undefined, d = 0) =>
+    n == null || !Number.isFinite(n) ? '—' : n.toLocaleString(vi() ? 'vi-VN' : 'en-GB', { maximumFractionDigits: d, minimumFractionDigits: d });
+
+  let current: { p: Photometry; s: ReturnType<typeof summarize>; name: string } | null = null;
+
+  function polar(p: Photometry) {
+    const svg = $('ph-polar');
+    const R = 150;
+    let max = 0;
+    for (const row of p.candela) for (const v of row) max = Math.max(max, v);
+    const nice = (() => {
+      const e = Math.pow(10, Math.floor(Math.log10(max)));
+      return [1, 2, 2.5, 5, 10].map((k) => k * e).find((v) => v >= max) ?? max;
+    })();
+    const pt = (c: number, g: number, side: 1 | -1) => {
+      const r = (intensity(p, c, g) / nice) * R;
+      const a = (g * Math.PI) / 180;
+      return [side * r * Math.sin(a), r * Math.cos(a)];
+    };
+    const curve = (c: number) => {
+      const pts: number[][] = [];
+      for (let g = 180; g >= 0; g -= 1) pts.push(pt(c + 180, g, -1));
+      for (let g = 0; g <= 180; g += 1) pts.push(pt(c, g, 1));
+      return 'M' + pts.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join('L');
+    };
+    const rings = [0.25, 0.5, 0.75, 1]
+      .map((f) => `<circle r="${R * f}" fill="none" stroke="var(--border)" stroke-width="0.6"/><text x="3" y="${R * f - 2}" font-size="7" fill="var(--text-faint)">${fmt(nice * f)}</text>`)
+      .join('');
+    const spokes = [0, 30, 60, 90, 120, 150, 180]
+      .map((g) => {
+        const a = (g * Math.PI) / 180;
+        return `<line x1="0" y1="0" x2="${R * Math.sin(a)}" y2="${R * Math.cos(a)}" stroke="var(--border)" stroke-width="0.5"/><line x1="0" y1="0" x2="${-R * Math.sin(a)}" y2="${R * Math.cos(a)}" stroke="var(--border)" stroke-width="0.5"/><text x="${(R + 9) * Math.sin(a)}" y="${(R + 9) * Math.cos(a) + 3}" font-size="7" text-anchor="middle" fill="var(--text-faint)">${g}°</text>`;
+      })
+      .join('');
+    svg.innerHTML = `<g>${rings}${spokes}
+      <path d="${curve(0)}" fill="color-mix(in srgb, var(--accent) 12%, transparent)" stroke="var(--accent)" stroke-width="1.6"/>
+      <path d="${curve(90)}" fill="none" stroke="var(--accent-cool)" stroke-width="1.4" stroke-dasharray="4 3"/>
+      <circle r="2.5" fill="var(--text)"/></g>`;
+    $('ph-scale').textContent = `${t('rings', 'vòng')}: cd`;
+  }
+
+  function coneTable() {
+    if (!current) return;
+    const c = Number(($('ph-plane') as HTMLSelectElement).value);
+    const beam = spreadAngle(current.p, c, 0.5), field = spreadAngle(current.p, c, 0.1);
+    const I0 = intensity(current.p, 0, 0);
+    const dia = (deg: number | null, h: number) => (deg == null || deg >= 179 ? '—' : `${fmt(2 * h * Math.tan(((deg / 2) * Math.PI) / 180), 2)} m`);
+    $('ph-cone').innerHTML = [1, 1.5, 2, 2.5, 3, 4, 5, 6, 8]
+      .map((h) => `<tr><td class="num">${fmt(h, 1)} m</td><td class="num" style="color: var(--accent)">${fmt(I0 / (h * h))} lx</td><td class="num">${dia(beam, h)}</td><td class="num">${dia(field, h)}</td></tr>`)
+      .join('');
+  }
+
+  function show(name: string, text: string) {
+    const err = $('ph-error');
+    err.classList.add('hidden');
+    let p: Photometry;
+    try {
+      p = parsePhotometry(name, text);
+    } catch (e) {
+      err.textContent = t(`Could not read this file: ${(e as Error).message}`, `Không đọc được file này: ${(e as Error).message}`);
+      err.classList.remove('hidden');
+      $('ph-result').classList.add('hidden');
+      return;
+    }
+    const s = summarize(p);
+    current = { p, s, name };
+    $('ph-title').textContent = [p.info.manufacturer, p.info.catalog || p.info.luminaire].filter(Boolean).join(' · ') || name;
+    $('ph-sub').textContent = [p.format, p.info.luminaire && p.info.catalog ? p.info.luminaire : '', p.info.lamp].filter(Boolean).join(' · ');
+    const card = (en: string, v: string, value: string, note = '') =>
+      `<div class="card p-3"><p class="label !mb-1"><span>${en}</span><span class="vi-block-inline">${v}</span></p><p class="font-mono text-lg" style="color: var(--accent)">${value}</p>${note ? `<p class="text-[0.75rem]" style="color: var(--text-faint)">${note}</p>` : ''}</div>`;
+    const beam = (a: number | null) => (a == null ? '—' : `${fmt(a, 1)}°`);
+    $('ph-stats').innerHTML = [
+      card('Luminaire lumens', 'Quang thông bộ đèn', `${fmt(s.flux)} lm`, t('integrated from the file', 'tích phân từ dữ liệu')),
+      card('Circuit power', 'Công suất', p.watts ? `${fmt(p.watts, 1)} W` : '—'),
+      card('Efficacy', 'Hiệu suất', s.efficacy ? `${fmt(s.efficacy)} lm/W` : '—'),
+      card('Peak intensity', 'Cường độ đỉnh', `${fmt(s.maxI)} cd`, `C${fmt(s.maxAt.c)}° γ${fmt(s.maxAt.g)}°`),
+      card('Beam angle (50%)', 'Góc chiếu (50%)', beam(s.beam.c0), `C90: ${beam(s.beam.c90)}`),
+      card('Field angle (10%)', 'Góc trường (10%)', beam(s.field.c0), `C90: ${beam(s.field.c90)}`),
+      card('Downward light', 'Tỷ lệ chiếu xuống', s.downwardFraction != null ? `${fmt(s.downwardFraction * 100)} %` : '—'),
+      card('LOR', 'Hiệu suất quang (LOR)', s.lor != null ? `${fmt(s.lor * 100)} %` : t('absolute', 'tuyệt đối'), p.lampLumens ? `${fmt(p.lampLumens)} lm ${t('rated lamp', 'nguồn định mức')}` : t('absolute photometry', 'trắc quang tuyệt đối')),
+    ].join('');
+    const warn = $('ph-warn');
+    warn.textContent = p.warnings.join(' ');
+    warn.classList.toggle('hidden', !p.warnings.length);
+    polar(p);
+    coneTable();
+    $('ph-result').classList.remove('hidden');
+    $('ph-added').classList.add('hidden');
+  }
+
+  const read = (f: File) => f.text().then((txt) => show(f.name, txt));
+  $<HTMLInputElement>('ph-file').addEventListener('change', (e) => {
+    const f = (e.target as HTMLInputElement).files?.[0];
+    if (f) read(f);
+  });
+  const drop = $('ph-drop');
+  ['dragenter', 'dragover'].forEach((ev) => drop.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.add('over'); }));
+  ['dragleave', 'drop'].forEach((ev) => drop.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.remove('over'); }));
+  drop.addEventListener('drop', (e) => {
+    const f = (e as DragEvent).dataTransfer?.files?.[0];
+    if (f) read(f);
+  });
+  $('ph-plane').addEventListener('change', coneTable);
+
+  // a synthetic 24° spot so the page can be explored without a file
+  $('ph-sample').addEventListener('click', (e) => {
+    e.preventDefault();
+    const g = Array.from({ length: 91 }, (_, i) => i);
+    const row = g.map((x) => (8000 * Math.exp(-((x / 12) ** 2) * Math.LN2) + 60 * Math.cos((x * Math.PI) / 180)).toFixed(2)).join(' ');
+    const ies = ['IESNA:LM-63-2002', '[MANUFAC] Pastelux sample', '[LUMCAT] SPOT-24', '[LUMINAIRE] Adjustable spot 24°', '[LAMP] LED 3000 K', 'TILT=NONE', `1 -1 1 ${g.length} 1 1 2 0.08 0.08 0.1`, '1 1 14', g.join(' '), '0', row].join('\n');
+    show('sample.ies', ies);
+  });
+
+  $('ph-add').addEventListener('click', () => {
+    if (!current) return;
+    const { p, s } = current;
+    addFixture({
+      manufacturer: p.info.manufacturer ?? '',
+      model: p.info.catalog || p.info.luminaire || '',
+      description: p.info.luminaire ?? '',
+      lumens: Math.round(s.flux),
+      watts: p.watts ?? undefined,
+      beam: s.beam.c0 != null ? Math.round(s.beam.c0) : undefined,
+      source: current.name,
+    });
+    const el = $('ph-added');
+    el.textContent = t('Added to the fixture schedule of the current project.', 'Đã thêm vào bảng thống kê đèn của dự án hiện tại.');
+    el.classList.remove('hidden');
+  });
+</script>

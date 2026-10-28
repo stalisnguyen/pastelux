@@ -70,6 +70,25 @@ const heading = (x: number, y: number, text: string, size = 28): Sk => ({
   strokeColor: '#1e1e1e',
 });
 
+const panel = (x: number, y: number, w: number, h: number, title: string, hint = ''): Sk[] => [
+  {
+    type: 'rectangle',
+    x,
+    y,
+    width: w,
+    height: h,
+    strokeColor: '#adb5bd',
+    backgroundColor: '#ffffff',
+    fillStyle: 'solid',
+    strokeStyle: 'dashed',
+    strokeWidth: 1,
+    roughness: 0,
+    roundness: { type: 3 },
+  },
+  { type: 'text', x: x + 16, y: y + 14, text: title, fontSize: 20, fontFamily: 2, strokeColor: '#1e1e1e' },
+  ...(hint ? [{ type: 'text', x: x + 16, y: y + 44, text: hint, fontSize: 14, fontFamily: 2, strokeColor: '#868e96' }] : []),
+];
+
 /** Templates, as Excalidraw element skeletons positioned from (0, 0). */
 export function templates(vi: boolean) {
   const t = (en: string, v: string) => (vi ? v : en);
@@ -84,14 +103,9 @@ export function templates(vi: boolean) {
           t('Materials & textures', 'Vật liệu & bề mặt'),
           t('Fixtures', 'Bộ đèn'),
           t('References', 'Tham khảo'),
-        ].map((name, i) => ({
-          type: 'frame',
-          x: (i % 2) * 520,
-          y: Math.floor(i / 2) * 420,
-          width: 480,
-          height: 380,
-          name,
-        })),
+        ].flatMap((name, i) =>
+          panel((i % 2) * 520, Math.floor(i / 2) * 420, 480, 380, name, t('Drop images here', 'Thả ảnh vào đây'))
+        ),
         ...CCT_SWATCHES.map((s, i) => ({
           type: 'rectangle',
           x: i * 124,
@@ -132,7 +146,7 @@ export function templates(vi: boolean) {
       id: 'rcp',
       name: t('Ceiling plan sheet', 'Bản vẽ mặt bằng trần'),
       build: (): Sk[] => [
-        { type: 'frame', x: 0, y: 0, width: 900, height: 620, name: t('Reflected ceiling plan', 'Mặt bằng trần') },
+        ...panel(0, -50, 900, 670, t('Reflected ceiling plan', 'Mặt bằng trần')),
         { type: 'rectangle', x: 40, y: 60, width: 600, height: 500, strokeColor: '#1e1e1e', strokeWidth: 2, roughness: 0 },
         heading(670, 60, t('Legend', 'Chú giải'), 22),
         heading(670, 100, t('◉  Downlight\n⊗  Pendant\n▬  Linear\n●—●  Track\n- - -  Cove / LED strip', '◉  Downlight\n⊗  Đèn thả\n▬  Đèn tuyến tính\n●—●  Đèn ray\n- - -  Hắt trần / LED dây'), 16),
