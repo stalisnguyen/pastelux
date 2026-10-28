@@ -615,8 +615,10 @@ export default function BoardApp() {
   const askAI = async () => {
     if (!api) return;
     const elements = api.getSceneElements();
+    const askUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/ask/`;
+    // an empty board: just open the chat, nothing to attach
     if (!elements.length) {
-      flash(t('The board is empty', 'Bảng đang trống'));
+      window.location.href = askUrl;
       return;
     }
     const blob = await exportToBlob({
@@ -632,8 +634,10 @@ export default function BoardApp() {
       r.readAsDataURL(blob);
     });
     store(() => sessionStorage.setItem('pastelux-ask-attach', dataUrl), undefined);
-    window.location.href = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/ask/`;
+    window.location.href = askUrl;
   };
+  const askRef = useRef(askAI);
+  askRef.current = askAI;
 
   useLayoutEffect(() => {
     const pop = popRef.current;
@@ -709,6 +713,17 @@ export default function BoardApp() {
               <Icon d={I.comment} />
               <span>{commentCount}</span>
             </button>
+            {aiOn && (
+              <button
+                type="button"
+                className="board-stas-btn"
+                onClick={() => askRef.current()}
+                title={t('Ask Stas about this board (sends a picture of it)', 'Hỏi Stas về bảng này (gửi kèm ảnh chụp bảng)')}
+              >
+                <Icon d={I.ai} />
+                <span>{t('Ask Stas', 'Hỏi Stas')}</span>
+              </button>
+            )}
           </div>
     ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -733,6 +748,12 @@ export default function BoardApp() {
 
   return (
     <div className="board-shell">
+      {aiOn && (
+        <button type="button" className="board-stas-btn board-stas-float" onClick={() => askRef.current()} aria-label={t('Ask Stas about this board', 'Hỏi Stas về bảng này')}>
+          <Icon d={I.ai} />
+          <span>Stas</span>
+        </button>
+      )}
       <Excalidraw
         excalidrawAPI={setApi}
         initialData={initialData}

@@ -502,3 +502,8 @@
   margin-inline: auto;
   padding-inline: 1.25rem;
 }
+
+/* Keyboard shortcut labels: ⌘ on Apple devices, Ctrl elsewhere (Windows has no ⌘ glyph). */
+.kbd-mac { display: none; }
+html.os-mac .kbd-mac { display: inline; }
+html.os-mac .kbd-other { display: none; }

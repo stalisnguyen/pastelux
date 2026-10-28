@@ -31,6 +31,15 @@ import Base from '../layouts/Base.astro';
           placeholder="Mã truy cập"
           data-ph-en="Access code"
         />
+        <input
+          id="ask-name"
+          type="text"
+          class="field !w-auto flex-1 min-w-[10rem]"
+          autocomplete="nickname"
+          maxlength="40"
+          placeholder="Tên của bạn (không bắt buộc)"
+          data-ph-en="Your name (optional)"
+        />
         <button class="btn btn-primary" type="submit">
           <span>Unlock</span><span class="vi-block-inline">Mở</span>
         </button>
@@ -63,7 +72,7 @@ import Base from '../layouts/Base.astro';
             <span>Attach image</span><span class="vi-block-inline">Đính kèm ảnh</span>
           </label>
           <button id="ask-new" type="button" class="btn !py-1.5 !text-[0.82rem]">
-            <span>New chat</span><span class="vi-block-inline">Cuộc mới</span>
+            <span>New chat</span><span class="vi-block-inline">Trò chuyện mới</span>
           </button>
           <button id="ask-send" type="submit" class="btn btn-primary !py-1.5 ml-auto">
             <span>Send</span><span class="vi-block-inline">Gửi</span>
@@ -74,8 +83,8 @@ import Base from '../layouts/Base.astro';
         </div>
       </form>
       <p class="text-[0.75rem] mt-2 pb-6" style="color: var(--text-faint)">
-        <span>Stas runs on Google Gemini (or Groq). Treat numbers as a starting point and check them against the standard your project uses.</span>
-        <span class="vi-block-inline">Stas chạy trên Google Gemini (hoặc Groq). Con số chỉ để tham khảo ban đầu — đối chiếu lại với tiêu chuẩn dự án đang dùng.</span>
+        <span>Stas runs on Google Gemini. Treat numbers as a starting point and check them against the standard your project uses.</span>
+        <span class="vi-block-inline">Stas chạy trên Google Gemini. Các con số chỉ để tham khảo ban đầu, hãy đối chiếu lại với tiêu chuẩn mà dự án đang dùng.</span>
         <button id="ask-forget" type="button" class="underline ml-1" style="color: var(--text-faint)">
           <span>Lock this device</span><span class="vi-block-inline">Khoá thiết bị này</span>
         </button>
@@ -241,16 +250,29 @@ import Base from '../layouts/Base.astro';
   }
   const escHtml = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
 
+  const NAME_STORE = 'pastelux-ask-name';
+  // the name is shown inside markdown, so keep it to plain text
+  const readName = () => {
+    try {
+      return (localStorage.getItem(NAME_STORE) || '').replace(/[*_`#<>\[\]()!]/g, '').trim();
+    } catch {
+      return '';
+    }
+  };
+
   function renderAll() {
     log.innerHTML = '';
     if (!turns.length) {
       bubble(
         'ai',
         renderMarkdown(
-          t(
-            'Hi Pastel, I’m Stas. Ask me anything about the project you are on — a lux target, a fixture choice, glare in a render, a control scheme. You can attach a sketch or a render too.',
-            'Chào Pastel, mình là Stas. Cứ hỏi về dự án cậu đang làm — mức lux, chọn đèn, chói trong render, cách chia cảnh điều khiển. Đính kèm bản phác hay render cũng được.'
-          )
+          (() => {
+            const name = readName();
+            return t(
+              `${name ? `Hi ${name}` : 'Hello'}, I’m Stas. Ask me anything about the project you are on: a lux target, a fixture choice, glare in a render, a control scheme. You can attach a sketch or a render too.`,
+              `${name ? `Chào ${name}` : 'Xin chào'}, mình là Stas. Cứ hỏi về dự án cậu đang làm: mức lux, chọn đèn, chói trong render, cách chia cảnh điều khiển. Đính kèm bản phác hay render cũng được.`
+            );
+          })()
         )
       );
       return;
@@ -378,7 +400,12 @@ import Base from '../layouts/Base.astro';
     e.preventDefault();
     const code = $<HTMLInputElement>('ask-code').value.trim();
     if (!code) return;
-    try { localStorage.setItem(CODE_STORE, code); } catch {}
+    const name = $<HTMLInputElement>('ask-name').value.trim().slice(0, 40);
+    try {
+      localStorage.setItem(CODE_STORE, code);
+      if (name) localStorage.setItem(NAME_STORE, name);
+      else localStorage.removeItem(NAME_STORE);
+    } catch {}
     // the proxy checks the code on the first question; a wrong code locks again
     start();
   });
