@@ -57,15 +57,35 @@ async function geminiRequest(env, system, messages) {
   const models = [...new Set([env.GEMINI_MODEL, ...GEMINI_FALLBACKS].filter(Boolean))];
   let res;
   for (const model of models) {
+    const t0 = Date.now();
     res = await geminiCall(env, model, system, messages);
+    console.log('gemini headers', model, res.status, `${Date.now() - t0}ms`);
     if (res.status !== 404) return res;
     console.log('gemini model not found', model);
   }
   return res;
 }
 
-function geminiCall(env, model, system, messages) {
+// Google must start answering within this time, or the request fails
+// with a clear message instead of "thinking" forever.
+const FIRST_BYTE_MS = 40000;
+
+async function geminiCall(env, model, system, messages) {
+  const ctl = new AbortController();
+  const timer = setTimeout(() => ctl.abort(), FIRST_BYTE_MS);
+  try {
+    return await geminiFetch(env, model, system, messages, ctl.signal);
+  } catch (e) {
+    console.log('gemini fetch failed', model, String(e));
+    return new Response(JSON.stringify({ error: { message: ctl.signal.aborted ? 'Google did not answer in time' : String(e) } }), { status: 504 });
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+function geminiFetch(env, model, system, messages, signal) {
   return fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:streamGenerateContent?alt=sse`, {
+    signal,
     method: 'POST',
     headers: { 'content-type': 'application/json', 'x-goog-api-key': env.GEMINI_API_KEY },
     body: JSON.stringify({
@@ -119,6 +139,8 @@ function relay(upstream, pick) {
   const dec = new TextDecoder();
   let buf = '';
   let thinking = false;
+  let chars = 0;
+  let finish = '';
   const scrub = (t) => {
     let out = '';
     while (t) {
@@ -149,12 +171,25 @@ function relay(upstream, pick) {
           const payload = line.slice(5).trim();
           if (!payload || payload === '[DONE]') continue;
           try {
-            const t = scrub(pick(JSON.parse(payload)));
-            if (t) ctl.enqueue(enc.encode(`data: ${JSON.stringify({ t })}\n\n`));
+            const evt = JSON.parse(payload);
+            if (evt.error) {
+              console.log('stream error', JSON.stringify(evt.error).slice(0, 300));
+              ctl.enqueue(enc.encode(`data: ${JSON.stringify({ e: String(evt.error.message || 'error') })}\n\n`));
+              continue;
+            }
+            const fin = evt.candidates?.[0]?.finishReason || evt.promptFeedback?.blockReason || evt.choices?.[0]?.finish_reason;
+            if (fin) finish = fin;
+            const t = scrub(pick(evt));
+            if (t) {
+              chars += t.length;
+              ctl.enqueue(enc.encode(`data: ${JSON.stringify({ t })}\n\n`));
+            }
           } catch {}
         }
       },
       flush(ctl) {
+        console.log('stream done', `${chars} chars`, finish || '-');
+        if (!chars) ctl.enqueue(enc.encode(`data: ${JSON.stringify({ e: `No answer came back (${finish || 'empty'})` })}\n\n`));
         ctl.enqueue(enc.encode('data: [DONE]\n\n'));
       },
     })

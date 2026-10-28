@@ -57,7 +57,17 @@ export async function askStream(code: string, turns: Turn[], onText: (textSoFar:
   const dec = new TextDecoder();
   let buf = '', text = '';
   for (;;) {
-    const { done, value } = await reader.read();
+    // nothing for 90 s: give up instead of "thinking" forever
+    let stall: ReturnType<typeof setTimeout> | undefined;
+    const { done, value } = await Promise.race([
+      reader.read(),
+      new Promise<never>((_, reject) => {
+        stall = setTimeout(() => {
+          reader.cancel().catch(() => {});
+          reject(new StasError(504, 'No reply from Stas for 90 seconds'));
+        }, 90000);
+      }),
+    ]).finally(() => clearTimeout(stall));
     if (done) break;
     buf += dec.decode(value, { stream: true });
     let i;
@@ -67,10 +77,15 @@ export async function askStream(code: string, turns: Turn[], onText: (textSoFar:
       if (!evt.startsWith('data:')) continue;
       const payload = evt.slice(5).trim();
       if (payload === '[DONE]') return text;
+      let evtData: { t?: string; e?: string } | null = null;
       try {
-        text += JSON.parse(payload).t ?? '';
-        onText(text);
+        evtData = JSON.parse(payload);
       } catch {}
+      if (evtData?.e) throw new StasError(502, evtData.e);
+      if (evtData?.t) {
+        text += evtData.t;
+        onText(text);
+      }
     }
   }
   return text;
