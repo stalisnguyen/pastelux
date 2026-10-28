@@ -49,8 +49,22 @@ function sameSecret(a, b) {
 }
 
 // ------------------------------------------------------------ providers
-function geminiRequest(env, system, messages) {
-  const model = env.GEMINI_MODEL || 'gemini-2.5-flash';
+// Google retires model names; on "not found" try the next one. The
+// -latest alias always points at the current Flash model.
+const GEMINI_FALLBACKS = ['gemini-flash-latest', 'gemini-2.5-flash', 'gemini-flash-lite-latest'];
+
+async function geminiRequest(env, system, messages) {
+  const models = [...new Set([env.GEMINI_MODEL, ...GEMINI_FALLBACKS].filter(Boolean))];
+  let res;
+  for (const model of models) {
+    res = await geminiCall(env, model, system, messages);
+    if (res.status !== 404) return res;
+    console.log('gemini model not found', model);
+  }
+  return res;
+}
+
+function geminiCall(env, model, system, messages) {
   return fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:streamGenerateContent?alt=sse`, {
     method: 'POST',
     headers: { 'content-type': 'application/json', 'x-goog-api-key': env.GEMINI_API_KEY },
