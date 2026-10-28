@@ -1,0 +1,418 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Ask" description="A private lighting-design consult." indexable={false}>
+  <div class="ask-wrap">
+    <header class="pt-8 pb-4">
+      <p class="label !mb-1" style="color: var(--accent-cool)">
+        <span>Private</span><span class="vi-block-inline">Riêng tư</span>
+      </p>
+      <h1 class="text-2xl md:text-3xl font-semibold">
+        <span>Ask AI</span><span class="vi-block-inline">Hỏi AI</span>
+      </h1>
+      <p class="text-[0.92rem] mt-1.5" style="color: var(--text-muted)">
+        <span>A second opinion on lighting: ask anything, or attach a sketch, render or plan.</span>
+        <span class="vi-block-inline">Hỏi ý kiến thứ hai về chiếu sáng: hỏi gì cũng được, hoặc đính kèm bản phác, render hay mặt bằng.</span>
+      </p>
+    </header>
+
+    <!-- locked: no access code on this device yet -->
+    <section id="ask-lock" class="card p-5 hidden">
+      <p class="font-medium">
+        <span>This page is private.</span><span class="vi-block-inline">Trang này là riêng tư.</span>
+      </p>
+      <form id="ask-code-form" class="mt-3 flex gap-2 flex-wrap items-center">
+        <input
+          id="ask-code"
+          type="password"
+          class="field !w-auto flex-1 min-w-[12rem]"
+          autocomplete="off"
+          placeholder="Mã truy cập"
+          data-ph-en="Access code"
+        />
+        <button class="btn btn-primary" type="submit">
+          <span>Unlock</span><span class="vi-block-inline">Mở</span>
+        </button>
+      </form>
+      <p id="ask-lock-msg" class="text-[0.85rem] mt-2" style="color: var(--warning)"></p>
+    </section>
+
+    <!-- not set up: proxy not deployed yet -->
+    <section id="ask-off" class="card p-5 hidden">
+      <p>
+        <span>Ask AI is not switched on yet.</span><span class="vi-block-inline">Hỏi AI chưa được bật.</span>
+      </p>
+    </section>
+
+    <!-- the conversation -->
+    <section id="ask-app" class="hidden">
+      <div id="ask-log" class="ask-log" aria-live="polite"></div>
+
+      <form id="ask-form" class="ask-composer card">
+        <div id="ask-attach" class="ask-attach hidden"></div>
+        <textarea
+          id="ask-input"
+          rows="2"
+          class="ask-input"
+          placeholder="Hỏi về chiếu sáng…"
+          data-ph-en="Ask about lighting…"></textarea>
+        <div class="flex items-center gap-2 mt-2 flex-wrap">
+          <label class="btn !py-1.5 !text-[0.82rem] cursor-pointer">
+            <input id="ask-file" type="file" accept="image/*" class="sr-only" />
+            <span>Attach image</span><span class="vi-block-inline">Đính kèm ảnh</span>
+          </label>
+          <button id="ask-new" type="button" class="btn !py-1.5 !text-[0.82rem]">
+            <span>New chat</span><span class="vi-block-inline">Cuộc mới</span>
+          </button>
+          <button id="ask-send" type="submit" class="btn btn-primary !py-1.5 ml-auto">
+            <span>Send</span><span class="vi-block-inline">Gửi</span>
+          </button>
+          <button id="ask-stop" type="button" class="btn !py-1.5 ml-auto hidden">
+            <span>Stop</span><span class="vi-block-inline">Dừng</span>
+          </button>
+        </div>
+      </form>
+      <p class="text-[0.75rem] mt-2 pb-6" style="color: var(--text-faint)">
+        <span>Answers come from Claude. Treat numbers as a starting point and check them against the standard your project uses.</span>
+        <span class="vi-block-inline">Câu trả lời do Claude viết. Con số chỉ để tham khảo ban đầu — đối chiếu lại với tiêu chuẩn dự án đang dùng.</span>
+        <button id="ask-forget" type="button" class="underline ml-1" style="color: var(--text-faint)">
+          <span>Lock this device</span><span class="vi-block-inline">Khoá thiết bị này</span>
+        </button>
+      </p>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .ask-wrap {
+    max-width: 46rem;
+    margin-inline: auto;
+  }
+  .ask-log {
+    display: grid;
+    gap: 0.9rem;
+    padding-bottom: 1rem;
+  }
+  :global(.ask-msg) {
+    border-radius: 0.9rem;
+    padding: 0.8rem 1rem;
+    line-height: 1.7;
+    font-size: 0.95rem;
+    overflow-wrap: anywhere;
+  }
+  :global(.ask-msg.user) {
+    background: color-mix(in srgb, var(--accent-cool) 14%, var(--surface));
+    justify-self: end;
+    max-width: 85%;
+    white-space: pre-wrap;
+  }
+  :global(.ask-msg.ai) {
+    background: var(--surface);
+    border: 1px solid var(--border);
+  }
+  :global(.ask-msg.ai p + p),
+  :global(.ask-msg.ai ul),
+  :global(.ask-msg.ai ol),
+  :global(.ask-msg.ai pre),
+  :global(.ask-msg.ai h4) {
+    margin-top: 0.6em;
+  }
+  :global(.ask-msg.ai ul) {
+    list-style: disc;
+    padding-left: 1.3em;
+  }
+  :global(.ask-msg.ai ol) {
+    list-style: decimal;
+    padding-left: 1.3em;
+  }
+  :global(.ask-msg.ai h4) {
+    font-weight: 600;
+  }
+  :global(.ask-msg.ai code) {
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+  }
+  :global(.ask-msg.ai pre) {
+    background: var(--bg-elevated);
+    padding: 0.7rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+  }
+  :global(.ask-msg img) {
+    max-width: 14rem;
+    border-radius: 0.5rem;
+    margin-bottom: 0.4rem;
+    display: block;
+  }
+  :global(.ask-msg.err) {
+    color: var(--warning);
+    border: 1px solid color-mix(in srgb, var(--warning) 40%, transparent);
+  }
+  .ask-composer {
+    position: sticky;
+    bottom: calc(var(--mnav-h, 0px) + 0.75rem);
+    padding: 0.75rem;
+  }
+  @media (min-width: 1024px) {
+    .ask-composer {
+      bottom: 0.75rem;
+    }
+  }
+  .ask-input {
+    width: 100%;
+    resize: vertical;
+    min-height: 3rem;
+    max-height: 40vh;
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+    font-size: 0.95rem;
+    border: 0;
+    outline: none;
+  }
+  .ask-attach {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+  }
+  :global(.ask-attach img) {
+    height: 3.5rem;
+    border-radius: 0.4rem;
+  }
+</style>
+
+<script>
+  import {
+    CODE_STORE,
+    CHAT_STORE,
+    ATTACH_STORE,
+    makeClient,
+    askStream,
+    describeError,
+    renderMarkdown,
+    readCode,
+    type Turn,
+  } from '../lib/ask';
+  import { AI_PROXY_URL } from '../site';
+
+  const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+  const vi = () => document.documentElement.classList.contains('lang-vi');
+  const t = (en: string, v: string) => (vi() ? v : en);
+
+  const lock = $('ask-lock'), off = $('ask-off'), app = $('ask-app');
+  const log = $('ask-log'), input = $<HTMLTextAreaElement>('ask-input');
+  const sendBtn = $<HTMLButtonElement>('ask-send'), stopBtn = $<HTMLButtonElement>('ask-stop');
+  const attachBox = $('ask-attach');
+
+  let turns: Turn[] = [];
+  let pending: { media_type: 'image/jpeg'; data: string; preview: string } | null = null;
+  let controller: AbortController | null = null;
+
+  // ------------------------------------------------------------ state
+  const save = () => {
+    // images are too heavy for localStorage: keep a marker instead
+    const light = turns.map((m) => ({
+      role: m.role,
+      content:
+        typeof m.content === 'string'
+          ? m.content
+          : m.content.map((b: any) => (b.type === 'image' ? { type: 'text', text: '[image]' } : b)),
+    }));
+    try {
+      localStorage.setItem(CHAT_STORE, JSON.stringify(light.slice(-40)));
+    } catch {}
+  };
+  const load = () => {
+    try {
+      turns = JSON.parse(localStorage.getItem(CHAT_STORE) || '[]');
+    } catch {
+      turns = [];
+    }
+  };
+
+  // ------------------------------------------------------------ rendering
+  const textOf = (m: Turn) =>
+    typeof m.content === 'string' ? m.content : m.content.filter((b: any) => b.type === 'text' && b.text !== '[image]').map((b: any) => b.text).join('\n');
+
+  function bubble(role: 'user' | 'ai' | 'err', html: string) {
+    const el = document.createElement('div');
+    el.className = `ask-msg ${role}`;
+    el.innerHTML = html;
+    log.appendChild(el);
+    el.scrollIntoView({ block: 'end', behavior: 'smooth' });
+    return el;
+  }
+  const escHtml = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
+
+  function renderAll() {
+    log.innerHTML = '';
+    if (!turns.length) {
+      bubble(
+        'ai',
+        renderMarkdown(
+          t(
+            'Hi Pastel. Ask me anything about the project you are on — a lux target, a fixture choice, glare in a render, a control scheme. You can attach a sketch or a render too.',
+            'Chào Pastel. Cứ hỏi về dự án cậu đang làm — mức lux, chọn đèn, chói trong render, cách chia cảnh điều khiển. Đính kèm bản phác hay render cũng được.'
+          )
+        )
+      );
+      return;
+    }
+    for (const m of turns) {
+      const hasImg = typeof m.content !== 'string' && m.content.some((b: any) => b.type === 'image' || b.text === '[image]');
+      const img = hasImg ? `<p style="opacity:.7">🖼 ${t('image', 'ảnh')}</p>` : '';
+      if (m.role === 'user') bubble('user', img + escHtml(textOf(m)));
+      else bubble('ai', renderMarkdown(textOf(m)));
+    }
+  }
+
+  // ------------------------------------------------------------ images
+  async function toJpeg(src: Blob | string) {
+    const url = typeof src === 'string' ? src : URL.createObjectURL(src);
+    const img = new Image();
+    await new Promise((r, j) => { img.onload = r; img.onerror = j; img.src = url; });
+    const s = Math.min(1, 1568 / Math.max(img.naturalWidth, img.naturalHeight));
+    const c = document.createElement('canvas');
+    c.width = Math.round(img.naturalWidth * s);
+    c.height = Math.round(img.naturalHeight * s);
+    const g = c.getContext('2d')!;
+    g.fillStyle = '#fff';
+    g.fillRect(0, 0, c.width, c.height);
+    g.drawImage(img, 0, 0, c.width, c.height);
+    const dataUrl = c.toDataURL('image/jpeg', 0.88);
+    if (typeof src !== 'string') URL.revokeObjectURL(url);
+    return { media_type: 'image/jpeg' as const, data: dataUrl.split(',')[1], preview: dataUrl };
+  }
+  function showAttach() {
+    if (!pending) {
+      attachBox.classList.add('hidden');
+      attachBox.innerHTML = '';
+      return;
+    }
+    attachBox.classList.remove('hidden');
+    attachBox.innerHTML = `<img src="${pending.preview}" alt="" /><span>${t('Image attached', 'Đã đính kèm ảnh')}</span>
+      <button type="button" class="underline" id="ask-unattach">${t('remove', 'bỏ')}</button>`;
+    $('ask-unattach').addEventListener('click', () => { pending = null; showAttach(); });
+  }
+  $<HTMLInputElement>('ask-file').addEventListener('change', async (e) => {
+    const f = (e.target as HTMLInputElement).files?.[0];
+    if (f) { pending = await toJpeg(f); showAttach(); }
+    (e.target as HTMLInputElement).value = '';
+  });
+
+  // ------------------------------------------------------------ sending
+  async function send(text: string) {
+    const code = readCode();
+    if (!code) return start();
+    const content: any[] = [];
+    if (pending) content.push({ type: 'image', source: { type: 'base64', media_type: pending.media_type, data: pending.data } });
+    content.push({ type: 'text', text: text || t('Please review this.', 'Góp ý giúp mình nhé.') });
+    const userTurn: Turn = { role: 'user', content };
+    turns.push(userTurn);
+    bubble('user', (pending ? `<img src="${pending.preview}" alt="" />` : '') + escHtml(text));
+    pending = null;
+    showAttach();
+    input.value = '';
+    save();
+
+    const out = bubble('ai', `<p style="opacity:.6">${t('Thinking…', 'Đang nghĩ…')}</p>`);
+    sendBtn.classList.add('hidden');
+    stopBtn.classList.remove('hidden');
+    controller = new AbortController();
+    let frame = 0;
+    try {
+      const { text: answer, refused } = await askStream(makeClient(code), turns, (so) => {
+        cancelAnimationFrame(frame);
+        frame = requestAnimationFrame(() => { out.innerHTML = renderMarkdown(so); });
+      }, controller.signal);
+      cancelAnimationFrame(frame);
+      const final = refused
+        ? t('I can’t help with that one. Try asking it another way.', 'Câu này mình không trả lời được. Thử hỏi theo cách khác nhé.')
+        : answer;
+      out.innerHTML = renderMarkdown(final);
+      turns.push({ role: 'assistant', content: final });
+      save();
+    } catch (err) {
+      cancelAnimationFrame(frame);
+      out.className = 'ask-msg err';
+      out.textContent = describeError(err, vi());
+      turns.pop(); // let her resend the same question
+      save();
+      if ((err as any)?.status === 401) {
+        try { localStorage.removeItem(CODE_STORE); } catch {}
+        setTimeout(start, 1200);
+      }
+    } finally {
+      controller = null;
+      stopBtn.classList.add('hidden');
+      sendBtn.classList.remove('hidden');
+    }
+  }
+
+  $('ask-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const text = input.value.trim();
+    if (!text && !pending) return;
+    if (controller) return;
+    send(text);
+  });
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) $<HTMLFormElement>('ask-form').requestSubmit();
+  });
+  stopBtn.addEventListener('click', () => controller?.abort());
+  $('ask-new').addEventListener('click', () => {
+    turns = [];
+    save();
+    renderAll();
+    input.focus();
+  });
+  $('ask-forget').addEventListener('click', () => {
+    if (!confirm(t('Lock Ask AI on this device? The code will be needed again.', 'Khoá Hỏi AI trên thiết bị này? Lần sau phải nhập lại mã.'))) return;
+    try {
+      localStorage.removeItem(CODE_STORE);
+      localStorage.removeItem(CHAT_STORE);
+    } catch {}
+    turns = [];
+    start();
+  });
+
+  $('ask-code-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const code = $<HTMLInputElement>('ask-code').value.trim();
+    if (!code) return;
+    try { localStorage.setItem(CODE_STORE, code); } catch {}
+    // the proxy checks the code on the first question; a wrong code locks again
+    start();
+  });
+
+  // ------------------------------------------------------------ start
+  function start() {
+    [lock, off, app].forEach((el) => el.classList.add('hidden'));
+    if (!AI_PROXY_URL) return off.classList.remove('hidden');
+    if (!readCode()) return lock.classList.remove('hidden');
+    app.classList.remove('hidden');
+    load();
+    renderAll();
+    // a snapshot handed over from the board
+    try {
+      const handed = sessionStorage.getItem(ATTACH_STORE);
+      if (handed) {
+        sessionStorage.removeItem(ATTACH_STORE);
+        toJpeg(handed).then((p) => {
+          pending = p;
+          showAttach();
+          input.value = t(
+            'Here is my sketch. What would you change in the lighting?',
+            'Đây là bản phác của mình. Cậu sẽ chỉnh gì về chiếu sáng?'
+          );
+          input.focus();
+        });
+      }
+    } catch {}
+  }
+  start();
+</script>

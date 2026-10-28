@@ -1,0 +1,8 @@
+name = "pastelux-ai"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+# Only the site may call the proxy. Secrets (ANTHROPIC_API_KEY, ACCESS_CODE)
+# are set with `npx wrangler secret put …` and never live in this file.
+[vars]
+ALLOWED_ORIGINS = "https://pasteluxvn.com,http://localhost:4321,http://localhost:4550"

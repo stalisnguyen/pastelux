@@ -12,23 +12,48 @@ import BoardApp from '../components/board/BoardApp';
   <h1 class="sr-only">Board<span class="vi-block-inline">Bảng nháp</span></h1>
   <BoardApp client:only="react" />
   <p class="board-note container-page text-[0.78rem] py-3" style="color: var(--text-faint)">
-    <span>Your board is saved in this browser only — nothing is uploaded. Use the menu (☰) to save it as a file or export PNG / SVG, and drag lighting symbols from the library (book icon).</span>
-    <span class="vi-block-inline">Bảng chỉ lưu trong trình duyệt này, không gửi đi đâu cả. Mở menu (☰) để lưu thành file hoặc xuất PNG / SVG; ký hiệu đèn nằm trong thư viện (biểu tượng cuốn sách), kéo ra là dùng.</span>
+    <span>Saved in this browser only — nothing is uploaded. Shortcuts: N note, C comment, T text, R rectangle, A connector, F frame, E eraser, V select, H pan. Save or export (PNG / SVG) from the ☰ menu.</span>
+    <span class="vi-block-inline">Bảng chỉ lưu trong trình duyệt này, không gửi đi đâu. Phím tắt: N note, C bình luận, T chữ, R hình chữ nhật, A đường nối, F khung, E tẩy, V chọn, H kéo bảng. Lưu file hoặc xuất PNG / SVG từ menu ☰.</span>
   </p>
 </Base>
 
 <style is:global>
+  /* The board is always light, like Miro, whatever the site theme. */
   .board-shell {
+    --mb-bg: #ffffff;
+    --mb-ink: #1a1a2e;
+    --mb-muted: #5f6577;
+    --mb-line: #e3e5ea;
+    --mb-hover: #f1f2f6;
+    --mb-accent: #4262ff;
+    --mb-accent-soft: #e8ecff;
+    --mb-shadow: 0 2px 6px rgb(16 24 40 / 0.08), 0 10px 24px -8px rgb(16 24 40 / 0.18);
+    position: relative;
     height: calc(100dvh - 60px);
     width: 100%;
+    color: var(--mb-ink);
+    font-family: var(--font-sans);
   }
   @media (max-width: 1023.98px) {
     .board-shell {
       height: calc(100dvh - 60px - var(--mnav-h, 4.5rem));
     }
   }
-  .board-shell .excalidraw {
-    --ui-font: var(--font-sans);
+
+  /* Excalidraw's own top toolbar and hint are replaced by the Miro-style bar */
+  .board-shell .App-toolbar-container,
+  .board-shell .HintViewer {
+    display: none !important;
+  }
+  /* keep its menu and style panel clear of the left bar */
+  .board-shell .App-menu_top__left,
+  .board-shell .App-menu__left {
+    margin-left: 60px;
+  }
+
+  .mb-top {
+    display: flex;
+    gap: 0.5rem;
   }
   .board-grid-btn {
     display: inline-flex;
@@ -37,16 +62,349 @@ import BoardApp from '../components/board/BoardApp';
     white-space: nowrap;
     height: 2.25rem;
     padding: 0 0.7rem;
-    border-radius: 0.5rem;
-    border: 1px solid var(--color-surface-lowest, #ced4da);
-    background: var(--island-bg-color, #fff);
-    color: var(--text-primary-color, inherit);
+    border-radius: 0.6rem;
+    border: 1px solid var(--mb-line);
+    background: var(--mb-bg);
+    color: var(--mb-ink);
     font: 500 0.82rem var(--font-sans);
     cursor: pointer;
-    box-shadow: var(--shadow-island, none);
+    box-shadow: var(--mb-shadow);
+  }
+  .board-grid-btn svg {
+    width: 16px;
+    height: 16px;
   }
   .board-grid-btn.on {
-    background: var(--color-primary-light, #e0dfff);
-    border-color: var(--color-primary, #6965db);
+    background: var(--mb-accent-soft);
+    border-color: var(--mb-accent);
+    color: var(--mb-accent);
+  }
+
+  /* ---- vertical toolbar */
+  .mb-bar {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 6px;
+    background: var(--mb-bg);
+    border-radius: 12px;
+    box-shadow: var(--mb-shadow);
+    max-height: calc(100% - 24px);
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+  .mb-btn {
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--mb-ink);
+    cursor: pointer;
+  }
+  .mb-btn:hover,
+  .mb-btn.open {
+    background: var(--mb-hover);
+  }
+  .mb-btn.on {
+    background: var(--mb-accent-soft);
+    color: var(--mb-accent);
+  }
+  .mb-btn:focus-visible {
+    outline: 2px solid var(--mb-accent);
+    outline-offset: -2px;
+  }
+  .mb-sep {
+    height: 1px;
+    margin: 4px 6px;
+    background: var(--mb-line);
+  }
+
+  /* ---- popovers, opening to the right of the bar */
+  .mb-pop {
+    position: absolute;
+    left: 70px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 6;
+    background: var(--mb-bg);
+    border-radius: 12px;
+    box-shadow: var(--mb-shadow);
+    padding: 10px;
+    max-width: min(320px, calc(100% - 90px));
+    max-height: calc(100% - 24px);
+    overflow-y: auto;
+  }
+  .mb-pop-title {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--mb-muted);
+    margin: 4px 2px 6px;
+  }
+  .mb-pop-title:not(:first-child) {
+    margin-top: 12px;
+  }
+  .mb-row {
+    display: flex;
+    gap: 2px;
+  }
+  .mb-col {
+    display: grid;
+    gap: 2px;
+    min-width: 200px;
+  }
+  .mb-item {
+    text-align: left;
+    border: 0;
+    background: transparent;
+    padding: 8px 10px;
+    border-radius: 8px;
+    font: 500 0.88rem var(--font-sans);
+    color: var(--mb-ink);
+    cursor: pointer;
+  }
+  .mb-item:hover {
+    background: var(--mb-hover);
+  }
+  .mb-danger {
+    color: #c92a2a;
+  }
+  .mb-grid {
+    display: grid;
+    gap: 6px;
+  }
+  .mb-notes {
+    grid-template-columns: repeat(4, 44px);
+  }
+  .mb-note {
+    width: 44px;
+    height: 44px;
+    border: 1px solid;
+    border-radius: 3px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 0.08);
+  }
+  .mb-note:hover {
+    transform: translateY(-2px);
+  }
+  .mb-emoji {
+    grid-template-columns: repeat(6, 40px);
+  }
+  .mb-emoji button {
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    border: 0;
+    background: transparent;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .mb-emoji button:hover {
+    background: var(--mb-hover);
+  }
+  .mb-stamps,
+  .mb-cct {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .mb-stamps button {
+    font: 700 0.72rem var(--font-sans);
+    letter-spacing: 0.04em;
+    padding: 5px 8px;
+    border: 2px solid;
+    border-radius: 6px;
+    background: transparent;
+    cursor: pointer;
+  }
+  .mb-cct button {
+    font: 500 0.72rem var(--font-mono);
+    color: #1e1e1e;
+    padding: 6px 8px;
+    border: 1px solid var(--mb-line);
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .mb-tally {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 0.85rem;
+    padding: 4px 10px;
+  }
+  .mb-tally b {
+    color: #e03131;
+  }
+
+  /* ---- comment panel */
+  .mb-panel {
+    position: absolute;
+    right: 12px;
+    top: 64px;
+    z-index: 6;
+    width: min(320px, calc(100% - 24px));
+    max-height: calc(100% - 140px);
+    display: flex;
+    flex-direction: column;
+    background: var(--mb-bg);
+    color: var(--mb-ink);
+    border-radius: 12px;
+    box-shadow: var(--mb-shadow);
+    overflow: hidden;
+  }
+  .mb-panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--mb-line);
+  }
+  .mb-panel-head button {
+    border: 0;
+    background: transparent;
+    font-size: 1.3rem;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--mb-muted);
+  }
+  .mb-thread {
+    overflow-y: auto;
+    padding: 6px 12px;
+    display: grid;
+    gap: 10px;
+  }
+  .mb-thread p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .mb-meta {
+    font-size: 0.75rem !important;
+    color: var(--mb-muted);
+  }
+  .mb-jump {
+    text-align: left;
+    width: 100%;
+    border: 0;
+    background: transparent;
+    padding: 6px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: inherit;
+  }
+  .mb-jump:hover {
+    background: var(--mb-hover);
+  }
+  .mb-reply {
+    display: flex;
+    gap: 6px;
+    padding: 8px 12px;
+    border-top: 1px solid var(--mb-line);
+  }
+  .mb-reply input,
+  .mb-panel-foot input {
+    flex: 1;
+    min-width: 0;
+    border: 1px solid var(--mb-line);
+    border-radius: 8px;
+    padding: 6px 8px;
+    font: inherit;
+    font-size: 0.88rem;
+    background: #fff;
+    color: var(--mb-ink);
+  }
+  .mb-reply button,
+  .mb-panel-foot button {
+    border: 0;
+    border-radius: 8px;
+    padding: 6px 10px;
+    background: var(--mb-accent);
+    color: #fff;
+    font: 600 0.82rem var(--font-sans);
+    cursor: pointer;
+  }
+  .mb-panel-foot {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 8px 12px 12px;
+    font-size: 0.78rem;
+    color: var(--mb-muted);
+  }
+  .mb-panel-foot button {
+    background: #2f9e44;
+    white-space: nowrap;
+  }
+  .mb-panel-foot label {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    flex: 1;
+  }
+  .mb-empty {
+    padding: 12px;
+    font-size: 0.88rem;
+    color: var(--mb-muted);
+  }
+  .mb-toast {
+    position: absolute;
+    left: 50%;
+    bottom: 64px;
+    transform: translateX(-50%);
+    z-index: 7;
+    background: #1a1a2e;
+    color: #fff;
+    font-size: 0.85rem;
+    padding: 8px 14px;
+    border-radius: 999px;
+    box-shadow: var(--mb-shadow);
+    white-space: nowrap;
+  }
+
+  .mb-compose textarea {
+    width: 100%;
+    min-height: 80px;
+    border: 1px solid var(--mb-line);
+    border-radius: 8px;
+    padding: 8px;
+    font: inherit;
+    font-size: 0.9rem;
+    color: var(--mb-ink);
+    background: #fff;
+    resize: vertical;
+  }
+  .mb-hint {
+    font-size: 0.78rem;
+    color: var(--mb-muted);
+    margin: 0 2px 4px;
+  }
+  .mb-primary {
+    border: 0;
+    border-radius: 8px;
+    padding: 8px 12px;
+    background: var(--mb-accent);
+    color: #fff;
+    font: 600 0.85rem var(--font-sans);
+    cursor: pointer;
+    justify-self: end;
+    margin-top: 6px;
+  }
+
+  @media (max-width: 640px) {
+    .mb-btn {
+      width: 36px;
+      height: 36px;
+    }
+    .mb-pop {
+      left: 60px;
+    }
   }
 </style>
