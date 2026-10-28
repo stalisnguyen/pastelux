@@ -11,13 +11,23 @@ import BoardApp from '../components/board/BoardApp';
 >
   <h1 class="sr-only">Board<span class="vi-block-inline">Bảng nháp</span></h1>
   <BoardApp client:only="react" />
-  <p class="board-note container-page text-[0.78rem] py-3" style="color: var(--text-faint)">
-    <span>Saved in this browser only — nothing is uploaded. Shortcuts: N note, C comment, T text, R rectangle, A connector, F frame, E eraser, V select, H pan. Save or export (PNG / SVG) from the ☰ menu.</span>
-    <span class="vi-block-inline">Bảng chỉ lưu trong trình duyệt này, không gửi đi đâu. Phím tắt: N note, C bình luận, T chữ, R hình chữ nhật, A đường nối, F khung, E tẩy, V chọn, H kéo bảng. Lưu file hoặc xuất PNG / SVG từ menu ☰.</span>
-  </p>
+
 </Base>
 
 <style is:global>
+  /* The board is an app screen, like Miro: it fills the window and the page
+     itself never scrolls (a scrolled page traps the wheel inside the canvas). */
+  html:has(.board-shell),
+  body:has(.board-shell) {
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+  body:has(.board-shell) footer.site-footer {
+    display: none;
+  }
+  main:has(.board-shell) {
+    padding-bottom: 0 !important;
+  }
   /* The board is always light, like Miro, whatever the site theme. */
   .board-shell {
     --mb-bg: #ffffff;

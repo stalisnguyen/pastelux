@@ -272,7 +272,15 @@ export function spreadAngle(p: Photometry, c: number, frac: number): number | nu
   const edge = (pts: Array<[number, number]>) => {
     // walk outward from the peak on this side
     let k = pts.reduce((best, x, idx) => (x[1] > pts[best][1] ? idx : best), 0);
-    for (; k < pts.length; k++) if (pts[k][1] < peak * frac) return pts[k][0];
+    const cut = peak * frac;
+    for (; k < pts.length; k++) {
+      if (pts[k][1] < cut) {
+        if (!k) return pts[0][0];
+        // interpolate the crossing between the last point above and this one
+        const [g0, i0] = pts[k - 1], [g1, i1] = pts[k];
+        return g0 + ((i0 - cut) / (i0 - i1)) * (g1 - g0);
+      }
+    }
     return null;
   };
   const ea = edge(a), eb = edge(b);
