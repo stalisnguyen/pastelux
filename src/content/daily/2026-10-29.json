@@ -1,0 +1,73 @@
+{
+  "date": "2026-10-29",
+  "generatedAt": "2026-10-28T21:34:36.854Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "Equation Lighting Design celebrates public vote win for Elizabeth Line",
+      "url": "https://www.arc-magazine.com/equation-lighting-design-celebrates-public-vote-win-for-elizabeth-line",
+      "source": "arc",
+      "published": "Wed, 28 Oct 2026 14:37:11 +0000",
+      "summary": "The Elizabeth Line's lighting scheme, by Equation Lighting Design, won a public vote marking 30 years of the Stirling Prize, recognising its integrated approach to station and platform lighting.",
+      "viTitle": "Equation Lighting Design chiến thắng bình chọn công chúng cho Elizabeth Line",
+      "viSummary": "Hệ thống chiếu sáng của Elizabeth Line, do Equation Lighting Design thực hiện, thắng bình chọn công chúng nhân 30 năm giải Stirling Prize, được ghi nhận nhờ cách tiếp cận chiếu sáng tích hợp cho ga và sân ga.",
+      "topics": [
+        "awards",
+        "practice"
+      ]
+    },
+    {
+      "title": "Framing Light explores the relationship between art, perception and dynamic light",
+      "url": "https://www.a1lightingmagazine.com/latest-news/framing-light-explores-the-relationship-between-art-perception-and-dynamic-light",
+      "source": "A1 Lighting",
+      "published": "Wed, 28 Oct 2026 11:27:09 +0000",
+      "summary": "At ERCO's London showroom, an exhibition curated by Maya Binkin pairs works by Adam Leef and Howard Hodgkin with ERCO's Tunable White system, demonstrating how dynamic colour temperature shifts alter perception of artwork.",
+      "viTitle": "Triển lãm Framing Light khám phá mối quan hệ giữa nghệ thuật, cảm nhận và ánh sáng động",
+      "viSummary": "Tại showroom ERCO ở London, triển lãm do Maya Binkin giám tuyển trưng bày tác phẩm của Adam Leef và Howard Hodgkin dưới giải pháp Tunable White của ERCO, cho thấy việc thay đổi nhiệt độ màu động làm biến đổi cách cảm nhận tác phẩm nghệ thuật.",
+      "topics": [
+        "circadian",
+        "controls"
+      ]
+    },
+    {
+      "title": "A Call For Speakers, An Award, &#038; A Registration Announcement",
+      "url": "https://www.lightnowblog.com/2026/10/a-call-for-speakers-an-award-a-registration-announcement",
+      "source": "LightNOW",
+      "published": "Wed, 28 Oct 2026 05:42:04 +0000",
+      "summary": "ArchLIGHT Summit has opened its 2027 call for speakers for the June 22-23 Dallas event, themed 'From Design Intent to Real-World Application', seeking case studies spanning specification through installation and commissioning.",
+      "viTitle": "Kêu gọi diễn giả, một giải thưởng và thông báo đăng ký cho ArchLIGHT Summit",
+      "viSummary": "ArchLIGHT Summit mở đợt kêu gọi diễn giả cho sự kiện tại Dallas ngày 22-23/6/2027, chủ đề 'Từ ý tưởng thiết kế đến ứng dụng thực tế', tìm kiếm case study từ giai đoạn chỉ định sản phẩm đến thi công và vận hành.",
+      "topics": [
+        "practice",
+        "awards"
+      ]
+    },
+    {
+      "title": "AI Infrastructure Boom Strains PCB Materials Supply Chain",
+      "url": "https://www.lightnowblog.com/2026/10/ai-infrastructure-boom-strains-pcb-materials-supply-chain",
+      "source": "LightNOW",
+      "published": "Tue, 27 Oct 2026 05:38:08 +0000",
+      "summary": "Heavy AI and HPC investment is straining PCB supply chains, pushing suppliers to expand capacity through 2029-2030; this could affect availability and cost of LED, driver and control boards used in luminaires.",
+      "viTitle": "Bùng nổ hạ tầng AI gây áp lực lên chuỗi cung ứng PCB",
+      "viSummary": "Đầu tư lớn vào AI và điện toán hiệu năng cao đang gây áp lực lên chuỗi cung ứng PCB, buộc nhà cung cấp mở rộng công suất đến 2029-2030, có thể ảnh hưởng nguồn cung và chi phí LED, driver và bo mạch điều khiển.",
+      "topics": [
+        "product",
+        "practice"
+      ]
+    },
+    {
+      "title": "Q3 2026 Acquisitions",
+      "url": "https://www.lightnowblog.com/2026/10/q3-2026-acquisitions",
+      "source": "LightNOW",
+      "published": "Fri, 23 Oct 2026 05:18:08 +0000",
+      "summary": "A quarterly roundup of lighting industry M&A deals: Luminii acquired Filix Lighting, Principal Industries bought GENLED, Glamox took Consolite Technology, and Platinum Equity acquired LMPG, among other transactions.",
+      "viTitle": "Các thương vụ mua bán - sáp nhập ngành chiếu sáng quý 3/2026",
+      "viSummary": "Tổng hợp các thương vụ M&A ngành chiếu sáng trong quý: Luminii mua Filix Lighting, Principal Industries mua GENLED, Glamox thâu tóm Consolite Technology, và Platinum Equity mua lại LMPG, cùng một số thương vụ khác.",
+      "topics": [
+        "practice"
+      ]
+    }
+  ],
+  "termOfDay": "tape-light",
+  "projectOfDay": "luminaire-types"
+}
