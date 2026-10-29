@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 ---
 
-<Base title="Stas" description="A private lighting-design consult." indexable={false}>
+<Base title="Stas" description="A private assistant." indexable={false}>
   <div class="ask-wrap">
     <header class="pt-8 pb-4">
       <p class="label !mb-1" style="color: var(--accent-cool)">
@@ -12,8 +12,8 @@ import Base from '../layouts/Base.astro';
         <span>Ask Stas</span><span class="vi-block-inline">Hỏi Stas</span>
       </h1>
       <p class="text-[0.92rem] mt-1.5" style="color: var(--text-muted)">
-        <span>A second opinion on lighting: ask anything, or attach a sketch, render or plan.</span>
-        <span class="vi-block-inline">Hỏi ý kiến thứ hai về chiếu sáng: hỏi gì cũng được, hoặc đính kèm bản phác, render hay mặt bằng.</span>
+        <span>Ask anything: work, lighting, writing, everyday questions. You can attach a picture too.</span>
+        <span class="vi-block-inline">Hỏi gì cũng được: công việc, chiếu sáng, viết lách, chuyện hằng ngày. Đính kèm ảnh cũng được.</span>
       </p>
     </header>
 
@@ -64,8 +64,8 @@ import Base from '../layouts/Base.astro';
           id="ask-input"
           rows="2"
           class="ask-input"
-          placeholder="Hỏi về chiếu sáng…"
-          data-ph-en="Ask about lighting…"></textarea>
+          placeholder="Hỏi Stas bất cứ điều gì…"
+          data-ph-en="Ask Stas anything…"></textarea>
         <div class="flex items-center gap-2 mt-2 flex-wrap">
           <label class="btn !py-1.5 !text-[0.82rem] cursor-pointer">
             <input id="ask-file" type="file" accept="image/*" class="sr-only" />
@@ -83,8 +83,8 @@ import Base from '../layouts/Base.astro';
         </div>
       </form>
       <p class="text-[0.75rem] mt-2 pb-6" style="color: var(--text-faint)">
-        <span>Stas runs on Google Gemini. Treat numbers as a starting point and check them against the standard your project uses.</span>
-        <span class="vi-block-inline">Stas chạy trên Google Gemini. Các con số chỉ để tham khảo ban đầu, hãy đối chiếu lại với tiêu chuẩn mà dự án đang dùng.</span>
+        <span>Stas runs on Google Gemini and can be wrong. Double-check important facts, and check lighting numbers against the standard your project uses.</span>
+        <span class="vi-block-inline">Stas chạy trên Google Gemini và có thể sai. Thông tin quan trọng thì kiểm tra lại, còn số liệu chiếu sáng thì đối chiếu với tiêu chuẩn mà dự án đang dùng.</span>
         <button id="ask-forget" type="button" class="underline ml-1" style="color: var(--text-faint)">
           <span>Lock this device</span><span class="vi-block-inline">Khoá thiết bị này</span>
         </button>
@@ -269,8 +269,8 @@ import Base from '../layouts/Base.astro';
           (() => {
             const name = readName();
             return t(
-              `${name ? `Hi ${name}` : 'Hello'}, I’m Stas. Ask me anything about the project you are on: a lux target, a fixture choice, glare in a render, a control scheme. You can attach a sketch or a render too.`,
-              `${name ? `Chào ${name}` : 'Xin chào'}, mình là Stas. Cứ hỏi về dự án cậu đang làm: mức lux, chọn đèn, chói trong render, cách chia cảnh điều khiển. Đính kèm bản phác hay render cũng được.`
+              `${name ? `Hi ${name}` : 'Hello'}, I’m Stas. Ask me anything: work, lighting, writing, or just everyday stuff. You can attach a picture too.`,
+              `${name ? `Chào ${name}` : 'Xin chào'}, mình là Stas. Cậu cứ hỏi gì cũng được: công việc, chiếu sáng, viết lách hay chuyện hằng ngày. Gửi kèm ảnh cũng được nhé.`
             );
           })()
         )

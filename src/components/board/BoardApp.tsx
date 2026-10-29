@@ -248,6 +248,39 @@ export default function BoardApp() {
   );
   useHandleLibrary({ excalidrawAPI: api, adapter: libraryAdapter });
 
+  // Mouse wheel zooms around the pointer, like Miro. Excalidraw zooms on
+  // Ctrl + wheel, so a plain mouse-wheel turn is re-sent with Ctrl held.
+  // Touchpads (small or sideways deltas) keep scrolling to pan, and
+  // pinch already arrives with Ctrl.
+  useEffect(() => {
+    const shell = document.querySelector('.board-shell');
+    if (!shell) return;
+    const onWheel = (e: Event) => {
+      const w = e as WheelEvent;
+      if (!w.isTrusted || w.ctrlKey || w.metaKey || w.shiftKey || w.altKey) return;
+      if (!(w.target instanceof HTMLCanvasElement)) return; // lists and popovers scroll normally
+      // a wheel notch is ~100 px (or lines); touchpads send small, often sideways steps
+      const mouse = w.deltaMode !== 0 || (w.deltaX === 0 && Math.abs(w.deltaY) >= 40);
+      if (!mouse) return;
+      w.preventDefault();
+      w.stopPropagation();
+      w.target.dispatchEvent(
+        new WheelEvent('wheel', {
+          bubbles: true,
+          cancelable: true,
+          clientX: w.clientX,
+          clientY: w.clientY,
+          deltaX: 0,
+          deltaY: w.deltaMode === 0 ? w.deltaY : w.deltaY * 33,
+          deltaMode: 0,
+          ctrlKey: true,
+        })
+      );
+    };
+    shell.addEventListener('wheel', onWheel, { capture: true, passive: false });
+    return () => shell.removeEventListener('wheel', onWheel, { capture: true } as any);
+  }, [api]);
+
   // A library installed in another tab shows up here without a reload, and
   // this tab's older copy never overwrites it.
   useEffect(() => {

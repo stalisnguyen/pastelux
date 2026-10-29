@@ -6,7 +6,7 @@ compatibility_date = "2026-10-01"
 # and ACCESS_CODE) are set with `npx wrangler secret put …` and never live here.
 [vars]
 ALLOWED_ORIGINS = "https://pasteluxvn.com,http://localhost:4321,http://localhost:4550"
-GEMINI_MODEL = "gemini-flash-latest"
+GEMINI_MODEL = "gemini-flash-lite-latest"
 GROQ_MODEL = "qwen/qwen3.8-27b"
 
 # Gemini refuses some regions (Hong Kong, where Vietnamese traffic often lands).

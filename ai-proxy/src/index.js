@@ -49,9 +49,11 @@ function sameSecret(a, b) {
 }
 
 // ------------------------------------------------------------ providers
-// Google retires model names; on "not found" try the next one. The
-// -latest alias always points at the current Flash model.
-const GEMINI_FALLBACKS = ['gemini-flash-latest', 'gemini-2.5-flash', 'gemini-flash-lite-latest'];
+// Flash-Lite answers in a second or two on the free plan; the bigger
+// Flash is often overloaded there (503 or no answer at all). On "not
+// found", "overloaded" or "too slow", try the next model.
+const GEMINI_FALLBACKS = ['gemini-flash-lite-latest', 'gemini-3.1-flash-lite', 'gemini-flash-latest'];
+const RETRY_ON = new Set([404, 500, 503, 504]);
 
 async function geminiRequest(env, system, messages) {
   const models = [...new Set([env.GEMINI_MODEL, ...GEMINI_FALLBACKS].filter(Boolean))];
@@ -60,15 +62,15 @@ async function geminiRequest(env, system, messages) {
     const t0 = Date.now();
     res = await geminiCall(env, model, system, messages);
     console.log('gemini headers', model, res.status, `${Date.now() - t0}ms`);
-    if (res.status !== 404) return res;
-    console.log('gemini model not found', model);
+    if (!RETRY_ON.has(res.status)) return res;
+    console.log('gemini model unavailable, trying next', model, res.status);
   }
   return res;
 }
 
 // Google must start answering within this time, or the request fails
 // with a clear message instead of "thinking" forever.
-const FIRST_BYTE_MS = 40000;
+const FIRST_BYTE_MS = 25000;
 
 async function geminiCall(env, model, system, messages) {
   const ctl = new AbortController();
