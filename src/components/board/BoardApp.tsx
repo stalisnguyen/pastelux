@@ -1011,7 +1011,6 @@ export default function BoardApp() {
         <Btn id="comment" icon={I.comment} label={t('Comment (C)', 'Bình luận (C)')} active={commentMode} onClick={() => startCommentMode(!commentMode)} />
         <Btn id="vote" icon={I.vote} label={t('Vote', 'Bình chọn')} onClick={() => toggleMenu('vote')} />
         <Btn id="library" icon={I.library} label={t('Lighting symbols', 'Ký hiệu đèn')} onClick={openLibrary} />
-        {aiOn && <Btn id="ai" icon={I.ai} label={t('Ask Stas about this board', 'Hỏi Stas về bảng này')} onClick={askAI} />}
       </nav>
       <input
         ref={fileInput}
