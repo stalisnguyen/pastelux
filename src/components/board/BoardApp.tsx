@@ -78,6 +78,12 @@ export default function BoardApp() {
   const [lang, setLang] = useState<'vi' | 'en'>(readLang);
   const [grid, setGrid] = useState<boolean>(() => store(() => localStorage.getItem(GRID_KEY) === '1', false));
   const [api, setApi] = useState<any>(null);
+  const apiRef = useRef<any>(null);
+  apiRef.current = api;
+  const tidyTimer = useRef<number | undefined>(undefined);
+  const seenStrokes = useRef<Set<string> | null>(null);
+  const [frameSel, setFrameSel] = useState(false);
+  const [lockedFrames, setLockedFrames] = useState(0);
   const [tool, setTool] = useState('selection');
   const [menu, setMenu] = useState<string | null>(null);
   const [anchorTop, setAnchorTop] = useState(0);
@@ -164,6 +170,97 @@ export default function BoardApp() {
 
   // Excalidraw calls this on every pointer move: keep the per-event work tiny
   // and only touch React state when something we show actually changed.
+  const setFrameLock = (lock: boolean) => {
+    const a = apiRef.current;
+    if (!a) return;
+    const sel = a.getAppState().selectedElementIds;
+    const all: any[] = a.getSceneElementsIncludingDeleted();
+    let n = 0;
+    const next = all.map((e) => {
+      if (e.type !== 'frame' || e.isDeleted) return e;
+      if (lock ? !sel[e.id] || e.locked : !e.locked) return e;
+      n++;
+      return { ...e, locked: lock, version: e.version + 1, versionNonce: Math.floor(Math.random() * 2 ** 31), updated: Date.now() };
+    });
+    if (!n) return;
+    a.updateScene({ elements: next, appState: lock ? { selectedElementIds: {} } : undefined, captureUpdate: CaptureUpdateAction.IMMEDIATELY });
+    setFrameSel(false);
+    setLockedFrames((c) => (lock ? c + n : 0));
+    flash(lock ? t('Frame locked: things inside still move', 'Đã khoá frame: đồ bên trong vẫn kéo được') : t('Frames unlocked', 'Đã mở khoá frame'));
+  };
+
+  // ---------------------------------------------------- frames & strokes
+  // Frames get a white, locked backing sheet (Excalidraw draws frames as an
+  // outline only, so the grid shows through). Pen strokes drawn on a photo
+  // are grouped with it, so they move together, as in Miro.
+  const tidyRef = useRef<() => void>(() => {});
+  tidyRef.current = () => {
+    const a = apiRef.current;
+    if (!a) return;
+    const st = a.getAppState();
+    if (st.newElement || st.resizingElement || st.selectedElementsAreBeingDragged || st.editingTextElement || st.isResizing || st.isRotating) {
+      window.clearTimeout(tidyTimer.current);
+      tidyTimer.current = window.setTimeout(() => tidyRef.current(), 200);
+      return;
+    }
+    const all: any[] = a.getSceneElementsIncludingDeleted();
+    let next: any[] | null = null;
+    const edit = () => (next ??= [...all]);
+    const bump = (e: any, patch: any) => ({ ...e, ...patch, version: e.version + 1, versionNonce: Math.floor(Math.random() * 2 ** 31), updated: Date.now() });
+    const indexOf = (id: string) => (next ?? all).findIndex((e) => e.id === id);
+
+    // 1. white sheets behind frames
+    const frames = all.filter((e) => e.type === 'frame' && !e.isDeleted);
+    const frameIds = new Set(frames.map((f) => f.id));
+    for (const bg of all) {
+      if (bg.customData?.kind !== 'frame-bg' || bg.isDeleted) continue;
+      if (!frameIds.has(bg.customData.frame)) edit()[indexOf(bg.id)] = bump(bg, { isDeleted: true });
+    }
+    for (const f of frames) {
+      const bg = all.find((e) => e.customData?.kind === 'frame-bg' && e.customData.frame === f.id && !e.isDeleted);
+      if (!bg) {
+        const [sheet] = convertToExcalidrawElements(
+          [{ type: 'rectangle', x: f.x, y: f.y, width: f.width, height: f.height, backgroundColor: '#ffffff', fillStyle: 'solid', strokeColor: 'transparent', strokeWidth: 1, roughness: 0 } as any],
+          { regenerateIds: true }
+        ) as any[];
+        const el = { ...sheet, roundness: null, locked: true, frameId: f.id, customData: { kind: 'frame-bg', frame: f.id } };
+        const list = edit();
+        const firstChild = list.findIndex((e) => e.frameId === f.id && !e.isDeleted);
+        list.splice(firstChild >= 0 ? firstChild : list.length, 0, el);
+      } else if (bg.x !== f.x || bg.y !== f.y || bg.width !== f.width || bg.height !== f.height || bg.frameId !== f.id || !bg.locked) {
+        edit()[indexOf(bg.id)] = bump(bg, { x: f.x, y: f.y, width: f.width, height: f.height, frameId: f.id, locked: true, angle: 0 });
+      }
+    }
+
+    // 2. strokes drawn on a photo stick to it
+    if (!seenStrokes.current) {
+      seenStrokes.current = new Set(all.filter((e) => e.type === 'freedraw').map((e) => e.id));
+    } else {
+      const photos = all.filter((e) => e.type === 'image' && !e.isDeleted && !['sticker', 'emoji', 'vote', 'comment'].includes(e.customData?.kind));
+      for (const s0 of all) {
+        if (s0.type !== 'freedraw' || s0.isDeleted || seenStrokes.current.has(s0.id)) continue;
+        seenStrokes.current.add(s0.id);
+        const s1 = (next ?? all)[indexOf(s0.id)];
+        const cx = s1.x + s1.width / 2, cy = s1.y + s1.height / 2;
+        const under = photos.filter((ph) => {
+          const p = (next ?? all)[indexOf(ph.id)];
+          return cx >= p.x && cx <= p.x + p.width && cy >= p.y && cy <= p.y + p.height;
+        });
+        const photo = under.length ? (next ?? all)[indexOf(under[under.length - 1].id)] : null;
+        if (!photo) continue;
+        let gid = photo.groupIds?.[photo.groupIds.length - 1];
+        const list = edit();
+        if (!gid) {
+          gid = `ink-${Math.random().toString(36).slice(2, 10)}`;
+          list[indexOf(photo.id)] = bump(photo, { groupIds: [...(photo.groupIds ?? []), gid] });
+        }
+        if (!s1.groupIds?.includes(gid)) list[indexOf(s1.id)] = bump(s1, { groupIds: [...(s1.groupIds ?? []), gid] });
+      }
+    }
+
+    if (next) a.updateScene({ elements: next, captureUpdate: CaptureUpdateAction.NEVER });
+  };
+
   const onChange = useCallback((elements: readonly any[], appState: any, files: any) => {
     const type = appState.activeTool?.type;
     if (type !== lastTool.current) {
@@ -174,6 +271,7 @@ export default function BoardApp() {
     const selKey = ids.join(',');
     if (selKey !== lastSelection.current) {
       lastSelection.current = selKey;
+      setFrameSel(ids.length > 0 && elements.some((e) => e.type === 'frame' && appState.selectedElementIds[e.id] && !e.isDeleted));
       const pin = ids.length === 1 ? elements.find((e) => e.id === ids[0] && e.customData?.kind === 'comment' && !e.isDeleted) : null;
       openPin.current = pin ?? null;
       setSelectedComment(pin ?? null);
@@ -185,6 +283,8 @@ export default function BoardApp() {
         setSelectedComment(openPin.current);
       }
     }
+    window.clearTimeout(tidyTimer.current);
+    tidyTimer.current = window.setTimeout(() => tidyRef.current(), 80);
     window.clearTimeout(saveTimer.current);
     saveTimer.current = window.setTimeout(() => {
       const live = elements.filter((e) => !e.isDeleted);
@@ -194,6 +294,7 @@ export default function BoardApp() {
         if (e.customData?.kind === 'comment') c += 1 + (e.customData.thread?.length ?? 0);
         else if (e.customData?.kind === 'vote') v += e.customData.count ?? 0;
       }
+      setLockedFrames(live.filter((e) => e.type === 'frame' && e.locked).length);
       const counts = `${c}|${v}`;
       if (counts !== lastCounts.current) {
         lastCounts.current = counts;
@@ -742,6 +843,18 @@ export default function BoardApp() {
               </svg>
               <span>{grid ? t('Grid', 'Có lưới') : t('Plain', 'Giấy trơn')}</span>
             </button>
+            {frameSel && (
+              <button type="button" className="board-grid-btn" onClick={() => setFrameLock(true)} title={t('Lock the selected frame so it does not move by accident', 'Khoá frame đang chọn để không lỡ tay kéo nó đi')}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></svg>
+                <span>{t('Lock frame', 'Khoá frame')}</span>
+              </button>
+            )}
+            {lockedFrames > 0 && !frameSel && (
+              <button type="button" className="board-grid-btn" onClick={() => setFrameLock(false)} title={t('Unlock all frames', 'Mở khoá tất cả frame')}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" /><path d="M8 11V7a4 4 0 0 1 7.5-2" /></svg>
+                <span>{t('Unlock frames', 'Mở khoá frame')}</span>
+              </button>
+            )}
             <button type="button" className={`board-grid-btn${showComments ? ' on' : ''}`} onClick={() => setShowComments((v) => !v)}>
               <Icon d={I.comment} />
               <span>{commentCount}</span>
@@ -760,7 +873,7 @@ export default function BoardApp() {
           </div>
     ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [grid, showComments, commentCount, vi]
+    [grid, showComments, commentCount, vi, frameSel, lockedFrames]
   );
   const thread: Comment[] = selectedComment?.customData?.thread ?? [];
   /** Place the thread card beside its pin, kept inside the board. */
