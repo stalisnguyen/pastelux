@@ -1,3 +1,4 @@
+import { DurableObject } from 'cloudflare:workers';
 /**
  * Pastelux AI proxy (Stas) — a Cloudflare Worker that holds the AI key so the
  * static site never has to.
@@ -85,11 +86,14 @@ async function geminiCall(env, model, system, messages) {
   }
 }
 
+// One relay object, created in eastern North America and fixed there.
+const relayStub = (env) => env.RELAY.get(env.RELAY.idFromName('us-relay-1'), { locationHint: 'enam' });
+
 function geminiFetch(env, model, system, messages, signal) {
-  return fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:streamGenerateContent?alt=sse`, {
+  return relayStub(env).fetch(`https://relay/v1beta/models/${model}:streamGenerateContent?alt=sse`, {
     signal,
     method: 'POST',
-    headers: { 'content-type': 'application/json', 'x-goog-api-key': env.GEMINI_API_KEY },
+    headers: { 'content-type': 'application/json' },
     body: JSON.stringify({
       systemInstruction: { parts: [{ text: system }] },
       contents: messages.map((m) => ({
@@ -196,6 +200,20 @@ function relay(upstream, pick) {
       },
     })
   );
+}
+
+/** Runs in the US and forwards one request to Google with the key. */
+export class GeminiRelay extends DurableObject {
+  async fetch(req) {
+    const u = new URL(req.url);
+    if (!u.pathname.startsWith('/v1beta/models/')) return new Response('Not found', { status: 404 });
+    return fetch(`https://generativelanguage.googleapis.com${u.pathname}${u.search}`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'x-goog-api-key': this.env.GEMINI_API_KEY },
+      body: req.body,
+      signal: req.signal,
+    });
+  }
 }
 
 export default {

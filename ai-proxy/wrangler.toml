@@ -9,7 +9,13 @@ ALLOWED_ORIGINS = "https://pasteluxvn.com,http://localhost:4321,http://localhost
 GEMINI_MODEL = "gemini-flash-lite-latest"
 GROQ_MODEL = "qwen/qwen3.8-27b"
 
-# Gemini refuses some regions (Hong Kong, where Vietnamese traffic often lands).
-# Run the Worker next to a Google Cloud region in the US instead.
-[placement]
-region = "gcp:us-central1"
+# Gemini refuses some regions (Hong Kong, where Vietnamese traffic often
+# lands). Calls to Google go through a Durable Object pinned to the US
+# (created once with locationHint "enam"), so they always leave from there.
+[[durable_objects.bindings]]
+name = "RELAY"
+class_name = "GeminiRelay"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["GeminiRelay"]
