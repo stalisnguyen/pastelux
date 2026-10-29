@@ -82,6 +82,8 @@ export default function BoardApp() {
   apiRef.current = api;
   const tidyTimer = useRef<number | undefined>(undefined);
   const seenStrokes = useRef<Set<string> | null>(null);
+  const stuckCount = useRef(-1);
+  const photoPos = useRef(new Map<string, { x: number; y: number }>());
   const [frameSel, setFrameSel] = useState(false);
   const [lockedFrames, setLockedFrames] = useState(0);
   const [tool, setTool] = useState('selection');
@@ -232,7 +234,17 @@ export default function BoardApp() {
       }
     }
 
-    // 2. strokes drawn on a photo stick to it
+    // 2. strokes drawn on a photo stick to it (they stay separate, so one
+    //    stroke can still be selected and deleted on its own)
+    const cur = () => next ?? all;
+    // boards from the first version grouped strokes with the photo: undo that
+    for (const e of all) {
+      const ink = e.groupIds?.find((g: string) => g.startsWith('ink-'));
+      if (!ink || e.isDeleted) continue;
+      const photo = e.type === 'freedraw' ? all.find((x) => x.type === 'image' && x.groupIds?.includes(ink)) : null;
+      const i = indexOf(e.id);
+      edit()[i] = bump(cur()[i], { groupIds: e.groupIds.filter((g: string) => g !== ink), ...(photo ? { customData: { ...(e.customData ?? {}), stuckTo: photo.id } } : {}) });
+    }
     if (!seenStrokes.current) {
       seenStrokes.current = new Set(all.filter((e) => e.type === 'freedraw').map((e) => e.id));
     } else {
@@ -240,26 +252,53 @@ export default function BoardApp() {
       for (const s0 of all) {
         if (s0.type !== 'freedraw' || s0.isDeleted || seenStrokes.current.has(s0.id)) continue;
         seenStrokes.current.add(s0.id);
-        const s1 = (next ?? all)[indexOf(s0.id)];
-        const cx = s1.x + s1.width / 2, cy = s1.y + s1.height / 2;
-        const under = photos.filter((ph) => {
-          const p = (next ?? all)[indexOf(ph.id)];
-          return cx >= p.x && cx <= p.x + p.width && cy >= p.y && cy <= p.y + p.height;
-        });
-        const photo = under.length ? (next ?? all)[indexOf(under[under.length - 1].id)] : null;
-        if (!photo) continue;
-        let gid = photo.groupIds?.[photo.groupIds.length - 1];
-        const list = edit();
-        if (!gid) {
-          gid = `ink-${Math.random().toString(36).slice(2, 10)}`;
-          list[indexOf(photo.id)] = bump(photo, { groupIds: [...(photo.groupIds ?? []), gid] });
-        }
-        if (!s1.groupIds?.includes(gid)) list[indexOf(s1.id)] = bump(s1, { groupIds: [...(s1.groupIds ?? []), gid] });
+        const cx = s0.x + s0.width / 2, cy = s0.y + s0.height / 2;
+        const under = photos.filter((p) => cx >= p.x && cx <= p.x + p.width && cy >= p.y && cy <= p.y + p.height);
+        if (!under.length) continue;
+        const i = indexOf(s0.id);
+        edit()[i] = bump(cur()[i], { customData: { ...(s0.customData ?? {}), stuckTo: under[under.length - 1].id } });
       }
     }
+    // a deleted photo takes its strokes with it
+    const livePhotos = new Set(all.filter((e) => e.type === 'image' && !e.isDeleted).map((e) => e.id));
+    let stuck = 0;
+    for (const e of cur()) {
+      const to = e.customData?.stuckTo;
+      if (!to || e.isDeleted) continue;
+      if (!livePhotos.has(to)) edit()[indexOf(e.id)] = bump(e, { isDeleted: true });
+      else stuck++;
+    }
+    stuckCount.current = stuck;
 
     if (next) a.updateScene({ elements: next, captureUpdate: CaptureUpdateAction.NEVER });
   };
+
+  /** Moves strokes stuck to a photo by however far the photo moved. */
+  const follow = () => {
+    const a = apiRef.current;
+    if (!a || stuckCount.current === 0) return;
+    const all: any[] = a.getSceneElementsIncludingDeleted();
+    const moved = new Map<string, { dx: number; dy: number }>();
+    for (const e of all) {
+      if (e.type !== 'image') continue;
+      const prev = photoPos.current.get(e.id);
+      if (prev && (prev.x !== e.x || prev.y !== e.y)) moved.set(e.id, { dx: e.x - prev.x, dy: e.y - prev.y });
+      photoPos.current.set(e.id, { x: e.x, y: e.y });
+    }
+    if (!moved.size) return;
+    const sel = a.getAppState().selectedElementIds;
+    let changed = false;
+    const next = all.map((e) => {
+      const m = !e.isDeleted && e.customData?.stuckTo && !sel[e.id] ? moved.get(e.customData.stuckTo) : undefined;
+      if (!m) return e;
+      changed = true;
+      return { ...e, x: e.x + m.dx, y: e.y + m.dy, version: e.version + 1, versionNonce: Math.floor(Math.random() * 2 ** 31), updated: Date.now() };
+    });
+    if (changed) a.updateScene({ elements: next, captureUpdate: CaptureUpdateAction.NEVER });
+  };
+
+  const followRef = useRef(follow);
+  followRef.current = follow;
 
   const onChange = useCallback((elements: readonly any[], appState: any, files: any) => {
     const type = appState.activeTool?.type;
@@ -283,6 +322,7 @@ export default function BoardApp() {
         setSelectedComment(openPin.current);
       }
     }
+    followRef.current();
     window.clearTimeout(tidyTimer.current);
     tidyTimer.current = window.setTimeout(() => tidyRef.current(), 80);
     window.clearTimeout(saveTimer.current);
