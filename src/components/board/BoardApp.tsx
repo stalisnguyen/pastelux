@@ -15,10 +15,10 @@ import { get, set } from 'idb-keyval';
 import { lightingLibrary } from './library';
 import { NOTE_COLORS, STAMPS, CCT_SWATCHES, EMOJI_GROUPS, templates } from './stickers';
 import FLUENT from './fluent-stickers.json';
-import { loadMine, addMine, removeMine, MAX_MINE, type MySticker } from './mystickers';
+import { loadMine, addMine, removeMine, saveMine, MAX_MINE, type MySticker } from './mystickers';
 import { AI_PROXY_URL } from '../../site';
 import { boardKeys, currentProjectId, setCurrentProject, listProjects, createProject, renameProject, deleteProject, DEFAULT_ID, type Project } from '../../lib/projects';
-import { syncEnabled, syncProjects, readSeq, writeSeq, readPushed, writePushed, pullElements, pushElements, pushFiles, pullFiles, SyncError } from '../../lib/boardsync';
+import { syncEnabled, syncProjects, readSeq, writeSeq, readPushed, writePushed, pullElements, pushElements, pushFiles, pullFiles, syncList, SyncError } from '../../lib/boardsync';
 
 /*
  * A free-form board laid out like Miro: a vertical toolbar on the left
@@ -363,6 +363,51 @@ function BoardApp({ pid }: { pid: string }) {
     if (wasEmpty && merged.some((e) => !e.isDeleted)) a.scrollToContent(undefined, { fitToViewport: true, viewportZoomFactor: 0.9, animate: false });
   };
 
+  const blobToDataURL = (b: Blob) =>
+    new Promise<string>((res, rej) => {
+      const r = new FileReader();
+      r.onload = () => res(String(r.result));
+      r.onerror = rej;
+      r.readAsDataURL(b);
+    });
+  /** The library and My stickers are shared by every unlocked device. */
+  const syncShared = async () => {
+    const a = apiRef.current;
+    const lib = ((await get(LIB_KEY).catch(() => null)) as any[] | null) ?? [];
+    const nextLib = await syncList('library', lib, (x: any) => x, (_id, d) => (d && Array.isArray(d.elements) ? d : null));
+    if (nextLib && a) {
+      await set(LIB_KEY, nextLib);
+      libQuiet.current = true;
+      libCount.current = nextLib.length;
+      try {
+        await a.updateLibrary({ libraryItems: nextLib as any, merge: false });
+      } finally {
+        libQuiet.current = false;
+      }
+    }
+    const mineNow = await loadMine();
+    const nextMine = await syncList<MySticker>(
+      'stickers',
+      mineNow,
+      async (m) => {
+        const file = `mine-file-${m.id}`;
+        await pushFiles({ [file]: { dataURL: await blobToDataURL(m.blob), mimeType: m.blob.type || 'image/png', created: m.at } }, [file]);
+        return { name: m.name, at: m.at, file };
+      },
+      async (id, d) => {
+        if (!d?.file) return null;
+        const [f] = await pullFiles([d.file]);
+        if (!f) return null;
+        return { id, name: String(d.name || 'Sticker'), at: Number(d.at) || Date.now(), blob: await (await fetch(f.dataURL)).blob() };
+      }
+    );
+    if (nextMine) {
+      nextMine.sort((x, y) => y.at - x.at);
+      await saveMine(nextMine);
+      setMine((cur) => (cur === null ? null : nextMine));
+    }
+  };
+
   const runSync = async () => {
     const a = apiRef.current;
     if (!a || !syncEnabled()) return;
@@ -389,6 +434,7 @@ function BoardApp({ pid }: { pid: string }) {
         for (const e of out) pushed.current!.set(e.id, e.version);
         await writePushed(pid, pushed.current!);
       }
+      await syncShared();
       setSync('ok');
     } catch (e) {
       setSync(e instanceof SyncError && e.status === 401 ? 'denied' : 'offline');
@@ -565,19 +611,27 @@ function BoardApp({ pid }: { pid: string }) {
           libCount.current = n;
           if (!libQuiet.current) libChannel.current?.postMessage({ added });
         }
+        if (!libQuiet.current) syncSoonRef.current();
       },
     }),
     []
   );
   useHandleLibrary({ excalidrawAPI: api, adapter: libraryAdapter });
 
-  // Hold the right mouse button and drag to move around, like Miro. A
-  // right click without dragging still opens the context menu.
+  // Hold the right mouse button and drag to move around (the only drag-to-pan
+  // besides the hand tool). A right click without dragging still opens the
+  // context menu.
   useEffect(() => {
     const shell = document.querySelector('.board-shell') as HTMLElement | null;
     if (!shell) return;
     let pan: { x: number; y: number; sx: number; sy: number; moved: boolean; target: HTMLCanvasElement } | null = null;
     const onDown = (e: PointerEvent) => {
+      // Thy pans with the right button only: pressing the wheel does nothing
+      if (e.button === 1 && e.target instanceof HTMLCanvasElement) {
+        e.stopPropagation();
+        e.preventDefault();
+        return;
+      }
       if (e.button !== 2 || !(e.target instanceof HTMLCanvasElement) || !apiRef.current) return;
       const st = apiRef.current.getAppState();
       pan = { x: e.clientX, y: e.clientY, sx: st.scrollX, sy: st.scrollY, moved: false, target: e.target };
@@ -859,6 +913,7 @@ function BoardApp({ pid }: { pid: string }) {
     if (!list.length) return;
     const r = await addMine(list, list.map((f) => f.name.replace(/\.[^.]+$/, '')), clearBg);
     setMine(r.list);
+    syncSoonRef.current();
     setStickerTab('mine');
     flash(r.full ? t(`Sticker box is full (${MAX_MINE})`, `Hộp sticker đã đầy (${MAX_MINE})`) : t(`Added ${r.added} sticker${r.added === 1 ? '' : 's'}`, `Đã thêm ${r.added} sticker`));
   };
@@ -874,11 +929,13 @@ function BoardApp({ pid }: { pid: string }) {
     const blobs = await Promise.all(imgs.map((e: any) => fetch(files[e.fileId].dataURL).then((r) => r.blob())));
     const r = await addMine(blobs, blobs.map(() => 'From board'), clearBg);
     setMine(r.list);
+    syncSoonRef.current();
     setStickerTab('mine');
     flash(t(`Saved ${r.added} to My stickers`, `Đã lưu ${r.added} vào Sticker của tôi`));
   };
   const deleteMine = async (id: string) => {
     setMine(await removeMine(id));
+    syncSoonRef.current();
   };
 
   // ---------------------------------------------------- votes

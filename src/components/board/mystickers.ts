@@ -14,7 +14,7 @@ export async function loadMine(): Promise<MySticker[]> {
   return ((await get(KEY).catch(() => null)) as MySticker[] | null) ?? [];
 }
 
-async function saveMine(list: MySticker[]) {
+export async function saveMine(list: MySticker[]) {
   await set(KEY, list);
 }
 

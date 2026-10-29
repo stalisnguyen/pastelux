@@ -12,6 +12,7 @@ import { DurableObject } from 'cloudflare:workers';
 const CHUNK = 900_000; // SQLite values stay well under the 2 MB row limit
 const PULL_LIMIT = 1500;
 const FILES_RESPONSE_BYTES = 6_000_000;
+const DOC_KINDS = new Set(['library', 'stickers']);
 
 export class BoardStore extends DurableObject {
   constructor(ctx, env) {
@@ -24,6 +25,8 @@ export class BoardStore extends DurableObject {
       CREATE INDEX IF NOT EXISTS elements_seq ON elements (project, seq);
       CREATE TABLE IF NOT EXISTS files (id TEXT PRIMARY KEY, mime TEXT, created INTEGER, chunks INTEGER, size INTEGER);
       CREATE TABLE IF NOT EXISTS file_chunks (id TEXT, n INTEGER, data TEXT, PRIMARY KEY (id, n));
+      CREATE TABLE IF NOT EXISTS docs (kind TEXT, id TEXT, seq INTEGER, deleted INTEGER, data TEXT, PRIMARY KEY (kind, id));
+      CREATE INDEX IF NOT EXISTS docs_seq ON docs (kind, seq);
     `);
   }
 
@@ -46,6 +49,8 @@ export class BoardStore extends DurableObject {
     if (op === 'files-missing') return reply(200, this.filesMissing(body.ids));
     if (op === 'file-put') return reply(200, this.filePut(body.file));
     if (op === 'files-get') return reply(200, this.filesGet(body.ids));
+    if (op === 'docs-pull') return reply(200, this.docsPull(String(body.kind || ''), Number(body.since) || 0));
+    if (op === 'docs-push') return reply(200, this.docsPush(String(body.kind || ''), body.items));
     return reply(400, { error: 'Unknown op' });
   }
 
@@ -94,6 +99,38 @@ export class BoardStore extends DurableObject {
           nonce,
           this.nextSeq(),
           JSON.stringify(el)
+        );
+        accepted++;
+      }
+    });
+    return { accepted };
+  }
+
+  // Shared lists that are not boards (the Excalidraw library, My stickers):
+  // one row per item, the latest write wins, deletes kept as tombstones.
+  docsPull(kind, since) {
+    if (!DOC_KINDS.has(kind)) return { items: [], seq: since };
+    const rows = this.sql.exec(`SELECT id, seq, deleted, data FROM docs WHERE kind = ? AND seq > ? ORDER BY seq LIMIT 500`, kind, since).toArray();
+    return {
+      items: rows.map((r) => ({ id: r.id, deleted: Boolean(r.deleted), data: r.deleted ? null : JSON.parse(r.data) })),
+      seq: rows.length ? rows[rows.length - 1].seq : since,
+      more: rows.length === 500,
+    };
+  }
+
+  docsPush(kind, items) {
+    if (!DOC_KINDS.has(kind) || !Array.isArray(items)) return { accepted: 0 };
+    let accepted = 0;
+    this.ctx.storage.transactionSync(() => {
+      for (const it of items.slice(0, 2000)) {
+        if (!it || typeof it.id !== 'string' || !it.id) continue;
+        this.sql.exec(
+          `INSERT OR REPLACE INTO docs (kind, id, seq, deleted, data) VALUES (?, ?, ?, ?, ?)`,
+          kind,
+          it.id.slice(0, 128),
+          this.nextSeq(),
+          it.deleted ? 1 : 0,
+          it.deleted ? null : JSON.stringify(it.data ?? null)
         );
         accepted++;
       }
