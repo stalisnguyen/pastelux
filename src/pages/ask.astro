@@ -231,10 +231,21 @@ import Base from '../layouts/Base.astro';
     const light = turns.map((m) => ({ role: m.role, text: m.text, hadImage: Boolean(m.image) || (m as any).hadImage }));
     try {
       localStorage.setItem(CHAT_STORE, JSON.stringify(light.slice(-40)));
+      localStorage.setItem(CHAT_AT, String(Date.now()));
     } catch {}
   };
+  // A chat left alone for an hour starts fresh next time (old chats from
+  // before this rule have no time and start fresh too).
+  const CHAT_AT = 'pastelux-ask-chat-at';
+  const FRESH_AFTER_MS = 60 * 60 * 1000;
   const load = () => {
     try {
+      const at = Number(localStorage.getItem(CHAT_AT) || 0);
+      if (Date.now() - at > FRESH_AFTER_MS) {
+        localStorage.removeItem(CHAT_STORE);
+        turns = [];
+        return;
+      }
       turns = JSON.parse(localStorage.getItem(CHAT_STORE) || '[]');
     } catch {
       turns = [];
