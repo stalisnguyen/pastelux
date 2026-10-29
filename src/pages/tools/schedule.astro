@@ -1,0 +1,263 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import ScheduleApp from '../../components/ScheduleApp';
+---
+
+<Base title="Fixture schedule" description="Fixture types, quantities per area, watts and W/m² against your code's limit. Exports to Excel and prints to PDF.">
+  <PageHeader
+    eyebrow="Tools"
+    viEyebrow="Công cụ"
+    title="Fixture schedule"
+    viTitle="Bảng thống kê đèn"
+    lede="List the fixture types for a project, count them per area, and see watts and W/m² against the limit your energy code sets. Export to Excel or print to PDF for the drawing set."
+  >
+    <p class="vi-block vi-def mt-2 text-[0.95rem] max-w-2xl leading-relaxed">
+      Liệt kê các loại đèn của dự án, đếm số lượng theo từng khu vực, và xem tổng công suất cùng W/m² so với
+      giới hạn của quy chuẩn năng lượng. Xuất ra Excel hoặc in ra PDF để đưa vào bộ hồ sơ.
+    </p>
+  </PageHeader>
+
+  <ScheduleApp client:only="react" />
+</Base>
+
+<style is:global>
+  .sch {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem;
+    padding-bottom: 2rem;
+  }
+  .sch > * {
+    min-width: 0;
+  }
+  .sch-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: 0.75rem 1rem;
+  }
+  .sch-proj {
+    display: grid;
+    gap: 0.25rem;
+    min-width: 14rem;
+  }
+  .sch-actions {
+    margin-left: auto;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .sch-sync {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    padding-bottom: 0.6rem;
+  }
+  .sch-sync-ok {
+    color: var(--success, #2b8a3e);
+  }
+  .sch-sync-offline {
+    color: var(--warning);
+  }
+  .sch-card {
+    padding: 1rem 1rem 0.75rem;
+  }
+  .sch-head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  .sch-head h2 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-right: auto;
+  }
+  .sch-scroll {
+    overflow-x: auto;
+    margin: 0 -1rem;
+    padding: 0 1rem;
+  }
+  .sch-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.86rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .sch-table th {
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.74rem;
+    color: var(--text-muted);
+    padding: 0.4rem 0.4rem;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  .sch-table td {
+    padding: 0.25rem 0.4rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  .sch-table tfoot th {
+    color: var(--text);
+    border-top: 1px solid var(--border);
+    border-bottom: 0;
+  }
+  .sch-table .r {
+    text-align: right;
+  }
+  .sch-qty-h {
+    max-width: 7rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .sch-in {
+    font: inherit;
+    color: var(--text);
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    padding: 0.3rem 0.4rem;
+    width: 7.5rem;
+    min-width: 0;
+  }
+  .sch-in:hover {
+    border-color: var(--border);
+  }
+  .sch-in:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: var(--surface);
+  }
+  select.sch-in {
+    width: auto;
+    max-width: 10rem;
+    cursor: pointer;
+  }
+  .sch-wide {
+    width: 13rem;
+  }
+  .sch-num {
+    width: 5rem;
+    text-align: right;
+  }
+  .sch-qty {
+    width: 3.75rem;
+    text-align: right;
+  }
+  .sch-code {
+    width: 3.5rem;
+    font-weight: 600;
+  }
+  .sch-ip {
+    width: 3.75rem;
+  }
+  td > .sch-in + .sch-in {
+    margin-left: 0.25rem;
+  }
+  .sch-strong {
+    font-weight: 600;
+  }
+  .sch-muted {
+    color: var(--text-muted);
+  }
+  .sch-over {
+    color: var(--danger, #e03131);
+    font-weight: 600;
+  }
+  .sch-ok {
+    color: var(--success, #2b8a3e);
+  }
+  .sch-x,
+  .sch-row-actions button {
+    border: 0;
+    background: transparent;
+    color: var(--text-faint);
+    cursor: pointer;
+    font-size: 1rem;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 6px;
+  }
+  .sch-x:hover,
+  .sch-row-actions button:hover:not(:disabled) {
+    background: var(--surface-2, var(--surface));
+    color: var(--text);
+  }
+  .sch-row-actions button:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+  .sch-src {
+    font-size: 0.68rem;
+    padding: 0.05rem 0.35rem;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    margin-left: 0.25rem;
+  }
+  .sch-hint,
+  .sch-empty {
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+    margin-top: 0.6rem;
+    max-width: 52rem;
+  }
+  .sch-empty {
+    font-size: 0.9rem;
+    padding: 0.5rem 0 0.75rem;
+  }
+  .sch-print-only {
+    display: none;
+  }
+
+  @media print {
+    header,
+    footer,
+    nav,
+    .mnav,
+    .stas-fab,
+    .sch-noprint,
+    .sch-actions,
+    .sch-sync,
+    .sch-hint,
+    .sch-proj .label {
+      display: none !important;
+    }
+    .sch-proj select {
+      border: 0;
+      font-size: 1.1rem;
+      font-weight: 600;
+      appearance: none;
+      padding: 0;
+    }
+    .sch-card {
+      border: 0;
+      box-shadow: none;
+      padding: 0;
+    }
+    .sch-scroll {
+      overflow: visible;
+    }
+    .sch-table {
+      font-size: 8pt;
+    }
+    .sch-in {
+      border: 0 !important;
+      padding: 0;
+      width: auto;
+    }
+    select.sch-in {
+      display: none;
+    }
+    .sch-print-only {
+      display: inline;
+    }
+    @page {
+      size: A4 landscape;
+      margin: 12mm;
+    }
+  }
+</style>

@@ -46,6 +46,34 @@ import { url } from '../site';
       </p>
     </a>
 
+    <!-- ---------------------------------- photometry + fixture schedule -->
+    <div class="grid sm:grid-cols-2 gap-5">
+      <a href={url('/tools/photometry')} class="card p-6 no-underline block card-interactive" style="color: var(--text)">
+        <div class="flex items-baseline gap-2 flex-wrap">
+          <h2 class="text-lg font-semibold">Photometric file viewer<span class="vi-block-inline"> · Xem file trắc quang</span></h2>
+          <span class="ml-auto text-[0.85rem]" style="color: var(--accent-cool)">Open →<span class="vi-block-inline"> · Mở</span></span>
+        </div>
+        <p class="text-[0.9rem] mt-1.5" style="color: var(--text-muted)">
+          Open an IES or LDT file: polar curve, beam and field angles, delivered lumens, efficacy and lux at each mounting height.
+        </p>
+        <p class="vi-block vi-def text-[0.86rem] mt-1.5">
+          Mở file IES hoặc LDT: đường cong phân bố, góc chiếu và góc trường, quang thông thực phát, hiệu suất và độ rọi ở từng độ cao lắp.
+        </p>
+      </a>
+      <a href={url('/tools/schedule')} class="card p-6 no-underline block card-interactive" style="color: var(--text)">
+        <div class="flex items-baseline gap-2 flex-wrap">
+          <h2 class="text-lg font-semibold">Fixture schedule<span class="vi-block-inline"> · Bảng thống kê đèn</span></h2>
+          <span class="ml-auto text-[0.85rem]" style="color: var(--accent-cool)">Open →<span class="vi-block-inline"> · Mở</span></span>
+        </div>
+        <p class="text-[0.9rem] mt-1.5" style="color: var(--text-muted)">
+          Fixture types and quantities per area, total watts and W/m² against your code's limit. Exports to Excel, prints to PDF.
+        </p>
+        <p class="vi-block vi-def text-[0.86rem] mt-1.5">
+          Loại đèn và số lượng theo khu vực, tổng công suất và W/m² so với giới hạn quy chuẩn. Xuất Excel, in PDF.
+        </p>
+      </a>
+    </div>
+
     <!-- ------------------------------------------------ lumen method -->
     <section id="lumen" class="card p-6 scroll-mt-20" aria-labelledby="lumen-h">
       <h2 id="lumen-h" class="text-lg font-semibold">Lumen method<span class="vi-block-inline"> · Phương pháp quang thông</span></h2>

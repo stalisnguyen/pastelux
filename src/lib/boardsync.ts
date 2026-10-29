@@ -7,6 +7,7 @@ import { get, set } from 'idb-keyval';
 import { AI_PROXY_URL } from '../site';
 import { readCode } from './ask';
 import { allProjects, listProjects, mergeProjects, type Project } from './projects';
+import { loadSchedule, saveSchedule, type Schedule } from './schedule';
 
 export const syncEnabled = () => Boolean(AI_PROXY_URL && readCode());
 
@@ -109,7 +110,7 @@ export async function pullFiles(ids: string[]) {
 // The Excalidraw library and My stickers: one list each, shared by every
 // unlocked device. `known` is what this device last agreed with the server,
 // so an item missing locally but known was deleted here.
-export type DocKind = 'library' | 'stickers';
+export type DocKind = 'library' | 'stickers' | 'schedule';
 const docSeqKey = (k: DocKind) => `pastelux-sync-${k}-seq`;
 const docKnownKey = (k: DocKind) => `pastelux-sync-${k}-known`;
 
@@ -172,6 +173,34 @@ export async function syncList<T extends { id: string }>(kind: DocKind, local: T
   saveDocSeq(kind, seq);
   await writeKnown(kind, ids);
   return changed ? list : null;
+}
+
+/**
+ * Fixture schedules: one document per project. The copy edited last wins
+ * (schedules are small and usually edited on one device at a time).
+ */
+const SCHED_PUSHED = 'pastelux-sync-schedule-pushed';
+export async function syncSchedules() {
+  const { items, seq } = await pullDocs('schedule');
+  for (const it of items) {
+    if (it.deleted || !it.data || !Array.isArray(it.data.fixtures)) continue;
+    const local = loadSchedule(it.id);
+    if ((Number(it.data.updatedAt) || 0) > (local.updatedAt || 0)) saveSchedule(it.data as Schedule, it.id, Number(it.data.updatedAt));
+  }
+  const pushed: Record<string, number> = store(() => JSON.parse(localStorage.getItem(SCHED_PUSHED) || '{}'), {});
+  // what just came in counts as already on the server
+  for (const it of items) if (!it.deleted && it.data) pushed[it.id] = Math.max(pushed[it.id] || 0, Number(it.data.updatedAt) || 0);
+  const out: { id: string; data: Schedule }[] = [];
+  for (const p of allProjects()) {
+    const s = loadSchedule(p.id);
+    if (s.updatedAt && s.updatedAt > (pushed[p.id] || 0)) {
+      out.push({ id: p.id, data: s });
+      pushed[p.id] = s.updatedAt;
+    }
+  }
+  if (out.length) await pushDocs('schedule', out);
+  store(() => localStorage.setItem(SCHED_PUSHED, JSON.stringify(pushed)), undefined);
+  saveDocSeq('schedule', seq);
 }
 
 const store = <T,>(fn: () => T, fallback: T): T => {

@@ -12,7 +12,7 @@ import { DurableObject } from 'cloudflare:workers';
 const CHUNK = 900_000; // SQLite values stay well under the 2 MB row limit
 const PULL_LIMIT = 1500;
 const FILES_RESPONSE_BYTES = 6_000_000;
-const DOC_KINDS = new Set(['library', 'stickers']);
+const DOC_KINDS = new Set(['library', 'stickers', 'schedule']);
 
 export class BoardStore extends DurableObject {
   constructor(ctx, env) {
