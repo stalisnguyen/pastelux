@@ -38,12 +38,22 @@ export class StasError extends Error {
   }
 }
 
+/** The name she chose on the Ask page, if any, so Stas can use it. */
+function nameNote(): string {
+  try {
+    const n = (localStorage.getItem('pastelux-ask-name') || '').trim().slice(0, 40);
+    return n ? `\n\nHer name is ${n}.` : '';
+  } catch {
+    return '';
+  }
+}
+
 /** Streams one reply. Calls onText with the text so far. */
 export async function askStream(code: string, turns: Turn[], onText: (textSoFar: string) => void, signal?: AbortSignal): Promise<string> {
   const res = await fetch(`${AI_PROXY_URL}/chat`, {
     method: 'POST',
     headers: { 'content-type': 'application/json', 'x-pastelux-code': code },
-    body: JSON.stringify({ system: SYSTEM_PROMPT, messages: turns }),
+    body: JSON.stringify({ system: SYSTEM_PROMPT + nameNote(), messages: turns }),
     signal,
   });
   if (!res.ok || !res.body) {

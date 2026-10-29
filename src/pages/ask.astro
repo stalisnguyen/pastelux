@@ -85,7 +85,11 @@ import Base from '../layouts/Base.astro';
       <p class="text-[0.75rem] mt-2 pb-6" style="color: var(--text-faint)">
         <span>Stas runs on Google Gemini and can be wrong. Double-check important facts, and check lighting numbers against the standard your project uses.</span>
         <span class="vi-block-inline">Stas chạy trên Google Gemini và có thể sai. Thông tin quan trọng thì kiểm tra lại, còn số liệu chiếu sáng thì đối chiếu với tiêu chuẩn mà dự án đang dùng.</span>
-        <button id="ask-forget" type="button" class="underline ml-1" style="color: var(--text-faint)">
+        <button id="ask-rename" type="button" class="underline ml-1" style="color: var(--text-faint)">
+          <span>Change name</span><span class="vi-block-inline">Đổi tên</span>
+        </button>
+        <span aria-hidden="true" style="color: var(--text-faint)">·</span>
+        <button id="ask-forget" type="button" class="underline" style="color: var(--text-faint)">
           <span>Lock this device</span><span class="vi-block-inline">Khoá thiết bị này</span>
         </button>
       </p>
@@ -386,6 +390,18 @@ import Base from '../layouts/Base.astro';
     renderAll();
     input.focus();
   });
+  $('ask-rename').addEventListener('click', () => {
+    const now = readName();
+    const v = window.prompt(t('What should Stas call you? (leave empty for no name)', 'Stas nên gọi bạn là gì? (để trống nếu không cần tên)'), now);
+    if (v === null) return;
+    try {
+      const name = v.trim().slice(0, 40);
+      if (name) localStorage.setItem(NAME_STORE, name);
+      else localStorage.removeItem(NAME_STORE);
+    } catch {}
+    if (!turns.length) renderAll();
+  });
+
   $('ask-forget').addEventListener('click', () => {
     if (!confirm(t('Lock Ask AI on this device? The code will be needed again.', 'Khoá Hỏi AI trên thiết bị này? Lần sau phải nhập lại mã.'))) return;
     try {
