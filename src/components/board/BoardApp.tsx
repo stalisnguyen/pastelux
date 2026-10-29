@@ -7,6 +7,8 @@ import {
   useHandleLibrary,
   viewportCoordsToSceneCoords,
   sceneCoordsToViewportCoords,
+  reconcileElements,
+  restoreElements,
 } from '@excalidraw/excalidraw';
 import '@excalidraw/excalidraw/index.css';
 import { get, set } from 'idb-keyval';
@@ -15,12 +17,15 @@ import { NOTE_COLORS, STAMPS, CCT_SWATCHES, EMOJI_GROUPS, templates } from './st
 import FLUENT from './fluent-stickers.json';
 import { loadMine, addMine, removeMine, MAX_MINE, type MySticker } from './mystickers';
 import { AI_PROXY_URL } from '../../site';
+import { boardKeys, currentProjectId, setCurrentProject, listProjects, createProject, renameProject, deleteProject, DEFAULT_ID, type Project } from '../../lib/projects';
+import { syncEnabled, syncProjects, readSeq, writeSeq, readPushed, writePushed, pullElements, pushElements, pushFiles, pullFiles, SyncError } from '../../lib/boardsync';
 
 /*
  * A free-form board laid out like Miro: a vertical toolbar on the left
  * (select, hand, notes, text, shapes, connector, pen/highlighter/eraser,
  * frame, image, stickers, comments, votes, templates, lighting symbols),
- * built on Excalidraw. Everything stays in this browser (IndexedDB).
+ * built on Excalidraw. Every board stays in this browser (IndexedDB); devices
+ * unlocked with the Stas code also sync their projects (lib/boardsync.ts).
  */
 
 // Naming this tab lets libraries.excalidraw.com send "Add to Excalidraw"
@@ -28,8 +33,7 @@ import { AI_PROXY_URL } from '../../site';
 // a second board tab that has to load the whole editor again.
 if (typeof window !== 'undefined' && !window.name) window.name = 'pastelux-board';
 
-const SCENE_KEY = 'pastelux-board';
-const FILES_KEY = 'pastelux-board-files';
+const TOMBSTONE_DAYS = 30; // deleted elements are kept this long so deletes sync
 const LIB_KEY = 'pastelux-board-library';
 const UI_OPTIONS = { canvasActions: { toggleTheme: false } } as const;
 const GRID_KEY = 'pastelux-board-grid';
@@ -74,7 +78,21 @@ const Icon = ({ d }: { d: string }) => (
   </svg>
 );
 
-export default function BoardApp() {
+/** Picks the current project and remounts the board when it changes. */
+export default function BoardRoot() {
+  const [pid, setPid] = useState<string>(() => currentProjectId());
+  useEffect(() => {
+    const on = (e: Event) => setPid(String((e as CustomEvent).detail || currentProjectId()));
+    window.addEventListener('pastelux:project', on);
+    return () => window.removeEventListener('pastelux:project', on);
+  }, []);
+  return <BoardApp key={pid} pid={pid} />;
+}
+
+function BoardApp({ pid }: { pid: string }) {
+  const keys = useMemo(() => boardKeys(pid), [pid]);
+  const SCENE_KEY = keys.scene;
+  const FILES_KEY = keys.files;
   const [lang, setLang] = useState<'vi' | 'en'>(readLang);
   const [grid, setGrid] = useState<boolean>(() => store(() => localStorage.getItem(GRID_KEY) === '1', false));
   const [api, setApi] = useState<any>(null);
@@ -219,7 +237,10 @@ export default function BoardApp() {
       if (!frameIds.has(bg.customData.frame)) edit()[indexOf(bg.id)] = bump(bg, { isDeleted: true });
     }
     for (const f of frames) {
-      const bg = all.find((e) => e.customData?.kind === 'frame-bg' && e.customData.frame === f.id && !e.isDeleted);
+      const sheets = all.filter((e) => e.customData?.kind === 'frame-bg' && e.customData.frame === f.id && !e.isDeleted);
+      // two devices may each have made a sheet for the same frame: keep one
+      for (const extra of sheets.slice(1)) edit()[indexOf(extra.id)] = bump(extra, { isDeleted: true });
+      const bg = sheets[0];
       if (!bg) {
         const [sheet] = convertToExcalidrawElements(
           [{ type: 'rectangle', x: f.x, y: f.y, width: f.width, height: f.height, backgroundColor: '#ffffff', fillStyle: 'solid', strokeColor: 'transparent', strokeWidth: 1, roughness: 0 } as any],
@@ -252,6 +273,7 @@ export default function BoardApp() {
       for (const s0 of all) {
         if (s0.type !== 'freedraw' || s0.isDeleted || seenStrokes.current.has(s0.id)) continue;
         seenStrokes.current.add(s0.id);
+        if (s0.customData?.stuckTo) continue; // came from another device already stuck
         const cx = s0.x + s0.width / 2, cy = s0.y + s0.height / 2;
         const under = photos.filter((p) => cx >= p.x && cx <= p.x + p.width && cy >= p.y && cy <= p.y + p.height);
         if (!under.length) continue;
@@ -300,6 +322,162 @@ export default function BoardApp() {
   const followRef = useRef(follow);
   followRef.current = follow;
 
+  // ---------------------------------------------------- sync across devices
+  const [sync, setSync] = useState<'off' | 'syncing' | 'ok' | 'offline' | 'denied'>(() => (syncEnabled() ? 'syncing' : 'off'));
+  const [projects, setProjects] = useState<Project[]>(() => listProjects());
+  const [projMenu, setProjMenu] = useState(false);
+  const pushed = useRef<Map<string, number> | null>(null);
+  const syncBusy = useRef(false);
+  const syncAgain = useRef(false);
+  const syncTimer = useRef<number | undefined>(undefined);
+  const firstPull = useRef(true);
+
+  /** Takes in elements from other devices, element by element. */
+  const applyRemote = async (incoming: any[]) => {
+    const a = apiRef.current;
+    if (!a || !incoming.length) return;
+    // only well-formed elements get in (restoreElements drops unknown types)
+    const remote: any[] = restoreElements(
+      incoming.filter((e) => e && typeof e.id === 'string' && typeof e.type === 'string' && typeof e.version === 'number'),
+      null,
+      { refreshDimensions: false, repairBindings: true }
+    ) as any[];
+    if (!remote.length) return;
+    const wasEmpty = !a.getSceneElements().length;
+    const merged: any[] = reconcileElements(a.getSceneElementsIncludingDeleted(), remote as any, a.getAppState()) as any[];
+    const byId = new Map(merged.map((e) => [e.id, e]));
+    for (const r of remote) {
+      const m = byId.get(r.id);
+      if (m && m.version === r.version) pushed.current?.set(r.id, r.version);
+      if (r.type === 'freedraw') seenStrokes.current?.add(r.id);
+    }
+    // photos moved elsewhere already brought their strokes: do not move them twice
+    for (const e of merged) if (e.type === 'image') photoPos.current.set(e.id, { x: e.x, y: e.y });
+    a.updateScene({ elements: merged, captureUpdate: CaptureUpdateAction.NEVER });
+    const have = a.getFiles();
+    const need = [...new Set(merged.filter((e) => e.type === 'image' && !e.isDeleted && e.fileId && !have[e.fileId]).map((e) => e.fileId))] as string[];
+    if (need.length) {
+      const files = await pullFiles(need);
+      if (files.length) a.addFiles(files);
+    }
+    if (wasEmpty && merged.some((e) => !e.isDeleted)) a.scrollToContent(undefined, { fitToViewport: true, viewportZoomFactor: 0.9, animate: false });
+  };
+
+  const runSync = async () => {
+    const a = apiRef.current;
+    if (!a || !syncEnabled()) return;
+    if (syncBusy.current) {
+      syncAgain.current = true;
+      return;
+    }
+    syncBusy.current = true;
+    setSync('syncing');
+    try {
+      if (!pushed.current) pushed.current = await readPushed(pid);
+      firstPull.current = false;
+      const list = await syncProjects();
+      setProjects((prev) => (JSON.stringify(prev) === JSON.stringify(list) ? prev : list));
+      const { elements: remote, seq } = await pullElements(pid, readSeq(pid));
+      await applyRemote(remote);
+      writeSeq(pid, seq);
+      const all: any[] = a.getSceneElementsIncludingDeleted();
+      const out = all.filter((e) => pushed.current!.get(e.id) !== e.version);
+      if (out.length) {
+        const fileIds = [...new Set(out.filter((e) => e.type === 'image' && !e.isDeleted && e.fileId).map((e) => e.fileId))] as string[];
+        await pushFiles(a.getFiles(), fileIds); // images first, so other devices can fetch them
+        await pushElements(pid, out);
+        for (const e of out) pushed.current!.set(e.id, e.version);
+        await writePushed(pid, pushed.current!);
+      }
+      setSync('ok');
+    } catch (e) {
+      setSync(e instanceof SyncError && e.status === 401 ? 'denied' : 'offline');
+    } finally {
+      syncBusy.current = false;
+      if (syncAgain.current) {
+        syncAgain.current = false;
+        syncSoonRef.current();
+      }
+    }
+  };
+  const runSyncRef = useRef(runSync);
+  runSyncRef.current = runSync;
+  const syncSoonRef = useRef(() => {});
+  syncSoonRef.current = () => {
+    if (!syncEnabled()) return;
+    window.clearTimeout(syncTimer.current);
+    syncTimer.current = window.setTimeout(() => runSyncRef.current(), 1500);
+  };
+  useEffect(() => {
+    if (!api || !syncEnabled()) return;
+    runSyncRef.current();
+    const every = window.setInterval(() => {
+      if (document.visibilityState === 'visible') runSyncRef.current();
+    }, 20000);
+    const onVis = () => document.visibilityState === 'visible' && runSyncRef.current();
+    document.addEventListener('visibilitychange', onVis);
+    window.addEventListener('focus', onVis);
+    return () => {
+      window.clearInterval(every);
+      window.clearTimeout(syncTimer.current);
+      document.removeEventListener('visibilitychange', onVis);
+      window.removeEventListener('focus', onVis);
+    };
+  }, [api]);
+
+  // ---------------------------------------------------- projects
+  const switchProject = (id: string) => {
+    if (id === pid) return;
+    window.clearTimeout(saveTimer.current);
+    flushRef.current();
+    setCurrentProject(id); // BoardRoot remounts the board for that project
+  };
+  const newProject = () => {
+    const name = window.prompt(t('Name of the new project', 'Tên project mới'), '');
+    if (name === null) return;
+    const p = createProject(name || t('Untitled', 'Chưa đặt tên'));
+    setProjects(listProjects());
+    if (syncEnabled()) syncProjects().catch(() => {});
+    switchProject(p.id);
+  };
+  const renameCurrent = () => {
+    const cur = projects.find((p) => p.id === pid);
+    const name = window.prompt(t('Rename this project', 'Đổi tên project'), cur ? projectName(cur) : '');
+    if (!name) return;
+    renameProject(pid, name);
+    setProjects(listProjects());
+    if (syncEnabled()) syncProjects().then(setProjects).catch(() => {});
+  };
+  const deleteCurrent = () => {
+    const cur = projects.find((p) => p.id === pid);
+    if (!cur || listProjects().length < 2) return;
+    if (!window.confirm(t(`Hide the project “${projectName(cur)}” on every device?`, `Ẩn project “${projectName(cur)}” trên mọi thiết bị?`))) return;
+    deleteProject(pid);
+    setProjects(listProjects());
+    if (syncEnabled()) syncProjects().catch(() => {});
+  };
+  const projectName = (p: Project) => (p.id === DEFAULT_ID && p.name === 'My first project' ? t('My first project', 'Project đầu tiên') : p.name);
+
+  /** Writes the board right now (before switching project or leaving). */
+  const flushRef = useRef(() => {});
+  flushRef.current = () => {
+    const a = apiRef.current;
+    if (!a) return;
+    const cutoff = Date.now() - TOMBSTONE_DAYS * 864e5;
+    const st = a.getAppState();
+    set(SCENE_KEY, {
+      elements: a.getSceneElementsIncludingDeleted().filter((e: any) => !e.isDeleted || (e.updated ?? 0) > cutoff),
+      appState: { viewBackgroundColor: st.viewBackgroundColor, scrollX: st.scrollX, scrollY: st.scrollY, zoom: st.zoom },
+      files: {},
+    } satisfies Saved).catch(() => {});
+    set(FILES_KEY, a.getFiles()).catch(() => {});
+  };
+  useEffect(() => {
+    const onHide = () => flushRef.current();
+    window.addEventListener('pagehide', onHide);
+    return () => window.removeEventListener('pagehide', onHide);
+  }, []);
+
   const onChange = useCallback((elements: readonly any[], appState: any, files: any) => {
     const type = appState.activeTool?.type;
     if (type !== lastTool.current) {
@@ -340,8 +518,11 @@ export default function BoardApp() {
         lastCounts.current = counts;
         setSceneTick((n) => n + 1);
       }
+      // deleted elements stay a while (as tombstones) so the delete can sync
+      const cutoff = Date.now() - TOMBSTONE_DAYS * 864e5;
+      const all = apiRef.current?.getSceneElementsIncludingDeleted?.() ?? elements;
       set(SCENE_KEY, {
-        elements: live,
+        elements: all.filter((e: any) => !e.isDeleted || (e.updated ?? 0) > cutoff),
         appState: {
           viewBackgroundColor: appState.viewBackgroundColor,
           currentItemStrokeColor: appState.currentItemStrokeColor,
@@ -359,6 +540,7 @@ export default function BoardApp() {
         lastFileIds.current = fileIds;
         set(FILES_KEY, files).catch(() => {});
       }
+      syncSoonRef.current();
     }, 500);
   }, []);
 
@@ -388,6 +570,60 @@ export default function BoardApp() {
     []
   );
   useHandleLibrary({ excalidrawAPI: api, adapter: libraryAdapter });
+
+  // Hold the right mouse button and drag to move around, like Miro. A
+  // right click without dragging still opens the context menu.
+  useEffect(() => {
+    const shell = document.querySelector('.board-shell') as HTMLElement | null;
+    if (!shell) return;
+    let pan: { x: number; y: number; sx: number; sy: number; moved: boolean; target: HTMLCanvasElement } | null = null;
+    const onDown = (e: PointerEvent) => {
+      if (e.button !== 2 || !(e.target instanceof HTMLCanvasElement) || !apiRef.current) return;
+      const st = apiRef.current.getAppState();
+      pan = { x: e.clientX, y: e.clientY, sx: st.scrollX, sy: st.scrollY, moved: false, target: e.target };
+      e.stopPropagation();
+      e.preventDefault();
+    };
+    const onMove = (e: PointerEvent) => {
+      if (!pan) return;
+      const dx = e.clientX - pan.x, dy = e.clientY - pan.y;
+      if (!pan.moved && Math.hypot(dx, dy) < 4) return;
+      if (!pan.moved) {
+        pan.moved = true;
+        pan.target.style.cursor = 'grabbing';
+      }
+      const z = apiRef.current.getAppState().zoom.value || 1;
+      apiRef.current.updateScene({ appState: { scrollX: pan.sx + dx / z, scrollY: pan.sy + dy / z }, captureUpdate: CaptureUpdateAction.NEVER });
+      e.stopPropagation();
+    };
+    const onUp = (e: PointerEvent) => {
+      if (!pan || e.button !== 2) return;
+      const p = pan;
+      pan = null;
+      p.target.style.cursor = '';
+      e.stopPropagation();
+      // no drag: open Excalidraw's menu (lock, layers…) as a normal right click
+      if (!p.moved) p.target.dispatchEvent(new MouseEvent('contextmenu', { bubbles: true, cancelable: true, clientX: e.clientX, clientY: e.clientY, button: 2 }));
+    };
+    // the browser's own right-click event comes too early (on Mac) or after
+    // a drag (on Windows): the board decides instead
+    const onMenu = (e: MouseEvent) => {
+      if (e.isTrusted && e.target instanceof HTMLCanvasElement) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    };
+    shell.addEventListener('pointerdown', onDown, true);
+    window.addEventListener('pointermove', onMove, true);
+    window.addEventListener('pointerup', onUp, true);
+    shell.addEventListener('contextmenu', onMenu, true);
+    return () => {
+      shell.removeEventListener('pointerdown', onDown, true);
+      window.removeEventListener('pointermove', onMove, true);
+      window.removeEventListener('pointerup', onUp, true);
+      shell.removeEventListener('contextmenu', onMenu, true);
+    };
+  }, [api]);
 
   // Mouse wheel zooms around the pointer, like Miro. Excalidraw zooms on
   // Ctrl + wheel, so a plain mouse-wheel turn is re-sent with Ctrl held.
@@ -870,6 +1106,48 @@ export default function BoardApp() {
   const renderTopRight = useCallback(
     () => (
           <div className="mb-top">
+            <div className="mb-proj">
+              <button type="button" className="board-grid-btn mb-proj-btn" aria-haspopup="menu" aria-expanded={projMenu} onClick={() => setProjMenu((v) => !v)} title={t('Projects', 'Project')}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /></svg>
+                <span className="mb-proj-name">{projectName(projects.find((p) => p.id === pid) ?? { id: pid, name: '…', updatedAt: 0 })}</span>
+                <span aria-hidden="true">▾</span>
+              </button>
+              {projMenu && (
+                <div className="mb-proj-menu" role="menu">
+                  {projects.map((p) => (
+                    <button key={p.id} type="button" role="menuitemradio" aria-checked={p.id === pid} className={p.id === pid ? 'on' : ''} onClick={() => { setProjMenu(false); switchProject(p.id); }}>
+                      {projectName(p)}
+                    </button>
+                  ))}
+                  <hr />
+                  <button type="button" role="menuitem" onClick={() => { setProjMenu(false); newProject(); }}>{t('+ New project', '+ Project mới')}</button>
+                  <button type="button" role="menuitem" onClick={() => { setProjMenu(false); renameCurrent(); }}>{t('Rename this project', 'Đổi tên project này')}</button>
+                  {projects.length > 1 && (
+                    <button type="button" role="menuitem" className="mb-danger" onClick={() => { setProjMenu(false); deleteCurrent(); }}>{t('Hide this project', 'Ẩn project này')}</button>
+                  )}
+                  <p className="mb-proj-note">
+                    {sync === 'off'
+                      ? t('Projects stay in this browser. Unlock Stas on a device to sync them there.', 'Project đang lưu trong trình duyệt này. Mở khoá Stas trên máy nào thì project đồng bộ sang máy đó.')
+                      : t('Synced on every device unlocked with the Stas code.', 'Đồng bộ trên mọi máy đã mở khoá bằng mã của Stas.')}
+                  </p>
+                </div>
+              )}
+            </div>
+            {sync !== 'off' && (
+              <span
+                className={`mb-sync mb-sync-${sync}`}
+                role="status"
+                title={
+                  sync === 'ok' ? t('Synced', 'Đã đồng bộ')
+                  : sync === 'syncing' ? t('Syncing…', 'Đang đồng bộ…')
+                  : sync === 'denied' ? t('Sync is locked: unlock Stas again', 'Đồng bộ bị khoá: mở khoá Stas lại')
+                  : t('Offline: changes are kept here and sync later', 'Mất kết nối: thay đổi vẫn lưu ở máy này và sẽ đồng bộ sau')
+                }
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M7 18a4.5 4.5 0 0 1-.6-8.96A6 6 0 0 1 18 9a4 4 0 0 1 0 9z" />{sync === 'ok' && <path d="M9.5 13.5l2 2 3.5-3.5" />}{(sync === 'offline' || sync === 'denied') && <path d="M10 11l4 4M14 11l-4 4" />}</svg>
+                <span className="mb-sync-text">{sync === 'ok' ? t('Synced', 'Đã đồng bộ') : sync === 'syncing' ? t('Syncing…', 'Đang đồng bộ…') : sync === 'denied' ? t('Locked', 'Bị khoá') : t('Offline', 'Mất mạng')}</span>
+              </span>
+            )}
             <button
               type="button"
               className={`board-grid-btn${grid ? ' on' : ''}`}
@@ -913,7 +1191,7 @@ export default function BoardApp() {
           </div>
     ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [grid, showComments, commentCount, vi, frameSel, lockedFrames]
+    [grid, showComments, commentCount, vi, frameSel, lockedFrames, projMenu, projects, sync]
   );
   const thread: Comment[] = selectedComment?.customData?.thread ?? [];
   /** Place the thread card beside its pin, kept inside the board. */
@@ -934,6 +1212,25 @@ export default function BoardApp() {
 
   return (
     <div className="board-shell">
+      <div className="board-phonebar">
+        <button type="button" className="board-grid-btn mb-proj-btn" onClick={() => setProjMenu((v) => !v)} aria-haspopup="menu" aria-expanded={projMenu}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /></svg>
+          <span className="mb-proj-name">{projectName(projects.find((p) => p.id === pid) ?? { id: pid, name: '…', updatedAt: 0 })}</span>
+          {sync === 'ok' ? <span className="mb-sync mb-sync-ok" aria-label={t('Synced', 'Đã đồng bộ')}>✓</span> : sync === 'offline' || sync === 'denied' ? <span className="mb-sync mb-sync-offline">!</span> : null}
+        </button>
+        {projMenu && (
+          <div className="mb-proj-menu" role="menu">
+            {projects.map((p) => (
+              <button key={p.id} type="button" role="menuitemradio" aria-checked={p.id === pid} className={p.id === pid ? 'on' : ''} onClick={() => { setProjMenu(false); switchProject(p.id); }}>
+                {projectName(p)}
+              </button>
+            ))}
+            <hr />
+            <button type="button" role="menuitem" onClick={() => { setProjMenu(false); newProject(); }}>{t('+ New project', '+ Project mới')}</button>
+            <button type="button" role="menuitem" onClick={() => { setProjMenu(false); renameCurrent(); }}>{t('Rename this project', 'Đổi tên project này')}</button>
+          </div>
+        )}
+      </div>
       {aiOn && (
         <button type="button" className="board-stas-btn board-stas-float" onClick={() => askRef.current()} aria-label={t('Ask Stas about this board', 'Hỏi Stas về bảng này')}>
           <Icon d={I.ai} />

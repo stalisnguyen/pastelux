@@ -4,7 +4,7 @@
  * Sync (when Stas is unlocked on this device) is in lib/sync.ts.
  */
 
-export type Project = { id: string; name: string; updatedAt: number };
+export type Project = { id: string; name: string; updatedAt: number; deleted?: boolean };
 
 const LIST = 'pastelux-projects';
 const CURRENT = 'pastelux-project';
@@ -24,14 +24,21 @@ const write = (k: string, v: unknown) => {
   } catch {}
 };
 
-export function listProjects(): Project[] {
+/** Every project this device knows, deleted ones included (sync needs them). */
+export function allProjects(): Project[] {
   const list = read<Project[]>(LIST, []);
   if (!list.length) {
-    const first = { id: DEFAULT_ID, name: 'My first project', updatedAt: Date.now() };
+    // updatedAt 0: a fresh device never renames the shared first project
+    const first = { id: DEFAULT_ID, name: 'My first project', updatedAt: 0 };
     write(LIST, [first]);
     return [first];
   }
   return list;
+}
+
+export function listProjects(): Project[] {
+  const live = allProjects().filter((p) => !p.deleted);
+  return live.length ? live : [{ id: DEFAULT_ID, name: 'My first project', updatedAt: 0 }];
 }
 
 export function currentProjectId(): string {
@@ -54,21 +61,22 @@ export function setCurrentProject(id: string) {
 
 export function createProject(name: string): Project {
   const p = { id: `p${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`, name: name.trim() || 'Untitled', updatedAt: Date.now() };
-  write(LIST, [...listProjects(), p]);
+  write(LIST, [...allProjects(), p]);
   return p;
 }
 
 export function renameProject(id: string, name: string) {
-  write(LIST, listProjects().map((p) => (p.id === id ? { ...p, name: name.trim() || p.name, updatedAt: Date.now() } : p)));
+  write(LIST, allProjects().map((p) => (p.id === id ? { ...p, name: name.trim() || p.name, updatedAt: Date.now() } : p)));
 }
 
-export function touchProject(id: string, at = Date.now()) {
-  write(LIST, listProjects().map((p) => (p.id === id ? { ...p, updatedAt: at } : p)));
+export function touchProject(_id: string, _at = Date.now()) {
+  // updatedAt tracks the name and deletion only (it decides which copy wins
+  // in sync); board edits sync per element instead.
 }
 
 /** Replace the local list (used by sync when the server knows more projects). */
 export function mergeProjects(remote: Project[]) {
-  const local = listProjects();
+  const local = allProjects();
   const byId = new Map(local.map((p) => [p.id, p]));
   for (const r of remote) {
     const l = byId.get(r.id);
@@ -77,9 +85,9 @@ export function mergeProjects(remote: Project[]) {
   write(LIST, [...byId.values()]);
 }
 
+/** Hides a project everywhere it syncs; its board data stays stored. */
 export function deleteProject(id: string) {
-  const rest = listProjects().filter((p) => p.id !== id);
-  write(LIST, rest.length ? rest : [{ id: DEFAULT_ID, name: 'My first project', updatedAt: Date.now() }]);
+  write(LIST, allProjects().map((p) => (p.id === id ? { ...p, deleted: true, updatedAt: Date.now() } : p)));
   if (currentProjectId() === id) setCurrentProject(listProjects()[0].id);
 }
 

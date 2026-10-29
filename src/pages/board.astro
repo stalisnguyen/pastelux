@@ -248,6 +248,82 @@ import BoardApp from '../components/board/BoardApp';
     background: var(--mb-accent-soft);
     color: var(--mb-accent);
   }
+  .mb-proj {
+    position: relative;
+  }
+  .mb-proj-btn {
+    max-width: 220px;
+  }
+  .mb-proj-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 150px;
+  }
+  .mb-proj-menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    z-index: 20;
+    min-width: 230px;
+    max-height: 60vh;
+    overflow-y: auto;
+    background: #fff;
+    border: 1px solid var(--mb-line);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgb(0 0 0 / 0.14);
+    padding: 6px;
+    display: grid;
+    gap: 2px;
+  }
+  .mb-proj-menu button {
+    text-align: left;
+    border: 0;
+    background: transparent;
+    padding: 8px 10px;
+    border-radius: 8px;
+    font: 500 0.86rem var(--font-sans);
+    color: var(--mb-ink);
+    cursor: pointer;
+  }
+  .mb-proj-menu button:hover {
+    background: var(--mb-hover);
+  }
+  .mb-proj-menu button.on {
+    background: var(--mb-accent-soft);
+    color: var(--mb-accent);
+  }
+  .mb-proj-menu hr {
+    border: 0;
+    border-top: 1px solid var(--mb-line);
+    margin: 4px 2px;
+  }
+  .mb-proj-note {
+    font-size: 0.74rem;
+    line-height: 1.4;
+    color: var(--mb-muted);
+    margin: 6px 8px 4px;
+  }
+  .mb-sync {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font: 500 0.78rem var(--font-sans);
+    color: var(--mb-muted);
+    padding: 0 6px;
+  }
+  .mb-sync-ok {
+    color: #2b8a3e;
+  }
+  .mb-sync-offline,
+  .mb-sync-denied {
+    color: #c92a2a;
+  }
+  @media (max-width: 1100px) {
+    .mb-sync-text {
+      display: none;
+    }
+  }
   .board-stas-btn {
     display: inline-flex;
     align-items: center;
@@ -274,6 +350,9 @@ import BoardApp from '../components/board/BoardApp';
   .board-stas-float {
     display: none;
   }
+  .board-phonebar {
+    display: none;
+  }
   @media (max-width: 767px) {
     .board-stas-float {
       display: inline-flex;
@@ -281,6 +360,22 @@ import BoardApp from '../components/board/BoardApp';
       top: 12px;
       right: 12px;
       z-index: 5;
+    }
+    .board-phonebar {
+      display: block;
+      position: absolute;
+      top: 12px;
+      right: 104px;
+      z-index: 6;
+    }
+    .board-phonebar .mb-proj-btn {
+      background: #fff;
+      box-shadow: 0 2px 6px rgb(0 0 0 / 0.12);
+      max-width: calc(100vw - 190px);
+    }
+    .board-phonebar .mb-proj-menu {
+      right: auto;
+      left: 0;
     }
   }
   .mb-search {

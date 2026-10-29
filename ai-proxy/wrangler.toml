@@ -19,3 +19,12 @@ class_name = "GeminiRelay"
 [[migrations]]
 tag = "v1"
 new_sqlite_classes = ["GeminiRelay"]
+
+# Board sync (projects, elements, images) for devices unlocked with the code.
+[[durable_objects.bindings]]
+name = "BOARDS"
+class_name = "BoardStore"
+
+[[migrations]]
+tag = "v2"
+new_sqlite_classes = ["BoardStore"]

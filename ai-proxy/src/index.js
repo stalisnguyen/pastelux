@@ -1,4 +1,5 @@
 import { DurableObject } from 'cloudflare:workers';
+export { BoardStore } from './boards.js';
 /**
  * Pastelux AI proxy (Stas) — a Cloudflare Worker that holds the AI key so the
  * static site never has to.
@@ -224,7 +225,17 @@ export default {
     if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: h });
 
     const url = new URL(req.url);
-    if (req.method !== 'POST' || url.pathname !== '/chat') return json(404, 'Not found', h);
+    if (req.method !== 'POST' || (url.pathname !== '/chat' && url.pathname !== '/sync')) return json(404, 'Not found', h);
+
+    // Board sync: same access code as Stas; one store for all projects.
+    if (url.pathname === '/sync') {
+      if (!env.ACCESS_CODE) return json(503, 'Sync is not configured yet', h);
+      if (!sameSecret(req.headers.get('x-pastelux-code'), env.ACCESS_CODE)) return json(401, 'Wrong access code', h);
+      if (Number(req.headers.get('content-length') || 0) > MAX_BODY_BYTES) return json(413, 'Request too large', h);
+      const store = env.BOARDS.get(env.BOARDS.idFromName('boards'), { locationHint: 'apac' });
+      const res = await store.fetch('https://boards/', { method: 'POST', headers: { 'content-type': 'application/json' }, body: req.body });
+      return new Response(res.body, { status: res.status, headers: { ...h, 'content-type': 'application/json', 'cache-control': 'no-store' } });
+    }
 
     const provider = env.GEMINI_API_KEY ? 'gemini' : env.GROQ_API_KEY ? 'groq' : null;
     if (!provider || !env.ACCESS_CODE) return json(503, 'Stas is not configured yet', h);
