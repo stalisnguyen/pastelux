@@ -1,6 +1,7 @@
 /*
- * Board sync client. Devices unlocked with the Stas access code share their
- * projects and boards through the Pastelux proxy (a Durable Object). Each
+ * Board sync client. Devices unlocked with the same Stas access code share
+ * their projects and boards through the Pastelux proxy (a Durable Object);
+ * a different code has its own, separate store. Each
  * board stays in this browser first; sync only adds to it.
  */
 import { get, set } from 'idb-keyval';
@@ -10,6 +11,18 @@ import { allProjects, listProjects, mergeProjects, type Project } from './projec
 import { loadSchedule, saveSchedule, type Schedule } from './schedule';
 
 export const syncEnabled = () => Boolean(AI_PROXY_URL && readCode());
+
+/**
+ * Each access code has its own store on the server, so this device keeps
+ * its sync bookkeeping (what it has sent and seen) per code. A short hash
+ * is enough: it only tells codes apart, and the code itself is already in
+ * this browser.
+ */
+export function syncOwner() {
+  let h = 0x811c9dc5;
+  for (const ch of readCode()) h = Math.imul(h ^ ch.charCodeAt(0), 0x01000193);
+  return (h >>> 0).toString(36);
+}
 
 export class SyncError extends Error {
   constructor(public status: number, message: string) {
@@ -36,9 +49,9 @@ export async function syncProjects(): Promise<Project[]> {
 }
 
 // ------------------------------------------------------------ per board state
-const seqKey = (pid: string) => `pastelux-sync-seq:${pid}`;
-const pushedKey = (pid: string) => `pastelux-sync-pushed:${pid}`;
-const UPLOADED_KEY = 'pastelux-sync-files';
+const seqKey = (pid: string) => `pastelux-sync-seq:${syncOwner()}:${pid}`;
+const pushedKey = (pid: string) => `pastelux-sync-pushed:${syncOwner()}:${pid}`;
+const uploadedKey = () => `pastelux-sync-files:${syncOwner()}`;
 
 export function readSeq(pid: string) {
   try {
@@ -78,7 +91,7 @@ export async function pushElements(pid: string, elements: any[]) {
 
 /** Uploads the images the server does not have yet (each image only once). */
 export async function pushFiles(files: Record<string, any>, ids: string[]) {
-  const done = new Set(((await get(UPLOADED_KEY).catch(() => null)) as string[] | null) ?? []);
+  const done = new Set(((await get(uploadedKey()).catch(() => null)) as string[] | null) ?? []);
   const todo = ids.filter((id) => !done.has(id) && files[id]?.dataURL);
   if (!todo.length) return;
   const { missing } = await call<{ missing: string[] }>('files-missing', { ids: todo });
@@ -87,7 +100,7 @@ export async function pushFiles(files: Record<string, any>, ids: string[]) {
     await call('file-put', { file: { id, mimeType: f.mimeType, created: f.created, dataURL: f.dataURL } });
   }
   todo.forEach((id) => done.add(id));
-  await set(UPLOADED_KEY, [...done]).catch(() => {});
+  await set(uploadedKey(), [...done]).catch(() => {});
 }
 
 export async function pullFiles(ids: string[]) {
@@ -100,9 +113,9 @@ export async function pullFiles(ids: string[]) {
     rest = r.rest;
   }
   // what came from the server is on the server: no need to upload it again
-  const done = new Set(((await get(UPLOADED_KEY).catch(() => null)) as string[] | null) ?? []);
+  const done = new Set(((await get(uploadedKey()).catch(() => null)) as string[] | null) ?? []);
   got.forEach((f) => done.add(f.id));
-  await set(UPLOADED_KEY, [...done]).catch(() => {});
+  await set(uploadedKey(), [...done]).catch(() => {});
   return got;
 }
 
@@ -111,8 +124,8 @@ export async function pullFiles(ids: string[]) {
 // unlocked device. `known` is what this device last agreed with the server,
 // so an item missing locally but known was deleted here.
 export type DocKind = 'library' | 'stickers' | 'schedule';
-const docSeqKey = (k: DocKind) => `pastelux-sync-${k}-seq`;
-const docKnownKey = (k: DocKind) => `pastelux-sync-${k}-known`;
+const docSeqKey = (k: DocKind) => `pastelux-sync-${k}-seq:${syncOwner()}`;
+const docKnownKey = (k: DocKind) => `pastelux-sync-${k}-known:${syncOwner()}`;
 
 export async function pullDocs(kind: DocKind) {
   let since = Number(store(() => localStorage.getItem(docSeqKey(kind)), '0') || 0);
@@ -179,7 +192,7 @@ export async function syncList<T extends { id: string }>(kind: DocKind, local: T
  * Fixture schedules: one document per project. The copy edited last wins
  * (schedules are small and usually edited on one device at a time).
  */
-const SCHED_PUSHED = 'pastelux-sync-schedule-pushed';
+const schedPushedKey = () => `pastelux-sync-schedule-pushed:${syncOwner()}`;
 export async function syncSchedules() {
   const { items, seq } = await pullDocs('schedule');
   for (const it of items) {
@@ -187,7 +200,7 @@ export async function syncSchedules() {
     const local = loadSchedule(it.id);
     if ((Number(it.data.updatedAt) || 0) > (local.updatedAt || 0)) saveSchedule(it.data as Schedule, it.id, Number(it.data.updatedAt));
   }
-  const pushed: Record<string, number> = store(() => JSON.parse(localStorage.getItem(SCHED_PUSHED) || '{}'), {});
+  const pushed: Record<string, number> = store(() => JSON.parse(localStorage.getItem(schedPushedKey()) || '{}'), {});
   // what just came in counts as already on the server
   for (const it of items) if (!it.deleted && it.data) pushed[it.id] = Math.max(pushed[it.id] || 0, Number(it.data.updatedAt) || 0);
   const out: { id: string; data: Schedule }[] = [];
@@ -199,7 +212,7 @@ export async function syncSchedules() {
     }
   }
   if (out.length) await pushDocs('schedule', out);
-  store(() => localStorage.setItem(SCHED_PUSHED, JSON.stringify(pushed)), undefined);
+  store(() => localStorage.setItem(schedPushedKey(), JSON.stringify(pushed)), undefined);
   saveDocSeq('schedule', seq);
 }
 

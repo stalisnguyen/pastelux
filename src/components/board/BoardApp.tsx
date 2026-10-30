@@ -18,7 +18,7 @@ import FLUENT from './fluent-stickers.json';
 import { loadMine, addMine, removeMine, saveMine, MAX_MINE, type MySticker } from './mystickers';
 import { AI_PROXY_URL } from '../../site';
 import { boardKeys, currentProjectId, setCurrentProject, listProjects, createProject, renameProject, deleteProject, DEFAULT_ID, type Project } from '../../lib/projects';
-import { syncEnabled, syncProjects, readSeq, writeSeq, readPushed, writePushed, pullElements, pushElements, pushFiles, pullFiles, syncList, SyncError } from '../../lib/boardsync';
+import { syncEnabled, syncOwner, syncProjects, readSeq, writeSeq, readPushed, writePushed, pullElements, pushElements, pushFiles, pullFiles, syncList, SyncError } from '../../lib/boardsync';
 
 /*
  * A free-form board laid out like Miro: a vertical toolbar on the left
@@ -327,6 +327,7 @@ function BoardApp({ pid }: { pid: string }) {
   const [projects, setProjects] = useState<Project[]>(() => listProjects());
   const [projMenu, setProjMenu] = useState(false);
   const pushed = useRef<Map<string, number> | null>(null);
+  const pushedOwner = useRef('');
   const syncBusy = useRef(false);
   const syncAgain = useRef(false);
   const syncTimer = useRef<number | undefined>(undefined);
@@ -418,7 +419,11 @@ function BoardApp({ pid }: { pid: string }) {
     syncBusy.current = true;
     setSync('syncing');
     try {
-      if (!pushed.current) pushed.current = await readPushed(pid);
+      // the code may have changed in another tab: reload that code's bookkeeping
+      if (!pushed.current || pushedOwner.current !== syncOwner()) {
+        pushedOwner.current = syncOwner();
+        pushed.current = await readPushed(pid);
+      }
       firstPull.current = false;
       const list = await syncProjects();
       setProjects((prev) => (JSON.stringify(prev) === JSON.stringify(list) ? prev : list));

@@ -12,7 +12,8 @@ export { BoardStore } from './boards.js';
  * The provider follows whichever key is set:
  *   GEMINI_API_KEY → Google Gemini (default model GEMINI_MODEL)
  *   GROQ_API_KEY   → Groq (default model GROQ_MODEL)
- * Secrets (never committed): the key above and ACCESS_CODE.
+ * Secrets (never committed): the key above, ACCESS_CODE and optionally
+ * ACCESS_CODE_2 (a second person with their own boards, see storeFor).
  */
 
 const MAX_OUTPUT = 4096;
@@ -48,6 +49,20 @@ function sameSecret(a, b) {
   let diff = ea.length ^ eb.length;
   for (let i = 0; i < Math.max(ea.length, eb.length); i++) diff |= (ea[i] ?? 0) ^ (eb[i] ?? 0);
   return diff === 0 && ea.length > 0;
+}
+
+/**
+ * Each access code opens its own board store, so two people never see or
+ * change each other's boards. ACCESS_CODE keeps the original store
+ * ('boards'); ACCESS_CODE_2 gets a separate one. Both can use Stas.
+ * Returns the store name, or null for a wrong code.
+ */
+function storeFor(code, env) {
+  let found = null;
+  // check every code (no early exit) so timing does not tell which one matched
+  if (env.ACCESS_CODE && sameSecret(code, env.ACCESS_CODE)) found = 'boards';
+  if (env.ACCESS_CODE_2 && sameSecret(code, env.ACCESS_CODE_2)) found = found || 'boards-2';
+  return found;
 }
 
 // ------------------------------------------------------------ providers
@@ -227,19 +242,21 @@ export default {
     const url = new URL(req.url);
     if (req.method !== 'POST' || (url.pathname !== '/chat' && url.pathname !== '/sync')) return json(404, 'Not found', h);
 
-    // Board sync: same access code as Stas; one store for all projects.
+    const storeName = storeFor(req.headers.get('x-pastelux-code'), env);
+
+    // Board sync: the access code picks the store (one per person).
     if (url.pathname === '/sync') {
       if (!env.ACCESS_CODE) return json(503, 'Sync is not configured yet', h);
-      if (!sameSecret(req.headers.get('x-pastelux-code'), env.ACCESS_CODE)) return json(401, 'Wrong access code', h);
+      if (!storeName) return json(401, 'Wrong access code', h);
       if (Number(req.headers.get('content-length') || 0) > MAX_BODY_BYTES) return json(413, 'Request too large', h);
-      const store = env.BOARDS.get(env.BOARDS.idFromName('boards'), { locationHint: 'apac' });
+      const store = env.BOARDS.get(env.BOARDS.idFromName(storeName), { locationHint: 'apac' });
       const res = await store.fetch('https://boards/', { method: 'POST', headers: { 'content-type': 'application/json' }, body: req.body });
       return new Response(res.body, { status: res.status, headers: { ...h, 'content-type': 'application/json', 'cache-control': 'no-store' } });
     }
 
     const provider = env.GEMINI_API_KEY ? 'gemini' : env.GROQ_API_KEY ? 'groq' : null;
     if (!provider || !env.ACCESS_CODE) return json(503, 'Stas is not configured yet', h);
-    if (!sameSecret(req.headers.get('x-pastelux-code'), env.ACCESS_CODE)) return json(401, 'Wrong access code', h);
+    if (!storeName) return json(401, 'Wrong access code', h);
     if (Number(req.headers.get('content-length') || 0) > MAX_BODY_BYTES) return json(413, 'Request too large', h);
 
     let body;
