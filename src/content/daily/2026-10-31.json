@@ -1,0 +1,58 @@
+{
+  "date": "2026-10-31",
+  "generatedAt": "2026-10-30T21:24:42.116Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "Lighting design a \"strategic economic investment\" says Signify's Sameer Sodhi",
+      "url": "https://www.dezeen.com/2026/10/30/lighting-design-strategic-economic-signifys-sameer-sodhi",
+      "source": "Dezeen",
+      "published": "Fri, 30 Oct 2026 05:00:00 +0000",
+      "summary": "Signify executive Sameer Sodhi argues that architectural and public lighting should be evaluated as an economic asset alongside traditional metrics like construction cost and energy performance, not just aesthetics. The piece offers no technical specification detail.",
+      "viTitle": "Thiết kế chiếu sáng là \"khoản đầu tư kinh tế chiến lược\", theo Sameer Sodhi của Signify",
+      "viSummary": "Lãnh đạo Signify Sameer Sodhi cho rằng chiếu sáng kiến trúc và công trình công cộng nên được nhìn nhận như một tài sản kinh tế, bên cạnh các tiêu chí truyền thống như chi phí xây dựng và hiệu quả năng lượng, chứ không chỉ là yếu tố thẩm mỹ. Bài viết không đề cập chi tiết kỹ thuật hay thông số cụ thể.",
+      "topics": [
+        "practice"
+      ]
+    },
+    {
+      "title": "Flos integrates Michael Anastassiades’ work into its catalogue",
+      "url": "https://www.arc-magazine.com/flos-integrates-michael-anastassiades-into-its-catalogue",
+      "source": "arc",
+      "published": "Mon, 26 Oct 2026 08:49:42 +0000",
+      "summary": "Flos will manufacture and distribute selected designs from Michael Anastassiades' own studio brand, expanding its decorative luminaire catalogue through this licensing arrangement.",
+      "viTitle": "Flos đưa các thiết kế của Michael Anastassiades vào danh mục sản phẩm",
+      "viSummary": "Flos sẽ sản xuất và phân phối một số mẫu đèn từ thương hiệu riêng của Michael Anastassiades, mở rộng danh mục đèn trang trí thông qua thỏa thuận hợp tác này.",
+      "topics": [
+        "product"
+      ]
+    },
+    {
+      "title": "LiGHT 26 invites visitors to ‘Take a Moment’",
+      "url": "https://www.arc-magazine.com/light-26-invites-visitors-to-take-a-moment",
+      "source": "arc",
+      "published": "Mon, 26 Oct 2026 07:00:45 +0000",
+      "summary": "LiGHT 26 will feature a light-and-sound art installation at the UK show exploring climate volatility through sensory experience, part of the event's exhibition programme rather than a product or standard launch.",
+      "viTitle": "LiGHT 26 mời khách tham quan 'Take a Moment'",
+      "viSummary": "LiGHT 26 tại Anh sẽ trưng bày một tác phẩm sắp đặt ánh sáng kết hợp âm thanh, diễn giải sự biến động khí hậu qua trải nghiệm cảm quan, nằm trong chương trình triển lãm nghệ thuật của sự kiện.",
+      "topics": [
+        "practice"
+      ]
+    },
+    {
+      "title": "Interview: Chris Primous On New LiteTrace Brands &#038; More",
+      "url": "https://www.lightnowblog.com/2026/10/interview-chris-primous-on-new-litetrace-brands-more",
+      "source": "LightNOW",
+      "published": "Mon, 26 Oct 2026 05:45:05 +0000",
+      "summary": "LiteTrace has launched separate emergency lighting control and architectural lighting control brands, signalling a split product strategy; interview discusses direction of lighting control technology but offers few technical specifics.",
+      "viTitle": "Phỏng vấn: Chris Primous nói về các thương hiệu LiteTrace mới và hơn thế nữa",
+      "viSummary": "LiteTrace vừa tách ra hai thương hiệu riêng cho emergency lighting control và architectural lighting control. Bài phỏng vấn bàn về hướng đi của công nghệ controls nhưng ít đi sâu kỹ thuật.",
+      "topics": [
+        "controls",
+        "product"
+      ]
+    }
+  ],
+  "termOfDay": "linear-luminaire",
+  "projectOfDay": "by-typology"
+}
