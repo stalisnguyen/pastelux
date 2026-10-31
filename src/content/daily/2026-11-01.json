@@ -1,0 +1,62 @@
+{
+  "date": "2026-11-01",
+  "generatedAt": "2026-10-31T20:25:58.406Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "LiGHT 26 invites visitors to Take a Moment – an immersive light art installation",
+      "url": "https://www.a1lightingmagazine.com/latest-news/light-26-invites-visitors-to-take-a-moment-an-immersive-light-art-installation",
+      "source": "A1 Lighting",
+      "published": "Tue, 27 Oct 2026 12:37:05 +0000",
+      "summary": "LiGHT 26 will present Take a Moment, an immersive installation by ZHA with formalighting and Display Graphics, using light and sound to evoke climate volatility as a sensory reference for atmospheric lighting design.",
+      "viTitle": "LiGHT 26 giới thiệu Take a Moment – sắp đặt nghệ thuật ánh sáng đắm chìm",
+      "viSummary": "Tại LiGHT 26, ZHA kết hợp cùng formalighting và Display Graphics trình diễn sắp đặt Take a Moment, dùng ánh sáng và âm thanh diễn tả biến động khí hậu, tạo không gian tham khảo về hiệu ứng chiếu sáng cảm xúc.",
+      "topics": [
+        "product",
+        "practice"
+      ]
+    },
+    {
+      "title": "Signify comment: Putting circularity at the heart of specification",
+      "url": "https://www.arc-magazine.com/signify-comment-putting-circularity-at-the-heart-of-specification",
+      "source": "arc",
+      "published": "Fri, 23 Oct 2026 15:41:49 +0000",
+      "summary": "Signify argues that circularity - material reuse, recyclability and lifecycle accountability - should become a core specification criterion alongside energy efficiency, reflecting tightening sustainability requirements for lighting products.",
+      "viTitle": "Signify: Đưa tính tuần hoàn vào trọng tâm của việc specify đèn",
+      "viSummary": "Signify cho rằng tính tuần hoàn - tái sử dụng vật liệu, khả năng tái chế và trách nhiệm vòng đời sản phẩm - cần trở thành tiêu chí specify quan trọng ngang với hiệu suất năng lượng, khi yêu cầu bền vững ngày càng siết chặt.",
+      "topics": [
+        "sustainability",
+        "standards"
+      ]
+    },
+    {
+      "title": "DALI Part 151 supports surge protection for connected outdoor lighting",
+      "url": "https://www.a1lightingmagazine.com/lighting-controls/dali-part-151-supports-surge-protection-for-connected-outdoor-lighting",
+      "source": "A1 Lighting",
+      "published": "Fri, 23 Oct 2026 11:15:54 +0000",
+      "summary": "DALI Alliance's Part 151 standard, now reaching certified products, sets minimum surge-protection requirements for DALI control gear exposed to electrical transients in outdoor and connected lighting installations.",
+      "viTitle": "DALI Part 151 hỗ trợ bảo vệ chống sét lan truyền cho đèn ngoài trời kết nối",
+      "viSummary": "Chuẩn DALI Part 151 của DALI Alliance đã có sản phẩm được chứng nhận, quy định yêu cầu tối thiểu về bảo vệ chống xung điện cho thiết bị điều khiển DALI lắp đặt ngoài trời, nơi dễ chịu tác động của sét lan truyền.",
+      "topics": [
+        "standards",
+        "controls",
+        "product"
+      ]
+    },
+    {
+      "title": "Lighting Controls Industry Quietly Leaving Lighting Industry",
+      "url": "https://www.lightnowblog.com/2026/10/lighting-controls-industry-quietly-leaving-lighting-industry",
+      "source": "LightNOW",
+      "published": "Thu, 22 Oct 2026 05:12:27 +0000",
+      "summary": "DesignLights Consortium's Networked Lighting Controls Technical Requirements V5.2 took effect August 17, 2026, adding thermostat integration that lets occupancy sensors trigger HVAC setbacks alongside lighting, broadening NLC qualification beyond lighting control alone.",
+      "viTitle": "Ngành điều khiển chiếu sáng đang âm thầm tách khỏi ngành chiếu sáng",
+      "viSummary": "Bộ yêu cầu kỹ thuật NLC V5.2 của DesignLights Consortium có hiệu lực từ 17/8/2026, bổ sung tích hợp thermostat để cảm biến occupancy điều khiển cả HVAC lẫn đèn, mở rộng phạm vi NLC ra ngoài chiếu sáng thuần túy.",
+      "topics": [
+        "controls",
+        "standards"
+      ]
+    }
+  ],
+  "termOfDay": "louvre",
+  "projectOfDay": "circadian-design"
+}
