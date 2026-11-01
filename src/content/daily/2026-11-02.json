@@ -1,0 +1,60 @@
+{
+  "date": "2026-11-02",
+  "generatedAt": "2026-11-01T21:02:24.478Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "Equation Lighting Design celebrates public vote win for Elizabeth Line",
+      "url": "https://www.arc-magazine.com/equation-lighting-design-celebrates-public-vote-win-for-elizabeth-line",
+      "source": "arc",
+      "published": "Wed, 28 Oct 2026 14:37:11 +0000",
+      "summary": "Equation Lighting Design's lighting scheme for London's Elizabeth Line has won a public vote marking 30 years of the Stirling Prize, recognising the lighting approach within a major transit infrastructure project.",
+      "viTitle": "Equation Lighting Design thắng bình chọn công chúng cho dự án Elizabeth Line",
+      "viSummary": "Thiết kế chiếu sáng của Equation Lighting Design cho tuyến Elizabeth Line (London) giành chiến thắng trong một cuộc bình chọn công chúng nhân kỷ niệm 30 năm giải Stirling Prize.",
+      "topics": [
+        "awards",
+        "practice"
+      ]
+    },
+    {
+      "title": "Framing Light explores the relationship between art, perception and dynamic light",
+      "url": "https://www.a1lightingmagazine.com/latest-news/framing-light-explores-the-relationship-between-art-perception-and-dynamic-light",
+      "source": "A1 Lighting",
+      "published": "Wed, 28 Oct 2026 11:27:09 +0000",
+      "summary": "An exhibition at the ERCO showroom pairs works by Adam Leef and Howard Hodgkin with a dynamic tunable-white lighting concept, showing how shifting colour temperature and intensity reshape the perception of artwork over time.",
+      "viTitle": "Framing Light: khám phá mối quan hệ giữa nghệ thuật, cảm nhận và ánh sáng động",
+      "viSummary": "Triển lãm tại showroom ERCO London kết hợp tác phẩm của Adam Leef và Howard Hodgkin với giải pháp Tunable White động, cho thấy thay đổi nhiệt độ màu và cường độ sáng có thể làm biến đổi cách cảm nhận tác phẩm nghệ thuật theo thời gian.",
+      "topics": [
+        "controls",
+        "practice"
+      ]
+    },
+    {
+      "title": "A Call For Speakers, An Award, &#038; A Registration Announcement",
+      "url": "https://www.lightnowblog.com/2026/10/a-call-for-speakers-an-award-a-registration-announcement",
+      "source": "LightNOW",
+      "published": "Wed, 28 Oct 2026 05:42:04 +0000",
+      "summary": "ArchLIGHT Summit has opened its call for speakers for its June 2027 Dallas event, themed on moving from design intent to real-world application through case studies on specification, installation and commissioning.",
+      "viTitle": "ArchLIGHT Summit mở gọi diễn giả, công bố giải thưởng và thông tin đăng ký",
+      "viSummary": "ArchLIGHT Summit đã mở gọi diễn giả cho sự kiện tháng 6/2027 tại Dallas, chủ đề đưa ý tưởng thiết kế vào ứng dụng thực tế qua các case study về specification, lắp đặt và commissioning.",
+      "topics": [
+        "practice"
+      ]
+    },
+    {
+      "title": "AI Infrastructure Boom Strains PCB Materials Supply Chain",
+      "url": "https://www.lightnowblog.com/2026/10/ai-infrastructure-boom-strains-pcb-materials-supply-chain",
+      "source": "LightNOW",
+      "published": "Tue, 27 Oct 2026 05:38:08 +0000",
+      "summary": "Surging AI and high-performance computing demand is straining PCB supply chains, pushing suppliers to expand capacity through 2029-2030, which may tighten availability and raise costs for LED, driver and control boards.",
+      "viTitle": "Bùng nổ hạ tầng AI gây áp lực lên chuỗi cung ứng bảng mạch PCB",
+      "viSummary": "Nhu cầu AI và điện toán hiệu năng cao tăng mạnh đang gây áp lực lên chuỗi cung ứng PCB, buộc nhà cung cấp mở rộng công suất đến 2029-2030, có thể ảnh hưởng nguồn cung và chi phí bảng mạch LED, driver và điều khiển.",
+      "topics": [
+        "product",
+        "sustainability"
+      ]
+    }
+  ],
+  "termOfDay": "luminaire-efficacy",
+  "projectOfDay": "colour-quality"
+}
