@@ -1,0 +1,61 @@
+{
+  "date": "2026-11-03",
+  "generatedAt": "2026-11-02T23:50:17.294Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "Product Monday: Seoul Semi’s WICOP 3 Raises Many Questions",
+      "url": "https://www.lightnowblog.com/2026/11/product-monday-seoul-semis-wicop-3-raises-many-questions",
+      "source": "LightNOW",
+      "published": "Mon, 02 Nov 2026 06:10:32 +0000",
+      "summary": "Seoul Viosys claims mass production of rare-earth-free white microLEDs (0.015 lm) without phosphor conversion of a blue chip, though the mechanism for generating white light remains unexplained, raising questions for specifiers about performance and reliability data.",
+      "viTitle": "Product Monday: WICOP 3 của Seoul Semi đặt ra nhiều câu hỏi",
+      "viSummary": "Seoul Viosys tuyên bố đã sản xuất đại trà microLED trắng không dùng đất hiếm, đạt 0.015 lm, mà không qua chuyển đổi phosphor từ chip LED xanh. Cơ chế tạo ánh sáng trắng chưa được giải thích rõ, khiến giới chuyên môn còn hoài nghi về hiệu suất và độ tin cậy.",
+      "topics": [
+        "product",
+        "research"
+      ]
+    },
+    {
+      "title": "Lighting design a \"strategic economic investment\" says Signify's Sameer Sodhi",
+      "url": "https://www.dezeen.com/2026/10/30/lighting-design-strategic-economic-signifys-sameer-sodhi",
+      "source": "Dezeen",
+      "published": "Fri, 30 Oct 2026 05:00:00 +0000",
+      "summary": "Signify's Sameer Sodhi argues lighting design should be judged as an economic and social investment rather than a pure cost, citing civic identity and wellbeing benefits; the piece offers opinion, not technical or standards detail.",
+      "viTitle": "Thiết kế chiếu sáng là 'khoản đầu tư kinh tế chiến lược', theo Sameer Sodhi của Signify",
+      "viSummary": "Sameer Sodhi của Signify cho rằng nên nhìn chiếu sáng kiến trúc như một khoản đầu tư kinh tế - xã hội chứ không chỉ là chi phí, vì nó góp phần tạo bản sắc đô thị và nâng cao sức khỏe cộng đồng. Bài viết mang tính quan điểm, không có nội dung kỹ thuật cụ thể.",
+      "topics": [
+        "practice"
+      ]
+    },
+    {
+      "title": "NKBA’s 2027 Kitchen Forecast Spotlights Integrated Lighting",
+      "url": "https://www.lightnowblog.com/2026/10/nkbas-2027-kitchen-forecast-spotlights-integrated-lighting",
+      "source": "LightNOW",
+      "published": "Thu, 29 Oct 2026 05:48:53 +0000",
+      "summary": "NKBA's 2027 kitchen trends report frames lighting as a core design element rather than an afterthought, pointing to growth in cabinet-integrated fixtures, layered schemes and connected controls that require closer coordination between specifiers and kitchen designers.",
+      "viTitle": "Dự báo nhà bếp 2027 của NKBA nhấn mạnh ánh sáng tích hợp",
+      "viSummary": "Báo cáo xu hướng nhà bếp 2027 của NKBA cho thấy ánh sáng đang trở thành yếu tố thiết kế cốt lõi, kéo theo nhu cầu đèn tích hợp tủ bếp, chiếu sáng lớp và điều khiển kết nối, đòi hỏi phối hợp chặt chẽ hơn giữa các bên liên quan.",
+      "topics": [
+        "product",
+        "controls",
+        "practice"
+      ]
+    },
+    {
+      "title": "Lighting Controls Industry Quietly Leaving Lighting Industry",
+      "url": "https://www.lightnowblog.com/2026/10/lighting-controls-industry-quietly-leaving-lighting-industry",
+      "source": "LightNOW",
+      "published": "Thu, 22 Oct 2026 05:12:27 +0000",
+      "summary": "The DesignLights Consortium's Networked Lighting Controls Technical Requirements V5.2, effective August 17, 2026, adds thermostat integration for occupancy-linked HVAC coordination; specifiers using NLC-qualified controls should review the changes for compliance impact.",
+      "viTitle": "Ngành điều khiển chiếu sáng đang âm thầm tách khỏi ngành chiếu sáng",
+      "viSummary": "Bộ yêu cầu kỹ thuật NLC V5.2 của DesignLights Consortium có hiệu lực từ 17/8/2026, bổ sung tích hợp thermostat để điều phối HVAC theo occupancy. Các nhà thiết kế dùng sản phẩm đạt chuẩn NLC nên rà soát thay đổi này để đảm bảo tuân thủ.",
+      "topics": [
+        "controls",
+        "standards"
+      ]
+    }
+  ],
+  "termOfDay": "luminance",
+  "projectOfDay": "control-protocols"
+}
