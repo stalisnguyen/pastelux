@@ -1,0 +1,59 @@
+{
+  "date": "2026-11-04",
+  "generatedAt": "2026-11-03T22:15:18.076Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "CIE Technical Report On Adaptive Road Lighting Practices",
+      "url": "https://www.lightnowblog.com/2026/11/cie-technical-report-on-adaptive-road-lighting-practices",
+      "source": "LightNOW",
+      "published": "Tue, 03 Nov 2026 06:41:31 +0000",
+      "summary": "CIE 258:2026 compiles global adaptive road lighting control practices, covering how dimming and sensor-based strategies cut energy use and environmental impact while maintaining required safety levels on roads.",
+      "viTitle": "CIE công bố báo cáo kỹ thuật về chiếu sáng đường thích ứng",
+      "viSummary": "CIE 258:2026 tổng hợp các hệ thống điều khiển chiếu sáng đường thích ứng trên thế giới, phân tích cách giảm điện năng và tác động môi trường mà vẫn đảm bảo an toàn giao thông.",
+      "topics": [
+        "standards",
+        "controls"
+      ]
+    },
+    {
+      "title": "Flos integrates Michael Anastassiades’ work into its catalogue",
+      "url": "https://www.arc-magazine.com/flos-integrates-michael-anastassiades-into-its-catalogue",
+      "source": "arc",
+      "published": "Mon, 26 Oct 2026 08:49:42 +0000",
+      "summary": "Flos will manufacture and distribute selected designs from Michael Anastassiades' own studio brand, adding the designer's independent decorative pieces to its catalogue.",
+      "viTitle": "Flos đưa các thiết kế của Michael Anastassiades vào danh mục sản phẩm",
+      "viSummary": "Flos sẽ sản xuất và phân phối một số mẫu đèn từ thương hiệu riêng của nhà thiết kế Michael Anastassiades, bổ sung các sản phẩm trang trí độc lập của ông vào danh mục.",
+      "topics": [
+        "product"
+      ]
+    },
+    {
+      "title": "Interview: Chris Primous On New LiteTrace Brands &#038; More",
+      "url": "https://www.lightnowblog.com/2026/10/interview-chris-primous-on-new-litetrace-brands-more",
+      "source": "LightNOW",
+      "published": "Mon, 26 Oct 2026 05:45:05 +0000",
+      "summary": "LiteTrace has launched separate emergency lighting control and architectural lighting control brands, splitting its portfolio by application; the interview with its EVP of Sales & Marketing discusses the rationale and future direction for control technology.",
+      "viTitle": "Phỏng vấn: Chris Primous nói về các thương hiệu LiteTrace mới",
+      "viSummary": "LiteTrace vừa tách danh mục controls thành hai nhãn hiệu riêng, một cho chiếu sáng sự cố và một cho chiếu sáng kiến trúc. Bài phỏng vấn với EVP Sales & Marketing bàn về lý do và hướng phát triển controls sắp tới.",
+      "topics": [
+        "controls",
+        "product"
+      ]
+    },
+    {
+      "title": "Q3 2026 Acquisitions",
+      "url": "https://www.lightnowblog.com/2026/10/q3-2026-acquisitions",
+      "source": "LightNOW",
+      "published": "Fri, 23 Oct 2026 05:18:08 +0000",
+      "summary": "A roundup of Q3 2026 lighting-industry M&A deals, including Glamox acquiring UK defense lighting maker Consolite Technology and Platinum Equity buying Canadian architectural lighting firm LMPG, relevant to specifiers tracking manufacturer ownership changes.",
+      "viTitle": "Các thương vụ M&A quý 3/2026",
+      "viSummary": "Tổng hợp các thương vụ M&A ngành chiếu sáng quý 3/2026, trong đó Glamox mua lại hãng đèn quốc phòng Consolite Technology (Anh) và Platinum Equity mua công ty chiếu sáng kiến trúc LMPG (Canada), đáng chú ý với các nhà thiết kế theo dõi thay đổi sở hữu nhà sản xuất.",
+      "topics": [
+        "practice"
+      ]
+    }
+  ],
+  "termOfDay": "luminous-flux",
+  "projectOfDay": "dark-sky-facade"
+}
