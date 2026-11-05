@@ -37,6 +37,7 @@ const TOMBSTONE_DAYS = 30; // deleted elements are kept this long so deletes syn
 const LIB_KEY = 'pastelux-board-library';
 const UI_OPTIONS = { canvasActions: { toggleTheme: false } } as const;
 const GRID_KEY = 'pastelux-board-grid';
+const SNAP_KEY = 'pastelux-board-snap';
 const NAME_KEY = 'pastelux-board-name';
 const CANVAS_BG = '#f5f6f8';
 
@@ -95,6 +96,9 @@ function BoardApp({ pid }: { pid: string }) {
   const FILES_KEY = keys.files;
   const [lang, setLang] = useState<'vi' | 'en'>(readLang);
   const [grid, setGrid] = useState<boolean>(() => store(() => localStorage.getItem(GRID_KEY) === '1', false));
+  // Miro-style alignment guides (Excalidraw's object snapping), on unless turned off
+  const [snap, setSnap] = useState<boolean>(() => store(() => localStorage.getItem(SNAP_KEY) !== '0', true));
+  const snapRef = useRef(snap);
   const [api, setApi] = useState<any>(null);
   const apiRef = useRef<any>(null);
   apiRef.current = api;
@@ -162,6 +166,17 @@ function BoardApp({ pid }: { pid: string }) {
     window.setTimeout(() => setToast((m) => (m === msg ? '' : m)), 2600);
   }, []);
 
+  const rememberSnap = (on: boolean) => {
+    snapRef.current = on;
+    setSnap(on);
+    store(() => localStorage.setItem(SNAP_KEY, on ? '1' : '0'), undefined);
+  };
+  const toggleSnap = () => {
+    const on = !snapRef.current;
+    rememberSnap(on);
+    apiRef.current?.updateScene({ appState: { objectsSnapModeEnabled: on }, captureUpdate: CaptureUpdateAction.NEVER });
+  };
+
   const toggleGrid = useCallback(() => {
     setGrid((g) => {
       store(() => localStorage.setItem(GRID_KEY, g ? '0' : '1'), undefined);
@@ -180,7 +195,7 @@ function BoardApp({ pid }: { pid: string }) {
       return {
         elements: saved?.elements ?? [],
         // a light Miro-like canvas, whatever the site theme
-        appState: { viewBackgroundColor: CANVAS_BG, ...(saved?.appState ?? {}), collaborators: new Map() },
+        appState: { viewBackgroundColor: CANVAS_BG, ...(saved?.appState ?? {}), objectsSnapModeEnabled: snapRef.current, collaborators: new Map() },
         files,
         scrollToContent: Boolean(saved?.elements?.length),
       };
@@ -530,6 +545,8 @@ function BoardApp({ pid }: { pid: string }) {
   }, []);
 
   const onChange = useCallback((elements: readonly any[], appState: any, files: any) => {
+    // Alt+S (or Excalidraw's own menu) can change the guides too
+    if (typeof appState.objectsSnapModeEnabled === 'boolean' && appState.objectsSnapModeEnabled !== snapRef.current) rememberSnap(appState.objectsSnapModeEnabled);
     const type = appState.activeTool?.type;
     if (type !== lastTool.current) {
       lastTool.current = type;
@@ -1223,6 +1240,23 @@ function BoardApp({ pid }: { pid: string }) {
               </svg>
               <span>{grid ? t('Grid', 'Có lưới') : t('Plain', 'Giấy trơn')}</span>
             </button>
+            <button
+              type="button"
+              className={`board-grid-btn${snap ? ' on' : ''}`}
+              onClick={toggleSnap}
+              aria-pressed={snap}
+              title={t(
+                'Alignment guides: objects snap to the edges, centres and equal gaps of nearby objects. Hold Ctrl (⌘ on Mac) while dragging to move freely.',
+                'Đường gióng: khi kéo, vật tự dính vào mép, tâm và khoảng cách đều của vật bên cạnh. Giữ Ctrl (⌘ trên Mac) khi kéo để di chuyển tự do.'
+              )}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+                <rect x="4" y="5" width="7" height="6" rx="1" />
+                <rect x="13" y="13" width="7" height="6" rx="1" />
+                <path d="M11 3v18" strokeDasharray="2 2" />
+              </svg>
+              <span>{t('Guides', 'Gióng')}</span>
+            </button>
             {frameSel && (
               <button type="button" className="board-grid-btn" onClick={() => setFrameLock(true)} title={t('Lock the selected frame so it does not move by accident', 'Khoá frame đang chọn để không lỡ tay kéo nó đi')}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></svg>
@@ -1253,7 +1287,7 @@ function BoardApp({ pid }: { pid: string }) {
           </div>
     ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [grid, showComments, commentCount, vi, frameSel, lockedFrames, projMenu, projects, sync]
+    [grid, snap, showComments, commentCount, vi, frameSel, lockedFrames, projMenu, projects, sync]
   );
   const thread: Comment[] = selectedComment?.customData?.thread ?? [];
   /** Place the thread card beside its pin, kept inside the board. */
