@@ -230,7 +230,7 @@ export class StasPanel {
     L('.sp-snap', t('Board picture', 'Ảnh bảng'));
     L('.sp-go', t('Send', 'Gửi'));
     L('.sp-stop', t('Stop', 'Dừng'));
-    L('.sp-foot', t('Stas can be wrong. Check important facts and lighting numbers.', 'Stas có thể sai. Thông tin quan trọng và số liệu chiếu sáng nhớ kiểm tra lại.'));
+    L('.sp-foot', t('Stas can be wrong. Double-check anything important.', 'Stas có thể sai. Điều gì quan trọng thì nhớ kiểm tra lại.'));
 
     const unlocked = Boolean(readCode());
     this.q('.sp-lock').hidden = unlocked;
