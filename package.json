@@ -12,7 +12,8 @@
     "news": "node scripts/fetch-news.mjs",
     "check": "node scripts/check-links.mjs",
     "check:strict": "node scripts/check-links.mjs --strict",
-    "astro": "astro"
+    "astro": "astro",
+    "backup": "node scripts/backup-sync.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.2.6",

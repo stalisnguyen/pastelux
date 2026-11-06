@@ -27,3 +27,7 @@ private/
 *.rvt
 *.pln
 **/draft-*/
+
+# sync backups (scripts/backup-sync.mjs) never go in this public repo
+backups/
+Pastelux-backups/
