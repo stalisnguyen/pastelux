@@ -17,6 +17,7 @@ import { NOTE_COLORS, STAMPS, CCT_SWATCHES, EMOJI_GROUPS, templates } from './st
 import FLUENT from './fluent-stickers.json';
 import { loadMine, addMine, removeMine, saveMine, MAX_MINE, type MySticker } from './mystickers';
 import { AI_PROXY_URL } from '../../site';
+import { StasPanel } from '../../lib/stasPanel';
 import { boardKeys, currentProjectId, setCurrentProject, listProjects, createProject, renameProject, deleteProject, DEFAULT_ID, type Project } from '../../lib/projects';
 import { syncEnabled, syncOwner, syncProjects, readSeq, writeSeq, readPushed, writePushed, pullElements, pushElements, pushFiles, pullFiles, syncList, SyncError } from '../../lib/boardsync';
 
@@ -1101,15 +1102,11 @@ function BoardApp({ pid }: { pid: string }) {
     api?.toggleSidebar({ name: 'default', tab: 'library', force: true });
     setMenu(null);
   };
-  const askAI = async () => {
-    if (!api) return;
+  /** A picture of the board for Stas; null when the board is empty. */
+  const boardPicture = async (): Promise<string | null> => {
+    if (!api) return null;
     const elements = api.getSceneElements();
-    const askUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/ask/`;
-    // an empty board: just open the chat, nothing to attach
-    if (!elements.length) {
-      window.location.href = askUrl;
-      return;
-    }
+    if (!elements.length) return null;
     const blob = await exportToBlob({
       elements,
       appState: { ...api.getAppState(), exportBackground: true, viewBackgroundColor: '#ffffff', exportWithDarkMode: false },
@@ -1117,14 +1114,44 @@ function BoardApp({ pid }: { pid: string }) {
       mimeType: 'image/png',
       maxWidthOrHeight: 1600,
     });
-    const dataUrl: string = await new Promise((res) => {
+    return new Promise((res) => {
       const r = new FileReader();
       r.onload = () => res(String(r.result));
+      r.onerror = () => res(null);
       r.readAsDataURL(blob);
     });
-    store(() => sessionStorage.setItem('pastelux-ask-attach', dataUrl), undefined);
-    window.location.href = askUrl;
   };
+  // the panel lives as long as the board; these refs give it today's values
+  const pictureRef = useRef(boardPicture);
+  pictureRef.current = boardPicture;
+  const projNameRef = useRef('');
+  projNameRef.current = projectName(projects.find((p) => p.id === pid) ?? { id: pid, name: '…', updatedAt: 0 });
+  const shellRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<StasPanel | null>(null);
+  const [stasOpen, setStasOpen] = useState(false);
+  useEffect(() => {
+    if (!aiOn || !shellRef.current) return;
+    const panel = new StasPanel({
+      host: shellRef.current,
+      docked: true,
+      thread: `board:${pid}`,
+      subtitle: () => projNameRef.current,
+      context: () =>
+        `She is working on her Pastelux board (a Miro-like sketch board), project "${projNameRef.current}". An attached image is usually a picture of that board.`,
+      snapshot: () => pictureRef.current(),
+      onOpenChange: setStasOpen,
+    });
+    panelRef.current = panel;
+    return () => {
+      panel.close();
+      panel.el.remove();
+      panelRef.current = null;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [aiOn]);
+  // one conversation per project
+  useEffect(() => panelRef.current?.setThread(`board:${pid}`), [pid]);
+  const askAI = () => panelRef.current?.toggle();
   const askRef = useRef(askAI);
   askRef.current = askAI;
 
@@ -1276,9 +1303,10 @@ function BoardApp({ pid }: { pid: string }) {
             {aiOn && (
               <button
                 type="button"
-                className="board-stas-btn"
+                className={`board-stas-btn${stasOpen ? ' on' : ''}`}
                 onClick={() => askRef.current()}
-                title={t('Ask Stas about this board (sends a picture of it)', 'Hỏi Stas về bảng này (gửi kèm ảnh chụp bảng)')}
+                aria-expanded={stasOpen}
+                title={t('Chat with Stas about this board, right here (a picture of the board comes along)', 'Trò chuyện với Stas về bảng này ngay tại đây (kèm ảnh chụp bảng)')}
               >
                 <Icon d={I.ai} />
                 <span>{t('Ask Stas', 'Hỏi Stas')}</span>
@@ -1287,7 +1315,7 @@ function BoardApp({ pid }: { pid: string }) {
           </div>
     ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [grid, snap, showComments, commentCount, vi, frameSel, lockedFrames, projMenu, projects, sync]
+    [grid, snap, showComments, commentCount, vi, frameSel, lockedFrames, projMenu, projects, sync, stasOpen]
   );
   const thread: Comment[] = selectedComment?.customData?.thread ?? [];
   /** Place the thread card beside its pin, kept inside the board. */
@@ -1307,7 +1335,7 @@ function BoardApp({ pid }: { pid: string }) {
   };
 
   return (
-    <div className="board-shell">
+    <div className="board-shell" ref={shellRef}>
       <div className="board-phonebar">
         <button type="button" className="board-grid-btn mb-proj-btn" onClick={() => setProjMenu((v) => !v)} aria-haspopup="menu" aria-expanded={projMenu}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /></svg>
@@ -1328,7 +1356,7 @@ function BoardApp({ pid }: { pid: string }) {
         )}
       </div>
       {aiOn && (
-        <button type="button" className="board-stas-btn board-stas-float" onClick={() => askRef.current()} aria-label={t('Ask Stas about this board', 'Hỏi Stas về bảng này')}>
+        <button type="button" className={`board-stas-btn board-stas-float${stasOpen ? ' on' : ''}`} onClick={() => askRef.current()} aria-expanded={stasOpen} aria-label={t('Ask Stas about this board', 'Hỏi Stas về bảng này')}>
           <Icon d={I.ai} />
           <span>Stas</span>
         </button>

@@ -1,0 +1,345 @@
+/* Stas chat panel (lib/stasPanel.ts). Floats bottom-right on pages, docked
+   on the right inside the Board. Uses the site theme; the Board is always
+   light, so the docked panel takes the board's colours. */
+.sp {
+  --sp-bg: var(--bg-elevated);
+  --sp-surface: var(--surface);
+  --sp-ink: var(--text);
+  --sp-muted: var(--text-muted);
+  --sp-faint: var(--text-faint);
+  --sp-line: var(--border);
+  --sp-user: color-mix(in srgb, var(--accent-cool) 14%, var(--surface));
+  --sp-accent: #ffb35c;
+  --sp-accent-ink: #1a1206;
+  --sp-focus: var(--accent-cool);
+  --sp-warn: var(--warning);
+  position: fixed;
+  right: 1rem;
+  bottom: calc(var(--mnav-h, 0px) + 1rem);
+  z-index: 60;
+  width: min(24rem, calc(100vw - 2rem));
+  height: min(38rem, calc(100dvh - var(--mnav-h, 0px) - 6rem));
+  display: flex;
+  flex-direction: column;
+  background: var(--sp-bg);
+  color: var(--sp-ink);
+  border: 1px solid var(--sp-line);
+  border-radius: 1rem;
+  box-shadow:
+    0 12px 40px rgb(0 0 0 / 0.28),
+    0 2px 6px rgb(0 0 0 / 0.12);
+  font-family: var(--font-sans);
+  overflow: hidden;
+  animation: sp-in 0.16s ease-out;
+}
+/* locked: just the code form, no empty chat area */
+.sp:has(> .sp-lock:not([hidden])) {
+  height: auto;
+}
+.sp[hidden],
+.sp [hidden] {
+  display: none !important;
+}
+@keyframes sp-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+@media (min-width: 1024px) {
+  .sp {
+    right: 1.5rem;
+    bottom: 1.5rem;
+    height: min(40rem, calc(100dvh - 7rem));
+  }
+}
+/* phones: a sheet over the lower part of the screen */
+@media (max-width: 639.98px) {
+  .sp {
+    left: 0.5rem;
+    right: 0.5rem;
+    bottom: calc(var(--mnav-h, 0px) + 0.5rem);
+    width: auto;
+    height: min(75dvh, calc(100dvh - var(--mnav-h, 0px) - 4.5rem));
+  }
+}
+
+/* inside the Board: a column on the right, under the top bar */
+.sp.sp-docked {
+  --sp-bg: #ffffff;
+  --sp-surface: #ffffff;
+  --sp-ink: #1a1a2e;
+  --sp-muted: #5f6577;
+  --sp-faint: #8a90a0;
+  --sp-line: #e3e5ea;
+  --sp-user: #e8ecff;
+  --sp-focus: #4262ff;
+  --sp-warn: #a16207;
+  position: absolute;
+  top: 64px;
+  right: 12px;
+  bottom: 12px;
+  height: auto;
+  width: min(23rem, calc(100% - 24px));
+  z-index: 20;
+  box-shadow:
+    0 2px 6px rgb(16 24 40 / 0.08),
+    0 10px 30px -8px rgb(16 24 40 / 0.25);
+}
+@media (max-width: 767px) {
+  .sp.sp-docked {
+    top: auto;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    width: auto;
+    height: min(70%, 34rem);
+  }
+}
+
+.sp-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.65rem 0.6rem 0.65rem 0.85rem;
+  border-bottom: 1px solid var(--sp-line);
+}
+.sp-badge {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  background: var(--sp-accent);
+  color: var(--sp-accent-ink);
+  flex: none;
+}
+.sp-titles {
+  display: grid;
+  min-width: 0;
+  flex: 1;
+  line-height: 1.25;
+}
+.sp-titles strong {
+  font-size: 0.95rem;
+}
+.sp-sub {
+  font-size: 0.75rem;
+  color: var(--sp-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sp-iconbtn {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 0;
+  border-radius: 0.6rem;
+  background: transparent;
+  color: var(--sp-muted);
+  cursor: pointer;
+}
+.sp-iconbtn:hover {
+  background: color-mix(in srgb, var(--sp-ink) 8%, transparent);
+  color: var(--sp-ink);
+}
+.sp button:focus-visible,
+.sp input:focus-visible,
+.sp .sp-chip:focus-within {
+  outline: 2px solid var(--sp-focus);
+  outline-offset: 2px;
+}
+
+.sp-lock {
+  padding: 1rem;
+  font-size: 0.88rem;
+}
+.sp-lock-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+.sp-code {
+  flex: 1;
+  min-width: 0;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--sp-line);
+  border-radius: 0.6rem;
+  background: var(--sp-surface);
+  color: var(--sp-ink);
+  font: inherit;
+}
+
+.sp-log {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: 0.85rem;
+}
+.sp .ask-msg {
+  border-radius: 0.85rem;
+  padding: 0.6rem 0.8rem;
+  line-height: 1.6;
+  font-size: 0.9rem;
+  overflow-wrap: anywhere;
+}
+.sp .ask-msg.user {
+  align-self: flex-end;
+  max-width: 88%;
+  background: var(--sp-user);
+  white-space: pre-wrap;
+}
+.sp .ask-msg.ai {
+  background: var(--sp-surface);
+  border: 1px solid var(--sp-line);
+}
+.sp .ask-msg.err {
+  color: var(--sp-warn);
+  border: 1px solid color-mix(in srgb, var(--sp-warn) 40%, transparent);
+}
+.sp .ask-msg p + p,
+.sp .ask-msg ul,
+.sp .ask-msg ol,
+.sp .ask-msg pre,
+.sp .ask-msg h4 {
+  margin-top: 0.55em;
+}
+.sp .ask-msg ul {
+  list-style: disc;
+  padding-left: 1.2em;
+}
+.sp .ask-msg ol {
+  list-style: decimal;
+  padding-left: 1.2em;
+}
+.sp .ask-msg h4 {
+  font-weight: 600;
+}
+.sp .ask-msg code {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+}
+.sp .ask-msg pre {
+  background: color-mix(in srgb, var(--sp-ink) 6%, transparent);
+  padding: 0.6rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+}
+.sp .ask-msg img {
+  max-width: 100%;
+  max-height: 10rem;
+  border-radius: 0.5rem;
+  margin-bottom: 0.4rem;
+  display: block;
+}
+
+.sp-form {
+  border-top: 1px solid var(--sp-line);
+  padding: 0.6rem 0.7rem 0.5rem;
+}
+.sp-attach {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.45rem;
+  font-size: 0.78rem;
+  color: var(--sp-muted);
+}
+.sp-attach img {
+  height: 2.75rem;
+  max-width: 4.5rem;
+  object-fit: cover;
+  border-radius: 0.35rem;
+  border: 1px solid var(--sp-line);
+}
+.sp-unattach {
+  border: 0;
+  background: none;
+  color: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+  font: inherit;
+}
+.sp-input {
+  width: 100%;
+  min-height: 2.6rem;
+  max-height: 30vh;
+  resize: none;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--sp-ink);
+  font: inherit;
+  font-size: 0.92rem;
+  field-sizing: content;
+}
+.sp-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.35rem;
+}
+.sp-chip {
+  display: inline-flex;
+  align-items: center;
+  height: 2rem;
+  padding: 0 0.65rem;
+  border: 1px solid var(--sp-line);
+  border-radius: 999px;
+  background: var(--sp-surface);
+  color: var(--sp-ink);
+  font: 500 0.78rem var(--font-sans);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.sp-chip:hover {
+  background: color-mix(in srgb, var(--sp-ink) 6%, var(--sp-surface));
+}
+.sp-chip input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+.sp-send {
+  height: 2rem;
+  padding: 0 0.95rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--sp-accent);
+  color: var(--sp-accent-ink);
+  font: 600 0.82rem var(--font-sans);
+  cursor: pointer;
+}
+.sp-send:hover {
+  filter: brightness(0.96);
+}
+.sp-go,
+.sp-stop {
+  margin-left: auto;
+}
+.sp-stop {
+  background: color-mix(in srgb, var(--sp-ink) 10%, var(--sp-surface));
+  color: var(--sp-ink);
+}
+.sp-foot {
+  padding: 0 0.85rem 0.55rem;
+  font-size: 0.72rem;
+  color: var(--sp-muted);
+}
+@media (prefers-reduced-motion: reduce) {
+  .sp {
+    animation: none;
+  }
+}
+@media print {
+  .sp {
+    display: none !important;
+  }
+}

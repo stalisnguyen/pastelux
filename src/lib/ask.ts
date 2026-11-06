@@ -9,7 +9,35 @@ import { AI_PROXY_URL } from '../site';
 
 export const CODE_STORE = 'pastelux-ai-code';
 export const CHAT_STORE = 'pastelux-ask-chat';
-export const ATTACH_STORE = 'pastelux-ask-attach'; // image handed over from the board
+
+/** Removes every saved conversation (the Ask page's and each panel's). */
+export function clearChats() {
+  try {
+    for (const k of Object.keys(localStorage)) if (k.startsWith(CHAT_STORE)) localStorage.removeItem(k);
+  } catch {}
+}
+
+/** Shrinks a picture to a JPEG Stas can read (longest side 1568 px). */
+export async function toJpeg(src: Blob | string) {
+  const url = typeof src === 'string' ? src : URL.createObjectURL(src);
+  const img = new Image();
+  await new Promise((r, j) => {
+    img.onload = r;
+    img.onerror = j;
+    img.src = url;
+  });
+  const s = Math.min(1, 1568 / Math.max(img.naturalWidth, img.naturalHeight));
+  const c = document.createElement('canvas');
+  c.width = Math.round(img.naturalWidth * s);
+  c.height = Math.round(img.naturalHeight * s);
+  const g = c.getContext('2d')!;
+  g.fillStyle = '#fff';
+  g.fillRect(0, 0, c.width, c.height);
+  g.drawImage(img, 0, 0, c.width, c.height);
+  const dataUrl = c.toDataURL('image/jpeg', 0.88);
+  if (typeof src !== 'string') URL.revokeObjectURL(url);
+  return { media_type: 'image/jpeg' as const, data: dataUrl.split(',')[1], preview: dataUrl };
+}
 
 export const SYSTEM_PROMPT = `Your name is Stas. You are a warm, sharp, all-round assistant for a lighting and interior architect based in Vietnam. She can ask you anything: work, study, writing, English, travel, cooking, everyday questions, ideas. Architectural lighting is your specialty, so when a question touches design you answer like a senior lighting designer would.
 
@@ -48,12 +76,13 @@ function nameNote(): string {
   }
 }
 
-/** Streams one reply. Calls onText with the text so far. */
-export async function askStream(code: string, turns: Turn[], onText: (textSoFar: string) => void, signal?: AbortSignal): Promise<string> {
+/** Streams one reply. Calls onText with the text so far. `context` tells
+ *  Stas where she is asking from (a page, a board). */
+export async function askStream(code: string, turns: Turn[], onText: (textSoFar: string) => void, signal?: AbortSignal, context = ''): Promise<string> {
   const res = await fetch(`${AI_PROXY_URL}/chat`, {
     method: 'POST',
     headers: { 'content-type': 'application/json', 'x-pastelux-code': code },
-    body: JSON.stringify({ system: SYSTEM_PROMPT + nameNote(), messages: turns }),
+    body: JSON.stringify({ system: SYSTEM_PROMPT + nameNote() + (context ? `\n\n${context}` : ''), messages: turns }),
     signal,
   });
   if (!res.ok || !res.body) {

@@ -202,8 +202,9 @@ import Base from '../layouts/Base.astro';
   import {
     CODE_STORE,
     CHAT_STORE,
-    ATTACH_STORE,
     askStream,
+    clearChats,
+    toJpeg,
     describeError,
     renderMarkdown,
     readCode,
@@ -301,22 +302,6 @@ import Base from '../layouts/Base.astro';
   }
 
   // ------------------------------------------------------------ images
-  async function toJpeg(src: Blob | string) {
-    const url = typeof src === 'string' ? src : URL.createObjectURL(src);
-    const img = new Image();
-    await new Promise((r, j) => { img.onload = r; img.onerror = j; img.src = url; });
-    const s = Math.min(1, 1568 / Math.max(img.naturalWidth, img.naturalHeight));
-    const c = document.createElement('canvas');
-    c.width = Math.round(img.naturalWidth * s);
-    c.height = Math.round(img.naturalHeight * s);
-    const g = c.getContext('2d')!;
-    g.fillStyle = '#fff';
-    g.fillRect(0, 0, c.width, c.height);
-    g.drawImage(img, 0, 0, c.width, c.height);
-    const dataUrl = c.toDataURL('image/jpeg', 0.88);
-    if (typeof src !== 'string') URL.revokeObjectURL(url);
-    return { media_type: 'image/jpeg' as const, data: dataUrl.split(',')[1], preview: dataUrl };
-  }
   function showAttach() {
     if (!pending) {
       attachBox.classList.add('hidden');
@@ -417,8 +402,8 @@ import Base from '../layouts/Base.astro';
     if (!confirm(t('Lock Ask AI on this device? The code will be needed again.', 'Khoá Hỏi AI trên thiết bị này? Lần sau phải nhập lại mã.'))) return;
     try {
       localStorage.removeItem(CODE_STORE);
-      localStorage.removeItem(CHAT_STORE);
     } catch {}
+    clearChats(); // this page's chat and every page's and board's panel
     turns = [];
     start();
   });
@@ -445,22 +430,6 @@ import Base from '../layouts/Base.astro';
     app.classList.remove('hidden');
     load();
     renderAll();
-    // a snapshot handed over from the board
-    try {
-      const handed = sessionStorage.getItem(ATTACH_STORE);
-      if (handed) {
-        sessionStorage.removeItem(ATTACH_STORE);
-        toJpeg(handed).then((p) => {
-          pending = p;
-          showAttach();
-          input.value = t(
-            'Here is my sketch. What would you change in the lighting?',
-            'Đây là bản phác của mình. Cậu sẽ chỉnh gì về chiếu sáng?'
-          );
-          input.focus();
-        });
-      }
-    } catch {}
   }
   start();
 </script>

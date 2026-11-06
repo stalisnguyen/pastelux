@@ -1,8 +1,10 @@
 ---
 /*
  * Floating "Ask Stas" button, bottom-right on every page (except the Ask
- * page itself and the Board, which has Stas in its own toolbar). Visitors
- * without the access code only reach the locked page.
+ * page itself and the Board, which has Stas in its own toolbar). It opens
+ * the Stas chat panel right on the page, with its own conversation per
+ * page; the link to the Ask page stays for a new tab or no JavaScript.
+ * Visitors without the access code only see the lock.
  */
 import { url, AI_PROXY_URL } from '../site';
 
@@ -12,7 +14,7 @@ const hide = !AI_PROXY_URL || path.endsWith('/ask') || path.endsWith('/board');
 
 {
   !hide && (
-    <a href={url('/ask')} class="stas-fab" aria-label="Ask Stas · Hỏi Stas" title="Ask Stas · Hỏi Stas">
+    <a href={url('/ask')} class="stas-fab" id="stas-fab" aria-label="Ask Stas · Hỏi Stas" title="Ask Stas · Hỏi Stas" aria-haspopup="dialog" aria-expanded="false">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M12 3l1.8 4.6L18.5 9.5l-4.7 1.9L12 16l-1.8-4.6L5.5 9.5l4.7-1.9z" />
         <path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z" />
@@ -25,7 +27,41 @@ const hide = !AI_PROXY_URL || path.endsWith('/ask') || path.endsWith('/board');
   )
 }
 
+<script>
+  import { StasPanel } from '../lib/stasPanel';
+
+  const fab = document.getElementById('stas-fab') as HTMLAnchorElement | null;
+  let panel: StasPanel | null = null;
+  // "Fixture schedule — Pastelux" → "Fixture schedule"
+  const pageName = () => document.title.split(' — ')[0].trim();
+
+  fab?.addEventListener('click', (e) => {
+    // Cmd/Ctrl/middle click still opens the Ask page in a new tab
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+    e.preventDefault();
+    if (!panel) {
+      const path = location.pathname.replace(/\/$/, '') || '/';
+      panel = new StasPanel({
+        host: document.body,
+        thread: `page:${path}`,
+        subtitle: pageName,
+        context: () =>
+          `She is asking from the "${pageName()}" page of Pastelux, her lighting design site (${location.pathname}). Questions may be about that page, but do not assume so.`,
+        onOpenChange: (open) => {
+          fab.hidden = open;
+          fab.setAttribute('aria-expanded', String(open));
+          if (!open) fab.focus();
+        },
+      });
+    }
+    panel.open();
+  });
+</script>
+
 <style>
+  .stas-fab[hidden] {
+    display: none;
+  }
   .stas-fab {
     position: fixed;
     right: 1rem;
