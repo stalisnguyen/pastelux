@@ -303,7 +303,7 @@ export class StasPanel {
     this.pending = { ...(await toJpeg(url)), board: true };
     this.showAttach();
     if (prefill && !this.input.value.trim()) {
-      this.input.value = t('Here is my board. What would you change in the lighting?', 'Đây là bảng của mình. Cậu sẽ chỉnh gì về chiếu sáng?');
+      this.input.value = t('Here is my board. What do you think?', 'Đây là bảng của mình. Cậu thấy sao?');
       this.input.select();
     }
   }
