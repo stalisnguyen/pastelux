@@ -1,0 +1,62 @@
+{
+  "date": "2026-11-08",
+  "generatedAt": "2026-11-07T20:44:28.713Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "CIE Technical Report On Adaptive Road Lighting Practices",
+      "url": "https://www.lightnowblog.com/2026/11/cie-technical-report-on-adaptive-road-lighting-practices",
+      "source": "LightNOW",
+      "published": "Tue, 03 Nov 2026 06:41:31 +0000",
+      "summary": "CIE 258:2026 compiles global practice on adaptive road lighting control systems, covering how dimming and trimming strategies can cut energy use while maintaining safety thresholds, a reference point for specifying compliant adaptive outdoor schemes.",
+      "viTitle": "CIE công bố báo cáo kỹ thuật về chiếu sáng đường thích ứng",
+      "viSummary": "CIE 258:2026 tổng hợp kinh nghiệm toàn cầu về hệ thống điều khiển chiếu sáng đường thích ứng, cho thấy cách giảm quang thông theo thời gian thực giúp tiết kiệm năng lượng mà vẫn đảm bảo an toàn, là tài liệu tham chiếu khi thiết kế hệ thống đạt chuẩn.",
+      "topics": [
+        "standards",
+        "controls",
+        "sustainability"
+      ]
+    },
+    {
+      "title": "Product Monday: Seoul Semi’s WICOP 3 Raises Many Questions",
+      "url": "https://www.lightnowblog.com/2026/11/product-monday-seoul-semis-wicop-3-raises-many-questions",
+      "source": "LightNOW",
+      "published": "Mon, 02 Nov 2026 06:10:32 +0000",
+      "summary": "Seoul Viosys claims mass production of rare-earth-free white microLEDs that generate white light without phosphor conversion of a blue chip, though the mechanism and performance at 0.015 lumens remain unexplained and raise technical doubts.",
+      "viTitle": "Product Monday: WICOP 3 của Seoul Semi đặt ra nhiều câu hỏi",
+      "viSummary": "Seoul Viosys tuyên bố đã sản xuất đại trà microLED trắng không dùng đất hiếm, tạo ánh sáng trắng mà không qua lớp phosphor chuyển đổi từ chip xanh, nhưng cơ chế hoạt động và hiệu suất ở mức 0.015 lumen vẫn chưa được giải thích rõ, khiến giới kỹ thuật hoài nghi.",
+      "topics": [
+        "optics",
+        "product",
+        "research"
+      ]
+    },
+    {
+      "title": "Flos integrates Michael Anastassiades’ work into its catalogue",
+      "url": "https://www.arc-magazine.com/flos-integrates-michael-anastassiades-into-its-catalogue",
+      "source": "arc",
+      "published": "Mon, 26 Oct 2026 08:49:42 +0000",
+      "summary": "Flos will manufacture and distribute a range of designs from Michael Anastassiades' own studio, expanding its decorative luminaire catalogue with pieces previously sold independently.",
+      "viTitle": "Flos đưa các thiết kế của Michael Anastassiades vào danh mục sản phẩm",
+      "viSummary": "Flos sẽ sản xuất và phân phối một loạt thiết kế từ thương hiệu riêng của Michael Anastassiades, mở rộng danh mục đèn trang trí với các mẫu trước đây chỉ bán độc lập.",
+      "topics": [
+        "product"
+      ]
+    },
+    {
+      "title": "Interview: Chris Primous On New LiteTrace Brands &#038; More",
+      "url": "https://www.lightnowblog.com/2026/10/interview-chris-primous-on-new-litetrace-brands-more",
+      "source": "LightNOW",
+      "published": "Mon, 26 Oct 2026 05:45:05 +0000",
+      "summary": "LiteTrace's EVP discusses the company's new emergency lighting control brand and a separate architectural lighting control brand, offering a view of how control manufacturers are segmenting their product lines going forward.",
+      "viTitle": "Phỏng vấn Chris Primous về các thương hiệu mới của LiteTrace",
+      "viSummary": "Phó chủ tịch phụ trách kinh doanh của LiteTrace chia sẻ về thương hiệu điều khiển chiếu sáng khẩn cấp mới và thương hiệu điều khiển chiếu sáng kiến trúc riêng biệt, cho thấy xu hướng phân nhánh sản phẩm của các hãng controls.",
+      "topics": [
+        "controls",
+        "practice"
+      ]
+    }
+  ],
+  "termOfDay": "maintained-illuminance",
+  "projectOfDay": "led-sources"
+}
