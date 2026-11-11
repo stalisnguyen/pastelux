@@ -1,0 +1,62 @@
+{
+  "date": "2026-11-12",
+  "generatedAt": "2026-11-11T23:22:57.633Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "TRILUX delivers smart lighting for OBO Bettermann’s new central warehouse",
+      "url": "https://www.a1lightingmagazine.com/latest-news/trilux-delivers-smart-lighting-for-obo-bettermanns-new-central-warehouse",
+      "source": "A1 Lighting",
+      "published": "Wed, 11 Nov 2026 13:31:41 +0000",
+      "summary": "TRILUX fitted out a 23,000 m² logistics warehouse with its E-Line Pro continuous-row LED system paired with LiveLink Premium light management, targeting energy efficiency across automated warehouse operations.",
+      "viTitle": "TRILUX cung cấp giải pháp chiếu sáng thông minh cho kho trung tâm mới của OBO Bettermann",
+      "viSummary": "TRILUX lắp đặt hệ thống đèn dải liên tục E-Line Pro kết hợp hệ điều khiển LiveLink Premium cho kho hàng rộng 23.000 m², hướng tới tiết kiệm năng lượng trong vận hành kho tự động hóa.",
+      "topics": [
+        "product",
+        "controls",
+        "sustainability"
+      ]
+    },
+    {
+      "title": "Landscape Lighting For Luxury Estate Early-Warning Security",
+      "url": "https://www.lightnowblog.com/2026/11/landscape-lighting-for-luxury-estate-early-warning-security",
+      "source": "LightNOW",
+      "published": "Fri, 06 Nov 2026 06:28:14 +0000",
+      "summary": "Discusses landscape lighting design for high-security residential estates, where fixture placement and illumination levels are planned to give security personnel early visibility of approaching threats rather than purely aesthetic effect.",
+      "viTitle": "Chiếu sáng cảnh quan cho dinh thự cao cấp phục vụ cảnh báo an ninh sớm",
+      "viSummary": "Bài viết bàn về thiết kế chiếu sáng cảnh quan cho các dinh thự có yêu cầu an ninh cao, trong đó vị trí đèn và mức độ rọi được tính toán để nhân viên an ninh phát hiện sớm nguy cơ, thay vì chỉ phục vụ thẩm mỹ.",
+      "topics": [
+        "practice"
+      ]
+    },
+    {
+      "title": "CIE Technical Report On Adaptive Road Lighting Practices",
+      "url": "https://www.lightnowblog.com/2026/11/cie-technical-report-on-adaptive-road-lighting-practices",
+      "source": "LightNOW",
+      "published": "Tue, 03 Nov 2026 06:41:31 +0000",
+      "summary": "CIE 258:2026 compiles global data on adaptive road lighting control systems, covering how dimming and sensor-based strategies cut energy use and environmental impact while maintaining safety compliance, relevant for designers specifying street and infrastructure lighting controls.",
+      "viTitle": "CIE công bố báo cáo kỹ thuật về chiếu sáng đường thích ứng",
+      "viSummary": "CIE 258:2026 tổng hợp dữ liệu toàn cầu về hệ thống điều khiển chiếu sáng đường thích ứng, cho thấy cách giảm độ sáng theo cảm biến giúp tiết kiệm năng lượng và giảm tác động môi trường mà vẫn đảm bảo an toàn giao thông.",
+      "topics": [
+        "standards",
+        "controls",
+        "sustainability"
+      ]
+    },
+    {
+      "title": "Product Monday: Seoul Semi’s WICOP 3 Raises Many Questions",
+      "url": "https://www.lightnowblog.com/2026/11/product-monday-seoul-semis-wicop-3-raises-many-questions",
+      "source": "LightNOW",
+      "published": "Mon, 02 Nov 2026 06:10:32 +0000",
+      "summary": "Seoul Semiconductor claims its WICOP 3 microLED produces white light without phosphor conversion of a blue chip, reportedly rare-earth-free and mass-produced via Seoul Viosys, though the underlying mechanism remains unclear and unverified.",
+      "viTitle": "Product Monday: WICOP 3 của Seoul Semiconductor đặt ra nhiều nghi vấn",
+      "viSummary": "Seoul Semiconductor công bố WICOP 3, loại microLED được cho là tạo ánh sáng trắng mà không qua chuyển đổi phosphor từ chip xanh, không dùng đất hiếm và đã được Seoul Viosys sản xuất đại trà, nhưng cơ chế hoạt động thực sự vẫn chưa rõ ràng.",
+      "topics": [
+        "product",
+        "optics"
+      ]
+    }
+  ],
+  "termOfDay": "melanopic-edi",
+  "projectOfDay": "circadian-design"
+}
