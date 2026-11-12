@@ -1,0 +1,64 @@
+{
+  "date": "2026-11-13",
+  "generatedAt": "2026-11-12T22:39:28.573Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "Canadian Market: Dark Sky, Mercury Ban, and DLC Requirements",
+      "url": "https://www.lightnowblog.com/2026/11/canadian-market-dark-sky-mercury-ban-and-dlc-requirements",
+      "source": "LightNOW",
+      "published": "Thu, 12 Nov 2026 06:50:19 +0000",
+      "summary": "Canadian specifiers face three converging pressures: replacement of first-generation LED stock reaching end of life, a phased mercury-lamp ban, and tightening provincial and municipal dark-sky outdoor lighting rules, alongside ongoing DLC qualification requirements for product selection.",
+      "viTitle": "Thị trường Canada: lệnh cấm thủy ngân, quy định bầu trời tối và yêu cầu DLC",
+      "viSummary": "Giới thiết kế chiếu sáng tại Canada đang đối mặt ba áp lực cùng lúc: thay thế các hệ LED thế hệ đầu đã hết vòng đời, lộ trình cấm đèn thủy ngân, và quy định bầu trời tối ngày càng siết chặt ở cấp tỉnh bang, địa phương, cùng yêu cầu chứng nhận DLC khi chọn sản phẩm.",
+      "topics": [
+        "standards",
+        "sustainability",
+        "practice"
+      ]
+    },
+    {
+      "title": "Licht Kunst Licht illuminates Cologne Cathedral’s historic facade with \"largely invisible\" lights",
+      "url": "https://www.dezeen.com/2026/11/12/licht-kunst-licht-cologne-cathedral",
+      "source": "Dezeen",
+      "published": "Thu, 12 Nov 2026 06:00:00 +0000",
+      "summary": "Licht Kunst Licht specified over 700 surface-mounted LED luminaires for Cologne Cathedral's facade, avoiding any fixing into the historic stonework—an approach notable for conservation-sensitive facade lighting projects.",
+      "viTitle": "Licht Kunst Licht chiếu sáng mặt dựng nhà thờ chính tòa Cologne bằng đèn \"gần như vô hình\"",
+      "viSummary": "Licht Kunst Licht lắp hơn 700 bộ đèn LED gắn nổi cho mặt dựng nhà thờ chính tòa Cologne mà không khoan đục vào phần đá cổ, một giải pháp đáng chú ý cho các dự án chiếu sáng công trình di sản cần bảo tồn nguyên trạng.",
+      "topics": [
+        "facade",
+        "product",
+        "practice"
+      ]
+    },
+    {
+      "title": "Circadian Depression Study Puts Light &#038; Health in Focus",
+      "url": "https://www.lightnowblog.com/2026/11/circadian-depression-study-puts-light-health-in-focus",
+      "source": "LightNOW",
+      "published": "Tue, 10 Nov 2026 06:11:28 +0000",
+      "summary": "University of Sydney researchers found a proposed circadian subtype of depression in roughly one-quarter of a 11,380-person Australian cohort, published in The British Journal of Psychiatry. The finding supports further research into light's role in mental health but does not show that architectural lighting treats depression.",
+      "viTitle": "Nghiên cứu về trầm cảm liên quan nhịp sinh học đưa chủ đề ánh sáng và sức khỏe trở lại tâm điểm",
+      "viSummary": "Các nhà nghiên cứu Đại học Sydney phát hiện khoảng một phần tư trong nhóm 11.380 người Úc bị trầm cảm có dạng liên quan nhịp sinh học, công bố trên The British Journal of Psychiatry. Kết quả củng cố hướng nghiên cứu về vai trò của ánh sáng với sức khỏe tâm thần, nhưng chưa chứng minh chiếu sáng kiến trúc có thể điều trị bệnh này.",
+      "topics": [
+        "circadian",
+        "research"
+      ]
+    },
+    {
+      "title": "CIE Technical Report On Adaptive Road Lighting Practices",
+      "url": "https://www.lightnowblog.com/2026/11/cie-technical-report-on-adaptive-road-lighting-practices",
+      "source": "LightNOW",
+      "published": "Tue, 03 Nov 2026 06:41:31 +0000",
+      "summary": "CIE 258:2026 compiles global data on adaptive road lighting control systems, offering designers and infrastructure managers evidence on how dimming and sensor-based control strategies cut energy use while preserving road safety performance.",
+      "viTitle": "Báo cáo kỹ thuật CIE về chiếu sáng đường thích ứng",
+      "viSummary": "CIE 258:2026 tổng hợp dữ liệu toàn cầu về các hệ thống điều khiển chiếu sáng đường thích ứng, giúp người thiết kế và quản lý hạ tầng có cơ sở áp dụng dimming, cảm biến để giảm năng lượng mà vẫn đảm bảo an toàn giao thông.",
+      "topics": [
+        "standards",
+        "controls",
+        "sustainability"
+      ]
+    }
+  ],
+  "termOfDay": "mock-up",
+  "projectOfDay": "colour-quality"
+}
