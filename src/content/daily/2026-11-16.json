@@ -1,0 +1,60 @@
+{
+  "date": "2026-11-16",
+  "generatedAt": "2026-11-15T21:35:18.221Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "Signify revamp London Aquatic’s Centre lighting scheme",
+      "url": "https://www.arc-magazine.com/26215-2",
+      "source": "arc",
+      "published": "Fri, 13 Nov 2026 16:18:06 +0000",
+      "summary": "Signify installed an LED retrofit at the London Aquatics Centre, replacing existing fixtures with its own luminaires; no technical specifications, lux levels or controls detail were disclosed in the announcement.",
+      "viTitle": "Signify cải tạo hệ thống chiếu sáng London Aquatics Centre",
+      "viSummary": "Signify thay thế đèn cũ bằng bộ đèn LED của hãng tại London Aquatics Centre. Thông cáo không nêu thông số kỹ thuật, độ rọi hay chi tiết điều khiển cụ thể.",
+      "topics": [
+        "product"
+      ]
+    },
+    {
+      "title": "TRILUX delivers smart lighting for OBO Bettermann’s new central warehouse",
+      "url": "https://www.a1lightingmagazine.com/latest-news/trilux-delivers-smart-lighting-for-obo-bettermanns-new-central-warehouse",
+      "source": "A1 Lighting",
+      "published": "Wed, 11 Nov 2026 13:31:41 +0000",
+      "summary": "TRILUX fitted a 23,000 m² logistics warehouse with its E-Line Pro continuous-row LED system paired with LiveLink Premium lighting controls, supporting automated operations and energy-efficient illumination across the facility.",
+      "viTitle": "TRILUX cung cấp giải pháp chiếu sáng thông minh cho kho trung tâm mới của OBO Bettermann",
+      "viSummary": "TRILUX lắp đặt hệ thống đèn dải liên tục E-Line Pro kết hợp điều khiển LiveLink Premium cho kho logistics rộng 23.000 m², phục vụ vận hành tự động và tiết kiệm năng lượng.",
+      "topics": [
+        "product",
+        "controls",
+        "sustainability"
+      ]
+    },
+    {
+      "title": "Landscape Lighting For Luxury Estate Early-Warning Security",
+      "url": "https://www.lightnowblog.com/2026/11/landscape-lighting-for-luxury-estate-early-warning-security",
+      "source": "LightNOW",
+      "published": "Fri, 06 Nov 2026 06:28:14 +0000",
+      "summary": "A security consultant argues landscape lighting on high-risk estates should double as early-warning infrastructure, using illumination patterns and sightlines to help guards detect intruders before they reach the residence, alongside its architectural role.",
+      "viTitle": "Chiếu sáng cảnh quan cho biệt thự cao cấp: cảnh báo an ninh sớm",
+      "viSummary": "Một chuyên gia an ninh cho rằng chiếu sáng cảnh quan tại các biệt thự có rủi ro cao nên kiêm vai trò cảnh báo sớm, giúp đội bảo vệ phát hiện xâm nhập từ xa, bên cạnh chức năng tôn vinh kiến trúc và cây xanh.",
+      "topics": [
+        "practice"
+      ]
+    },
+    {
+      "title": "Product Monday: Seoul Semi’s WICOP 3 Raises Many Questions",
+      "url": "https://www.lightnowblog.com/2026/11/product-monday-seoul-semis-wicop-3-raises-many-questions",
+      "source": "LightNOW",
+      "published": "Mon, 02 Nov 2026 06:10:32 +0000",
+      "summary": "Seoul Semiconductor claims its new WICOP 3 microLED produces white light without phosphor conversion of a blue chip, reportedly rare-earth-free, though the underlying mechanism and performance claims (0.015 lumens output) remain technically unclear.",
+      "viTitle": "Product Monday: WICOP 3 của Seoul Semiconductor đặt ra nhiều câu hỏi",
+      "viSummary": "Seoul Semiconductor công bố microLED WICOP 3 cho ánh sáng trắng không qua phosphor từ chip xanh, tuyên bố không dùng đất hiếm, nhưng cơ chế hoạt động và thông số (0,015 lumen) vẫn chưa rõ ràng về mặt kỹ thuật.",
+      "topics": [
+        "product",
+        "research"
+      ]
+    }
+  ],
+  "termOfDay": "obtrusive-light",
+  "projectOfDay": "design-stages"
+}
