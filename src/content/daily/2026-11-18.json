@@ -1,0 +1,61 @@
+{
+  "date": "2026-11-18",
+  "generatedAt": "2026-11-17T23:48:00.272Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "LEDucation Launches New Awards Program",
+      "url": "https://www.lightnowblog.com/2026/11/leducation-launches-new-awards-program",
+      "source": "LightNOW",
+      "published": "Fri, 13 Nov 2026 06:57:12 +0000",
+      "summary": "DLFNY's LEDucation trade show is launching LEDawards, a new product recognition program for exhibitors at the North American event, intended to help attendees identify notable lighting products on the show floor.",
+      "viTitle": "LEDucation ra mắt chương trình giải thưởng mới",
+      "viSummary": "Triển lãm LEDucation của DLFNY công bố chương trình giải thưởng mới mang tên LEDawards, nhằm vinh danh sản phẩm chiếu sáng nổi bật và giúp khách tham quan dễ dàng tìm ra các giải pháp đáng chú ý tại sự kiện.",
+      "topics": [
+        "awards",
+        "product"
+      ]
+    },
+    {
+      "title": "Lucy Zodion brings smarter control to Cleethorpes’ iconic seafront illuminations",
+      "url": "https://www.a1lightingmagazine.com/company-news/lucy-zodion-brings-smarter-control-to-cleethorpes-iconic-seafront-illuminations",
+      "source": "A1 Lighting",
+      "published": "Thu, 12 Nov 2026 16:22:10 +0000",
+      "summary": "North East Lincolnshire Council upgraded Cleethorpes' seafront illuminations from Lucy Zodion's legacy Vizion system to the Ki. smart city platform, installing 50 new control units to manage the displays.",
+      "viTitle": "Lucy Zodion mang điều khiển thông minh hơn đến hệ thống đèn trang trí ven biển Cleethorpes",
+      "viSummary": "Hội đồng North East Lincolnshire nâng cấp hệ thống đèn trang trí ven biển Cleethorpes từ nền tảng Vizion cũ của Lucy Zodion lên nền tảng thành phố thông minh Ki., lắp đặt 50 bộ điều khiển mới để quản lý hệ thống chiếu sáng.",
+      "topics": [
+        "controls",
+        "product"
+      ]
+    },
+    {
+      "title": "Licht Kunst Licht illuminates Cologne Cathedral’s historic facade with \"largely invisible\" lights",
+      "url": "https://www.dezeen.com/2026/11/12/licht-kunst-licht-cologne-cathedral",
+      "source": "Dezeen",
+      "published": "Thu, 12 Nov 2026 06:00:00 +0000",
+      "summary": "Licht Kunst Licht fitted over 700 surface-mounted LED luminaires to relight Cologne Cathedral's facade without drilling into the historic stonework, a notable example of non-invasive mounting for heritage facade lighting.",
+      "viTitle": "Licht Kunst Licht chiếu sáng mặt dựng lịch sử của Nhà thờ Cologne bằng đèn \"gần như vô hình\"",
+      "viSummary": "Licht Kunst Licht lắp hơn 700 bộ đèn LED gắn nổi để chiếu sáng mặt dựng Nhà thờ Cologne vào ban đêm mà không khoan đục vào lớp đá cổ. Đây là ví dụ đáng chú ý về giải pháp lắp đặt không xâm phạm cho công trình di sản.",
+      "topics": [
+        "facade",
+        "product"
+      ]
+    },
+    {
+      "title": "Circadian Depression Study Puts Light &#038; Health in Focus",
+      "url": "https://www.lightnowblog.com/2026/11/circadian-depression-study-puts-light-health-in-focus",
+      "source": "LightNOW",
+      "published": "Tue, 10 Nov 2026 06:11:28 +0000",
+      "summary": "University of Sydney researchers identified a circadian-linked depression subtype in about a quarter of a large cohort, published in The British Journal of Psychiatry. The study strengthens interest in light's role in mental health but does not confirm that architectural lighting interventions can treat the condition.",
+      "viTitle": "Nghiên cứu về trầm cảm liên quan nhịp sinh học đưa chủ đề ánh sáng và sức khỏe trở lại tâm điểm",
+      "viSummary": "Các nhà nghiên cứu Đại học Sydney phát hiện một dạng trầm cảm liên quan nhịp sinh học ở khoảng một phần tư nhóm khảo sát lớn tại Úc, công bố trên British Journal of Psychiatry. Kết quả củng cố mối quan tâm đến vai trò của ánh sáng với sức khỏe tâm thần, nhưng chưa khẳng định chiếu sáng kiến trúc có thể điều trị bệnh.",
+      "topics": [
+        "circadian",
+        "research"
+      ]
+    }
+  ],
+  "termOfDay": "panel-light",
+  "projectOfDay": "inverse-square-and-beams"
+}
