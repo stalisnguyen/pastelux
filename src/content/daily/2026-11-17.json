@@ -1,0 +1,64 @@
+{
+  "date": "2026-11-17",
+  "generatedAt": "2026-11-17T00:42:29.826Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "Birmingham Airport transitions to energy-efficient high mast LED lighting",
+      "url": "https://www.a1lightingmagazine.com/latest-news/birmingham-airport-transitions-to-energy-efficient-high-mast-led-lighting",
+      "source": "A1 Lighting",
+      "published": "Mon, 16 Nov 2026 13:18:26 +0000",
+      "summary": "Birmingham Airport completed a multi-phase LED retrofit of its high mast lighting with C.U. Phosco, part of a net-zero carbon reduction programme for airport infrastructure.",
+      "viTitle": "Sân bay Birmingham chuyển sang đèn LED cột cao tiết kiệm năng lượng",
+      "viSummary": "Sân bay Birmingham hoàn tất nâng cấp đèn LED cho hệ thống cột cao (high mast) qua nhiều giai đoạn hợp tác với C.U. Phosco, nằm trong chương trình giảm phát thải carbon và hướng tới net-zero của sân bay.",
+      "topics": [
+        "product",
+        "sustainability",
+        "practice"
+      ]
+    },
+    {
+      "title": "Product Monday: USAI Connect LV+ Low Voltage Downlights",
+      "url": "https://www.lightnowblog.com/2026/11/product-monday-usai-connect-lv-low-voltage-downlights",
+      "source": "LightNOW",
+      "published": "Mon, 16 Nov 2026 06:29:38 +0000",
+      "summary": "USAI's Connect LV+ moves power conversion out of individual downlights into a centralized low-voltage system, aiming to reduce above-ceiling congestion, installation labor and service access issues. The company claims 15-33% savings across fixtures and labor, compatible with existing USAI fixture families.",
+      "viTitle": "Product Monday: Đèn downlight điện áp thấp USAI Connect LV+",
+      "viSummary": "USAI Connect LV+ chuyển khối chuyển đổi nguồn ra khỏi từng bộ đèn downlight, dùng kiến trúc điện áp thấp tập trung để giảm chen chúc trên trần giả, dễ thi công và bảo trì hơn. Hãng công bố tiết kiệm 15-33% chi phí đèn và lắp đặt, tương thích các dòng đèn USAI hiện có.",
+      "topics": [
+        "product",
+        "practice"
+      ]
+    },
+    {
+      "title": "Canadian Market: Dark Sky, Mercury Ban, and DLC Requirements",
+      "url": "https://www.lightnowblog.com/2026/11/canadian-market-dark-sky-mercury-ban-and-dlc-requirements",
+      "source": "LightNOW",
+      "published": "Thu, 12 Nov 2026 06:50:19 +0000",
+      "summary": "Canada's commercial lighting sector is heading into a retrofit cycle as early LED installations age, mercury lamps face phase-out, and provincial/municipal dark-sky rules tighten; specifiers should watch DLC qualification changes shaping compliant product choices.",
+      "viTitle": "Thị trường Canada: Dark Sky, lệnh cấm thủy ngân và yêu cầu DLC",
+      "viSummary": "Ngành chiếu sáng thương mại Canada bước vào chu kỳ retrofit khi các hệ thống LED đời đầu xuống cấp, đèn thủy ngân bị loại bỏ dần, và quy định dark-sky cấp tỉnh/thành siết chặt hơn; đơn vị thiết kế cần theo dõi thay đổi tiêu chuẩn DLC ảnh hưởng đến lựa chọn sản phẩm thay thế.",
+      "topics": [
+        "standards",
+        "sustainability",
+        "practice"
+      ]
+    },
+    {
+      "title": "CIE Technical Report On Adaptive Road Lighting Practices",
+      "url": "https://www.lightnowblog.com/2026/11/cie-technical-report-on-adaptive-road-lighting-practices",
+      "source": "LightNOW",
+      "published": "Tue, 03 Nov 2026 06:41:31 +0000",
+      "summary": "CIE 258:2026 compiles global data on adaptive road lighting control systems, assessing how dimming and adaptive strategies cut energy use and environmental impact while preserving safety — a reference for specifiers designing controls-based street lighting.",
+      "viTitle": "Báo cáo kỹ thuật CIE về thực hành chiếu sáng đường thích ứng",
+      "viSummary": "CIE 258:2026 tổng hợp dữ liệu toàn cầu về hệ thống điều khiển chiếu sáng đường thích ứng, đánh giá cách dimming và các chiến lược thích ứng giúp giảm năng lượng tiêu thụ, giảm tác động môi trường mà vẫn đảm bảo an toàn — tài liệu tham khảo cho nhà thiết kế và quản lý hạ tầng.",
+      "topics": [
+        "standards",
+        "controls",
+        "research"
+      ]
+    }
+  ],
+  "termOfDay": "occupancy-sensor",
+  "projectOfDay": "glare-and-ugr"
+}
