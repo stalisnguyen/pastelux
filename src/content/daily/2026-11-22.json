@@ -1,0 +1,62 @@
+{
+  "date": "2026-11-22",
+  "generatedAt": "2026-11-21T22:05:53.208Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "Beyond Lux: What Makes a Space Look Brighter",
+      "url": "https://www.lightnowblog.com/2026/11/beyond-lux-what-makes-a-space-look-brighter",
+      "source": "LightNOW",
+      "published": "Wed, 18 Nov 2026 06:38:43 +0000",
+      "summary": "Penn State research finds that illuminance alone does not predict perceived brightness: melanopic stimulation and colour-rendering characteristics also shape how bright a space feels, even at matched lux levels, with implications for specification and energy decisions.",
+      "viTitle": "Không chỉ lux: điều gì khiến không gian trông sáng hơn",
+      "viSummary": "Nghiên cứu của Penn State cho thấy độ rọi không quyết định toàn bộ cảm nhận độ sáng; kích thích melanopsin và đặc tính hoàn màu cũng ảnh hưởng đến cảm giác sáng, ngay cả khi độ rọi đo được bằng nhau, có ý nghĩa với việc chọn thông số thiết kế và tiết kiệm năng lượng.",
+      "topics": [
+        "circadian",
+        "research",
+        "optics"
+      ]
+    },
+    {
+      "title": "Signify revamp London Aquatic’s Centre lighting scheme",
+      "url": "https://www.arc-magazine.com/26215-2",
+      "source": "arc",
+      "published": "Fri, 13 Nov 2026 16:18:06 +0000",
+      "summary": "Signify carried out an LED retrofit of the London Aquatics Centre's lighting, targeting reduced energy use in a high-humidity, continuously operating pool environment; specific luminaire and control details were not disclosed.",
+      "viTitle": "Signify nâng cấp hệ thống chiếu sáng tại London Aquatics Centre",
+      "viSummary": "Signify đã thay đèn tại London Aquatics Centre bằng giải pháp LED nhằm giảm tiêu thụ năng lượng trong môi trường bể bơi ẩm, hoạt động liên tục; chưa công bố cụ thể loại đèn hay hệ điều khiển sử dụng.",
+      "topics": [
+        "product",
+        "sustainability"
+      ]
+    },
+    {
+      "title": "LEDucation Launches New Awards Program",
+      "url": "https://www.lightnowblog.com/2026/11/leducation-launches-new-awards-program",
+      "source": "LightNOW",
+      "published": "Fri, 13 Nov 2026 06:57:12 +0000",
+      "summary": "DLFNY's LEDucation trade show is launching a new product award program, LEDawards, intended to help attendees identify notable lighting products across the exhibition floor; no technical criteria or jury details are given yet.",
+      "viTitle": "LEDucation ra mắt chương trình giải thưởng mới",
+      "viSummary": "Hội chợ LEDucation của DLFNY công bố chương trình giải thưởng sản phẩm mới mang tên LEDawards, giúp khách tham quan dễ dàng nhận diện các sản phẩm chiếu sáng nổi bật tại triển lãm; tiêu chí đánh giá cụ thể chưa được công bố.",
+      "topics": [
+        "awards",
+        "product"
+      ]
+    },
+    {
+      "title": "Circadian Depression Study Puts Light &#038; Health in Focus",
+      "url": "https://www.lightnowblog.com/2026/11/circadian-depression-study-puts-light-health-in-focus",
+      "source": "LightNOW",
+      "published": "Tue, 10 Nov 2026 06:11:28 +0000",
+      "summary": "A University of Sydney study of 11,380 people found a proposed circadian subtype present in roughly a quarter of a depression cohort, reinforcing links between light exposure and mood regulation but stopping short of claiming architectural lighting interventions can treat depression.",
+      "viTitle": "Nghiên cứu về trầm cảm liên quan nhịp sinh học làm nổi bật mối quan hệ giữa ánh sáng và sức khỏe",
+      "viSummary": "Nghiên cứu của Đại học Sydney trên 11.380 người phát hiện khoảng một phần tư nhóm trầm cảm có dạng liên quan nhịp sinh học, củng cố mối liên hệ giữa ánh sáng và tâm trạng, nhưng chưa khẳng định chiếu sáng kiến trúc có thể điều trị bệnh này.",
+      "topics": [
+        "circadian",
+        "research"
+      ]
+    }
+  ],
+  "termOfDay": "power-factor",
+  "projectOfDay": "by-typology"
+}
