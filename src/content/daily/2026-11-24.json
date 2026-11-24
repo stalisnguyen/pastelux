@@ -1,0 +1,64 @@
+{
+  "date": "2026-11-24",
+  "generatedAt": "2026-11-24T03:12:55.307Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "What Is The Proposed Tetra Lighting Metric?",
+      "url": "https://www.lightnowblog.com/2026/11/what-is-the-proposed-tetra-lighting-metric",
+      "source": "LightNOW",
+      "published": "Mon, 23 Nov 2026 06:13:31 +0000",
+      "summary": "IES has proposed TM-Tetra, a new metric for calculating vertical illuminance across three-dimensional surfaces such as a face, addressing the limits of flat vertical illuminance when light arrives from multiple directions. This matters for specifying human-centric and circadian lighting more accurately.",
+      "viTitle": "Chỉ số chiếu sáng Tetra được đề xuất là gì?",
+      "viSummary": "IES đang đề xuất TM-Tetra, một metric mới để tính độ rọi đứng trên bề mặt ba chiều như khuôn mặt người, khắc phục hạn chế của độ rọi đứng kiểu phẳng khi ánh sáng đến từ nhiều hướng. Điều này có ý nghĩa với thiết kế chiếu sáng circadian và lấy con người làm trung tâm.",
+      "topics": [
+        "standards",
+        "research",
+        "circadian"
+      ]
+    },
+    {
+      "title": "Beyond Lux: What Makes a Space Look Brighter",
+      "url": "https://www.lightnowblog.com/2026/11/beyond-lux-what-makes-a-space-look-brighter",
+      "source": "LightNOW",
+      "published": "Wed, 18 Nov 2026 06:38:43 +0000",
+      "summary": "Penn State research indicates two spaces with identical illuminance readings can be perceived as differently bright depending on melanopic stimulation and colour-rendering characteristics, suggesting lux alone is an incomplete metric for specifying perceived brightness and energy use.",
+      "viTitle": "Vượt ra ngoài Lux: Điều gì khiến không gian trông sáng hơn",
+      "viSummary": "Nghiên cứu của Penn State cho thấy hai không gian có cùng độ rọi (lux) có thể được cảm nhận sáng khác nhau tùy mức kích thích melanopsin và đặc tính hoàn màu, cho thấy chỉ đo lux là chưa đủ để đánh giá độ sáng cảm nhận và hiệu quả năng lượng.",
+      "topics": [
+        "research",
+        "optics",
+        "circadian"
+      ]
+    },
+    {
+      "title": "Signify revamp London Aquatic’s Centre lighting scheme",
+      "url": "https://www.arc-magazine.com/26215-2",
+      "source": "arc",
+      "published": "Fri, 13 Nov 2026 16:18:06 +0000",
+      "summary": "Signify has completed a new LED lighting installation at the London Aquatics Centre, though the release gives no technical specification detail on fixtures, controls or performance targets.",
+      "viTitle": "Signify cải tạo hệ thống chiếu sáng tại London Aquatics Centre",
+      "viSummary": "Signify vừa hoàn thành lắp đặt hệ thống LED mới tại London Aquatics Centre, nhưng thông cáo không nêu chi tiết kỹ thuật cụ thể về đèn hay điều khiển.",
+      "topics": [
+        "product",
+        "sustainability"
+      ]
+    },
+    {
+      "title": "Canadian Market: Dark Sky, Mercury Ban, and DLC Requirements",
+      "url": "https://www.lightnowblog.com/2026/11/canadian-market-dark-sky-mercury-ban-and-dlc-requirements",
+      "source": "LightNOW",
+      "published": "Thu, 12 Nov 2026 06:50:19 +0000",
+      "summary": "Canadian commercial lighting specifiers face three converging pressures: end-of-life replacement of first-generation LED installations, mandatory phase-out of mercury lamps, and tightening dark-sky/light-pollution rules at provincial and municipal level, alongside shifting DLC qualification requirements.",
+      "viTitle": "Thị trường Canada: Dark Sky, lệnh cấm thủy ngân và yêu cầu DLC",
+      "viSummary": "Nhà thiết kế chiếu sáng thương mại tại Canada đang đối mặt ba xu hướng chính: thay thế đèn LED thế hệ đầu đã hết vòng đời, lộ trình loại bỏ đèn chứa thủy ngân, và quy định dark-sky/ô nhiễm ánh sáng ngày càng chặt ở cấp tỉnh bang và địa phương, cùng danh mục chứng nhận DLC liên tục thay đổi.",
+      "topics": [
+        "standards",
+        "sustainability",
+        "practice"
+      ]
+    }
+  ],
+  "termOfDay": "wall-washer-fitting",
+  "projectOfDay": "colour-quality"
+}
