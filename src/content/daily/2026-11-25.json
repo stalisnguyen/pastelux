@@ -1,0 +1,59 @@
+{
+  "date": "2026-11-25",
+  "generatedAt": "2026-11-25T01:17:46.989Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "What Is The Proposed U500 Metric For Outdoor Lighting?",
+      "url": "https://www.lightnowblog.com/2026/11/what-is-the-proposed-u500-metric-for-outdoor-lighting",
+      "source": "LightNOW",
+      "published": "Tue, 24 Nov 2026 06:24:35 +0000",
+      "summary": "The Czech Lighting Society has proposed U500, a spectral metric quantifying the percentage of a source's visible output below 500nm, aiming to replace CCT as a more direct way to specify blue-rich content in outdoor lighting.",
+      "viTitle": "Chỉ số U500 được đề xuất cho chiếu sáng ngoài trời là gì?",
+      "viSummary": "Hiệp hội Chiếu sáng Czech đề xuất chỉ số quang phổ U500, đo tỷ lệ phần trăm năng lượng bức xạ nhìn thấy dưới bước sóng 500nm của nguồn sáng, nhằm thay thế CCT để đặc tả trực tiếp hơn thành phần ánh sáng xanh/tím trong chiếu sáng ngoài trời.",
+      "topics": [
+        "standards",
+        "research"
+      ]
+    },
+    {
+      "title": "LiGHT 26 records 12 percent visitor growth as 7,564 lighting professionals attend Business Design Centre show",
+      "url": "https://www.a1lightingmagazine.com/company-news/light-26-records-12-percent-visitor-growth",
+      "source": "A1 Lighting",
+      "published": "Mon, 23 Nov 2026 14:04:02 +0000",
+      "summary": "LiGHT 26 at London's Business Design Centre drew 7,564 attendees, up 12% year on year, under new organiser Messe Frankfurt UK, reflecting continued trade interest from specifiers and consultants in the UK lighting sector.",
+      "viTitle": "LiGHT 26 tăng 12% lượng khách tham quan với 7.564 chuyên gia chiếu sáng tại Business Design Centre",
+      "viSummary": "Triển lãm LiGHT 26 tại Business Design Centre, London thu hút 7.564 khách tham quan, tăng 12% so với năm trước, dưới sự tổ chức lần đầu của Messe Frankfurt UK, cho thấy sức hút liên tục của ngành chiếu sáng Anh với giới thiết kế và tư vấn.",
+      "topics": [
+        "practice"
+      ]
+    },
+    {
+      "title": "Artemide unveils its renovated London showroom",
+      "url": "https://www.a1lightingmagazine.com/company-news/artemide-unveils-its-renovated-london-showroom",
+      "source": "A1 Lighting",
+      "published": "Fri, 20 Nov 2026 12:04:52 +0000",
+      "summary": "Artemide reopened its renovated London showroom on Great Russell Street, now spread across two floors to display its professional luminaire ranges and historic design pieces for specifiers and visitors.",
+      "viTitle": "Artemide khai trương showroom London sau cải tạo",
+      "viSummary": "Showroom lịch sử của Artemide tại phố Great Russell, London vừa mở cửa trở lại sau cải tạo, trải trên hai tầng để trưng bày các dòng luminaire chuyên nghiệp và các sản phẩm thiết kế tiêu biểu của hãng.",
+      "topics": [
+        "product"
+      ]
+    },
+    {
+      "title": "Product Monday: USAI Connect LV+ Low Voltage Downlights",
+      "url": "https://www.lightnowblog.com/2026/11/product-monday-usai-connect-lv-low-voltage-downlights",
+      "source": "LightNOW",
+      "published": "Mon, 16 Nov 2026 06:29:38 +0000",
+      "summary": "USAI's Connect LV+ shifts power conversion from individual downlights to a centralized low-voltage system, compatible with existing fixture families, cutting above-ceiling congestion and claiming 15-33% savings on fixtures, labor and installation.",
+      "viTitle": "Product Monday: Đèn downlight điện áp thấp USAI Connect LV+",
+      "viSummary": "Hệ thống Connect LV+ của USAI đưa phần chuyển đổi nguồn ra khỏi từng bộ đèn downlight, tập trung vào một hệ thống điện áp thấp tương thích với các dòng sản phẩm hiện có, giúp giảm chật chội trên trần và theo ước tính có thể tiết kiệm 15-33% chi phí đèn, nhân công và lắp đặt.",
+      "topics": [
+        "product",
+        "practice"
+      ]
+    }
+  ],
+  "termOfDay": "reflectance",
+  "projectOfDay": "control-protocols"
+}
