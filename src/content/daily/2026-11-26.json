@@ -1,0 +1,62 @@
+{
+  "date": "2026-11-26",
+  "generatedAt": "2026-11-26T00:52:53.606Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "DALI Alliance surpasses 500 members and 8,000 certified products",
+      "url": "https://www.a1lightingmagazine.com/company-news/dali-alliance-surpasses-500-members-and-8000-certified-products",
+      "source": "A1 Lighting",
+      "published": "Wed, 25 Nov 2026 09:16:56 +0000",
+      "summary": "DALI Alliance now counts over 500 member companies and more than 8,000 DALI-certified products, giving specifiers a wider pool of interoperable control gear and sensors to draw on for DALI-2 and D4i based lighting control systems.",
+      "viTitle": "DALI Alliance vượt mốc 500 thành viên và 8.000 sản phẩm được chứng nhận",
+      "viSummary": "DALI Alliance hiện có hơn 500 thành viên và hơn 8.000 sản phẩm được chứng nhận DALI, giúp các nhà thiết kế chiếu sáng có thêm nhiều lựa chọn thiết bị điều khiển tương thích DALI-2 và D4i khi triển khai hệ thống controls.",
+      "topics": [
+        "controls",
+        "standards"
+      ]
+    },
+    {
+      "title": "Signify revamp London Aquatic’s Centre lighting scheme",
+      "url": "https://www.arc-magazine.com/26215-2",
+      "source": "arc",
+      "published": "Fri, 13 Nov 2026 16:18:06 +0000",
+      "summary": "Signify completed an LED retrofit of the London Aquatics Centre, replacing the existing lighting scheme; the blurb gives no technical detail on fixtures, controls or performance targets achieved.",
+      "viTitle": "Signify nâng cấp hệ thống chiếu sáng cho London Aquatics Centre",
+      "viSummary": "Signify vừa hoàn thành cải tạo đèn LED cho London Aquatics Centre, thay thế hệ thống chiếu sáng cũ. Thông tin công bố chưa nêu chi tiết kỹ thuật về bộ đèn, điều khiển hay chỉ tiêu hiệu năng đạt được.",
+      "topics": [
+        "product",
+        "sustainability"
+      ]
+    },
+    {
+      "title": "LEDucation Launches New Awards Program",
+      "url": "https://www.lightnowblog.com/2026/11/leducation-launches-new-awards-program",
+      "source": "LightNOW",
+      "published": "Fri, 13 Nov 2026 06:57:12 +0000",
+      "summary": "DLFNY is launching LEDawards, a new product recognition program at the LEDucation trade show to help attendees identify notable lighting products across categories. No technical criteria or judging details are given.",
+      "viTitle": "LEDucation ra mắt chương trình giải thưởng mới",
+      "viSummary": "DLFNY vừa giới thiệu LEDawards, chương trình vinh danh sản phẩm mới tại hội chợ LEDucation, giúp người tham dự dễ tìm ra các giải pháp chiếu sáng nổi bật theo từng hạng mục. Bài viết chưa nêu rõ tiêu chí hay cách chấm giải.",
+      "topics": [
+        "awards",
+        "product"
+      ]
+    },
+    {
+      "title": "Canadian Market: Dark Sky, Mercury Ban, and DLC Requirements",
+      "url": "https://www.lightnowblog.com/2026/11/canadian-market-dark-sky-mercury-ban-and-dlc-requirements",
+      "source": "LightNOW",
+      "published": "Thu, 12 Nov 2026 06:50:19 +0000",
+      "summary": "Canadian retrofit demand is rising around three drivers: replacing first-generation LEDs nearing end of life, mercury lamp phase-outs, and provincial/municipal dark-sky compliance rules — all relevant to spec checks on existing installations.",
+      "viTitle": "Thị trường Canada: Dark Sky, cấm thủy ngân và yêu cầu DLC",
+      "viSummary": "Thị trường cải tạo chiếu sáng thương mại tại Canada đang tăng do ba yếu tố: thay thế đèn LED thế hệ đầu đã hết tuổi thọ, loại bỏ đèn thủy ngân, và tuân thủ quy định dark-sky cấp tỉnh/thành phố. Đây là những điểm cần lưu ý khi đánh giá lại các hệ thống hiện hữu.",
+      "topics": [
+        "standards",
+        "sustainability",
+        "practice"
+      ]
+    }
+  ],
+  "termOfDay": "reflector",
+  "projectOfDay": "dark-sky-facade"
+}
