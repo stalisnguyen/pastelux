@@ -1,0 +1,62 @@
+{
+  "date": "2026-11-27",
+  "generatedAt": "2026-11-27T00:58:49.067Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "Five lighting designs listed by Marset on Dezeen Showroom",
+      "url": "https://www.dezeen.com/2026/11/26/lighting-designs-marset-dezeen-showroom",
+      "source": "Dezeen",
+      "published": "Thu, 26 Nov 2026 19:00:00 +0000",
+      "summary": "Marset showcases five products on Dezeen Showroom, including the Gambosa table lamp by Mathias Hahn and an ice-block-like ceiling light, with emphasis on form and material rather than technical performance data.",
+      "viTitle": "Marset giới thiệu năm mẫu đèn trên Dezeen Showroom",
+      "viSummary": "Marset trưng bày năm sản phẩm trên Dezeen Showroom, gồm đèn bàn Gambosa của Mathias Hahn và một đèn trần dạng khối băng, chủ yếu nói về hình khối và vật liệu chứ không có thông số kỹ thuật cụ thể.",
+      "topics": [
+        "product"
+      ]
+    },
+    {
+      "title": "Recolight and the SLL to jointly run Circular Lighting Live from 2027",
+      "url": "https://www.a1lightingmagazine.com/show-news/recolight-and-the-sll-to-jointly-run-circular-lighting-live-from-2027",
+      "source": "A1 Lighting",
+      "published": "Thu, 26 Nov 2026 12:12:37 +0000",
+      "summary": "Recolight and the SLL will jointly run Circular Lighting Live from 2027, combining resources to support circular economy practices such as reuse, recycling and lifecycle standards in lighting specification.",
+      "viTitle": "Recolight và SLL sẽ đồng tổ chức Circular Lighting Live từ năm 2027",
+      "viSummary": "Từ năm 2027, Recolight và SLL hợp tác tổ chức sự kiện Circular Lighting Live, kết hợp nguồn lực để thúc đẩy kinh tế tuần hoàn trong ngành chiếu sáng, liên quan đến tái sử dụng, tái chế và tiêu chuẩn vòng đời sản phẩm.",
+      "topics": [
+        "sustainability",
+        "standards",
+        "practice"
+      ]
+    },
+    {
+      "title": "What Cognitive Cities Mean for Smart Streetlights",
+      "url": "https://www.lightnowblog.com/2026/11/what-cognitive-cities-mean-for-smart-streetlights",
+      "source": "LightNOW",
+      "published": "Thu, 26 Nov 2026 06:44:15 +0000",
+      "summary": "Article argues smart street lighting is evolving toward 'cognitive cities', where networked luminaires feed predictive decision-making systems rather than simply providing connectivity, shifting controls specification priorities.",
+      "viTitle": "Thành phố nhận thức và ý nghĩa đối với đèn đường thông minh",
+      "viSummary": "Bài viết cho rằng chiếu sáng đường phố thông minh đang tiến tới mô hình 'thành phố nhận thức', nơi đèn kết nối không chỉ truyền dữ liệu mà còn hỗ trợ dự đoán và ra quyết định đô thị, làm thay đổi cách đặc tả hệ thống controls.",
+      "topics": [
+        "controls",
+        "practice"
+      ]
+    },
+    {
+      "title": "Glamox provides one of Norway’s most sustainable university buildings with connected lighting",
+      "url": "https://www.a1lightingmagazine.com/led-lighting/glamox-provides-one-of-norways-most-sustainable-university-buildings-with-connected-lighting",
+      "source": "A1 Lighting",
+      "published": "Wed, 18 Nov 2026 10:36:59 +0000",
+      "summary": "Glamox installed connected LED lighting at the Professor Mørch's House building on Trondheim's Ocean Technology campus, enabling zoned lighting control tied to the building's energy-efficiency targets.",
+      "viTitle": "Glamox trang bị chiếu sáng kết nối cho một trong những tòa nhà đại học bền vững nhất Na Uy",
+      "viSummary": "Glamox lắp đặt hệ LED kết nối cho tòa nhà Professor Mørch's House thuộc khuôn viên Ocean Technology Centre tại Trondheim, cho phép chia vùng chiếu sáng linh hoạt nhằm đáp ứng mục tiêu hiệu quả năng lượng của công trình.",
+      "topics": [
+        "controls",
+        "sustainability",
+        "product"
+      ]
+    }
+  ],
+  "termOfDay": "rgbw",
+  "projectOfDay": "design-stages"
+}
