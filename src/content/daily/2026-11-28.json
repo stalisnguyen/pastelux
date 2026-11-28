@@ -1,0 +1,62 @@
+{
+  "date": "2026-11-28",
+  "generatedAt": "2026-11-28T00:24:59.567Z",
+  "degraded": false,
+  "items": [
+    {
+      "title": "DALI Alliance surpasses 500 members and 8,000 certified products",
+      "url": "https://www.a1lightingmagazine.com/company-news/dali-alliance-surpasses-500-members-and-8000-certified-products",
+      "source": "A1 Lighting",
+      "published": "Wed, 25 Nov 2026 09:16:56 +0000",
+      "summary": "DALI Alliance now has over 500 members and more than 8,000 DALI-certified products, broadening the pool of interoperable controls hardware available to specifiers designing DALI-2 lighting control systems.",
+      "viTitle": "DALI Alliance vượt mốc 500 thành viên và 8.000 sản phẩm được chứng nhận",
+      "viSummary": "DALI Alliance hiện có hơn 500 thành viên và hơn 8.000 sản phẩm đạt chứng nhận DALI, giúp các nhà thiết kế có thêm nhiều lựa chọn thiết bị tương thích khi triển khai hệ thống điều khiển DALI-2.",
+      "topics": [
+        "controls",
+        "standards"
+      ]
+    },
+    {
+      "title": "What Is The Proposed Tetra Lighting Metric?",
+      "url": "https://www.lightnowblog.com/2026/11/what-is-the-proposed-tetra-lighting-metric",
+      "source": "LightNOW",
+      "published": "Mon, 23 Nov 2026 06:13:31 +0000",
+      "summary": "IES is developing Tetra (TM-Tetra), a proposed three-dimensional illuminance metric to measure vertical light on 3D objects like faces, addressing the limits of standard flat vertical illuminance metrics for multi-directional lighting conditions.",
+      "viTitle": "Chỉ số Tetra được đề xuất của IES là gì?",
+      "viSummary": "IES đang xây dựng Tetra (TM-Tetra), một chỉ số độ rọi ba chiều mới nhằm đo ánh sáng thẳng đứng trên các vật thể 3D như khuôn mặt người, khắc phục hạn chế của độ rọi thẳng đứng truyền thống vốn chỉ phù hợp bề mặt phẳng.",
+      "topics": [
+        "standards",
+        "research"
+      ]
+    },
+    {
+      "title": "Beyond Lux: What Makes a Space Look Brighter",
+      "url": "https://www.lightnowblog.com/2026/11/beyond-lux-what-makes-a-space-look-brighter",
+      "source": "LightNOW",
+      "published": "Wed, 18 Nov 2026 06:38:43 +0000",
+      "summary": "Penn State research shows perceived spatial brightness depends on melanopsin stimulation and colour-rendering characteristics, not just measured illuminance, meaning two spaces with identical lux levels can feel differently bright — relevant for balancing energy use against occupant perception.",
+      "viTitle": "Vượt ra ngoài Lux: Điều gì khiến không gian trông sáng hơn",
+      "viSummary": "Nghiên cứu của Penn State cho thấy độ sáng cảm nhận của không gian phụ thuộc vào mức kích thích melanopsin và đặc tính hoàn màu, không chỉ độ rọi đo được. Hai không gian cùng lux có thể tạo cảm giác sáng khác nhau, ảnh hưởng đến cân bằng giữa tiết kiệm năng lượng và cảm nhận thị giác.",
+      "topics": [
+        "research",
+        "circadian",
+        "optics"
+      ]
+    },
+    {
+      "title": "Birmingham Airport transitions to energy-efficient high mast LED lighting",
+      "url": "https://www.a1lightingmagazine.com/latest-news/birmingham-airport-transitions-to-energy-efficient-high-mast-led-lighting",
+      "source": "A1 Lighting",
+      "published": "Mon, 16 Nov 2026 13:18:26 +0000",
+      "summary": "Birmingham Airport has completed a multi-phase LED retrofit of its high mast lighting with C.U. Phosco, replacing legacy fixtures to cut energy use and carbon as part of its net-zero infrastructure programme.",
+      "viTitle": "Sân bay Birmingham chuyển sang đèn cột cao LED tiết kiệm năng lượng",
+      "viSummary": "Sân bay Birmingham đã hoàn tất nâng cấp đèn cột cao sang LED qua nhiều giai đoạn, hợp tác cùng C.U. Phosco, thay thế đèn cũ nhằm giảm tiêu thụ năng lượng và phát thải carbon, phục vụ mục tiêu net-zero của sân bay.",
+      "topics": [
+        "product",
+        "sustainability"
+      ]
+    }
+  ],
+  "termOfDay": "scallop",
+  "projectOfDay": "glare-and-ugr"
+}
